@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>MAT02036 - Amostragem 2</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Markus Stein" />
+    <script src="libs/header-attrs-2.18/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, title-slide
+
+.title[
+# MAT02036 - Amostragem 2
+]
+.subtitle[
+## Aula 02 - Teoria Básica
+]
+.author[
+### Markus Stein
+]
+.institute[
+### Departamento de Estatística, IME/UFRGS
+]
+.date[
+### 2022/2
+]
+
+---
+
+
+
+
+<div>
+<style type="text/css">.xaringan-extra-logo {
+width: 110px;
+height: 128px;
+z-index: 0;
+background-image: url(C:/Users/User/Downloads/MAT02036 - Amostragem 2/aulas/img/logo_dest.png);
+background-size: contain;
+background-repeat: no-repeat;
+position: absolute;
+top:1em;right:1em;
+}
+</style>
+<script>(function () {
+  let tries = 0
+  function addLogo () {
+    if (typeof slideshow === 'undefined') {
+      tries += 1
+      if (tries < 10) {
+        setTimeout(addLogo, 100)
+      }
+    } else {
+      document.querySelectorAll('.remark-slide-content:not(.title-slide):not(.inverse):not(.hide_logo)')
+        .forEach(function (slide) {
+          const logo = document.createElement('div')
+          logo.classList = 'xaringan-extra-logo'
+          logo.href = null
+          slide.appendChild(logo)
+        })
+    }
+  }
+  document.addEventListener('DOMContentLoaded', addLogo)
+})()</script>
+</div>
+
+### *Housekeeping*
+
+* Aproveitem o momento presencial para tirar dúvidas
+
+* Se estivéssemos no ensino remoto ou à distância
+
+  + vocês poderiam estar somente ouvindo, sem interação
+  
+  + ou assistindo vídeos e material em outro momento
+  
+* Depois das aulas, rever material da aula passada
+
+  + fazer exercícios
+  
+  + se preparar para a próxima aula
+
+---
+
+## Aula passada 📀
+
+Notação | População | Amostra
+---|:---:|:---
+Índice (rótulo) | `\(U = \{ 1, 2, \ldots, i, \ldots, N\}\)` | `\(s=\{i_1, i_2, \dots, i_n\}\)`
+Característica  | `\(Y_U = \{y_1,\;y_2,\;...,\;y_i,\;..., \;y_N\}\)` | `\(Y_s = \{y_{i_1}, y_{i_2}, \dots, y_{i_n}\}\)`
+Total           | `\(T = \sum_{i=1}^{N}y_i=\sum_{i\in U}y_i\)` | `\(\widehat{T} = t(s) = t = \sum_{i \in s} y_i\)`
+Média           | `\(\overline{Y} = \frac{T}{N}=\frac{1}{N}\sum_{i\in U} y_i\)` | `\(\widehat{\overline{Y}} = \overline{y} = \frac{t(s)}{n} = \frac{1}{n} \sum_{i \in s} y_i\)`
+Variância       | `\(Var_y = \frac{1}{N} \sum_{i\in U}({y_i-\overline{Y}})^2\)` | `\(var_y = \frac{1}{n} \sum_{i\in s}(y_i - \overline y)^2\)`
+Variância       | `\(S^2_y = \frac{1}{N-1} \sum_{i \in U}({y_i-\overline{Y}})^2\)` | `\(s^2_y = \frac{1}{n-1} \sum_{i \in s}(y_i - \overline y)^2\)`
+
+
+&lt;!-- Proporção       | `\(p = \overline{Y}\)`, para `\(Y \in \{0,1\}\)` | --&gt;
+
+&lt;!-- Variância*       | `\(S^2_y = \displaystyle\frac{1}{N-1} \sum_{i\in}({y_i-\overline{Y}})^2 = \frac{1}{N-1}\left[\sum_{i\in U}{y_i}^2-N\overline{Y}^2\right]\)` |  --&gt;
+
+
+* Espaço amostral: `\(S = \{ s_1,  s_2, \ldots, s_j, \ldots, s_{\nu} \}\)`
+* Plano amostral: `\(p(s)\)`, em que `\(\sum_{s \in S} p(s) = 1\)` 
+* Esperança em relação a `\(p(s)\)`: `\(E_p [t(s)] = \sum_{s \in S} t(s) p(s)\)`
+* Variância  em relação a `\(p(s)\)`: `\(Var_p [t(s)] = \sum_{s \in S} [t(s) - E_p(t)]^2 p(s)\)`
+  
+---
+
+## Aula passada 💿
+
+* Vimos que trabalhar com a distribuição `\(p(s)\)` é complicado. 
+  + O número total, `\(\nu = {N \choose n}\)`, tamanho do conjunto `\(S\)` cresce muito rapidamente com `\(N\)` e com `\(n\)`. 
+  + Então trabalhamos com a **probabilidade de inclusão** da unidade `\(i\)`, `\(\pi_i\)`.
+  
+* **Probabilidade de inclusão** (de primeira ordem) 
+`$$\pi_i = P(i \in s) =  \sum_{s \ni i} p(s) &gt; 0, \forall i \in U.$$` 
+
+* **Estimador linear** do total populacional (não viesado sob `\(\pi\)`): 
+`$$\widehat T_w = \sum_{i \in s} w_i y_i = \sum_{i \in s}  \frac{1}{\pi_i} y_i = \sum_{i \in s} {\pi_i}^{-1} y_i.$$`
+
+---
+
+class: inverse, middle, center
+
+# Teoria Básica e AAS
+
+---
+
+## Teoria básica
+
+* Vamos olhar um pouco mais para a ideia de trabalhar com **propabilidades de inclusão** `\(\pi_i\)`.
+
+* `\(\pi_i\)` pode ser vista como o parâmetro da distribuição de probabilidades da variável aleatória `\(R\)`, para a `\(i\)`-ésima unidade.
+
+* Definimos a variável indicadora `\(R_i\)` tal que
+
+`$$R_i = \begin{cases} 1, &amp; i \in s \\ 0, &amp; i \notin s \end{cases}$$`
+
+para todo `\(i \in U\)`.
+
+
+* A variável `\(R_i\)` é indicadora do evento 'inclusão da unidade `\(i\)` na amostra `\(s\)`'.
+
+---
+
+## Teoria básica
+#### Exemplo: estimação do total e AAS
+
+* Para `\(N= 4\)` e `\(n=2\)`, as seis amostras possíveis podem ser representadas pelas indicadoras por 
+
+.center[
+*Representação de cada amostra possível pelas variáveis indicadoras*
+]
+
+Amostra | Unidades na Amostra | `\(R_1\)` | `\(R_2\)` | `\(R_3\)` | `\(R_4\)` 
+:--:|:--:|:--:|:--:|:--:|:--:
+1 | `\(s_1 = \{ 1; 2\}\)` | 1 | 1 |   0 |  0
+2 | `\(s_2 = \{ 1; 3\}\)` | 1 | 0 |   1 |  0
+3 | `\(s_3 = \{ 1; 4\}\)` | 1 | 0 |   0 |  1
+4 | `\(s_4 = \{ 2; 3\}\)` | 0 | 1 |   1 |  0  
+5 | `\(s_5 = \{ 2; 4\}\)` | 0 | 1 |   0 |  1
+6 | `\(s_6 = \{ 3; 4\}\)` | 0 | 0 |   1 |  1
+
+* Cada amostra fica univocamente determinada pelas variáveis indicadoras `\(R_1, R_2, \ldots, R_N\)` correspondentes.
+
+---
+
+## Teoria básica
+
+* As variáveis indicadoras `\(R\)` dependem da amostra `\(s\)`,
+  + não indicamos explicitamente em nossa notação, mas temos que
+
+`$$\pi_i (s) = P(i \in s) = \sum_{s \ni i} p(s) = P( R_i = 1) = E_p( R_i), \forall i \in U$$`
+ 
+* Relembre: as **probabilidades de inclusão** `\(\pi_i\)` são ditas de **primeira ordem**.
+
+--
+
+* Sob essa ótica, precisamos também definir **probabilidades de inclusão de segunda ordem**, denotadas `\(\pi_{ij}\)`, dadas por 
+`$$\pi_{ij} = P \left[ (i,j) \in s \right] = \sum_{s \ni \left( i,j \right)} p(s) = P \left( R_{ij} = 1 \right) = E_p \left(  R_{ij} \right), \forall (i,j) \in U,$$`
+em que `\(R_{ij} = R_i R_j\)`.
+
+* Note que quando `\(i=j\)`, `\(\pi_{ij} = \pi_{ii} = \pi_i, \forall i \in U\)`.
+
+---
+
+## Teoria básica
+
+* Além da propriedade de valor esperado das variáveis aleatórias indicadoras `\(R_i\)`, pode-se também deduzir que:
+`$$Var_p( R_i) = \pi_i (1 - \pi_i)$$`
+e
+`$$Cov_p( R_i, R_j) = \pi_{ij} - \pi_i \pi_j.$$`
+
+--
+
+* Um método geral de prova em amostragem se baseia num uso inteligente das variáveis indicadoras `\(R_1, R_2, \ldots, R_N\)`. 
+
+* Uma propriedade importante dessas variáveis indicadoras é que:
+`$$\sum_{i \in s} R_i = \sum_{i \in U} R_i.$$`
+
+---
+
+## Teoria básica
+
+* Segue também que: 
+`$$\sum_{i \in s} y_i = \sum_{i \in s} R_i y_i = \sum_{i \in U} R_i y_i.$$`
+
+--
+
+* Convertemos a soma amostral que, 
+
+  + antes de selecionada a amostra, tem  parcelas aleatórias, 
+  
+  + em uma soma na população, onde as parcelas são conhecidas mas dependem das `\(R_i\)`.
+
+---
+
+class: inverse, middle, center
+
+# Estimador linear do total
+
+---
+
+## Estimador linear do total
+
+* Considere o total populacional `\(T = \sum_{i \in U} y_i\)` como parâmetro alvo; 
+
+* Um **estimador linear** de `\(T\)` é sempre da forma
+`$$\widehat T_w = \sum_{i \in s} w_i y_i = \sum_{i \in U} R_i w_i y_i$$`
+
+onde `\(w_i\)` é o *peso amostral* da unidade `\(i\)`.
+
+--
+
+* Para que o estimador linear `\(\widehat Y_w\)` de `\(Y\)` seja **sempre** não viciado, é preciso que:
+
+`$$E_p \left( \widehat T_w \right) = T \Leftrightarrow \sum_{i \in U} E_p \left( R_i \right) w_i y_i = \sum_{i \in U} y_i \Leftrightarrow \sum_{i \in U} \pi_i w_i y_i = \sum_{i \in U} y_i.$$`
+
+* Esta relação só será válida para quaisquer valores populacionais `\(y_i\)` da variável de pesquisa caso `\(\pi_i \times w_i = 1, \forall i \in U\)`.
+
+---
+
+## Estimador linear do total
+### Exemplo: AAS sem reposição
+
+Considere o plano amostral AASs para estimar o total populacional `\(T\)` usando o estimador `\(\widehat T_w = \widehat T_{AASs}\)`.
+
+<svg aria-hidden="true" role="img" viewBox="0 0 448 512" style="height:1em;width:0.88em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M253.5 51.7C248.6 39.8 236.9 32 224 32s-24.6 7.8-29.5 19.7l-120 288-40 96c-6.8 16.3 .9 35 17.2 41.8s35-.9 41.8-17.2L125.3 384H322.7l31.8 76.3c6.8 16.3 25.5 24 41.8 17.2s24-25.5 17.2-41.8l-40-96-120-288zM296 320H152l72-172.8L296 320z"/></svg>. Calcule as probabilidades de inclusão de primeira ordem `\(\pi_i\)`.  
+
+<svg aria-hidden="true" role="img" viewBox="0 0 320 512" style="height:1em;width:0.62em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M32 32C14.3 32 0 46.3 0 64V256 448c0 17.7 14.3 32 32 32H192c70.7 0 128-57.3 128-128c0-46.5-24.8-87.3-62-109.7c18.7-22.3 30-51 30-82.3c0-70.7-57.3-128-128-128H32zM160 224H64V96h96c35.3 0 64 28.7 64 64s-28.7 64-64 64zM64 288h96 32c35.3 0 64 28.7 64 64s-28.7 64-64 64H64V288z"/></svg>. Calcule as probabilidades de inclusão de segunda ordem `\(\pi_{ij}\)`.  
+
+<svg aria-hidden="true" role="img" viewBox="0 0 384 512" style="height:1em;width:0.75em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M329.1 142.9c-62.5-62.5-155.8-62.5-218.3 0s-62.5 163.8 0 226.3s155.8 62.5 218.3 0c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3c-87.5 87.5-221.3 87.5-308.8 0s-87.5-229.3 0-316.8s221.3-87.5 308.8 0c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0z"/></svg>. Mostre que `\(\widehat T_{AASs}\)` é não viesado para `\(T\)`  
+
+  + <svg aria-hidden="true" role="img" viewBox="0 0 384 512" style="height:1em;width:0.75em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M329.1 142.9c-62.5-62.5-155.8-62.5-218.3 0s-62.5 163.8 0 226.3s155.8 62.5 218.3 0c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3c-87.5 87.5-221.3 87.5-308.8 0s-87.5-229.3 0-316.8s221.3-87.5 308.8 0c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0z"/></svg>.<svg aria-hidden="true" role="img" viewBox="0 0 256 512" style="height:1em;width:0.5em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M160 64c0-11.8-6.5-22.6-16.9-28.2s-23-5-32.9 1.6l-96 64C-.5 111.2-4.4 131 5.4 145.8s29.7 18.7 44.4 8.9L96 123.8V416H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h96 96c17.7 0 32-14.3 32-32s-14.3-32-32-32H160V64z"/></svg>. usando o plano amostral `\(p(s)\)`.
+  
+  + <svg aria-hidden="true" role="img" viewBox="0 0 384 512" style="height:1em;width:0.75em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M329.1 142.9c-62.5-62.5-155.8-62.5-218.3 0s-62.5 163.8 0 226.3s155.8 62.5 218.3 0c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3c-87.5 87.5-221.3 87.5-308.8 0s-87.5-229.3 0-316.8s221.3-87.5 308.8 0c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0z"/></svg>.<svg aria-hidden="true" role="img" viewBox="0 0 320 512" style="height:1em;width:0.62em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M142.9 96c-21.5 0-42.2 8.5-57.4 23.8L54.6 150.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L40.2 74.5C67.5 47.3 104.4 32 142.9 32C223 32 288 97 288 177.1c0 38.5-15.3 75.4-42.5 102.6L109.3 416H288c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9L200.2 234.5c15.2-15.2 23.8-35.9 23.8-57.4c0-44.8-36.3-81.1-81.1-81.1z"/></svg>. usando a probabilidade de inclusão `\(\pi\)`.
+  
+---
+
+## Estimador linear do total
+### Exemplo: AAS sem reposição
+
+<svg aria-hidden="true" role="img" viewBox="0 0 448 512" style="height:1em;width:0.88em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M253.5 51.7C248.6 39.8 236.9 32 224 32s-24.6 7.8-29.5 19.7l-120 288-40 96c-6.8 16.3 .9 35 17.2 41.8s35-.9 41.8-17.2L125.3 384H322.7l31.8 76.3c6.8 16.3 25.5 24 41.8 17.2s24-25.5 17.2-41.8l-40-96-120-288zM296 320H152l72-172.8L296 320z"/></svg>. Temos que para a AASs `\(p(s) = ?\)`, para todo `\(s \in S\)`, 
+  + pois o número de possíveis amostra é dado por `\(\nu = ?\)`... 
+  + então `\(\pi_i = ?\)`
+
+<svg aria-hidden="true" role="img" viewBox="0 0 320 512" style="height:1em;width:0.62em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M32 32C14.3 32 0 46.3 0 64V256 448c0 17.7 14.3 32 32 32H192c70.7 0 128-57.3 128-128c0-46.5-24.8-87.3-62-109.7c18.7-22.3 30-51 30-82.3c0-70.7-57.3-128-128-128H32zM160 224H64V96h96c35.3 0 64 28.7 64 64s-28.7 64-64 64zM64 288h96 32c35.3 0 64 28.7 64 64s-28.7 64-64 64H64V288z"/></svg>. `\(\pi_{ij} = ?\)`
+
+<svg aria-hidden="true" role="img" viewBox="0 0 384 512" style="height:1em;width:0.75em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M329.1 142.9c-62.5-62.5-155.8-62.5-218.3 0s-62.5 163.8 0 226.3s155.8 62.5 218.3 0c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3c-87.5 87.5-221.3 87.5-308.8 0s-87.5-229.3 0-316.8s221.3-87.5 308.8 0c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0z"/></svg>.<svg aria-hidden="true" role="img" viewBox="0 0 256 512" style="height:1em;width:0.5em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M160 64c0-11.8-6.5-22.6-16.9-28.2s-23-5-32.9 1.6l-96 64C-.5 111.2-4.4 131 5.4 145.8s29.7 18.7 44.4 8.9L96 123.8V416H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h96 96c17.7 0 32-14.3 32-32s-14.3-32-32-32H160V64z"/></svg>. Olhar Cochran... ou slides Prof. Rodrigo.
+
+<svg aria-hidden="true" role="img" viewBox="0 0 384 512" style="height:1em;width:0.75em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M329.1 142.9c-62.5-62.5-155.8-62.5-218.3 0s-62.5 163.8 0 226.3s155.8 62.5 218.3 0c12.5-12.5 32.8-12.5 45.3 0s12.5 32.8 0 45.3c-87.5 87.5-221.3 87.5-308.8 0s-87.5-229.3 0-316.8s221.3-87.5 308.8 0c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0z"/></svg>.<svg aria-hidden="true" role="img" viewBox="0 0 320 512" style="height:1em;width:0.62em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M142.9 96c-21.5 0-42.2 8.5-57.4 23.8L54.6 150.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L40.2 74.5C67.5 47.3 104.4 32 142.9 32C223 32 288 97 288 177.1c0 38.5-15.3 75.4-42.5 102.6L109.3 416H288c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9L200.2 234.5c15.2-15.2 23.8-35.9 23.8-57.4c0-44.8-36.3-81.1-81.1-81.1z"/></svg>. Olhar propriedades do estimador linear acima.
+
+---
+
+## Estimador linear do total
+### Exemplo: AAS sem reposição
+
+* Qual a distribuição amostral do estimador do total `\(\widehat T_w\)`?
+
+  + Ou da média `\(\overline y_w = \widehat{\overline{T_w}}\)`?
+
+* TCL para amostras de populações finitas?
+
+  + `\(\sqrt{n} (\widehat T_w - T) \xrightarrow[]{d}?\)`
+
+  + condições? quando `\(N \rightarrow \infty\)`, `\(n \rightarrow \infty\)`, `\(f=\frac{n}{N}\)` limitado menor que 1?
+  
+Ver Bolfarine e Bussab capítulo 10, Cochran , Slides do Prof. Rodrigo, ...
+
+#### Quem tiver interesse em aspectos teóricos podemos revisar!
+
+---
+
+## Estimador linear do total
+### Estimador Horvitz-Thompson
+
+* Com pesos básicos `\(d_i\)`, o estimador não viciado de total fica dado pelo conhecido *estimador de Horvitz-Thompson* ou *estimador HT*:
+
+`$$\widehat T_{HT} = \sum_{i \in s} {d_i}{y_i} = \sum_{i \in s} {\pi_i}^{-1} y_i = \sum_{i \in s} {y_i}/{\pi_i}$$`
+* Assim, o estimador linear do total `\(\widehat T_w = \sum_{i \in s} w_i y_i\)` será **sempre** não viciado se: 
+
+  + `\(w_i = {\pi_i}^{-1} = {1}/{\pi_i} = d_i, \forall i \in U\)`.
+  
+  + os pesos amostrais `\(d_i\)` são chamados de **pesos básicos** do plano amostral. 
+  
+  + outros pesos além dos definidos pelo delineamento, `\(d_i\)`, podem ser úteis na prática. 
+  
+  + A notação `\(w_i\)` é reservada para designar pesos genéricos que podem ser aplicados para a obtenção de estimadores (viciados ou não).
+
+---
+
+## Estimador linear do total
+### Estimador Horvitz-Thompson
+
+* Este estimador está definido para qualquer 
+
+  + variável de pesquisa `\(y\)` e 
+  
+  + para qualquer *plano amostral probabilístico* `\(p\)`, ou `\(\pi_i &gt; 0, \forall i \in U\)`. 
+
+* **Amostragem probabilística** de populações finitas nos garante certa confiança de sempre dispor de estimadores não viciados como o `\(HT\)`.
+
+* Lembrando: o estimador  **HT** faz uso das probabilidades de inclusão `\(\pi\)` (implicadas pelo plano amostral `\(p(s)\)`), 
+
+  + mas depende através das probabilidades de inclusão de primeira ordem `\(\pi_i\)`, 
+  
+  + uma condição geralmente simples de satisfazer na prática da pesquisa.
+
+---
+
+## Estimador linear do total
+### Estimador Horvitz-Thompson
+#### Propriedades do estimador de Horvitz-Thompson
+
+O *estimador de Horvitz-Thompson* é *não viciado* para estimar o total, ou seja, `\(E_p(\widehat T_{HT}) = Y\)`.
+
+**Prova:**
+
+`$$E_p(\widehat T_{HT}) = E_p \left[ \sum_{i \in U} {R_i y_i}/{\pi_i} \right] = \sum_{i \in U} \left[ { E_p(R_i) y_i} / {\pi_i} \right] = \sum_{i \in U} y_i = Y$$`
+
+Esta propriedade vale para qualquer população `\(U\)`, variável de interesse `\(y\)` e plano amostral `\(p\)`, desde que `\(\pi_i &gt; 0, \forall i \in U\)`.
+
+---
+
+## Estimador linear do total
+### Estimador Horvitz-Thompson
+#### Propriedades do estimador de Horvitz-Thompson
+
+A variância do estimador Horvitz-Thompson para o total é dada por: 
+
+`$$\begin{align} 
+Var_{HT}(\widehat T_{HT}) &amp; = \sum_{i \in U} \sum_{j \in U} \left( \frac{\pi_{ij}}{\pi_i \pi_j} -1 \right) {y_i} {y_j} \\
+                          &amp; = \sum_{i \in U} \sum_{j \in U} \left( \frac{d_i d_j}{d_{ij}} - 1 \right) {y_i} {y_j} 
+\end{align}$$`
+
+onde `\(d_{ij} = \pi_{ij}^{-1}\)`.
+
+Esta é a chamada forma de Horvitz-Thompson da variância. Existe uma outra forma para esta variância, que vamos conhecer mais adiante.
+
+---
+
+## Estimador linear do total
+### Estimador Horvitz-Thompson
+#### Propriedades do estimador de Horvitz-Thompson
+
+**Prova:**
+
+`$$\begin{align} 
+Var_{HT} (\widehat T_{HT}) &amp; =  Var_p \left( \sum_{i \in U} R_i \frac{1}{\pi_{i}} {y_i} \right) \\ 
+                           &amp; = \sum_{i \in U} \sum_{j \in U} Cov_p( R_i, R_j) \left( \frac{y_i}{\pi_{i}}  \right) \left( \frac{y_j}{\pi_{j}} \right)  \\ 
+                           &amp; = \sum_{i \in U} \sum_{j \in U} (\pi_{ij} - \pi_i \pi_j) \left( \frac{y_i}{\pi_i} \frac{y_j}{\pi_j} \right) \\ 
+                           &amp; = \sum_{i \in U} \sum_{j \in U} \left( \frac{\pi_{ij}}{\pi_i \pi_j} -1 \right) {y_i} {y_j} \\ 
+                           &amp; = \sum_{i \in U} \sum_{j \in U} \left( \frac{d_i d_j}{d_{ij}} - 1 \right) {y_i} {y_j} 
+\end{align}$$`
+
+---
+
+## Estimador linear do total
+### Estimador Horvitz-Thompson
+#### Propriedades do estimador de Horvitz-Thompson
+
+Um estimador não viciado da variância do estimador **HT** do total é dado por:
+
+`$$\begin{align} \widehat Var_{HT} (\widehat T_{HT}) &amp; = \sum_{i\in s} \sum_{j\in s} \frac{(\pi_{ij}-\pi_i\pi_j)}{\pi_{ij}} \left( \frac{y_i}{\pi_i} \frac{y_j}{\pi_j} \right) \\
+                                                &amp; = \sum_{i \in s} \sum_{j \in s} \left( {d_i d_j} - {d_{ij}} \right) {y_i} {y_j}
+\end{align}$$`
+
+* Este estimador da variância foi obtido usando o princípio dos estimadores tipo Horvitz-Thompson do total. 
+
+  + Agora, como estimamos uma soma dupla na população, os pesos das parcelas nessa soma dependem das probabilidades de inclusão de **segunda ordem** `\(\pi_{ij}\)`.
+  
+  + Para ser viável, `\(p(s)\)` tem que satisfazer a condição adicional de que `\(\pi_{ij} &gt; 0 \forall i \ne j \in U\)` (estritamente positivas).
+
+&lt;!-- Para planos amostrais de tamanho prefixado, uma forma alternativa para a variância do estimador HT do total populacional, equivalente a apresentada anteriormente, é dada pela expressão de Sen-Yates-Grundy. --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- \begin{align}  --&gt;
+&lt;!-- V_{SYG}(\widehat Y_{HT}) &amp; = \sum_{i \in U} \sum_{j&gt;i} (\pi_i \pi_j - \pi_{ij}) \left( \frac{y_i}{\pi_i} - \frac{y_j}{\pi_j} \right)^2 \\  --&gt;
+&lt;!--                                        &amp; = \sum_{i \in U} \sum_{j&gt;i} (1/d_i d_j - 1/d_{ij}) \left( d_i{y_i} - d_j{y_j} \right)^2 --&gt;
+&lt;!-- \end{align} --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- Note a troca do sinal da diferença de probabilidades de inclusão em relação à expressão anterior.  --&gt;
+
+&lt;!-- ---  --&gt;
+
+&lt;!-- ## Teoria básica --&gt;
+
+&lt;!-- Uma análise dessa expressão de variância nos dá uma indicação de quando pode ser vantajoso empregar probabilidades de inclusão distintas. A variância do estimador de total seria nula caso `\(\frac{y_i}{\pi_i} = \frac{y_j}{\pi_j}, \forall i \ne j \in U\)`. Isto só seria possível quando `\(\pi_i \propto y_i, \forall i \in U\)`, isto é, quando as probabilidades de inclusão fossem exatamente proporcionais aos valores da variável de interesse. Na prática, é impossível aplicar essa ideia já que os valores da variável de interesse são desconhecidos antes da seleção da amostra. --&gt;
+
+&lt;!-- Entretanto, vemos no Capítulo \? que esta ideia pode ser usada de forma aproximada fazendo as probabilidades de inclusão proporcionais a uma medida de tamanho cujos valores estejam disponíveis para todas as unidades da população `\(U\)`. Sempre que a medida de tamanho for positivamente correlacionada com a(s) variável(is) de interesse `\(y\)`, vemos que é possível tirar proveito da informação de tamanho para aplicar métodos de amostragem que levam a estimadores mais eficientes do total que no caso de planos amostrais com equiprobabilidade para amostras de tamanhos iguais. --&gt;
+
+&lt;!-- Um estimador alternativo da variância do estimador **HT** do total, pode ser escrito como: --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- \begin{align} --&gt;
+&lt;!-- \widehat V_{SYG}(\widehat Y_{HT}) &amp; = \sum_{i \in s} \sum_{j&gt;i} \left( \frac{\pi_i \pi_j - \pi_{ij}}{\pi_{ij}} \right) \left( \frac{y_i}{\pi_i} - \frac{y_j}{\pi_j} \right)^2 \\  --&gt;
+&lt;!--                                   &amp; = \sum_{i \in s} \sum_{j&gt;i} (d_{ij}/d_i d_j - 1) \left( d_i{y_i} - d_j{y_j} \right)^2 --&gt;
+&lt;!-- \end{align} --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- O estimador `\(\widehat V_{SYG}(\widehat Y_{HT})\)` foi motivado a partir da forma de Sen-Yates-Grundy para a variância do estimador HT do total. Tal estimador não coincide com o estimador de variância derivado a partir da expressão de Horvitz-Thompson apresentada anteriormente. --&gt;
+
+---
+
+class: inverse, middle, center
+
+# Considerações
+
+---
+
+## Estimador linear do total
+
+Comentários sobre estimação de totais e respectivas variâncias em **amostragem probabilística**:
+
+* É possível sempre **estimar sem vício um total populacional** usando uma soma amostral `\(\pi\)`-ponderada, o estimador **HT** do total.
+
+--
+
+* Expressões de variância para **avaliar a qualidade do estimador de total** sob distintas situações (população, variável) para qualquer plano amostral.
+
+--
+
+* Estimar muitos **outros parâmetros populacionais** (tais como médias, proporções e razões) com os resultados vistos na estimação de totais.
+
+--
+
+* Derivar estimadores não viciados do total populacional e da variância do estimador **HT** de total para **distintos planos amostrais** como **casos especiais** da teoria geral apresentada.
+
+  + conveniente para a **estimação de variâncias**, cujas expressões gerais dependem de somas duplas difíceis de calcular para `\(n\)` grande. 
+
+  + **expressões para cada um dos planos amostrais** específicos são úteis porque permitem simplificar os cálculos da estimação de variâncias.
+
+&lt;!-- ---  --&gt;
+
+&lt;!-- ## Teoria básica --&gt;
+&lt;!-- ### Estimação da média populacional --&gt;
+
+&lt;!-- Quando o tamanho da população `\(N\)` é conhecido, o estimador “natural” da média populacional baseado no estimador HT do total é: --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- \overline y_{HT} = \widehat Y_{HT} / N = \frac{1}{N} \sum_{i \in s} d_i y_i = \sum_{i \in s} w_i^{HT} y_i --&gt;
+&lt;!-- $$ --&gt;
+&lt;!-- onde `\(w_i^{HT}= d_i/N\)`. --&gt;
+
+&lt;!-- As expressões de variância e seu estimador não viciado seguem diretamente das anteriores mediante divisão por `\(N^2\)`, levando a: --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- \begin{align}  --&gt;
+&lt;!-- V_{HT} \left( \overline y_{HT} \right) &amp; = \frac{1}{N^2} \sum_{i \in U} \sum_{j \in U} \left( \frac{\pi_{ij}}{\pi_i \pi_j} -1 \right) {y_i} {y_j} \\  --&gt;
+&lt;!--                                        &amp; = \frac{1}{N^2} \sum_{i \in U} \sum_{j \in U} \left( \frac{d_i d_j}{d_{ij}} - 1 \right) {y_i} {y_j}  --&gt;
+&lt;!-- \end{align} --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- e --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- \widehat V_{HT} \left( \overline y_{HT} \right) = \frac{1}{N^2} \sum_{i \in s} \sum_{j \in s} \left( {d_i d_j} - {d_{ij}} \right) {y_i} {y_j} --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- Expressões na forma Sen-Yates-Grundy podem ser obtidas de forma análoga. --&gt;
+
+&lt;!-- ---  --&gt;
+
+&lt;!-- ## Teoria básica --&gt;
+
+&lt;!-- Mesmo quando o tamanho `\(N\)` da população não for conhecido, ele pode ser estimado usando o estimador HT do total de uma variável de contagem tomando valor igual a 1 para todas as unidades da população, levando ao estimador: --&gt;
+
+&lt;!-- `$$\widehat N_{HT} = \sum_{i \in s} d_i$$` --&gt;
+
+&lt;!-- Usando esse estimador do tamanho da população no denominador, um estimador tipo razão para a média populacional é dado por: --&gt;
+
+&lt;!-- `$$\overline y^R = \widehat Y_{HT} / \widehat N_{HT} = \frac {\sum_{i \in s} d_i y_i} {\sum_{i \in s}d_i} = \sum_{i \in s} w_i^R y_i$$` --&gt;
+
+&lt;!-- onde `\(w_i^R = d_i / \sum_{j \in s} d_j\)`. --&gt;
+
+&lt;!-- A variância desse estimador de média pode ser aproximada por: --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- V_{HT} (\overline y^R) \doteq \frac{1}{N^2} \sum_{i \in U} \sum_{j \in U} (\pi_{ij} - \pi_i\pi_j) \left( \frac {y_i - \overline Y} {\pi_i} \right) \left( \frac{y_j - \overline Y} {\pi_j} \right)  --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- Um estimador aproximadamente não viciado para essa variância é dado por:  --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- \widehat V_{HT} (\overline y^R) = \frac{1}{\widehat{N}_{HT}^2} \sum_{i \in s} \sum_{j \in s} \frac {(\pi_{ij} - \pi_i\pi_j)} {\pi_{ij}} \left( \frac{y_i - \overline y^R} {\pi_i} \right) \left( \frac{y_j - \overline y^R} {\pi_j} \right)  --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- Cabe registrar que para alguns planos amostrais, os dois estimadores são equivalentes, isto é, `\(\overline y^R=\overline y_{HT}\)` porque `\(w_i^R=w_i^{HT}\)`. Porém, quando diferem, o *estimador de razão da média* é geralmente mais eficiente que o estimador HT. Uma outra propriedade atraente do estimador tipo razão da média é que ele é invariante sob transformações de locação, isto é, se tomarmos `\(z_i = y_i + A\)`, então `\(\overline z^R = \overline y^R + A\)`. Esta propriedade não se verifica para o estimador HT. --&gt;
+
+---
+
+## Estimador linear do total
+
+* Em **planos amostrais equiponderados** (em que as probabilidades de inclusão `\(\pi_i\)` são todas iguais); 
+  + os pesos `\(w_i\)` para estimação de médias ficam todos iguais a `\(1/n\)`; 
+  + uma vantagem pois a tarefa de estimação fica simplificada.
+
+* Estimadores `\(HT\)` do total, média e respectivas variâncias ($N$ conhecido):
+
+Estimadores `\(HT\)` | Variâncias dos Estimadores `\(HT\)`
+--|--
+`\(\widehat T_{HT} = \sum_{i\in s} d_i y_i = \sum_{i \in s} {y_i}/{\pi_i}\)` | `\(\widehat{Var}_{HT}(\widehat T_{HT}) =  \sum_{i\in s} \sum_{j\in s} \frac{(\pi_{ij} - \pi_i \pi_j)}{\pi_{ij}} \left( \frac{y_i}{\pi_i} \frac{y_j}{\pi_j} \right)\)`
+`\(\overline y_{HT} = \widehat T_{HT}/N = \sum_{i\in s}d_i y_i/N\)` | `\(\widehat{Var}_{HT}(\overline y_{HT}) = \widehat{Var}_{HT}(\widehat T_{HT})/{N^2}\)`
+
+Quando `\(N\)` **não for conhecido**, podemos usar o **estimador de razão**
+`\(\overline y^R = \frac{\sum_{i\in s}d_i y_i}{\sum_{i\in s}d_i} = \sum_{i\in s}w_i^R y_i \: \: \text{e} \: \: \widehat{Var}_{HT}(\overline y^R) = \frac{1}{\widehat{N}_{HT}^2} \sum_{i\in s}\sum_{j\in s} \frac{(\pi_{ij}-\pi_i\pi_j)}{\pi_{ij}} \left( \frac{y_i-\overline y^R}{\pi_i} \right) \left( \frac{y_j-\overline y^R}{\pi_j}\right)\)`
+
+Expressão alternativa para a variância - Sen-Yates-Grundy
+`\(\widehat{Var}_{SYG}(\widehat Y_{HT}) = \sum_{i \in s} \sum_{j&gt;i} \left( \frac{\pi_i\pi_j-\pi_{ij}}{\pi_{ij}} \right) \left( \frac{y_i}{\pi_i} - \frac{y_j}{\pi_j} \right)^2\)`
+
+---
+
+class: inverse, middle, center
+
+# Laboratório de <svg aria-hidden="true" role="img" viewBox="0 0 581 512" style="height:1em;width:1.13em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/></svg>
+
+---
+
+## Exercício 🏃‍♀
+
+Considere a população com `\(N=6\)` domicílios listada com os respectivos valores de variáveis de interesse.
+
+.center[
+*Valores de variáveis de interesse para cada domicílio da população*
+]
+
+Domicílio | Renda (R$) | NO. de Moradores | No. de Trabalhadores
+----------|:----------:|:--:|:--:
+1         | 800        |  2 | 2
+2	        | 4.200      |  4 | 3
+3	        | 1.600      |  2 | 1
+4         | 500        |  2 | 1
+5         | 900        |  4 | 2
+6	        | 2.000      |  1 | 1
+Total     |  10.000    | 15 | 10
+
+---
+
+## Exercício 🏃‍♀
+
+<svg aria-hidden="true" role="img" viewBox="0 0 256 512" style="height:1em;width:0.5em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M160 64c0-11.8-6.5-22.6-16.9-28.2s-23-5-32.9 1.6l-96 64C-.5 111.2-4.4 131 5.4 145.8s29.7 18.7 44.4 8.9L96 123.8V416H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h96 96c17.7 0 32-14.3 32-32s-14.3-32-32-32H160V64z"/></svg>. Para cada variável de interesse (Renda, Número de Moradores e Número de Trabalhadores), calcule os seguintes parâmetros populacionais: total, média e variância.
+
+<svg aria-hidden="true" role="img" viewBox="0 0 320 512" style="height:1em;width:0.62em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M142.9 96c-21.5 0-42.2 8.5-57.4 23.8L54.6 150.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L40.2 74.5C67.5 47.3 104.4 32 142.9 32C223 32 288 97 288 177.1c0 38.5-15.3 75.4-42.5 102.6L109.3 416H288c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9L200.2 234.5c15.2-15.2 23.8-35.9 23.8-57.4c0-44.8-36.3-81.1-81.1-81.1z"/></svg>. Liste o conjunto `\(S\)` de todas as amostras possíveis de tamanho `\(n=2\)` da população, considerando apenas **amostras de unidades distintas**.
+
+<svg aria-hidden="true" role="img" viewBox="0 0 448 512" style="height:1em;width:0.88em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M64 64c0-17.7 14.3-32 32-32H336c13.2 0 25 8.1 29.8 20.4s1.5 26.3-8.2 35.2L226.3 208H248c75.1 0 136 60.9 136 136s-60.9 136-136 136H169.4c-42.4 0-81.2-24-100.2-61.9l-1.9-3.8c-7.9-15.8-1.5-35 14.3-42.9s35-1.5 42.9 14.3l1.9 3.8c8.1 16.3 24.8 26.5 42.9 26.5H248c39.8 0 72-32.2 72-72s-32.2-72-72-72H144c-13.2 0-25-8.1-29.8-20.4s-1.5-26.3 8.2-35.2L253.7 96H96C78.3 96 64 81.7 64 64z"/></svg>. Supondo que todas as amostras listadas no conjunto `\(S\)` são **equiprováveis** (Plano A), calcule:
+  + As probabilidades de inclusão das unidades.
+  + As probabilidades de inclusão dos pares de unidade.
+  + Os valores possíveis para o estimador Horvitz-Thompson do total populacional para a variável Renda.
+  + O valor esperado e a variância para o estimador Horvitz-Thompson do total populacional para a variável Renda.
+
+---
+
+## Exercício 💪
+
+<svg aria-hidden="true" role="img" viewBox="0 0 384 512" style="height:1em;width:0.75em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M189 77.6c7.5-16 .7-35.1-15.3-42.6s-35.1-.7-42.6 15.3L3 322.4c-4.7 9.9-3.9 21.5 1.9 30.8S21 368 32 368H256v80c0 17.7 14.3 32 32 32s32-14.3 32-32V368h32c17.7 0 32-14.3 32-32s-14.3-32-32-32H320V160c0-17.7-14.3-32-32-32s-32 14.3-32 32V304H82.4L189 77.6z"/></svg>. Considere agora que o conjunto `\(S\)` é formado somente pelas amostras `\((1;2), (2;3), (2;4), (2;5) e (2;6)\)`, tendo cada uma delas probabilidade 1/5 de ser a amostra selecionada (Plano B). Repita os cálculos do item 3 para o novo plano amostral.    
+
+<svg aria-hidden="true" role="img" viewBox="0 0 320 512" style="height:1em;width:0.62em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M32.5 58.3C35.3 43.1 48.5 32 64 32H256c17.7 0 32 14.3 32 32s-14.3 32-32 32H90.7L70.3 208H184c75.1 0 136 60.9 136 136s-60.9 136-136 136H100.5c-39.4 0-75.4-22.3-93-57.5l-4.1-8.2c-7.9-15.8-1.5-35 14.3-42.9s35-1.5 42.9 14.3l4.1 8.2c6.8 13.6 20.6 22.1 35.8 22.1H184c39.8 0 72-32.2 72-72s-32.2-72-72-72H32c-9.5 0-18.5-4.2-24.6-11.5s-8.6-16.9-6.9-26.2l32-176z"/></svg>.	Faça gráficos dos valores possíveis do estimador de total sob os dois planos amostrais para comparar as respectivas distribuições.    
+
+<svg aria-hidden="true" role="img" viewBox="0 0 320 512" style="height:1em;width:0.62em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M232.4 84.7c11.4-13.5 9.7-33.7-3.8-45.1s-33.7-9.7-45.1 3.8L38.6 214.7C14.7 242.9 1.1 278.4 .1 315.2c0 1.4-.1 2.9-.1 4.3c0 .2 0 .3 0 .5c0 88.4 71.6 160 160 160s160-71.6 160-160c0-85.5-67.1-155.4-151.5-159.8l63.9-75.6zM64 320c0-53 43-96 96-96s96 43 96 96s-43 96-96 96s-96-43-96-96z"/></svg>. Use os resultados obtidos em 3 e 4 para comparar os dois planos amostrais e indique qual deles seria preferível usar, caso fosse necessário amostrar duas unidades distintas da população `\((n=2)\)` para estimar o total da Renda. Justifique. 👍
+
+---
+
+## Exercício 🏋️‍♀️
+
+
+```r
+## dados da populacao e plano amostral
+N &lt;- 6               # no. elementos na pop.
+i &lt;- 1:N             # indice dos elementos da pop.
+n &lt;- 2               # no. elementos na amostra
+nu &lt;- choose(N, n)   # no. possíveis amostras
+j &lt;- 1:nu            # indice dos elementos dos espaço amostral
+S &lt;- combn(N,n)      # espaço amostral
+p1s &lt;- 1/nu          # AAS
+
+## variaveis
+renda &lt;- c(800, 4200, 1600, 500, 900, 2000)   
+moradores &lt;- c(2, 4, 2, 2, 4, 1)
+trabalhadores &lt;- c(2, 3, 1, 1, 2, 1)
+```
+
+---
+
+## Para casa 🏠
+
+* Continuar o Exemplo
+
+* Continuar o Exercício
+
+* Rever os slides.
+
+* Ler seção 11.1 a 11.3 do livro 'Amostragem: Teoria e Prática Usando R'.
+
+
+
+## Próxima aula 📊
+
+* Amostragem Estratificada
+  + Características
+  + Parâmetros
+  + Estimadores
+
+&lt;!-- * Laboratório de <svg aria-hidden="true" role="img" viewBox="0 0 581 512" style="height:1em;width:1.13em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/></svg> --&gt;
+
+---
+
+## Muito obrigado!
+
+&lt;img src="img/image_basu_elephant.jpg" width="30%" height="30%" style="display: block; margin: auto;" /&gt;
+Fonte: imagem do livro *Combined Survey Sampling Inference: Weighing of Basu's Elephants: Weighing Basu's Elephants*.
+
+---
+
+class: inverse, middle, center
+
+# Amostragem aleatória simples
+
+---
+
+## Amostragem aleatória simples COM reposição 
+
+* Na **Amostragem Aleatória Simples com reposição** (AASc) as unidades da população têm a mesma chance de ser incluídas na amostra em cada sorteio, e essa probabilidade é igual a `\(1/N\)`.
+
+* **Plano amostral**
+
+  + Existem `\(N^n\)` amostras distintas em `\(S\)`, então 
+  
+`$$p(s) = 1/N^n, \forall\, s\in S.$$`
+
+--
+
+* **Probabilidades de inclusão**:
+
+  + `\(\pi_i \: = \: P \left( i \in s \right) \: = \: 1 - P \left( i \notin s \right) \: = \: 1 - \left( 1-\frac{1}{N} \right)^n.\)`
+
+  + `\(\pi_{ij} = 1 - 2 \left( 1 - \frac{1}{N} \right)^n + \left( 1 - \frac{2}{N} \right)^n\)`, para `\(i,j=1, \ldots,N\)`.
+
+
+---
+
+## Amostragem aleatória simples COM reposição 
+
+* A variável `\(Q_i\)` denota a 'qtd. de vezes a unidade `\(i\)` aparece na amostra `\(s\)`',
+`$$Q_i \sim Binomial(n, 1/N)$$`
+
+  + `\(E_{AAS} [Q_i] = n \frac{1}{N}\)` 
+  
+  + `\(Var_{AAS} [Q_i] = n \frac{1}{N} \left(1-\frac{1}{N}\right)\)`  
+  
+  + `\(Cov_{AAS} [Q_i, Q_j ] = - \frac{n}{N^2}\)`  (*propriedade da multinomial*)
+--
+
+
+**Estimador** não viciado (**ENV**) para:
+
+* o **total** populacional `\(T\)`: `\(\widehat T_{AASc} = N \overline y = N \sum_{i \in s} \frac{y_i}{n}\)`
+
+* a **média** populacional `\(\overline Y\)`: `\(\widehat{\overline{Y}}_{AASc} = \frac {1}{n} \sum_{i \in s} y_i = \overline y\)`
+
+* a **variância** populacional `\(Var_y\)`: `\(\widehat{Var}_{y, AASc} = \frac{1}{n-1} \sum_{i \in s} ({y_i-\overline{y}})^2 = \widehat S_y^2\)`
+
+---
+
+## Amostragem aleatória simples COM reposição 
+
+* **Variância** dos **Estimadores**
+
+  + `\(Var_{AASc}(\widehat T_{AASC}) = N^2 Var_y / n\)`
+
+  + `\(Var_{AASc}(\overline{y}) = Var_y / n\)`
+
+em que `\(Var_y = \frac{1}{N} \sum_{i \in U} ({y_i-\overline{Y}})^2 = \frac{N-1}{N} S^2\)`
+
+* **ENV** da **Variância** dos **Estimadores**
+
+  + `\(\widehat{Var}_{AASc}(\widehat T_{AASC}) = N^2 \widehat S_y^2 / n\)`
+
+  + `\(\widehat{Var}_{AASc}(\overline{y}) = \widehat S_y^2 / n\)`
+
+em que `\(\widehat S^2_y = \frac{1}{n-1} \sum_{i \in s} ({y_i-\overline{y}})^2 = s_y^2\)`.
+
+---
+
+## Amostragem aleatória simples SEM reposição 
+
+* Na **Amostragem Aleatória Simples sem reposição** (**AASs**) cada unidade da população pode aparecer na amostra no máximo uma única vez.
+
+* **Plano amostral** sob **AASs**
+
+  + Existem `\(\binom{N}{n} = \frac{N!}{n!(N-n)!}\)` amostras distintas em `\(S\)`, então 
+`$$p(s) = 1/\binom{N}{n}, \forall\, s \in S.$$`
+
+--
+
+* **Probabilidades de inclusão** sob **AASs**
+
+  + `\(\pi_i = n / N &gt; 0\)`, `\(\forall \,i \in U\)`, desde que `\(n &gt; 0\)`.
+
+  + `\(f = n / N\)` é chamada de **fração amostral** ou **taxa de amostragem**.
+
+  + Estimação de variância sem vício requer `\(\pi_{ij} &gt; 0\)`,  `\(\forall\, i,j \in U\)`.
+  `$$\pi_{ij} = \frac{n(n-1)}{N(N-1)} &gt; 0, \forall i \ne j \in U.$$`
+
+  + Sob **AASs**, as probabilidades de inclusão `\(\pi_i\)` e `\(\pi_{ij}\)` não dependem de `\(i\)` ou `\(j\)`, e essa é a razão da simplicidade desse plano amostral.
+
+---
+
+## Amostragem aleatória simples SEM reposição 
+
+* A variável `\(R_i\)`, indicadora do evento 'inclusão da unidade `\(i\)` na amostra `\(s\)`', sob **AASs**
+
+  + `\(E_{AAS} [R_i] = \frac{n}{N}\)` 
+  
+  + `\(Var_{AAS} [R_i] = \frac{n}{N} \left(1-\frac{n}{N}\right)\)`  
+  
+  + `\(Cov_{AAS} [R_i, R_j ] = \frac{n(n-1)}{N(N-1)} - \left(\frac{n}{N}\right)^2 = \frac{n}{N}\left(1-\frac{n}{N}\right)\left(-\frac{1}{N-1}\right)\)`
+--
+
+
+**Estimador** não viciado (**ENV**) para:
+
+  + o **total** populacional `\(T\)`: `\(\widehat T_{HT} = \sum_{i \in s} \frac{y_i}{n/N} =  \frac{N}{n} \sum_{i \in s} y_i = N \overline {y} = \widehat T_{AAS}\)`
+
+  + a **média** populacional `\(\overline Y\)`: `\(\widehat{\overline{Y}}_{AAS} = \frac{1}{n} \sum_{i \in s} y_i = \overline y\)`
+  
+  + a **variância** populacional `\(Var_y\)`: `\(\widehat{Var}_{y, AAS} = \frac{N-1}{N} \widehat S_y^2\)`,
+  
+pois `\(\widehat S_y^2\)` é **ENV** de `\(S_y^2\)` na `\(AASs\)`.
+
+---
+
+## Amostragem aleatória simples SEM reposição 
+
+* **Variância** dos **Estimadores**
+
+  + `\(Var_{AAS}(\widehat T_{AASs}) = N^2 \left( 1 - \frac{n}{N} \right) \frac{S^2}{n} = N^2 \left( \frac{1}{n} - \frac{1}{N} \right) S^2\)`
+
+  + `\(Var_{AAS} (\overline{y}) = \left( 1 - \frac{n}{N} \right) \frac{S^2}{n} = \left( \frac{1}{n} - \frac{1}{N} \right) S^2\)`
+
+onde `\(S^2_y = \frac{1}{N-1} \sum_{i \in U} ({y_i - \overline{Y}})^2\)`, como já definido.
+
+* **ENV** da **Variância** dos **Estimadores** 
+
+  + `\(\widehat{Var}_{AAS} (\widehat T_{AAS}) = N^2 \left( 1 - \frac{n}{N} \right) \frac{\widehat S^2_y}{n} = N^2 \left( \frac{1}{n} - \frac{1}{N} \right) \widehat S^2_y\)`
+
+  + `\(\widehat{Var}_{AAS} (\overline{y}) = \left( \frac{1}{n} - \frac{1}{N} \right) \widehat S^2_y\)`
+  
+onde `\(\widehat S^2_y = \frac{1}{n-1} \sum_{i \in s} ({y_i - \overline{y}})^2\)`, como já definido.
+
+
+---
+
+## Amostragem aleatória simples SEM reposição 
+#### Considerações
+
+1. O termo `\((1 - n/N) = (1 - f)\)` é chamado de **fator de correção para população finita**. 
+
+  + Quando `\(n/N \rightarrow 1\)`, o tamanho da amostra se aproximando do tamanho da população, então `\((1 - n/N) \rightarrow 0\)`. 
+
+  + Ou seja: com amostras grandes as variâncias das estimativas tendem a ser pequenas. 
+--
+
+2. Se a fração amostral `\(f = n/N\)` for pequena (da ordem de 1% ou 2%), então a **correção de população finita** pode ser ignorada, pois `\((1 – f) \doteq 1\)`. 
+
+  + Quando `\(f \doteq 0\)`, a AASse AASc (com reposição) tem comportamento semelhante em relação à precisão das estimativas. 
+  
+  + *Intuitivamente*, sempre que `\(n\)` for muito **pequeno** em relação ao `\(N\)` a probabilidade de uma unidade `\(i\)` da população ser selecionada mais de uma vez é pequena.
+
+---
+
+## Amostragem aleatória simples SEM reposição 
+#### Distribuição da média amostral
+
+* Repetições do plano amostral `\(p(s)\)` segundo *AASs*, `\(\overline{y}\)` tem uma **distribuição de probabilidades exata**, que **depende**:
+  + da distribuição de `\(y\)` na população, 
+  + do tamanho da amostra `\(n\)` e 
+  + do plano amostral `\(p(s)\)`, que neste caso, é AASs. 
+--
+
+* Isto resulta numa situação complicada, que pode ser resolvida considerando a **Distribuição Assintótica da Média Amostral**.
+--
+
+* Se `\(n\)` for **grande** e `\(f = n/N\)` for pequena, o *Teorema Central do Limite* (Hajeck, 1960) sugere uma aproximação
+`$$\frac{ \overline {y} - E_{AAS} (\overline{y}) }{ \sqrt{Var_{AAS} (\overline{y})}} = \frac{ \overline{y} - \overline{Y} }{ \sqrt{ \left( \frac{1}{n} - \frac{1}{N} \right) S^2_y}} \approx Normal(0;1),$$`
+onde `\(Normal(0;1)\)` denota uma variável aleatória com distribuição normal padrão.
+
+.footnote[[*] Para detalhes ver  Cochran(1977), Seções 2.8 e 2.15, ou Sarndal(1992), Seção 2.11.]
+
+---
+
+## Amostragem aleatória simples SEM reposição 
+#### Distribuição da média amostral
+
+* Podemos construir **intervalos de confiança**(IC) para `\(\overline Y\)`.
+
+  + Um `\(IC\)` de nível `\((1 - \alpha)%\)` para `\(\overline Y\)` é dado por
+`$$IC_{AAS} (\overline{Y} ; 1 - \alpha) = \left [ \overline {y} \mp z_{\alpha/2} \sqrt{\widehat{Var}_{AAS}(\overline{y})} \right]$$`
+onde `\(z_{\alpha/2}\)` é o quantil `\(1-\frac \alpha 2\)`, que deixa área `\({\alpha/2}\)` à sua direita.
+--
+
+* A **semiamplitude** do `\(IC\)` fornece uma ideia da **margem de erro** que se tem ao estimar o parâmetro. 
+`$$\widehat{ME}_{AAS} (\overline{y}) = z_{\alpha/2} \sqrt{\widehat{Var}_{AAS} (\overline{y})}.$$`
+
+  + A **margem de erro** pode ser **estimada** a partir da amostra selecionada e observada. 
+  
+  + **Amostragem probabilística** fornece indicativos da **incerteza associada a estimativas**, além de estimativas pontuais.
+
+---
+
+## Resumo da notação
+
+Estimadores AASc | Estimadores AASs
+--|--
+`\(\widehat T_{AASc} = \frac {N}{n} \sum_{i \in s} y_i = N \, \overline{y}\)` | `\(\widehat{T}_{AASs} = \frac {N}{n} \sum_{i \in s} y_i= N \overline{y}\)`
+`\(\overline{y} = \frac{1}{n} \sum_{i \in s} y_i\)` | `\(\overline{y} = \frac{1}{n} \sum_{i \in s} y_i = \widehat{\overline T}_{AASs}\)`
+`\(\widehat{Var}_{AASc}(\widehat T_{AASC}) = N^2 \widehat S_y^2 / n\)` | `\(\widehat{Var}_{AASs}(\widehat T_{AASs}) = N^2 \left( \frac{1}{n} - \frac{1}{N} \right) \widehat S^2_y\)` 
+`\(\widehat{Var}_{AASc}(\overline{y}) = \widehat S_y^2 / n\)` | `\(\widehat{Var}_{AASs} (\overline{y}) = \left( \frac{1}{n} - \frac{1}{N} \right) \widehat S^2_y\)`
+em que `\(\widehat S^2_y = \frac{1}{n-1} \sum_{i\in s} ({y_i-\overline{y}})^2\)`.
+
+
+Estimadores `\(HT\)` | Variâncias dos Estimadores `\(HT\)`
+--|--
+`\(\widehat T_{HT} = \sum_{i\in s} d_i y_i = \sum_{i \in s} {y_i}/{\pi_i}\)` | `\(\widehat{Var}_{HT}(\widehat T_{HT}) =  \sum_{i\in s} \sum_{j\in s} \frac{(\pi_{ij} - \pi_i \pi_j)}{\pi_{ij}} \left( \frac{y_i}{\pi_i} \frac{y_j}{\pi_j} \right)\)`
+`\(\overline y_{HT} = \widehat T_{HT}/N = \sum_{i\in s}d_i y_i/N\)` | `\(\widehat{Var}_{HT}(\overline y_{HT}) = \widehat{Var}_{HT}(\widehat T_{HT})/{N^2}\)`
+
+---
+
+## Referências
+
+Slides baseados nos Capítulos 3 e 4 do livro
+
+* [Amostragem: Teoria e Prática Usando o R](https://amostragemcomr.github.io/livro/index.html)
+
+Citações do Capítulo
+
+* Cochran(1977)
+* Fuller(2009)
+* Hajeck(1960)
+* Horvitz(1952) 
+* Sarndal(1992)
+* Sen(1953)
+* Yates(1953)
+* Yates e Grundy (1953) 
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

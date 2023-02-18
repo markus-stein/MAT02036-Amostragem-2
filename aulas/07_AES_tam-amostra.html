@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>MAT02036 - Amostragem 2</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Markus Stein" />
+    <script src="libs/header-attrs-2.18/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, title-slide
+
+.title[
+# MAT02036 - Amostragem 2
+]
+.subtitle[
+## Aula 07 - Amostragem Estratificada - Tamanho Amostral
+]
+.author[
+### Markus Stein
+]
+.institute[
+### Departamento de Estatística, IME/UFRGS
+]
+.date[
+### 2022/2
+]
+
+---
+
+
+
+
+<div>
+<style type="text/css">.xaringan-extra-logo {
+width: 110px;
+height: 128px;
+z-index: 0;
+background-image: url(C:/Users/User/Downloads/MAT02036 - Amostragem 2/aulas/img/logo_dest.png);
+background-size: contain;
+background-repeat: no-repeat;
+position: absolute;
+top:1em;right:1em;
+}
+</style>
+<script>(function () {
+  let tries = 0
+  function addLogo () {
+    if (typeof slideshow === 'undefined') {
+      tries += 1
+      if (tries < 10) {
+        setTimeout(addLogo, 100)
+      }
+    } else {
+      document.querySelectorAll('.remark-slide-content:not(.title-slide):not(.inverse):not(.hide_logo)')
+        .forEach(function (slide) {
+          const logo = document.createElement('div')
+          logo.classList = 'xaringan-extra-logo'
+          logo.href = null
+          slide.appendChild(logo)
+        })
+    }
+  }
+  document.addEventListener('DOMContentLoaded', addLogo)
+})()</script>
+</div>
+
+### *Housekeeping*
+
+* Aproveitem o momento presencial para tirar dúvidas
+
+* Se estivéssemos no ensino remoto ou à distância
+
+  + vocês poderiam estar somente ouvindo, sem interação
+  
+  + ou assistindo vídeos e material em outro momento
+  
+* Depois das aulas, rever material da aula passada
+
+  + fazer exercícios
+  
+  + se preparar para a próxima aula
+
+---
+
+## Aula passada 💿
+**Comparação de alternativas de alocação da amostra**
+
+* Sob *alocação de Neyman*, 
+`$$V_{AESne} \left( \overline y_{AES} \right) \le V_{AESpr} \left( \overline y_{AES} \right) \le V_{AAS} \left( \overline y \right)$$`
+
+* **AES** com alocação de **Neyman** é **mais eficiente** que **AES** com alocação **proporcional**.
+
+* Ambas superam **AAS** como plano amostral para um mesmo tamanho especificado de amostra. 
+
+**Efeito do Plano Amostral/Delineamento** (*Design Effect*) de um *plano* amostral
+`$$EPA_{plano} = deff_{plano} = \frac{Var(\overline y_{plano})}{Var(\overline y_{AAS_c})}.$$`
+
+* se `\(deff_{plano} &lt; 1\)` então o **plano** é mais eficiente que a **AASc**.
+
+---
+
+## Aula passada 💾
+**Comparação de alternativas de alocação da amostra**
+
+**Outro exemplo** de hoje: 🏃
+
+Sabemos mostrar `\(EPA_{AES_{pr}} = deff_{AES_{pr}}\)` e `\(EPA_{AES_{pr}} = deff_{AES_{pr}}\)` assumindo **AASc** dentro dos estratos❓
+
+---
+
+class: inverse, middle, center
+
+# Tamanho da amostra na **AES**
+
+---
+
+## Tamanho da amostra na **AES**
+
+* Podemos determinar o **tamanho total da amostra** estratificada, a partir das expressões das variâncias dos estimadores, dado: 
+  + o tipo de **alocação**, `\(w_h = n_h / n\)`;
+  + a **variância máxima**, `\(V\)`, desejada para a estimativa do parâmetro.
+
+* Ex.: Estimação da **média populacional** sob **AASs** dentro dos estratos.
+  
+  + Substituindo `\(n_h = n \times w_h\)` na expressão da variâcia do estimador, e fixando `\(V\)` o valor máximo para sua estimativa,
+
+`$$V \ge V_{AES} \left( \overline y_{AES} \right) = \sum_{h=1}^{H} W_h^2 S_{h,y}^2 \left( \frac{1}{n_h} - \frac{1}{N_h} \right) = \frac1n\sum_{h=1}^{H} \frac {W_h^2 S_{h,y}^2}{w_h} - \frac1N\sum_{h=1}^{H}{ W_h S_{h,y}^2}.$$`
+Logo (❓)
+`$$n \ge \frac {\sum_{h=1}^{H} \frac {W_h^2 S_{h,y}^2}{w_h}}{V+\frac1N\sum_{h=1}^{H}{ W_h S_{h,y}^2}}$$`
+
+* E sob **AASc** dentro dos estratos❓
+
+---
+
+## Tamanho da amostra na **AES** - média
+### Estimação da **média populacional** sob **AASc**
+
+Supondo uma alocação `\(w_h = n_h / n\)` e **AASc** dentro dos estratos, 
+
+<svg aria-hidden="true" role="img" viewBox="0 0 256 512" style="height:1em;width:0.5em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M160 64c0-11.8-6.5-22.6-16.9-28.2s-23-5-32.9 1.6l-96 64C-.5 111.2-4.4 131 5.4 145.8s29.7 18.7 44.4 8.9L96 123.8V416H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h96 96c17.7 0 32-14.3 32-32s-14.3-32-32-32H160V64z"/></svg>. A **variância do estimador** é dada por 
+`$$V_{AES} \left( \overline y_{AES} \right) = \sum_{h=1}^{H} W_h^2 \frac{ Var_{h,y} }{n_h} = \sum_{h=1}^{H} W_h^2 \frac{ Var_{h,y} }{nw_h} = \frac{1}{n} \sum_{h=1}^{H} W_h^2 \frac{ Var_{h,y} }{w_h}.$$`
+
+<svg aria-hidden="true" role="img" viewBox="0 0 320 512" style="height:1em;width:0.62em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M142.9 96c-21.5 0-42.2 8.5-57.4 23.8L54.6 150.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L40.2 74.5C67.5 47.3 104.4 32 142.9 32C223 32 288 97 288 177.1c0 38.5-15.3 75.4-42.5 102.6L109.3 416H288c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9L200.2 234.5c15.2-15.2 23.8-35.9 23.8-57.4c0-44.8-36.3-81.1-81.1-81.1z"/></svg>. Então definindo uma **variância máxima** para a estimativa do parâmetro,
+
+`$$\begin{eqnarray} V \ge V_{AES} \left( \overline y_{AES} \right) &amp; \Leftrightarrow &amp; V \ge \frac{1}{n} \sum_{h=1}^{H} W_h^2 \frac{ Var_{h,y} }{w_h} \end{eqnarray},$$`
+
+ou seja,
+
+`$$n \ge \frac{\sum_{h=1}^{H} W_h^2 \frac{ Var_{h,y} }{w_h} }{V}.$$`
+
+---
+
+## Tamanho da amostra na **AES** - total
+### Estimação do **total populacional**
+
+* Sob **AASs** dentro dos estratos sabemos que 
+
+`$$Var_{AES} \left( \widehat T_{AES} \right) = \sum_{h=1}^{H} N_h^2 S_{h,y}^2 \left( \frac{1}{n_h} - \frac{1}{N_h} \right) = \ldots = \frac{1}{N^2} V_{AES} \left( \overline y_{AES} \right)$$`
+
+  + Fazendo `\(V_T \ge V_{AES} \left( \widehat T_{AES} \right) = \sum_{h=1}^{H} N_h^2 S_{h,y}^2 \left( \frac{1}{n_h} - \frac{1}{N_h} \right)\)`
+
+`$$n \ge \frac {\sum_{h=1}^{H} \frac{N_h^2 S_{h,y}^2}{w_h}}{V_T + \sum_{h=1}^{H}{ N_h S_{h,y}^2}}$$`
+
+* E na estimação do **total populacional** sob **AASc** dentro dos estratos❓❓❓
+
+`$$n \ge \frac{\sum_{h=1}^{H} \frac{N_h^2 Var_{h,y}}{w_h}}{V_T}$$`
+
+---
+
+class: inverse, middle, center
+
+# E a margem de erro?
+
+---
+
+## Tamanho da amostra na **AES** - e a margem de erro?
+#### Margem de erro absoluta - estimação da **média**
+
+* Podemos pensar na **variância máxima** `\(V\)` como uma **função** da **margem de erro** `\(e\)`, tal que 
+
+`$$P \left( \left| \overline y - \overline Y \right| \leq e \right) = P \left( \frac{ \left| \overline y - \overline Y \right|}{\sqrt{Var(\overline y)}} \leq \frac{e}{\sqrt{Var(\overline y)}} \right) = 1 - \alpha.$$` 
+sendo `\(\alpha\)` uma 'probabilidade pequena', ou valor de significância.
+ 
+* Usando a aproximação da distribuição de `\(\overline y\)` para a distribuição **normal**,
+
+`$$e = z_\frac{\alpha}{2} \sqrt{Var(\overline y)} \Leftrightarrow V = \frac{e^2}{z^2_\frac{\alpha}{2}},$$`
+onde `\(z_\frac{\alpha}{2}\)` é o quantil da normal padrão que deixa área `\(\alpha/2\)` à sua direita.
+
+* Quais suposições são necessárias nesse caso❓
+
+* A distância máxima assumida `\(e\)` é absoluta portando denominada **margem de erro absoluta**.
+
+---
+
+## Tamanho da amostra na **AES** - e a margem de erro?
+#### Margem de erro relativa  - estimação da **média**
+
+* Muitas vezes queremos controlar o **erro relativo** `\(r\)` na estimativa, tal que
+
+`$$P \left( \left| \frac{\overline y_{AES} - \overline Y}{\overline Y} \right| \leq r \right) = P \left( \frac{ \left| \overline y_{AES} - \overline Y \right| }{\sqrt{Var(\overline y_{AES})}} \leq \frac{r \overline Y}{\sqrt{Var(\overline y_{AES})}} \right) = 1 - \alpha.$$` 
+
+* Novamente pela aproximação de `\(\overline y\)` para a distribuição **normal**,
+
+`$$r \overline Y = z_\frac{\alpha}{2} \sqrt{Var(\overline y_{AES})} \Leftrightarrow V_T = \frac{r^2 \overline Y^2}{z^2_\frac{\alpha}{2}}.$$`
+
+* Expressões de `\(\sqrt{Var(\overline y)}\)` na **AASc** ou **AASs**...(❓)
+
+  + Pode ser útil utilizar a relação entre variâncias que já conhecemos 
+
+`$$Var(\overline y) = \frac{N-n}{n} \frac{S^2}{n} \Leftrightarrow \sqrt{Var(\overline y)} = \sqrt{\frac{N-n}{n}} \frac{S}{\sqrt{n}}$$`
+
+---
+
+## Tamanho da amostra na **AES** - e a margem de erro?
+#### Margem de erro relativa  - estimação do **total**
+
+* No caso da estimação do total o **erro relativo** `\(r\)` se refere ao total, tal que
+
+`$$P \left( \left| \frac{\widehat T_{AES} - \overline T}{\overline T} \right| \leq r \right) = P \left( \frac{ \left| N\overline y_{AES} - N\overline Y \right| }{\sqrt{Var(\overline T_{AES})}} \leq \frac{r N \overline Y}{\sqrt{Var(\overline T_{AES})}} \right) = 1 - \alpha.$$`
+  + Novamente pela aproximação de `\(\overline y\)` para a distribuição **normal**,
+
+`$$r N \overline Y = z_\frac{\alpha}{2} \sqrt{Var(\overline T_{AES})} \Leftrightarrow V = \frac{r^2 N^2 \overline Y^2}{z^2_\frac{\alpha}{2}}.$$`
+* O **tamanho da amostra** `\(n\)` é o **mesmo** na estimação da **média** e **total**,
+  + se usar erro relativo `\(r \overline Y\)` para definir `\(V\)` e usar `\(V \ge Var_{AES} (\overline y)\)`;
+  + ou com erro relativo `\(r N \overline Y\)` para definir `\(V_T\)` e usar `\(V_T \ge Var_{AES} (\widehat T)\)`.
+
+* Expressões para **AASs** e **AASc** dentro dos estratos...(❓)
+
+&lt;!-- relacao entre erro relativo e definir CV... geralmente mais facil que definir V --&gt;
+
+---
+
+## Tamanho da amostra e Alocações
+
+* Para obter a expressão para uma alocação particular basta substituir `\(w_h\)` de forma adequada. 
+
+  + Ex. no caso da **AESpr** basta substituir `\(w_h\)` por `\(W_h\)` e obter a expressão para o cálculo do tamanho da amostra. 
+  
+  + Mostrar(❓)
+
+&lt;!-- * No caso da **AESot**, para um custo fixado `\(C\)`, basta substituir o valor de `\(n_h\)`, dado pela expressão adequada, na função de custo linear. --&gt;
+
+&lt;!-- `$$n_{AESot} = \left( C - c_0 \right) \times \frac{\sum_{h=1}^{H} N_h S_{h,y} / \sqrt c_h} {\sum_{h=1}^{H} N_h S_{h,y} \sqrt c_h}$$` --&gt;
+
+* Sabemos mostrar os resultados para diferentes `\(w_h\)`❓
+
+Alocação | Uniforme | Proporcional | de Neyman (AASs)
+--|:--:|:--:|:--:
+`\(w_h\)` | `\(\frac{1}{H}\)` | `\(\frac{N_h}{N} = W_h\)` | `\(\frac{S_h N_h}{\sum_{h=1}^H S_h N_h}\)`
+
+* E no caso de **AASc** dentro dos estratos?
+
+---
+
+## Exemplo 🏃
+
+**Exemplo 7 da Apostila** da Profa Vanessa: 
+
+Suponha que os restaurantes em uma cidade foram divididos em 3 estratos, de
+acordo com a zona de localização: `\(A\)` `\((N_1 = 600)\)`, `\(B\)` `\((N_2 = 300)\)` e `\(C\)` `\((N_3 = 100)\)`. Queremos
+estimar o número médio de clientes por dia. Os valores do desvio padrão dos estratos são: 20, 30
+e 50 clientes, respectivamente. Determinar o tamanho de amostra pra estimar a média de clientes
+por dia com um erro máximo absoluto de 3 clientes e com 99,73% de confiança (isto é, `\(z\)` = 3).
+Considere que será feita uma **AASs** em cada estrato.
+
+---
+
+## Exemplo 🏋️‍♀️
+
+*Ainda não falamos sobre estimação de proporções, mas será nosso próximo tópico*
+
+**Exemplo 8 da Apostila** da Profa Vanessa:: 
+
+Seja uma população de tamanho `\(N=1000\)`, estratificada em `\(H=2\)` estratos de tamanhos
+iguais. Uma amostra piloto de tamanho `\(n_1 = 40\)` foi retirada do primeiro estrato, e outra de `\(n_2 = 60\)`
+do segundo, com **AASs** em ambos. Na primeira amostra, houve 20 sucessos, e na segunda, 40.
+Calcular o tamanho da amostra necessário para estimar a proporção com 99% de confiança e erro
+máximo absoluto de 10%.
+
+---
+
+## Para casa 🏠
+
+* Continuar os Exemplos.
+
+* Mostrar tamanho de amostra `\(n\)` para **AASc** dentro dos estratos nas alocações **AESun**, **AESpr**, **AESne**.
+
+* Fazer exercícios 11.7 e 11.10 do livro 'Amostragem: Teoria e Prática Usando R'    https://amostragemcomr.github.io/livro/estrat.html#exerc11
+
+* Fazer exercício 5 da lista 1.
+
+* Rever os slides.
+
+&lt;!-- * Ler BOlfarine e Bussab...da seção 11.3 do livro 'Amostragem: Teoria e Prática Usando R'. --&gt;
+
+
+
+## Próxima aula 📊
+
+* Amostragem Estratificada
+  + Estimação de proporções
+  + Exercícios e Intervalos de confiança
+  
+&lt;!-- * Laboratório de <svg aria-hidden="true" role="img" viewBox="0 0 581 512" style="height:1em;width:1.13em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/></svg> --&gt;
+
+---
+
+## Muito obrigado!
+
+&lt;img src="img/image_basu_elephant.jpg" width="30%" height="30%" style="display: block; margin: auto;" /&gt;
+Fonte: imagem do livro *Combined Survey Sampling Inference: Weighing of Basu's Elephants: Weighing Basu's Elephants*.
+
+
+
+---
+
+## Resumo da notação
+
+* **Tamanho da amostra** na **AES** dado um tipo de **alocação**, `\(w_h\)`, e **fixando a variância** máxima que se deseja para a estimativa do parâmetro, `\(V\)`
+
+Parâmetro | Sob AASc dentro dos estratos | Sob AASs dentro dos estratos
+--|:--:|:--:
+Média | `\(n \ge \frac{\sum_{h=1}^{H} W_h^2 \frac{ Var_{h,y} }{w_h} }{V}\)` | `\(n \ge \frac {\sum_{h=1}^{H} \frac {W_h^2 S_{h,y}^2}{w_h}}{V+\frac1N\sum_{h=1}^{H}{ W_h S_{h,y}^2}}\)`
+Total | `\(n \ge \frac{\sum_{h=1}^{H} N_h^2 \frac{ Var_{h,y} }{w_h} }{V}\)` | `\(n \ge \frac {\sum_{h=1}^{H} \frac {N_h^2 S_{h,y}^2}{w_h}}{V +  \sum_{h=1}^{H}{ N_h S_{h,y}^2}}\)`
+
+* **Margem de erro** para o estimador `\(\widehat \theta\)` (approx. normal para dist. de `\(\widehat \theta\)`)
+
+  + **Absoluta**: `\(e = z_\frac{\alpha}{2} \sqrt{ Var(\widehat \theta)} \Leftrightarrow V = \frac{e^2}{z^2_\frac{\alpha}{2}}\)`
+
+  + **Relativa**: `\(r \overline Y = z_\frac{\alpha}{2} \sqrt{Var(\widehat \theta)} \Leftrightarrow V = \frac{r^2 \overline Y^2}{z^2_\frac{\alpha}{2}}\)`
+
+* Pode ser útil utilizar a relação entre variâncias que já conhecemos `\(Var(\overline y) = \frac{N-n}{n} \frac{S^2}{n} \Leftrightarrow \sqrt{Var(\overline y)} = \sqrt{\frac{N-n}{n}} \frac{S}{\sqrt{n}}\)`
+
+---
+
+## Resumo da notação
+
+* Tamanho mínimo de amostra para **estimação da média** populacional
+
+.center[
+Alocação | **AASc** dentro dos estratos | **AASs** dentro dos estratos
+--|:--:|:--:
+`\(AES_{un}\)` | `\(n \ge \frac{ H \sum_{h=1}^{H} W_h^2 Var_{h,y} }{V}\)` | `\(n \ge \frac{ H \sum_{h=1}^{H} W_h^2 S^2_h }{V + \frac{1}{N} \sum_{h=1}^{H} W_h S^2_h}\)`
+`\(AES_{pr}\)` | `\(n \ge \frac{ \sum_{h=1}^{H} W_h Var_{h,y} }{V}\)` | `\(n \ge \frac{ \sum_{h=1}^{H} W_h S^2_h }{V + \frac{1}{N} \sum_{h=1}^{H} W_h S^2_h}\)`
+`\(AES_{ne}\)` | `\(n \ge \frac{ \left( \sum_{h=1}^{H} W_h DP_{h,y} \right)^2 }{V}\)` | `\(n \ge \frac{ \left( \sum_{h=1}^{H} W_h S_{h,y} \right)^2 }{V + \frac{1}{N} \sum_{h=1}^{H} W_h S^2_h}\)`
+`\(AES_{ot}\)` | `\(n \ge \frac{ \left( \sum_{h=1}^{H} W_h DP_{h,y} \sqrt{C_h} \right)\left( \sum_{h=1}^{H} W_h DP_{h,y} / \sqrt{C_h} \right) }{V}\)` | `\(n \ge \frac{  \left( \sum_{h=1}^{H} W_h S_{h,y} \sqrt{C_h} \right)\left( \sum_{h=1}^{H} W_h S_{h,y} / \sqrt{C_h} \right) }{V + \frac{1}{N} \sum_{h=1}^{H} W_h S^2_h}\)`
+]
+
+---
+
+## Referências
+
+Slides baseados no Capítulo 11 do livro
+
+* [Amostragem: Teoria e Prática Usando o R](https://amostragemcomr.github.io/livro/index.html)
+
+Citações do Capítulo
+
+* Neyman(1934)
+* Cochran(1977)
+
+
+&lt;!-- * refazer calculos para amostagem aleatoria simples com reposicao --&gt;
+&lt;!-- * alocacao... ou lab R comparando alocação proporcional e igual tamanho --&gt;
+
+&lt;!-- listas de exercicios... --&gt;
+&lt;!-- dois aspectos da disciplina... ter flexibilidade com teoria... exercitar os conceitos com exercicios teoricos e praticos --&gt;
+
+&lt;!-- falar dos pesos na AES --&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

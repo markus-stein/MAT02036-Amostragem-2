@@ -1,0 +1,433 @@
+---
+title: "MAT02036 - Amostragem 2"
+subtitle: "Aula 00 - Apresentações"
+type: "lecture"
+author: "Markus Stein"
+institute: "Departamento de Estatística, IME/UFRGS"
+date: "2022/2"
+output:
+  xaringan::moon_reader:
+    # css: ["assets/remark.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      titleSlideClass: [center, middle]
+---
+
+class: inverse, middle, center
+
+```{r libs, echo=FALSE, message=FALSE, warning=FALSE}
+library(xaringanExtra)
+library(emo)
+library(fontawesome)
+```
+
+
+```{r xaringan-logo, echo=FALSE}
+# install.packages("remotes")
+# remotes::install_github('yihui/xaringan')
+# remotes::install_github("gadenbuie/xaringanExtra")
+# xaringanExtra::use_logo(
+#   image_url = "https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/xaringan.png"
+# )
+use_logo( here::here('img/logo_dest.png'))
+```
+
+# Apresentações
+
+---
+
+
+## O professor esse semestre
+* Eu! 
+
+.center[
+<iframe src="https://giphy.com/embed/3owzWkGtQ3us1pV0qc" width="480" height="206" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/starwars-movie-star-wars-3owzWkGtQ3us1pV0qc">via GIPHY</a></p>
+]
+
+---
+
+## O professor esse semestre
+### Minha experiência com Estatística `r emo::ji("professor")` 
+
+* Graduação em Estatística em **2006** aqui no DEst, título da monografia *Estudos de Correlação Ecológica - Uma aplicação a dados de saúde em Porto Alegre.*;
+
+* Mestrado em Estatística na **UFMG** com conclusão em **2008**: dissertação intitulada _Testes da Razão de Verossimilhanças em Modelos Lineares Mistos_.
+
+* Ingressei na **UFPEL** em **2009** como Professor Assistente no **Departamento de Matemática e Estatística**.
+
+* Em novembro de **2010** voltei para o **DEst**, onde estou como docente desde então.
+
+---
+
+## O professor nesse semestre
+### Minha experiência com Estatística `r emo::ji("professor")[1]`
+
+* Em **2013** fui contemplado com bolsa de estudos e cursei o Doutorado em Estatística da __Universidade de Auckland__, Nova Zelândia; porém não concluí a tese, intitulada provisóriamente *Combining aggregate and individual level data in contingency tables*.
+
+* Continuarei minha formação de Doutorado em **2023** no **Programa de Pós-Graduação em Epidemiologia** da UFRGS.
+
+* Meus interesses de pesquisa são: **inferência paramétrica**; **teoria de verossimilhança e aproximações**, **melhoramentos de testes de hipóteses**, **equações de estimação ponderadas e amostragem complexa**.
+
+* Em estatística aplicada: **modelos mistos**, **dados (correlacionados) de área e/ou longitudinais**.  `r emo::ji("stats")`
+
+---
+
+## E sobre vocês? `r emo::ji("student")[1]`
+### Sugestões
+
+* Qual o seu nome?  
+
+* Etapa do curso?
+
+* Quantas/quais disciplinas nesse semestre?  
+
+* O que é estatística/amostragem/inferência?  
+
+* O que espera da disciplina?
+
+* Possui alguma experiência profisional na área?
+
+* Qual sua cidade?
+
+---
+
+## A disciplina
+### Objetivos `r emo::ji("target")`
+
+* Estender o conhecimento de técnicas de __obtenção de dados__ primários e métodos de **inferência** sobre características populacionais baseados em **amostragens complexas**. 
+
+* Estudar outros delineamentos: __Amostragem Estratificada__; **Amostragem por Conglomerados**; e **extensões**, vantagens e desvantagens em relação à AAS com e sem Reposição. 
+
+---
+
+## A disciplina
+### Organização `r emo::ji("professor")`
+
+- __Disciplina:__ Amostragem 2
+- __Turma:__ U
+
+- __Modalidade:__ Ensino presencial
+- __Professor:__ Markus Chagas Stein
+    + e-mail: `markus.stein@ufrgs.br` 
+    + Sala: B120 do IME
+
+---
+
+## A disciplina
+### Aulas e material didático `r emo::ji("notebook")`
+
+- __Aulas__ (teóricas e práticas)
+    + Exposição e __discussão__ dos conteúdos
+        - __Leituras semanais de artigos e capítulos de livros__
+    + Exemplos
+- __Notas de aula__
+    + Slides
+    + Arquivos de rotinas em `R`
+- __Exercícios__
+    + Listas de exercícios
+
+---
+
+## A disciplina
+### Aulas e material didático `r emo::ji("notebook")`
+
+- __Canais de comunicação:__
+    + Durante as aulas
+    + Moodle: aulas, materiais e __fórum geral__
+    + e-mail do professor
+
+* **Aulas**: terças e quintas, das 8hs 30min às 10hs 10min, na Sala F115 do Instituto de Química - Campus do Vale
+    + _8hs 30min:_ chegada
+    + _8hs 40min:_ início `r emo::ji("clock")`
+    + _10hs:_ fim/dúvidas
+    + _10hs 10min:_ saída
+
+* **Covid** e recomendaçoes.
+
+---
+
+## A disciplina
+### Tecnologias e Linguagem
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='55%', paged.print=FALSE}
+knitr::include_graphics('https://media.giphy.com/media/CEYYQNKO2HDoc/giphy.gif')
+```
+*Fonte: [ghipy.com](https://giphy.com/)*
+
+
+* Exemplos e exercícios com o apoio do computador:
+    + `r fa("r-project", fill = "steelblue")` e `RStudio`
+
+---
+
+## A disciplina
+### Tecnologias e Linguagem
+* `GitHub`, `.Rproj` e `.Rmd`.
+	+ revisão(?)
+
+
+### Porque usar `r fa("r-project", fill = "steelblue")`?
+* Aprendemos `r fa("r-project", fill = "steelblue")` para análises estatística, mas `r fa("r-project", fill = "steelblue")` é uma linguagem de programação (geral).
+
+* Ao contrário de linguagens específicas, como `SQL` para manipulação de bases de dados.
+
+* `r fa("r-project", fill = "steelblue")` foi criado na **Universidade de Auckland** em 1993,
+  + continua sendo uma das linguagens mais utilizadas porque sua comunidade cresce e desenvolve milhares de pacotes e produtos.
+
+* CRAN
+
+---
+
+## A disciplina
+### Conteúdo programático `r emo::ji("document")`
+
+* __Área 1__ - *Amostragem Estratificada*
+    + Características. Decomposição da variância total. Parâmetros. Composição dos estratos. Critérios de repartição da amostra. Estimadores. Erro padrão dos estimadores. Eficiência das repartições. Dimensionamento de amostras.
+
+* __Área 2__ - *Amostragem por conglomerados*
+    + Características, as variâncias dentro e entre congloerados, comparação com estratos. Amostragem por conglomerados com etapa única, em duas etapas com sub-amostras de tamanhos iguais e tamanhos variáveis. Estimadores e tamanhos de amostras.
+
+* __Área 3__
+    + Amostragem sistemática, seleção de amostras 
+    + Amostragem com probabilidades variáveis
+    + Planos amostrais complexos
+
+---
+    
+## A disciplina
+### Avaliação `r emo::ji("bomb")`
+
+- Serão realizadas quatro atividades de avaliação (pelo menos uma em de cada área):
+    + três provas ($P_1$, $P_2$ e $P_3$) presenciais e individuais;
+    + um trabalho em grupo ($T_1$).
+- Cada atividade de avaliação vale 10 pontos
+- Será realizado uma prova presencial e individual como atividade de recuperação ($PR$)
+    + Para os alunos que não atingirem o conceito mínimo
+    + __Esta prova abrange todo o conteúdo da disciplina__
+
+---
+
+## A disciplina
+### Avaliação `r emo::ji("mark")`
+
+$$
+MF = \frac{P_1 + P_2 + P_3 + T_1}{4}
+$$
+
++ __A:__ $9 \leq MF \leq 10$
++ __B:__ $7,5 \leq MF < 9$
++ __C:__ $6 \leq MF < 7,5$
++ __D:__ $MF < 6$
++ __FF:__ se o aluno tiver frequência inferior a 75% da carga horária prevista no plano da disciplina
+
+---
+
+## A disciplina
+### Avaliação `r emo::ji("bomb")`
+
++ Se $MF < 6$ e frequência mínima de 75% o aluno poderá realizar a prova de recuperação e neste caso
+
+$$
+MF' = MF \times 0,4 + PR \times 0,6
+$$
+
+- __C:__ $MF' \geq 6$
+- __D:__ $MF' < 6$
+
+---
+
+## A disciplina
+### Datas das avaliações `r emo::ji("calendar")`
+
+* $P1$: 22/12/2022
+* $P2$: 02/03/2023
+* $P3$: 11/04/2023
+* $T1$: a definir 
+* $PR$: 18/04/2023
+
+### Tempo (esperado) de dedicação `r emo::ji("time")`
+* aulas presenciais - **4h semanais**
+* listas de exercícios, laboratórios e revisão - **6h semanais**
+
+---
+
+## A disciplina
+### Referências bibliográficas `r emo::ji("book")[1]`
+
+```{r echo=FALSE, fig.align='right', message=FALSE, warning=FALSE, out.width='15%', paged.print=FALSE}
+# knitr::include_graphics(here('images','ctanlion.png'))
+```
+
+* Principais
+    + Bolfarine, H. e Bussab, W. O. __Elementos de amostragem__, Blucher, 2005. (*sabi+*)
+    + Cochran, W. G. __Técnicas de Amostragem__, Fundo de Cultura, 1965.
+
+* Complementares
+    + Leotti, V. B. __Amostragem 2__, Notas de aula, 2019.
+    + Silva, P. L. N. e Dias, A. J. R. __Amostragem: teoria e prática usando o R__, 2021. (*github*)
+    + Djalma Pessoa e Pedro Nascimento Silva, **Análise de Dados Amostrais Complexos** (*github*)
+    + Lumley, T. **Complex Surveys: a guide to analysis using R**, 2010. (https://r-survey.r-forge.r-project.org/svybook/)
+
+---
+
+class: inverse, middle, center
+
+# Dúvidas, sugestões, críticas, ...? `r emo::ji("question")[1]`
+
+---
+
+class: inverse, middle, center
+
+# O que é amostragem?
+
+---
+
+## De modo geral
+* teoria de **amostragem** = **planejamento** + **obtenção** + **análise**  
+de dados amostrais obtidos de populações finitas.
+
+*Em amostragem 2 estudamos diferentes formas de obtenção de dados e (des)vantajem em relação à AAS.*
+
+* **Model** *versus* **design** *approach*
+  + *verossimilhança* $\times$ *equação de estimação ponderada*?
+  + v.a.: $Y_i \sim f(y,\theta)$ ou $R_i \in \left\{ 0, 1\right\}$(?).
+
+---
+
+## O que é Amostragem 2?
+* Análise de dados de amostras dependentes (possivelmente) com probabilidades desiguais de seleção.
+
+* Na prática pesquisas utilizam a combinação de
+	+ AAS (ou sistemática)
+	+ estratos
+	+ *clusters*
+
+* Aspectos computacionais
+	+ tradicionalmente livros de amostragem focam nas diferentes configurações
+	+ computacionalmente é mais eficiente implementar o caso geral (de equações de estimação ponderadas)
+
+---
+
+## Na prática
+* Exemplos de Pesquisas no Brasil
+  + PNS do IBGE - 
+  + PED do DEE? FEEE? - https://arquivofee.rs.gov.br/publicacoes/ped-rmpa/
+  + POF - 
+  + PNAD - 
+
+---
+
+## Institutos/Organizações
+* No Brasil
+  + ENCE/IBGE - 
+  + DEE/RS - FEEE???
+
+* Exterior
+  + StatsNZ - Nova Zelândia
+  + Statscan - Canadá
+
+* IASS/ISI - http://isi-iass.org/home/
+
+---
+
+## Na prática
+* *Epicovid* 
+  + EPIDEMIOLOGIA DA COVID-19 NO RIO GRANDE DO SUL: Estudo de base populacional - https://wp.ufpel.edu.br/covid19/files/2020/09/Coletiva-RS-Fase-8-20200908_v2.pdf
+  + *Estimando a prevalência de covid19 no RS* - https://github.com/markus-stein/MCML-notes/blob/master/covid-prevalence_RS/prevalencia_covid19_RS2.pdf
+
+* Artigo caso-controle e Covid no RS
+  + *Social Distancing, Mask Use and the Transmission of SARS-CoV-2: A Population-Based Case-Control Study* - https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3731445
+  + https://github.com/markus-stein/MCML-notes/blob/master/case-control_mask-use_and-covid/case-control_mask-use-and-covid.txt
+
+* Tenho também alguma experiência em análise de dados caso-controle em epidemiologia veterinária.
+
+---
+
+## Viéses em amostragem
+Definição de viés:  
+
+* Dicionário Priberam - https://dicionario.priberam.org/vi%C3%A9s
+* Cambridge dictionary - https://dictionary.cambridge.org/dictionary/english/bias
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='50%', out.height='50%', paged.print=FALSE}
+knitr::include_graphics(here::here('img', 'bias-marketing-survey.png'))
+```
+Fonte: https://www.adweek.com/agencies/6-ways-you-might-be-unintentionally-introducing-bias-into-your-marketing-surveys/
+
+---
+
+## Viéses em pesquisas
+### **Nonresponse - Interviewer bias**
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='50%', out.height='50%', paged.print=FALSE}
+knitr::include_graphics(here::here('img', 'halloween-pollster.jpg'))
+```
+Fonte: https://blog.cruxresearch.com/2013/08/27/the-top-5-errors-and-biases-in-survey-research/
+
+---
+
+## Viéses em pesquisas
+### **Response bias**
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='70%', out.height='70%', paged.print=FALSE}
+knitr::include_graphics(here::here('img', 'response_bias.png'))
+```
+Fonte: https://www.zef.fi/blog/response-bias-its-cramping-your-survey-style
+
+---
+
+## Viéses em pesquisas
+### **Questionnaire bias**
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='40%', out.height='40%', paged.print=FALSE}
+knitr::include_graphics(here::here('img', 'questionnaire_bias.jpg'))
+```
+Fonte: https://news.nnlm.gov/nec/2017/03/06/the-dark-side-of-questionnaires-how-to-identify-questionnaire-bias/ -->
+
+---
+
+class: inverse, middle, center
+
+# Por fim
+
+---
+
+## Coisas que acredito...
+* (duas) disciplinas que diferenciam nosso curriculo (da Estatística em relação a outras graduações em **ciência de dados**) são o estudo de planejamento e análise de 
+	+ experimentos 
+	+ (amostragens complexas)
+
+* porque?
+	+ estimular o pensamento critico sobre a obtencao dos dados
+	+ desenvolver analises e conclusoes rigorosamente seguindo a teoria
+	+ flexibilidade para trabalhar em novos delineamentos/amostragens
+
+---
+
+## Próxima aula
+
+Revisão de conceitos básicos da teoria de:
+
+* probabilidade,
+  + definições,
+  + variáveis aleatórias;
+
+* inferência,
+  + estimação (pontual e intervalar),
+  + teste de hipóteses;
+  	
+* __amostragem (1) aleatória simples (AAS)__,
+  + parâmetros e estimadores,
+  + AAS com e sem reposição
+  + estimacao dos parametros e das variancias dos estimadores, viés,
+  + resultados assintóticos, tcl, 
+  + ICs e THs.
+
+---
+
+## Sejam bem-vinda(o)s!
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='30%', out.height='30%', paged.print=FALSE}
+knitr::include_graphics(here::here('img', 'image_basu_elephant.jpg'))
+```
+Fonte: imagem do livro *Combined Survey Sampling Inference: Weighing of Basu's Elephants: Weighing Basu's Elephants*.

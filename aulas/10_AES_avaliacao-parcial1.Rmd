@@ -1,0 +1,944 @@
+---
+title: "MAT02036 - Amostragem 2"
+subtitle: "Aula 10 - Amostragem Estratificada - Avaliação Parcial 1" 
+author: "Markus Stein"
+institute: "Departamento de Estatística, IME/UFRGS"
+date: "2022/2"
+type: "lecture"
+# fontsize: 10pt
+output:
+  xaringan::moon_reader:
+    # css: ["assets/remark.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      titleSlideClass: [center, middle]
+---
+
+```{r libs, echo=FALSE, message=FALSE, warning=FALSE}
+library(xaringanExtra)
+library(emo)
+library(fontawesome)
+library(kableExtra)
+```
+
+```{r xaringan-logo, echo=FALSE}
+# install.packages("remotes")
+# remotes::install_github('yihui/xaringan')
+# remotes::install_github("gadenbuie/xaringanExtra")
+# xaringanExtra::use_logo(
+#   image_url = "https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/xaringan.png"
+# )
+xaringanExtra::use_logo( here::here('img/logo_dest.png'))
+```
+
+### *Housekeeping*
+
+* A avaliação é composta por **cinco** exercícios. `r emo::ji("workout")`
+
+  + Pode ser feito **à mão** ou **em códigos**, de qualquer forma serão **postados no moodle**.
+  
+  + Indicar **notações** e **fórmulas** utilizadas.
+  
+  + Mostrar **desenvolvimento**, **interpretação** e **conclusão**.
+
+* Discutam as resoluções com os colegas, mas a **entrega** é **individual**.
+
+  + colaboração é importante, mas cópia é proibido.
+
+**Extra: (1.0 ponto)** para quem entregou o exercício da aula 08.
+
+.center[
+### Boa Avaliação!
+]
+
+---
+
+class: inverse, middle, center
+
+# Avaliação Parcial 1
+
+---
+
+##  Exercício 1 `r emo::ji("workout")`
+#### (2,0 pontos) Revisar exercícios 1 e 2 com resolução nos slides 'Aula 08'.
+
+* Quem já entregou, conferir seus resultados com a resolução atualizada nos slides da `Aula 08`.
+
+  + Alguma discordância com a resolução?
+
+* Quem fez parcialmente e/ou não entregou, ...
+
+---
+
+##  Exercício 2 `r emo::ji("workout")`
+#### (2,0 pontos) Exercício 3 dos slides 'Aula 08' modificado.
+
+  a. Conferir cálculos da letra (a) do exercício original nos slides da `Aula 08`.
+  
+  b. A alocação apresenta $n_h > N_h$? Se sim, como realocar?
+  
+  c. Apresente uma estimativa do faturamento total $T_y$ por ponto e por intervalo, de acordo com o realocamento em (b). Interprete.
+
+*(bônus)*: No item (a), mostrar que tamanho da amostra para média é equivalente ao tamanho para o total, usando $V$ e a fórmula de $n$ adequados para cada caso.
+
+---
+
+##  Exercício 3 `r emo::ji("workout")`
+#### (2,0 pontos) Banco de dados `Lucy`. (arquivo `Aula_AE_xxx.R`)
+
+Assuma que o banco de dados `Lucy` represente uma população.
+
+  a. Apresente o tamanho na população por estrato, os parâmetros média e variância populacionais da variável `Income`, por estrato e globias, usando `Zone` como variável estratificadora. Repita para a variável `Level` como estratificadora.
+  
+  b. Supondo **AASc** de 30 empresas em cada estrato, calcule a variância do estimador da média de `Income`, comparando o desempenho de `Zone` e `Level` como variáveis estratificadoras.
+
+  c. Qual a melhor variável para estratificação? Justifique, por exemplo, calculando efeito de planejamento $EPA$ $(deff)$ em cada caso.
+  
+  d. Selecione uma amostra com a alocação definida no item (b) e obtenha uma estimativa pontual e intervalar para a média de `Income`. Interprete.
+
+*(bônus)*: Adicionar comandos para obtet total de `Income`.
+  
+*(bônus 2)*: Adicionar comandos para obter proporção de `SPAM`.
+
+---
+
+##  Exercício 4 `r emo::ji("workout")` - *Assuma* **AASc** *dentro dos estratos*
+
+#### (2,0 pontos) Exercício 4.4 (elementos de amostragem)
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='90%', out.height='90%', paged.print=FALSE}
+knitr::include_graphics(here::here('img', 'exerc_4-4_elementos-de-amostragem.png'))
+```
+
+---
+
+##  Exercício 5 `r emo::ji("workout")` - *Assuma* **AASc** *dentro dos estratos*
+
+####(2.0 pontos) Exercício 4.20 (elementos de amostragem)
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='90%', out.height='90%', paged.print=FALSE}
+knitr::include_graphics(here::here('img', 'exerc_4-20_elementos-de-amostragem.png'))
+```
+
+---
+
+## Para casa `r emo::ji("house")`
+
+* Continuar os Exercícios e Entregar.
+
+<!-- * Mostrar tamanho de amostra $n$ para AASc dentro dos estratos. -->
+
+<!-- * Continuar exercícios do livro 'Amostragem: Teoria e Prática Usando R'    https://amostragemcomr.github.io/livro/estrat.html#exerc11 -->
+
+<!-- * Fazer exercícios da lista 1. -->
+
+<!-- * Rever os slides. -->
+
+<!-- * Ler BOlfarine e Bussab...da seção 11.3 do livro 'Amostragem: Teoria e Prática Usando R'. -->
+
+## Próxima aula `r emo::ji("stats")`
+
+* Acompanhar o material no moodle.
+
+<!-- Amostragem Estratificada -->
+
+<!--   + Avaliação -->
+
+  <!-- + Exercícios e Intervalos de confiança -->
+  
+  <!-- + Laboratório de `r fa("r-project", fill = "steelblue")` -->
+
+---
+
+## Boas Festas! `r emo::ji("santa")`
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='20%', out.height='20%', paged.print=FALSE}
+knitr::include_graphics(here::here('img', 'image_basu_elephant.jpg'))
+```
+.center[
+#### Fonte: imagem do livro *Combined Survey Sampling Inference: Weighing of Basu's Elephants*.
+]
+
+
+---
+
+## Referências
+
+<!-- Slides baseados no Capítulo 11 do livro -->
+
+* [Amostragem: Teoria e Prática Usando o R](https://amostragemcomr.github.io/livro/index.html)
+
+* **Elementos de Amostragem**, Bolfarine e Bussab.
+
+<!-- Citações do Capítulo -->
+
+<!-- * Neyman(1934) -->
+
+* Cochran(1977)
+
+
+<!-- * refazer calculos para amostagem aleatoria simples com reposicao -->
+<!-- * alocacao... ou lab R comparando alocação proporcional e igual tamanho -->
+
+<!-- listas de exercicios... -->
+<!-- dois aspectos da disciplina... ter flexibilidade com teoria... exercitar os conceitos com exercicios teoricos e praticos -->
+
+<!-- falar dos pesos na AES -->
+
+<!-- valor z_alpha/2 significa z ou t -->
+
+<!-- quem tiver interesse em conferir as fórmulas... mostra as conttas, gosta dessa pparte...posso contabilizar ponto extra... tem q ser o primeira... -->
+<!-- o mesmo pode valer para os códigos e texto... -->
+<!-- fazer o formulário -->
+<!-- resumo de formulas -->
+
+---
+
+class: inverse, middle, center
+
+# Solução: 
+
+---
+
+##  Exercício 1
+#### (2,0 pontos) Revisar exercícios 1 e 2 com resolução nos slides 'Aula 08'.
+
+Exercício 4.1 (Elementos de Amostragem), Itens (c) e (d).
+
+```{r}
+## dados do problema - Exercício 4.1 (Elementos de Amostragem)
+H <- 5                                    # no. de estratos
+h <- 1:H                                  # indice dos estratos
+Nh <- c( 117, 98, 74, 41, 45)             # tamanho dos estratos
+Ybarrah <- c( 7.3, 6.9, 11.2, 9.1, 9.6)   # media pop. dos estratos
+S2h <- c( 1.31, 2.03, 1.13, 1.96, 1.74)   # variancia do estrato 
+N <- sum(Nh)                              # tamanho da populacao
+n <- 80                                   # tamanho de amostra
+```
+
+```{r, echo=FALSE}
+## a.
+## media populacional
+Ybarra <- sum( Nh * Ybarrah) / N       # media pop global
+Ybarra
+## variancia populacional Var_y
+Vary_aux1 <- sum((Nh - 1) * S2h) / N                 # primeiro termo
+Vary_aux2 <- ( sum( Nh * Ybarrah^2) / N) - Ybarra^2  # segundo termo
+Vary <- Vary_aux1 + Vary_aux2                        # variancia pop global
+Vary
+
+## b.
+## alocacao proporcional
+nhpr <- n * Nh / N                          # vetor de nh's na proporcional
+nhpr
+## alocancao de neyman SEM reposicao dentro dos estratos
+Sh <- sqrt(S2h)                             # desvios SHy dos estratos Var_h,y, sob AASs dentro
+nhneAESs <- n * (Nh * Sh) / (sum(Nh * Sh))  # vetor de nh's na de Neyman, sob AASs dentro
+nhneAESs
+## alocacao de neyman COM reposicao dentro dos estratos
+Varh <- (Nh - 1) * S2h / Nh                 # variancias dos estratos Var_h,y, sob AASc dentro
+DPh <- sqrt(Varh)                           # desvios padroes dos estratos DP_h,y, sob AASc dentro
+nhneAESc <- n * (Nh * DPh) / (sum(Nh * DPh))# vetor de nh's na de Neyman, sob AASc dentro
+nhneAESc
+## pequena diferença entre AESne SEM e COM reposicao!!! neyman alocando mais em estratos com mais variabilidade
+```
+
+---
+
+##  Exercício 1
+
+```{r}
+## c.
+## na AASc
+Varybarra <- Vary / n              # variancia de ybarra sob AASc
+Varybarra
+## AESne sob AAS SEM reposicao dentro dos estratos
+Wh <- Nh / N
+VarybarraAESnes <- sum( Wh * Sh)^2 / n - sum( Wh * S2h) / N
+VarybarraAESnes
+## AESne sob AAS COM reposicao dentro dos estratos
+VarybarraAESnec <- sum( Wh * DPh)^2 / n
+VarybarraAESnec
+## variancias reduzem com alocacao de neyman, vantagem sob ASSs dentro
+```
+
+---
+
+##  Exercício 1
+(c) Sabemos que na **AASc** (ignorando os estratos) a **variância** do **estimador** da **média** é dada por
+$$Var_{AASc} (\overline y) = \frac{Var_y}{n} = \frac{`r Vary`}{`r n`} = `r round( Varybarra, 4)`.$$
+
+* Já na **AESne** considerando **AASs** dentro dos estratos sabemos que
+$$Var_{AES_{ne}} \left( \overline y_{AES} \right) = \frac{1}{n} \left( \sum_{h=1}^{H} W_h S_h \right)^2 - \frac{1}{N} \left( \sum_{h=1}^{H} W_h S_h^2 \right)^2 = \frac{\overline{S}^2}{n} - \frac{\overline{S^2}}{N}.$$
+
+* E na **AESne** considerando **AASc** dentro dos estratos
+$$Var_{AES_{ne}} \left( \overline y_{AES} \right) = \frac{1}{n} \left( \sum_{h=1}^{H} W_h \sqrt{Var_h} \right)^2 = \frac{\overline{DP}^2}{n}.$$
+
+As Variâncias nas estratégias de alocação de Neyman são consideravelmente menores. A variância do estimador da média no plano **AASc** ignorando os estratos é cerca de 3,5 vezez a variância assumindo **AESne** sob **AASs**. Se **AASc** dentros dos estratos, esse número cai para 2,8. 
+
+---
+
+##  Exercício 1
+
+```{r}
+## d.
+## na AESpr sob AAS SEM reposicao dentro dos estratos
+VarybarraAESprs <- sum(Wh * S2h) * ((1/n) - (1/N))  
+VarybarraAESprs
+## na AESpr sob AAS COM reposicao dentro dos estratos
+VarybarraAESprc <- sum(Wh * Varh) / n
+VarybarraAESprc
+## variancias um pouco maiores que na alocacao ne neyman, novamente vantagem sob AASs dentro
+```
+
+---
+
+##  Exercício 1
+
+(d) 
+
+* Para a variância na **AESpr** considerando **AASs** dentro dos estratos sabemos que
+
+$$Var \left( \overline y_{AES_{pr}} \right) = \left( \frac{1}{n} - \frac{1}{N} \right) \sum_{h=1}^{H} W_h S_h^2$$
+
+* E para a variância na **AESpr** considerando **AASc** dentro dos estratos
+
+$$Var \left( \overline y_{AES_{pr}} \right) = \frac{1}{n} \sum_{h=1}^{H} W_h Var_h$$ 
+
+Usando alocação proporcional, a redução nas variâncias é muito similar a da alocação de Neyman, com uma pequena vantagem para a última.  
+
+---
+
+##  Exercício 1
+
+Ex. 11.10 (Amostragem: Teoria e Prática Usando o R)
+
+```{r}
+## dados do problema - Exercício 11.10 (Amostragem: Teoria e Prática Usando o R)
+H <- 3                        # no. de estratos
+h <- 1:H                      # indice dos estratos
+Nh <- c( 112, 68, 39)         # tamanho dos estratos
+S2h <- c( 2.25, 3.24, 3.24)   # variancia do estrato 
+Ch <- c( 9, 25, 36)           # custo de amostragem no estrato
+N <- sum(Nh)                  # tamanho da populacao
+V <- 0.1                      # variancia maxima
+
+## calculo de n
+Wh <- Nh / N        # peso do estrato h na pop. 
+Sh <- sqrt(S2h)     # variancia do estrato h
+raizCh <- sqrt(Ch)  # raiz quadrada do custo no estrato h
+num_part1 <- sum( Wh * Sh * raizCh)
+num_part2 <- sum( Wh * Sh / raizCh)
+denom <- V + sum( Wh * S2h) / N
+n <- num_part1 * num_part2 / denom # tamanho da amostra sob AESot e AASs dentro
+# n     # arredondar para cima, ceiling(n)
+```
+
+---
+
+##  Exercício 1
+
+* Para calcular o tamanho total da amostra $n$, sob alocação ótima (*uma vez que o custo de observação das unidades difere de estrato para estrato*),  
+
+  + assumindo **AASs** dentro dos estratos,   
+  
+  + e definindo a variância da estimativa da média populacional tal que não ultrapasse $V = 0,1$
+
+$$\begin{eqnarray} Var_{AES_{ot}} (\overline y_{AES}) \le 0,1 & \Leftrightarrow & \frac{  \left( \sum_{h=1}^{H} W_h S_{h,y} \sqrt{C_h} \right)\left( \sum_{h=1}^{H} W_h S_{h,y} / \sqrt{C_h} \right) }{0,1 + \frac{1}{N} \sum_{h=1}^{H} W_h S^2_h} \le n \\
+& \Leftrightarrow &  \frac{`r num_part1` \times `r num_part2`}{`r denom`} \le n \\
+& \Leftrightarrow &  `r num_part1 * num_part2 / denom` \le n. \end{eqnarray}$$
+
+* Arredondaremos $n$ para o número inteiro maior e mais próximo, então precisamos de no mínimo $n = `r ceiling(n)`$ observações para garantir que a variância do estimador da média não ultrapasse $V = 0,1$.
+
+---
+
+##  Exercício 1
+
+```{r}
+n <- ceiling(n)
+nh <- n * (Wh * Sh / raizCh) / sum( Wh * Sh / raizCh) # tamanho da amostra no estrato h
+```
+
+* A alocação apropriada para essa amostra, assumindo **AESot** e **AASs** dentro dos estratos, 
+
+$$n_h = n \times \frac{N_h S_{h,y}}{\sum_{k=1}^{H} N_k S_{k,y}} = (`r paste0( round( nh, 4), collapse=", ")`).$$
+
+*Sob alocacao ótima arredondar para o inteiro mais próximo nos estratos com menor custo, maior variabilidade, maior tamanho?*
+
+.pull-left[
+```{r}
+## arredondando todos para mais
+ceiling(nh); sum( ceiling(nh))
+```
+]
+.pull-right[
+```{r}
+## arredondando inteiro mais proximo
+round( nh); sum(round( nh))
+```
+]
+
+---
+
+##  Exercício 2
+#### (2,0 pontos) Exercício 3 dos slides 'Aula 08' modificado.
+
+```{r echo=FALSE}
+## dados do problema - Exercício 11.7 (Amostragem: Teoria e Prática Usando o R)
+H <- 6                        # no. de estratos
+h <- 1:H                      # indice dos estratos
+Nh <- c( 1100, 500, 250, 130, 120, 20)  # tamanho dos estratos
+Thx <- c( 9020, 13500, 17750, 17329, 36600, 14280)
+S2hx <- c( 8.30, 102.08, 207.00, 840.10, 7500.00, 20805.00)   # variancia de x nos estratos 
+ybarrah <- c( 3, 17, 52, 170, 350, 7000)                      # media amostral de y nos estratos
+s2hy <- c(2.53, 66.59, 411.28, 1953.64, 16770.25, 3062500.00) # variancia amostral de y nos estratos
+N <- sum(Nh)                  # tamanho da populacao
+
+## a.
+## valor de V
+r <- 0.02                        # erro relativo 2%
+alfa <- 0.05                     # confianca (1 - alfa) = 95%
+z_alfa_2 <- qnorm(1-alfa/2)      # usando aproximacao pela normal
+Wh <- Nh / N                     # peso do estrato h na pop. 
+Tx <- sum(Thx)                   # total populacional de x
+Xbarra <- Tx / N                 # media populacional de x
+Shx <- sqrt(S2hx)                # variancia de x do estrato h
+
+## na estimacao do total
+V <- r^2 * Tx^2 / z_alfa_2^2 # variancia maxima - erro relativo para total
+num <- sum( Nh * Shx)^2      # num. formula n para total
+denom <- V + sum( Nh * S2hx) # denom. formula n para total
+n <- num / denom  # tamanho da amostra sob AESot e AASs dentro para o total
+n <- ceiling(n)              # arredondando para mais
+
+## alocacao de neyman
+nh <- ceiling(n * Shx * Nh / sum(Shx * Nh))      # arredondando para mais
+```
+
+(a) Utilizando os dados referentes a $x$, o tamanho de amostra necessária para estimar o número total de empregados com um erro máximo admissível de 2% e com um nível de confiança de 95%, supondo alocação de Neyman, na **AASs** dentro do estratos 
+$$n \ge \frac {\sum_{h=1}^{H} \frac {N_h^2 S_{h,x}^2}{w_h}}{V_T +  \sum_{h=1}^{H}{ N_h S_{h,x}^2}}$$
+Denotamos $V_T$ um valor máximo para a variância do estimador do total, então
+$$r N \overline X = z_\frac{\alpha}{2} \sqrt{Var(\overline T_{AES})} \Leftrightarrow V_T = \frac{r^2 N^2 \overline X^2}{z^2_\frac{\alpha}{2}}.$$
+Temos que 
+$$\overline X = \frac{T_x}{N} = \sum_{h=1}^H T_{h,x} / N = (`r paste0( Thx, collapse=" + ")`) / N = `r Tx / N`,$$
+então $n = `r ceiling(n)`.$
+
+---
+
+##  Exercício 2
+
+(b) Conforme os cálculos da letra (a) do exercício original nos slides da `Aula 08`, a alocação apresenta $n_6 > N_6$. 
+
+  + Uma solução é observar todas as unidades do estrato em que $n_H \geq N_H$.
+
+```{r, echo=FALSE}
+N_novo <- N - Nh[6]
+```
+
+  + Definindo $n_6 = N_6$, restam $N^* = N - N_6 = `r N` - `r Nh[6]`=`r N - Nh[6]`$ unidades da população para serem selecionadas e distribuídas nos $H^*=5$.
+
+```{r, echo=FALSE}
+n_novo <- n - Nh[6]
+```
+  
+  + O tamanho restante da amostra é $n^* = n - N_6 = `r n` - `r Nh[6]`=`r n - Nh[6]`$.
+  
+  + Sob alocação de Neyman, agora temos $n^*_h = n^* \frac{S_h N_h}{\sum_k S_k N_k}$, $h,k = 1, \ldots, 5$. $N_h S_{h,x} = \left( `r paste0( Nh[1:5], "\\times", round( Shx[1:5], 2), collapse=";")` \right)$ e $\sum_{k=1}^5 N_h S_{h,x} = `r format( sum( Nh * Shx), scientific = FALSE)`.$ Assim,
+
+```{r}
+nh_novo <- n_novo * (Nh * Shx)[1:5] / sum( (Nh * Shx)[1:5])
+(nh <- c( nh_novo, Nh[6]))      # nova alocacao incluindo o ultimo estrato
+```
+
+---
+
+##  Exercício 2
+  
+(c) De acordo com o realocamento em (b), uma estimativa pontual do faturamento total é dada por
+
+$t_y = \widehat T_y = \sum_{h=1}^{6} \widehat T_{h,y}  = \sum_{h=1}^{6} N_h \overline y_h = `r paste0(Nh ,ybarrah, collapse=" + ")`.$
+
+````{r}
+ty <- sum(Nh * ybarrah)                      # estimativa do total
+```
+
+`r ty` milhares de reais.
+
+Uma estimativa intervalar para o faturamento total é dada por (se $n = \sum_{h=1}^{H} n_h$ "for grande"), 
+
+$$IC ( T_y; 0,95) = \left[ t_y \pm z_{0,05/2} \sqrt{\widehat{Var}_{AES} \left( t_y \right)} \right]$$
+
+Assumindo (o coeficiente de) confiança $1 - \alpha = 95\%$, por exemplo, temos o valor da distribuição normal padrão que deixa área 0,025 à sua direita dado por $z_{0,025} = `r -qnorm(0.025)`$.
+
+---
+
+##  Exercício 2
+
+Sob *AASs* dentro dos estratos, temos os estimadores da variância do estimador do total $s^2_{h, t_y} = Var_{AES} \left( \widehat T_h \right) = N_h^2 Var_{AES} \left( \overline y_h \right)$.
+
+A variância global é dada por $s^2_{t_y} = \widehat{Var} \left( t_y \right) = \sum_{h=1}^6 N_h^2 \left( \frac{1}{n_h} - \frac{1}{N_h} \right) s^2_{h, t_y}$
+
+```{r}
+s2ty <- sum( Nh^2 * (1/nh - 1/Nh) *  s2hy)   # estimativa da variancia do estimador do total
+s2ty
+```
+
+Assim, temos o erro absoluto, $e = z_{0,05} * \sqrt{ s^2_{t_y}}$ 
+
+```{r}
+e <- -qnorm(0.025) * sqrt(s2ty)   # erro absoluto
+e
+```
+
+---
+
+##  Exercício 2
+
+O intervalo ao nível $95\%$ para $T_y$ é dado por 
+
+```{r}
+IC <- ty + c(-1, 1) * e          # intervalo de confianca para o total
+IC
+```
+
+O intervalo de `r format( round( IC[1], 2), scientific=FALSE)` milhares de reais a `r format( round( IC[2], 2), scientific=FALSE)` milhares de reais deve conter o verdadeiro faturamento total dos estabelecimentos, com uma confiança de $95\%$. Ou ainda, a cada 100 amostras observadas sob o mesmo plano, espera-se que 95% dos intervalos construídos com base nessas amostras conterão o verdadeiro faturamento total dos estabelecimentos.
+
+
+---
+
+##  Exercício 2
+
+(*Bônus*) No item (a), mostrar que tamanho da amostra para média é equivalente ao tamanho para o total, usando $V$ e a fórmula de $n$ adequados para cada caso.
+
+* O **tamanho da amostra** $n$ é o **mesmo** na estimação da **média** e **total**,
+  + se usar erro relativo $r \overline Y$ para definir $V$ e usar $V \ge Var_{AES} (\overline y)$;
+  + ou com erro relativo $r N \overline Y$ para definir $V_T$ e usar $V_T \ge Var_{AES} (\widehat T)$.
+  
+A variância mínima dos estimador da média é dada por $V = \frac{r^2 \overline X^2}{z^2_\frac{\alpha}{2}}$.
+
+
+---
+
+##  Exercício 3
+#### (2,0 pontos) Banco de dados `Lucy`. (arquivo `Aula_AE_xxx.R`)
+
+a. Usando `Zone` como variável estratificadora, temos o tamanho da população, bem como a média e variância populacionais da variável `Income`, por estrato e globais, 
+  
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+## pacotes
+library(TeachingSampling)
+varpop <- function(x) (length(x) - 1) * var(x) / (length(x)) # calcula Varx
+
+## dados
+data(Lucy)
+# head(Lucy)
+
+## estratiticacao usando `Zone`
+H <- length( unique( Lucy$Zone))  # numero de estratos
+Nh <- table(Lucy$Zone)          # tamanho dos estratos
+N <- sum(Nh)                    # tamanho da populacao
+Wh <- Nh/N                      # pesos dos estratos na pop
+# Wh
+```
+
+Parâmetros por estrato
+
+```{r}
+## parametros por estrato
+Ybarrah <- tapply( Lucy$Income, Lucy$Zone, mean)      # medias - ou aggregate( Lucy$Income, list(Lucy$Zone), mean)
+Varh <- tapply( Lucy$Income, Lucy$Zone, varpop)       # Variancias
+cbind( h = 1:H, Nh = Nh, Media = Ybarrah, Variancia =  Varh)
+```
+
+---
+
+##  Exercício 3
+
+Parâmetros globais
+
+```{r}
+## parametros globais
+Ybarra <- mean( Lucy$Income)  # media
+# sum( Wh * Ybarrah)          # forma equivalente para caluclar media pop na AES
+Ybarra
+
+Var <-  varpop(Lucy$Income)   # Variancia
+Var
+# Vard <- sum( Wh * Varh)                 # Variância dentro
+# Vard
+# Vare <- sum( Wh * (Ybarrah - Ybarra)^2) # Variância entre
+# Vare
+# Vare + Vard                             # equivalente ao calculo de varianccia na AES
+```
+  
+
+---
+
+##  Exercício 3
+
+Usando `Level` como variável estratificadora. temos
+
+```{r, echo=FALSE}
+## estratiticacao usando `Zone`
+H2 <- length( unique( Lucy$Level))    # numero de estratos
+Nh2 <- table( Lucy$Level)             # tamanho dos estratos
+N2 <- sum(Nh2)                        # tamanho da populacao
+Wh2 <- Nh2/N                          # pesos dos estratos na pop
+# Wh2
+```
+
+Parâmetros por estrato
+
+```{r}
+## parametros por estrato
+Ybarrah2 <- tapply( Lucy$Income, Lucy$Level, mean)      # medias
+Varh2 <- tapply( Lucy$Income, Lucy$Level, varpop)       # Variancias
+cbind( h = 1:H2, Nh = Nh2, Media = Ybarrah2, Variancia =  Varh2)
+```
+
+Os Parâmetros globais devem ser os mesmos
+
+```{r}
+## globais
+Ybarra <- mean( Lucy$Income)  # media
+Ybarra
+# sum( Wh2 * Ybarrah2)          # forma equivalente para caluclar media pop na AES
+
+Var <-  varpop( Lucy$Income)   # Variancia
+Var
+# Vard <- sum( Wh2 * Varh2)                 # Variância dentro
+# Vard
+# Vare <- sum( Wh2 * (Ybarrah2 - Ybarra)^2) # Variância entre
+# Vare
+# Vare + Vard                             # equivalente ao calculo de varianccia na AES
+```
+
+---
+
+##  Exercício 3
+  
+b. Supondo **AASc** de 30 empresas em cada estrato, a variância do estimador da média de `Income`, utilizando `Zone` como variável estratificadora,
+
+```{r}
+# Supondo AASc de 30 empresas em cada estrato, vamos calcular a variância do estimador da média
+nh <- rep(30, H)
+Varybarrah <- Varh/nh
+Varybarrah
+Varybarra <- sum( Wh^2 * Varybarrah)
+Varybarra
+
+## Ignorando os estratos, a variância do estimador da média se AASc tradicional de 150 empresasfosse realizada
+Var/(30*H)
+```
+
+---
+
+##  Exercício 3
+
+Para `Level` como variável estratificadora,
+
+```{r}
+# Supondo AASc de 30 empresas em cada estrato, vamos calcular a variância do estimador da média
+nh2 <- rep(30, H2)
+Varybarrah2 <- Varh2/nh2
+Varybarrah2
+Varybarra2 <- sum( Wh2^2 * Varybarrah2)
+Varybarra2
+
+## Ignorando os estratos, a variância do estimador da média se AASc tradicional de 90 empresasfosse realizada
+Var/90
+```
+
+---
+
+##  Exercício 3
+
+c. Se olharmos diretamente para as variâncias dos estimadores, usando $n_h = 30$ paratodos os estratos, para ambas as variáveis estratificadoras, temos
+
+Variável estratificadora | $Var_{AES} \left( \overline y \right)$ | $n$ 
+--|:--:|:--:
+`Zone`  | `r Varybarra` | 150
+`Level` | `r Varybarra2` | 90
+
+A comparação das variâncias pode não parecer justa à primeira vista, pois fixando $n_h = 30$ sendo que a variável `Zone` possui $H=5$ estratos e `Level` $H = 3$. Mas ainda, usando $n_h = 50$ para `Level` a $Var_{AES} \left( \overline y \right)$ diminuiria.
+
+Olhando para os **EPA**s para ambas as variáveis estratificadoras temos
+
+Variável estratificadora | $Var_{AASc} \left( \overline y \right) = \frac{Var_y}{n}$ | $EPA = \frac{Var_{AES} \left( \overline y \right)}{Var_{AASc} \left( \overline y \right)}$ 
+--|:--:|:--:
+`Zone`  | $\frac{`r Var`}{150} = `r Var/150`$ | $`r Varybarra/(Var/150)`$
+`Level` | $\frac{`r Var`}{90} = `r Var/90`$ | $`r Varybarra2/(Var/90)`$
+
+---
+
+##  Exercício 3
+  
+d. Usando a variável `Level` como estratificadora, selecionamos uma amostra de tamanho $n=90$ de igual tamanho entre os $H=3$ estratos.
+
+```{r}
+set.seed(02036)
+nh <- 30
+s <- tapply( Lucy$ID, Lucy$Level, sample, size=nh)             # IDs selecionados para a amostra
+Lucy_amostra <- Lucy[Lucy$ID %in% unlist(s), c("Level","Income")]   # banco de dados amostral          
+```
+Ou podemos usar a função... do pacote... . 
+
+Com a amostra observada, calculamos os valores por estrato 
+
+```{r}
+## estimativas por estrato
+ybarrah <- tapply( Lucy_amostra$Income, Lucy_amostra$Level, mean)   # medias amostrais
+varh <- tapply( Lucy_amostra$Income, Lucy_amostra$Level, varpop)    # Variancias amostrais
+cbind( h = 1:H2, Nh = Nh2, nh = nh, ybarra = ybarrah, varh =  varh)
+## estimativas globais
+ybarra <- sum( Wh2 * ybarrah)
+var_ybarra <- (1/nh) * sum( Wh2^2 * varh)
+```
+
+---
+
+##  Exercício 3
+
+Uma estimativa do lucro médio das companhias, no particular ano fiscal, é aproximadamente 
+
+$$\begin{eqnarray} \overline y & = & \sum_{h=1}^3 W_h \overline y_h \\
+ & = & `r paste0( round( Wh2, 2), " \\times ", round( ybarrah, 2), collapse = " + ")` \\
+ & = & `r round(ybarra, 2)` \text{reais}.
+\end{eqnarray}$$
+
+Utilizando **AASc** dentro dos estratos, a **estimativa da variância da média amostral** é dada por 
+
+$$\begin{eqnarray} Var_{AES} \left( \overline y \right) & = & \frac{1}{k} \sum_{h=1}^3 W_h^2 Var_h \\ 
+ & = & \frac{1}{`r nh`} \left( `r paste0( round( Wh2^2, 2), " \\times ", round( Varh2, 2), collapse = " + ")` \right) \\
+ & = & `r round(var_ybarra, 2)`.
+\end{eqnarray}$$
+
+---
+
+##  Exercício 3
+
+Por fim, uma estimativa intervalar para o lucro médio das companhias, com 95% de confiança (se $n = \sum_{h=1}^{H} n_h$ "for grande") é dado por 
+
+$$IC ( \overline y; 0,95) = \left[ \overline y \pm z_{0,05/2} \sqrt{\widehat{Var}_{AES} \left( \overline y \right)} \right]$$
+
+Assumindo (o coeficiente de) confiança $1 - \alpha = 95\%$, por exemplo, temos o valor da distribuição normal padrão que deixa área 0,025 à sua direita dado por $z_{0,025} = `r -qnorm(0.025)`$. Assim, o erro absoluto, $e = z_{0,05} * \sqrt{ s^2_{\overline y}}$  é aproximadamente
+
+```{r}
+e <- -qnorm(0.025) * sqrt(var_ybarra)   # erro absoluto
+e
+```
+
+E o intervalo ao nível $95\%$ para $\overline y$ é dado por 
+
+```{r}
+IC <- ybarra + c(-1, 1) * e          # intervalo de confianca para a media
+IC
+```
+
+---
+
+##  Exercício 3
+
+O intervalo de `r format( round( IC[1], 2), scientific=FALSE)` dólares a `r format( round( IC[2], 2), scientific=FALSE)` dólares deve conter o verdadeiro lucro médio da companhias, no ano fiscal estudado, com uma confiança de $95\%$. Ou ainda, a cada 100 amostras observadas sob o mesmo plano, espera-se que em $95%$ dos intervalos construídos com base nessas amostras conterão o verdadeiro lucro médio das companhias.
+
+*(bônus)*: Adicionar comandos para obter total de `Income`.
+  
+*(bônus 2)*: Adicionar comandos para obter proporção de `SPAM`.
+
+---
+
+##  Exercício 4
+#### (2,0 pontos) Exercício 4.4 (elementos de amostragem)
+
+```{r echo=FALSE}
+## dados do problema - E]exercicio 4.4 (elementos de amostragem)
+H <- 3                        # no. de estratos
+h <- 1:H                      # indice dos estratos
+Wh <- c( 0.6, 0.3, 0.1)       # peso do estrato na composicao da media
+Ph <- c( 0.2, 0.4, 0.6)       # proporcao pop. nos estratos
+DPh <- c( 9, 18, 52)         # variancia pop. nos estratos
+na  <- sum( Wh * sqrt( Ph * (1-Ph)))^2 / 0.02^2 # tamanho de amostra para prop.
+nb <-  sum( Wh * DPh)^2 / 2^2
+```
+
+a. Para estimar uma proporção de famílias que possume conta em caderneta de poupança, com erro padrão da estimativa de no máximo 0,02, definimos $V_P \geq Var_{AES} \left( \widehat P_{AES} \right)$.
+
+Lembrando erro padrão: $EP \left( \widehat P \right) = \sqrt{ Var \left( \widehat P \right)} = DP \left( \widehat P_{AES} \right)$.
+
+Assumindo **AASc** dentro dos estrtos, e custo de amostragem constante, o tamanho amostral mínimo para assegurarmos uma variância da estimativa da proporção menor ou igual a $V_P = \left[ EP \left( \widehat P_{AES} \right) \right]^2$ é dado por
+
+$$\begin{eqnarray} n & \ge & \frac{ \left( \sum_{h=1}^{H} W_h \sqrt{P_h (1-P_h)} \right)^2 }{V_P} = \frac{ \left( \sum_{h=1}^{H} W_h \sqrt{P_h (1-P_h)} \right)^2 }{\left[ EP \left( \widehat P_{AES} \right) \right]^2} \\
+ & = & \frac{ `r paste0( round( Wh, 2), " \\times ", round( sqrt( Ph * (1-Ph)), 3), collapse = " + ")`}{(0,02)^2} = `r round( na,2)` \end{eqnarray}$$
+
+---
+
+##  Exercício 4
+
+A partição ótima com custo constante, partição de Neyman, nesse caso (**AASc** dentro) pode ser dada por 
+$$n_h = n \times \frac{w_h \times \sqrt{P_h (1-P_h)}}{\sum_k w_k \times \sqrt{P_k (1-P_k)}} = \left( `r round( na * (Wh*sqrt(Ph*(1-Ph))) / sum(Wh*sqrt(Ph*(1-Ph))), 2)` \right).$$
+
+b. Para estimar a quantidade média, com custo constante, sabemos que 
+$$n \ge \frac{ \left( \sum_{h=1}^{H} W_h DP_{h,y} \right)^2 }{V}.$$
+
+Fixando o erro padrão máximo da estimativa da média em 2 *reais*, temos $V = 4reais^2$, assim 
+$$n \ge \frac{ `r paste0( round( Wh, 2), " \\times ", DPh, collapse = " + ")`}{2^2} = `r round( nb,2)`.$$ 
+
+E a partição dada por
+$$n_h = n \times \frac{w_h \times DP_h}{\sum_k w_k \times DP_k} = \left( `r round( nb * (Wh*DPh) / sum(Wh*DPh), 2)` \right)$$
+
+Interpretação e conclusão: Não havendo restrição de orçamento na pesquisa, optamos por observar o maior dos tamanhos amostrais pois garantimos que o erro padrão da estimativa não ultrapasse o valor máximo estipulado. Nesse caso, a estimativa para o parâmetro que resultou em menor tamanho amostral terá seu erro pedráo provavelmente menor ainda do que o estipulado.
+
+---
+
+##  Exercício 5
+
+```{r echo=FALSE}
+## dados do problema - E]exercicio 4.4 (elementos de amostragem)
+H <- 4                        # no. de estratos
+h <- 1:H                      # indice dos estratos
+Nh <- c( 60, 40, 100, 30)     # tamanho dos estratos
+nh <- c( 15, 10, 20, 6)       # tamanho da amostra nos estratos
+ph <- c( 0.3, 0.2, 0.4, 0.1)  # proporcao amostral nos estratos
+N <- sum(Nh)                  # tamanho da populacao 
+Wh <- Nh /N                   # peso do estrato na composicao da media
+
+## estimativas
+p <- sum( Wh * ph)
+var_p <- sum( Wh^2 * (ph * (1-ph)) / (nh - 1))
+```
+
+Uma estimativa pontual da proporção de contas problemáticas $\widehat P_{AES}$ é dada por 
+
+$$\begin{eqnarray} \widehat P & = & \sum_{h=1}^4 W_h p_h \\
+ & = & `r paste0( round( Wh, 2), " \\times ", round( ph, 2), collapse = " + ")` \\
+ & = & `r round( p, 4)`.
+\end{eqnarray}$$
+Ou seja, estimamos que a proporção de contas problemáticas da rede de lojas seja aproximadamente 30%.
+
+Utilizando **AASc** dentro dos estratos, a **estimativa da variância da proporção amostral** é dada por 
+
+$$\begin{eqnarray} Var_{AES} \left( p \right) & = & \frac{1}{k} \sum_{h=1}^4 W_h^2 p_h (1-p_h) \\ 
+ & = & \frac{1}{`r nh`} \left( `r paste0( round( Wh^2, 2), " \\times ", round( ph * (1-ph), 2), collapse = " + ")` \right) \\
+ & = & `r round(var_p, 4)`.
+\end{eqnarray}$$
+
+---
+
+##  Exercício 5
+
+Por fim, uma estimativa intervalar para a proporção de contas problemáticas, com 95% de confiança (se $n = \sum_{h=1}^{H} n_h$ "for grande") é dado por 
+
+$$IC ( P; 0,95) = \left[ p \pm z_{0,05/2} \sqrt{\widehat{Var}_{AES} \left( p \right)} \right]$$
+
+Assumindo (o coeficiente de) confiança $1 - \alpha = 95\%$, por exemplo, temos o valor da distribuição normal padrão que deixa área 0,025 à sua direita dado por $z_{0,025} = `r -qnorm(0.025)`$. Assim, o erro absoluto, $e = z_{0,05} * \sqrt{ s^2_p}$  é aproximadamente
+
+```{r}
+e <- -qnorm(0.025) * sqrt(var_p)   # erro absoluto
+e
+```
+
+E o intervalo ao nível $95\%$ para $\overline y$ é dado por 
+
+```{r}
+IC <- p + c(-1, 1) * e          # intervalo de confianca para a media
+IC
+```
+
+---
+
+##  Exercício 5
+
+O intervalo de `r format( round( IC[1], 2), scientific=FALSE)` a `r format( round( IC[2], 2), scientific=FALSE)` deve conter a verdadeira proporção de contas problemáticas dessa rede, com uma confiança de $95\%$. Ou ainda, a cada 100 amostras observadas sob o mesmo plano, espera-se que em $95%$ dos intervalos construídos com base nessas amostras conterão a verdadeira proporção de contas problemáticas.
+
+---
+
+class: inverse, middle, center
+
+# Pontuação e Comentários 
+
+---
+
+## Pontuação
+### Avaliação parcial 1
+#### Exercício 1: (2,0 pontos)
+* Ex. 4.1 (Elementos de Amostragem),  
+	a. (0,8 pontos) Itens (c) e (d).  
+	b. (0,2 pontos) Interprete os resultados.
+
+* Ex. 11.10 (Amostragem: Teoria e Prática Usando o R)  
+	a. (0,1 pontos) Informações do enunciado.  
+	b. (0,2 pontos) Indicar fórmulas.  
+	c. (0,6 pontos) Cálculo de n e n_h.  
+	d. (0,1 pontos) Interpretação.
+
+#### Exercício 2: (2,0 pontos)
+a. (0,6 pontos) Cálculo n e nh conferir.  
+b. (0,7 pontos) Comentários e realocação.  
+c. (0,7 pontos) Estimação pontual, por intervalo e interpretação.  
+d. (*0,5 pontos bônus)
+
+---
+
+## Pontuação
+### Avaliação parcial 1
+#### Exercício 3: (2,0 pontos)  
+a. (0,4 pontos) Parâmetros por `Zone` e `Level`.  
+b. (0,6 pontos) Variância do estimador da média por `Zone` e `Level`.  
+c. (0,2 pontos) Comparação.  
+d. (0,8 pontos) Seleção da amostra, estimação e interpretações.  
+e. (*0,2 pontos bônus1)  
+f. (*0,3 pontos bônus2)  
+
+#### Exercício 4: (2,0 pontos)  
+a. (0,9 pontos) Cálculos e Interpretação  
+b. (0,9 pontos) Cálculos e Interpretação  
+c. (0,2 pontos) Conclusão
+
+#### Exercício 5: (2,0 pontos)  
+a. (1,0 pontos) Estimativa pontual e interpretação  
+b. (1,0 pontos) Estimativa intervalo e interpretação
+
+---
+
+## Pontuação
+### Atividade Aula 08
+#### Exercício 1:
+* a. Nos slides *Aula 06*, página 8, continuar ítens (c) e (d).  
+* Interprete os resultados.  
+* Arredondamento.
+
+#### Exercício 2: Exercício 11.10 (Amostragem: Teoria e Prática Usando o R)
+* Informações do enunciado.  
+* Indicar fórmula.  
+* Cálculo de n.  
+* Conclusáo... "tamanho mínimo"
+
+#### Exercício 3: Exercício 11.7 (Amostragem: Teoria e Prática Usando o R)
+* a. Expressões, cálculo e interpretação.  
+* b. Expressões, cálculo e interpretação.
+
+---
+
+## Comentarios gerais
+* Enviar o output `.pdf`, com imagens da resolução `à mão` ou os resultados da versão `em códigos`
+* Se os códigos estão em arquivo `.R`, enviar fórmulas em separado
+* Se enviar código com erro deixar claro onde está o erro... o ideal seria deixar as linhas com erro comentadas 
+* Colocar nome nos arquivos, nos códigos e outputs também.
+* Fórmulas/expressões devem aparecer, seja no formato `à mão` ou `em códigos`... se enviar somente pdf... enviar arquivo de codigos tambem
+* Interpretações... Pontual... qual o parâmetro em termos do problema, unidade de medida... ou IC parametro, unidade de medida, confianca... Resultado e Conclusão: O IC(), com alfa; Portanto, com 95%...
+	+ " estimamos que a média esteja entre 406,16 e 167,84 com 95% de confiança." ... "o total esta em ic de 95% de confiança entre 187184.3 e 192095.7" está correto:
+	+ suposições para ICs...
+Fórmulas... 
+códigos... se pegamos de outros, cuidado para não deixar código desnecessário... manter organizados os códigos...
+Entrega... relatorio bem apresentado... "Marcia falou sobre relatorio e markdown"... capricho com relatorios
+Se nao fez a atividade "Aula 08" conferiu os codigos... odnde estao... tua versao dos codigos... semente nao aleatoria, nos caso de selecionar amostra cada um poderia ter uma amostra diferente... 
+
+---
+
+## Comentarios gerais
+* Para evitar o `for()` 
+	+ calcular somas de vetores... x <- 1; for{x <- x + 1}
+	+ calcular medidas agregadas `tapply()` faz o mesmo, ou `aggregate()`.
+* Arredondamentos: $n$ `ceiling()` e $n_h$ `round()`
+* Cálculo do deff incorreto (usando amostra???), selecionando amostra e usando `svymean`. (-0,2 pontos)

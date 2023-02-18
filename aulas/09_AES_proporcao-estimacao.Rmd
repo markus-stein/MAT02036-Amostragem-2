@@ -1,0 +1,1024 @@
+---
+title: "MAT02036 - Amostragem 2"
+subtitle: "Aula 09 - Amostragem Estratificada - Estimação de Proporções" 
+author: "Markus Stein"
+institute: "Departamento de Estatística, IME/UFRGS"
+date: "2022/2"
+type: "lecture"
+# fontsize: 10pt
+output:
+  xaringan::moon_reader:
+    # css: ["assets/remark.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      titleSlideClass: [center, middle]
+---
+
+```{r libs, echo=FALSE, message=FALSE, warning=FALSE}
+library(xaringanExtra)
+library(emo)
+library(fontawesome)
+library(kableExtra)
+```
+
+```{r xaringan-logo, echo=FALSE}
+# install.packages("remotes")
+# remotes::install_github('yihui/xaringan')
+# remotes::install_github("gadenbuie/xaringanExtra")
+# xaringanExtra::use_logo(
+#   image_url = "https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/xaringan.png"
+# )
+xaringanExtra::use_logo( here::here('img/logo_dest.png'))
+```
+
+### *Housekeeping*
+
+* Aproveitem o momento presencial para tirar dúvidas
+
+* Se estivéssemos no ensino remoto ou à distância
+
+  + vocês poderiam estar somente ouvindo, sem interação
+  
+  + ou assistindo vídeos e material em outro momento
+  
+* Depois das aulas, rever material da aula passada
+
+  + fazer exercícios
+  
+  + se preparar para a próxima aula
+
+---
+
+## Aula passada `r emo::ji("disk")`
+####  Exercícios para entregar 1 `r emo::ji("workout")`
+
+* Exercício 4.1 (Bolfarine e Bussab)
+
+* Exercício 11.10 (Amostragem: Teoria e Prática Usando o R)
+
+* Exercício 11.7 (Amostragem: Teoria e Prática Usando o R)
+
+
+.center[
+### Dúvidas`r emo::ji("question")`
+]
+
+---
+
+class: inverse, middle, center
+
+# Estimação de Proporções na **AES**
+
+---
+
+
+## Estimação de Proporções na AES
+
+Um caso especial do que já vimos ocorre quando a variável $y$ indicadora de uma unidade populacional $i$ tem ou não uma determinada **característica** ou **atributo** de **interesse**, ou pertence a um determinado grupo especificado de unidades da população:
+
+* Migrantes entre os habitantes de determinada região.
+* Estabelecimentos agropecuários de produção leiteira numa localidade.
+* Estudantes do sexo feminino em escolas.
+* Sondagens eleitorais, parcela dos eleitores pretende votar em determinado candidato.
+
+Definimos a variável $y$, para cada unidade $i$ da população,  assumindo um de dois valores possíveis:
+
+$$y_i = I(i \in A) = \begin{cases} 
+1, \text { se a unidade } i \text { do estrato } h \text{ possui o atributo, } A \subset U; \\ 
+0, \text{ caso contrário.} \end{cases}$$
+
+---
+
+## Parâmetros populacionais no estrato h
+
+* O **total** populacional da variável $y$ no estrato $h$ é 
+
+$$T_{h,y} = \sum_{i \in U_h} y_i = N_{h,A},$$
+onde $N_{h,A}$ representa o **número de unidades populacionais** com o **atributo** de interesse.
+
+* A **média populacional** no estrato $h$ é dada por: 
+
+$$\overline Y_{h,y} = \frac{1}{N_h} \sum_{i \in U_h} y_i = \frac {T_h}{N_h} = \frac {N_{h,A}} {N_h} = P_h$$
+
+* $P_h$ corresponde à **proporção** $P$ de unidades da população que têm o atributo de interesse. 
+
+  + O parâmetro **proporção** é aqui representado pela letra $P$ maiúscula, lembrando que $P()$ maiúscula denota **probabilidade**.
+
+* Uma *proporção* pode assumir valores variando entre $0$, quando nenhuma unidade da população tem o atributo investigado, até $1$, quando todas as unidades possuem esse atributo. 
+  
+  + Muitas vezes é interessante expressar a **proporção** sob forma de **porcentagem** podendo então variar de 0% até 100%.
+
+---
+
+## Parâmetros populacionais no estrato h
+
+* A **variância** populacional para $y$ assumindo somente valores $0$ ou $1$ pode ser simplificada:
+
+$$S^2_{h,y} = \frac {1}{N_h-1} \left( \sum_{i \in U_h} y^2_i - N_h \overline{Y}_h^2 \right) = \frac{1}{N_h-1} \left(N_h P_h - N_h P_h^2 \right) = \frac{N_h}{N_h-1} P_h \left(1-P_h\right)$$ 
+
+* A **variância** populacional de $y$ pode também ser definida como 
+
+$$Var_{h,y} = P_h (1-P_h).$$  
+
+  + Tanto $S^2_{h,y}$ como $Var_{h,y}$ representam a dispersão da distribuição dos valores de $y$ na população do estrato $h$.  
+  
+  + Para populações grandes $(N_h \rightarrow \infty)$, (é fácil verificar que) $S^2_{h,y} \doteq P_h (1-P_h) = Var_y$.
+
+<!-- * O **Coeficiente de Variação** $(CV)$, $CV_y = \frac {\sqrt {var_y}} {\overline Y} = \sqrt {{P(1-P) / P^2}} = \sqrt {(1-P)/P}$. -->
+
+
+---
+
+## Parâmetros populacionais globais
+
+Na **AES** podemos escrever os parâmetros populacionais globais como abaixo.
+
+* o **total populacional** de elementos com o atributo
+
+$$T = \sum_{h = 1}^H N_h P_h = N_A.$$
+
+* A **proporção populacional**
+
+$$P = \sum_{h = 1}^H W_h P_h.$$
+
+* A **variância populacional** sob **AASc** dentro dos estratos 
+
+$$Var_y = \sum_{i \in U} \frac{(y_i - \overline Y)^2}{N} = \sum_{h = 1}^H W_h Var_h + \sum_{h = 1}^H W_h (P_h - P) = \sum_{h = 1}^H W_h P_h (1-P_h) + \sum_{h = 1}^H W_h (P_h - P),$$
+ou (lembrando)
+
+$$S^2_y = \frac{N}{N-1} Var_y.$$
+
+---
+
+## Estimadores de parämetros globais
+
+* Para o **total populacional** global de elementos com o atributo
+
+$$\widehat T = \sum_{h = 1}^H N_h \widehat P_h = N_A,$$
+  + onde $\widehat P_h = \frac{t_{h,y}}{n_h}$ é a proporção estimada no estrato $h$, 
+
+  + e $t_{h,y} = \sum{i \in s_h} y_i$ o total de elementos com o atributo na amostra.
+
+* A **proporção populacional**
+
+$$P = \sum_{h = 1}^H W_h \widehat P_h.$$
+
+* **Variância do estimador** da proporção nos estratos.
+
+  + Sob **AASs** dentro, $Var (\widehat P_h) = \left( \frac{1}{n_h} - \frac {1}{N_h} \right) \frac{N_h}{N_h-1} P_h(1-P_h)$.
+  
+  + Sob **AASc** dentro, $Var (\widehat P_h) = \frac{\widehat P_h (1-\widehat P_h)}{n_h}$.
+  
+---
+
+## Variancia do estimador da proporção global
+
+A **variância** do estimador da **proporção** populacional global é dada,
+
+* sob **AASs** dentro dos estratos
+
+$$Var_{AES_s} (\widehat P_{AES}) = \sum_{h = 1}^H W_h^2 \left( \frac{N_h - n_h}{N_h - 1} \right) \frac{P_h (1 - P_h)}{n_h};$$
+* sob **AASc** dentro dos estratos
+
+$$Var_{AES_c} (\widehat P_{AES}) = \sum_{h = 1}^H W_h^2 \frac{P_h (1 - P_h)}{n_h}.$$
+
+---
+
+## Estimador da variância do estimador da proporção
+
+Usando os resultados acima podemos mostrar que o **estimador da variância** do estimador da proporção são dados abaixo.
+
+* sob **AASs** dentro dos estratos
+
+$$\widehat Var_{AES_s} (\widehat P_{AES}) = \sum_{h = 1}^H W_h^2 \left( \frac{N_h - n_h}{N_h - 1} \right) \frac{ \widehat P_h (1 - \widehat P_h)}{n_h - 1}.$$
+
+* sob **AASc** dentro dos estratos
+
+$$\widehat Var_{AES_c} (\widehat P_{AES}) = \sum_{h = 1}^H W_h^2 \frac{ \widehat P_h (1 - \widehat P_h)}{n_h - 1}.$$
+
+---
+
+###  Exemplo 1 `r emo::ji("workout")`
+
+Exercício 4.4 (Bolfarine e Bussab)
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='90%', out.height='90%', paged.print=FALSE}
+knitr::include_graphics(here::here('img', 'exerc_4-4_elementos-de-amostragem.png'))
+```
+
+---
+
+###  Exemplo 1 `r emo::ji("workout")`
+
+Exercício 4.4 (Bolfarine e Bussab)
+
+a. Erro padrão $\left( `r emo::ji("question")` \right)$: No caso de $\overline y$, 
+
+$$EP( \overline y) = \sqrt{Var(\overline y)} = DP(\overline y).$$
+
+  + Como definir $V$ em função de $EP_{AES} (\widehat P_{AES})$?
+  
+  + Derivar uma expressão para $n$ mínimo usando 
+  
+$$V \ge Var_{AES} (\widehat P_{AES}).$$
+
+b. Como definir $V$ em função de $EP_{AES}(\overline y_{AES})$?
+
+Interpretação e conclusão.
+
+---
+
+###  Exemplo 2 `r emo::ji("workout")`
+
+Exercício 4.20 (Bolfarine e Bussab)
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='90%', out.height='90%', paged.print=FALSE}
+knitr::include_graphics(here::here('img', 'exerc_4-20_elementos-de-amostragem.png'))
+```
+
+---
+
+###  Exemplo 2 `r emo::ji("workout")`
+
+Exercício 4.20 (Bolfarine e Bussab)
+
+* Estimativa pontual $\widehat P_{AES}$. Qual o valor? Interprete.
+
+* Para o intervalo de confiança: 
+
+  +  erro absoluto:
+  
+$$e = z_{\alpha/2} \times \sqrt{ \widehat P_{AES}}.$$ 
+
+  + Quais os limites? 
+
+$$IC \left( \widehat P_{AES}; 1-\alpha \right) = \left[ `r emo::ji("question")` ; `r emo::ji("question")` \right].$$
+
+  + Interprete.
+
+
+
+---
+
+## Para casa `r emo::ji("house")`
+
+* Se preparar para a avaliação parcial da área.
+
+<!-- * Mostrar tamanho de amostra $n$ para AASc dentro dos estratos. -->
+
+* Continuar exercícios do livro 'Amostragem: Teoria e Prática Usando R'    https://amostragemcomr.github.io/livro/estrat.html#exerc11
+
+* Fazer exercícios da lista 1.
+
+* Rever os slides.
+
+
+<!-- * Ler BOlfarine e Bussab...da seção 11.3 do livro 'Amostragem: Teoria e Prática Usando R'. -->
+
+
+
+## Próxima aula `r emo::ji("stats")`
+
+* Amostragem Estratificada
+
+  + Avaliação
+
+  <!-- + Exercícios e Intervalos de confiança -->
+  
+  + Laboratório de `r fa("r-project", fill = "steelblue")`
+
+---
+
+## Muito obrigado!
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='30%', out.height='30%', paged.print=FALSE}
+knitr::include_graphics(here::here('img', 'image_basu_elephant.jpg'))
+```
+Fonte: imagem do livro *Combined Survey Sampling Inference: Weighing of Basu's Elephants: Weighing Basu's Elephants*.
+
+
+
+---
+
+## Resumo da notação
+Estimação de Proporções na AES
+
+Parâmetros | no estrato h
+--|--
+**total** | $T_{h,y} = \sum_{i \in U_h} y_i = N_{h,A}$
+**proporção** | $\overline Y_{h,y} = \frac{1}{N_h} \sum_{i \in U_h} y_i = \frac {T_h}{N_h} = \frac {N_{h,A}} {N_h} = P_h$
+**variância** | $Var_{h,y} = P_h (1-P_h)$
+**variância** | $S^2_{h,y} = \frac{N_h}{N_h-1} P_h \left(1-P_h\right)$
+
+Parâmetros | globais
+--|--
+**total** | $T = \sum_{h = 1}^H N_h P_h = N_A$
+**proporção** | $P = \sum_{h = 1}^H W_h P_h$
+**variância** | $Var_y = \sum_{h = 1}^H W_h P_h (1-P_h) + \sum_{h = 1}^H W_h (P_h - P)$
+**variância** | $S^2_y = \frac{N}{N-1} Var_y$
+
+---
+
+## Resumo da notação
+
+**Estimadores** | de parämetros globais
+--|--
+**total** | $\widehat T = \sum_{h = 1}^H N_h \widehat P_h = N_A$
+**proporção** | $\widehat P = \sum_{h = 1}^H W_h \widehat P_h$
+
+
+**Variância do estimador** | da proporção nos estratos.
+--|--
+Sob **AASs** dentro | $Var (\widehat P_h) = \left( \frac{1}{n_h} - \frac {1}{N_h} \right) \frac{N_h}{N_h-1} P_h(1-P_h)$
+Sob **AASc** dentro | $Var (\widehat P_h) = \frac{\widehat P_h (1-\widehat P_h)}{n_h}$
+
+---
+
+## Resumo da notação
+  
+**Variância** | **do estimador** da proporção global
+--|--
+sob **AASs** dentro dos estratos | $Var_{AES_s} (\widehat P_{AES}) = \sum_{h = 1}^H W_h^2 \left( \frac{N_h - n_h}{N_h - 1} \right) \frac{P_h (1 - P_h)}{n_h}$
+sob **AASc** dentro dos estratos | $Var_{AES_c} (\widehat P_{AES}) = \sum_{h = 1}^H W_h^2 \frac{P_h (1 - P_h)}{n_h}$
+
+**Estimador da variância** | do estimador da proporção global
+--|--
+sob **AASs** dentro dos estratos | $\widehat Var_{AES_s} (\widehat P_{AES}) = \sum_{h = 1}^H W_h^2 \left( \frac{N_h - n_h}{N_h - 1} \right) \frac{ \widehat P_h (1 - \widehat P_h)}{n_h - 1}$
+sob **AASc** dentro dos estratos | $\widehat Var_{AES_c} (\widehat P_{AES}) = \sum_{h = 1}^H W_h^2 \frac{ \widehat P_h (1 - \widehat P_h)}{n_h - 1}$
+
+---
+
+## Resumo da notação
+
+* Tamanho mínimo de amostra para **estimação da proporção** populacional
+
+.center[
+Alocação | **AASc** dentro dos estratos
+--|:--:
+$AES_{un}$ | $n \ge \frac{ H \sum_{h=1}^{H} W_h^2 P_h (1-P_h) }{V}$ 
+$AES_{pr}$ | $n \ge \frac{ \sum_{h=1}^{H} W_h P_h (1-P_h) }{V}$
+$AES_{ne}$ | $n \ge \frac{ \left( \sum_{h=1}^{H} W_h \sqrt{P_h (1-P_h)} \right)^2 }{V}$
+$AES_{ot}$ | $n \ge \frac{ \left( \sum_{h=1}^{H} W_h \sqrt{P_h (1-P_h)} \sqrt{C_h} \right)\left( \sum_{h=1}^{H} W_h \sqrt{P_h (1-P_h)} / \sqrt{C_h} \right) }{V}$
+]
+
+---
+
+## Resumo da notação
+
+* Tamanho mínimo de amostra para **estimação da proporção** populacional
+
+.center[
+Alocação | **AASs** dentro dos estratos
+--|:--:|:--:
+$AES_{un}$ | $n \ge \frac{ H \sum_{h=1}^{H} W_h^2 P_h (1-P_h) }{V + \frac{1}{N} \sum_{h=1}^{H} W_h P_h (1-P_h)}$
+$AES_{pr}$ | $n \ge \frac{ \sum_{h=1}^{H} W_h P_h (1-P_h) }{V + \frac{1}{N} \sum_{h=1}^{H} W_h P_h (1-P_h)}$
+$AES_{ne}$ | $n \ge \frac{ \left( \sum_{h=1}^{H} W_h \sqrt{P_h (1-P_h)} \right)^2 }{V + \frac{1}{N} \sum_{h=1}^{H} W_h P_h (1-P_h)}$
+$AES_{ot}$ | $n \ge \frac{  \left( \sum_{h=1}^{H} W_h \sqrt{P_h (1-P_h)} \sqrt{C_h} \right)\left( \sum_{h=1}^{H} W_h \sqrt{P_h (1-P_h)} / \sqrt{C_h} \right) }{V + \frac{1}{N} \sum_{h=1}^{H} W_h P_h (1-P_h)}$
+]
+
+
+---
+
+## Referências
+
+<!-- Slides baseados no Capítulo 11 do livro -->
+
+* [Amostragem: Teoria e Prática Usando o R](https://amostragemcomr.github.io/livro/index.html)
+
+<!-- Citações do Capítulo -->
+
+<!-- * Neyman(1934) -->
+* Cochran(1977)
+
+
+<!-- * refazer calculos para amostagem aleatoria simples com reposicao -->
+<!-- * alocacao... ou lab R comparando alocação proporcional e igual tamanho -->
+
+<!-- listas de exercicios... -->
+<!-- dois aspectos da disciplina... ter flexibilidade com teoria... exercitar os conceitos com exercicios teoricos e praticos -->
+
+<!-- falar dos pesos na AES -->
+
+<!-- valor z_alpha/2 significa z ou t -->
+
+<!-- quem tiver interesse em conferir as fórmulas... mostra as conttas, gosta dessa pparte...posso contabilizar ponto extra... tem q ser o primeira... -->
+<!-- o mesmo pode valer para os códigos e texto... -->
+<!-- fazer o formulário -->
+<!-- resumo de formulas -->
+
+---
+
+class: inverse, middle, center
+
+# Revisão Estimação de Proporções na AAS
+
+---
+
+## Estimação de Proporções
+
+Um caso especial do que já vimos ocorre quando a variável $y$ indicadora de uma unidade populacional $i$ tem ou não uma determinada **característica** ou **atributo** de **interesse**, ou pertence a um determinado grupo especificado de unidades da população:
+
+* Migrantes entre os habitantes de determinada região.
+
+* Estabelecimentos agropecuários de produção leiteira numa localidade.
+
+* Estudantes do sexo feminino em escolas.
+
+* Sondagens eleitorais, parcela dos eleitores pretende votar em determinado candidato.
+
+Definimos a variável $y$, para cada unidade $i$ da população, assumindo um de dois valores possíveis:
+
+$$y_i = I(i \in A) = \begin{cases} 
+1, \text { se a unidade } i \text{ possui o atributo, } A \subset U; \\ 
+0, \text{ caso contrário.} \end{cases}$$
+
+---
+
+## Parâmetros populacionais
+
+* O **total** populacional da variável $y$ é 
+
+$$T = \sum_{i \in U} y_i = N_A,$$
+onde $N_A$ representa o **número de unidades populacionais** com o **atributo** de interesse.
+
+* Variáveis indicadoras são usadas quando se quer tabular frequências de respostas a uma pergunta categórica.
+
+* Para respostas sendo valores inteiros de $1$ a $H$, onde $H$ representa o número de categorias de resposta da pergunta. 
+
+  + Ex.: na pergunta 'Qual é o sexo do morador', há duas categorias de resposta $(H= 2)$: 1 (=Feminino) e 2 (=Masculino). 
+  
+  + Para contar o número de pessoas por sexo na população, definimos: $y_{1i} = I[Sexo(i) = 1]$ e $y_{2i} = I[Sexo(i) = 2]$. 
+  
+---
+
+## Parâmetros populacionais
+
+Sabemos que quando a variável $y$ é do tipo indicadora, a **média populacional** dada por: 
+
+$$\overline {Y} = \frac{1}{N} \sum_{i \in U} y_i = \frac {T}{N} = \frac {N_A} {N} = P$$
+
+* $P$ corresponde à **proporção** $P$ de unidades da população que têm o atributo de interesse. 
+
+  + O parâmetro **proporção** é aqui representado pela letra $P$ maiúscula, lembrando que $P()$ maiúscula denota **probabilidade**.
+
+* Uma *proporção* pode assumir valores variando entre $0$, quando nenhuma unidade da população tem o atributo investigado, até $1$, quando todas as unidades possuem esse atributo. 
+  
+  + Muitas vezes é interessante expressar a **proporção** sob forma de **porcentagem** podendo então variar de 0% até 100%.
+
+---
+
+## Parâmetros populacionais
+
+* A **variância** populacional para $y$ assumindo somente valores $0$ ou $1$ pode ser simplificada:
+
+$$S^2_y = \frac {1}{N-1} \left( \sum_{i \in U} y^2_i - N \overline{Y}^2 \right) = \frac{1}{N-1} \left(NP-NP^2 \right) = \frac{N}{N-1} P \left(1-P\right)$$ 
+
+* A **variância** populacional de $y$ pode também ser definida como $Var_y = P (1-P)$. 
+
+  + Tanto $S^2_y$ como $Var_y$ representam a dispersão da distribuição dos valores de $y$ na população. 
+  
+  + Para populações grandes $(N \rightarrow \infty)$, (é fácil verificar que) $S^2_y \doteq P(1-P) = Var_y$.
+
+* O **Coeficiente de Variação** $(CV)$, $CV_y = \frac {\sqrt {var_y}} {\overline Y} = \sqrt {{P(1-P) / P^2}} = \sqrt {(1-P)/P}$.
+
+---
+
+## Estimação sob amostragem aleatória simples AAS
+
+* Seja $s$ uma amostra observada sob **AAS** de tamanho $n$ de uma população com $N$ unidades, onde se observa uma variável indicadora $y$. 
+
+  + Podemos obter estimadores para os parâmetros populacionais de $y$ adaptando os estimadores gerais de total e média apresentados no capítulo anterior.
+
+* O **total de unidades da amostra** com o **atributo** de interesse, $n_A$, será dado pela soma amostral:
+
+$$t_y = \sum_{i \in\ s} y_i = n_A$$
+  + O **total estimado** de unidades na população com o **atributo** de interesse, $N_A$, é estimado usando:
+
+$$\widehat T_{AAS} = N \times t_y / n = N \times n_A / n = \widehat N_A$$
+  + Como sabemos este estimador é não viciado sob AASC para qualquer variável $y$, logo é **ENV** também quando $y$ é do tipo indicadora.
+
+---
+
+## Estimação sob amostragem aleatória simples AAS
+
+* A **proporção amostral** de unidades que possuem o atributo de interesse é dada pela **média amostral**:
+
+$$\overline y = \frac {1}{n} \sum_{i \in s} y_i = \frac {n_A}{n} =  \widehat P$$
+
+  + Pode-se facilmente verificar que $\widehat p$ é um *estimador não viciado* para a *proporção* populacional $p$, pois:
+
+$$E_{AAS} (\widehat P) = E_{AAS} (\overline y) = \overline Y = P$$
+  + Mostrar (`r emo::ji("question")`)
+  
+---
+
+## Estimação sob amostragem aleatória simples 
+### COM REPOSIÇÃO - AASc
+
+* sob amostragem aleatória simples com reposição **AAS
+
+A *variância da proporção amostral* sob AASC é dada por:
+
+$$Var_{AASC} (\widehat P) = \frac {Var_y}{n} = \frac {P(1-P)}{n}$$
+ou
+$$\widehat S^2_y = \frac {n}{n-1} \widehat P (1 - \widehat P)$$
+
+* Sob **AASc**, $\widehat S^2_y$ é um **ENV** para $Var_y$. Assim 
+
+$$\widehat {Var}_{AASc} (\widehat P) = \frac {\widehat P (1 - \widehat P)}{n-1}$$
+
+---
+
+## Estimação sob amostragem aleatória simples 
+### COM REPOSIÇÃO - AASc
+
+* O **estimador** do **total** de unidades na população que possuem o **atributo** de interesse, $N_A= NP$ é dado por
+
+$$\widehat N_A = N \widehat P.$$
+
+* A **variância do estimador** de $N_A$, 
+
+$$V_{AASc}(\widehat N_A) = N^2 \frac {P(1-P)} {n}$$
+pode ser estimada por
+
+$$\widehat Var_{AASc}(\widehat N_A) = N^2 \frac {\widehat P(1- \widehat P)} {n-1}.$$
+---
+
+## Estimação sob amostragem aleatória simples 
+### SEM REPOSIÇÃO AASs 
+
+* No caso de $s$ ser obtida por seleção do tipo **AASs**, 
+
+  + a **soma amostral** $t_y$, a **proporção amostral** $\widehat p$ e a **variância amostral** $\widehat S^2_y$ têm a **mesma forma** que na **AASC**. 
+  
+  + As estimadores para o total populacional $N_A$ e a proporção populacional $P$ são os mesmo. 
+  
+* A **diferença** é que na **AASs** a variância amostral $\widehat S^2_y$ é um **ENV** para $S^2_y$ e não para $Var_y$. 
+
+  + Também são **diferentes** as expressões para as variâncias dos estimadores amostrais e seus correspondentes estimadores não viciados.
+
+---
+
+## Estimação sob amostragem aleatória simples 
+### SEM REPOSIÇÃO AASs 
+
+* Sabemos que as **variâncias** dos **estimadores** do **total** e da **média** são 
+
+$$Var_{AASs} (\widehat Y) = N^2 \left( \frac 1 n - \frac {1}{N} \right) {S^2_y} \: \: \text{ e }
+\: \: Var_{AASs} (\overline y) = \left( \frac 1 n - \frac {1}{N} \right) {S^2_y}.$$
+
+* No caso de variáveis $y$ do tipo indicadoras, tem-se que as **variâncias** do **estimador** do **total** e da **proporção populacionais** são dadas por:
+
+$$Var_{AASs} (\widehat N_A) = N^2 \left( \frac 1 n - \frac {1}{N} \right) \frac{N}{N-1} P(1-P) \: \: \text{ e }
+\: \: Var_{AASs} (\widehat P) = \left( \frac 1 n - \frac {1}{N} \right) \frac{N}{N-1} P(1-P).$$
+
+* Se o número de unidades $N$ é suficientemente grande, tem-se que $Var_{AAS} (\widehat p) \doteq \frac {P (1 - P)}{n}$, resultando em desempenhos similares entre **AASs** e *AASC* na estimação da proporção populacional. 
+
+  + Intuitivamente, isso ocorre porque a probabilidade de seleção repetida sob **AASc** tende a ser muito pequena no caso de populações muito grandes.
+
+---
+
+## Estimação sob amostragem aleatória simples 
+### SEM REPOSIÇÃO AASs 
+
+Utilizando $\widehat S^2_y$ como estimador não viciado para $S^2_y$ chega-se aos estimadores para as variâncias dos estimadores de total e proporção:
+
+$$\widehat Var_{AAS} (\widehat {N} _A) = N^2 \left( \frac 1 n - \frac {1}{N} \right) \frac {n \widehat P (1 - \widehat P)} {n-1}$$
+e
+
+$$\widehat Var_{AAS} (\widehat P) = \left( \frac 1 n - \frac {1}{N} \right) \frac {n \widehat P (1 - \widehat P)} {n-1}$$
+
+---
+
+## Distribuição amostral EXATA de estimadores
+### COM REPOSIÇÃO AASc 
+
+* Na **AASc**, a **soma amostral** $t_y = n_A \sim Bernoulli(P)$, portanto, $t_y = n_A \sim Binomial(n,P)$, 
+  
+$$E_{AASc}(n_A) = n p {\quad \text e \quad} V_{AASc}(n_A) = n P (1-P)$$
+
+* Da mesma forma o **valor esperado** e a **variância** de $\widehat P$:
+
+$$E_{AASc} (\widehat P) = E_{AASc} \left(\frac{n_A}{n} \right) = P  {\quad \text e \quad} Var_{AASc} (\widehat P) = \frac {P (1-P)} {n}$$
+
+Outro resultado importante da **distribuição** de probabilidades **exata** de $\widehat P$,
+
+$$P \left(\widehat P = \frac v n \right) = P(n_A = v) = \binom{n} {v} P^v (1-P)^{n-v} ,\quad \forall\, v=0, 1, 2, ..., n.$$
+
+Esta distribuição corresponde apenas a uma transformação escalar da distribuição $\text {Binomial}(n,p)$, onde a contagem de sucessos $(n_A)$ é dividida pelo número de sorteios $(n)$.
+
+---
+
+## Distribuição amostral EXATA de estimadores
+### SEM REPOSIÇÃO AASs
+
+* Sob **AASs**, temos $n_A \sim Hipergeométrica(N, N_A, n)$, $n$ sorteios são feitos da população sem reposição.
+
+    + O **número total de amostras** aleatórias simples sem reposição de tamanho $n$, $\binom{N}{n}$; 
+    
+    + o número dessas amostras com exatamente $v$ unidades com a característica em estudo e $n-v$ unidades sem essa característica pode ser calculado por $\binom{N_A}{v}\binom{N-N_A}{n-v}$, assim a **distribuição** de probabilidades de $t_y = n_A$ é dada por:
+
+$$P \left(n_A = v \right) = \frac {\binom{N_A} {v} \binom{N-N_A} {n-v}}{\binom{N} {n}} , \quad \forall\, v=0, 1, 2, ..., min(n;N_A)$$
+---
+
+## Distribuição amostral EXATA de estimadores
+### SEM REPOSIÇÃO AASs
+
+* Assim fica também determinada a distribuição exata de probabilidades do estimador $\widehat p$, que é a mesma de $n_A$ com os valores possíveis divididos pelo tamanho da amostra $n$.
+
+Consequentemente tem-se que o valor esperado de unidades com o atributo de interesse na amostra e sua variância serão dados por:
+
+$$E_{AASs}(n_A) = n \ frac{N_A} N = n P \quad \text e \quad Var_{AAS}(n_A) = n P (1-P)\frac{N-n}{N-1}$$
+
+Para o estimador, $\widehat p=n_A/n$, da proporção de unidades com o atributo de interesse na população tem-se:
+
+$$E_{AAS}(\widehat p)=p \quad\text e\quad V_{AAS}(\widehat p)=\left(\frac1n-\frac1N\right)S^2_y$$
+
+---
+
+## Intervalos de confiança para proporções na amostragem aleatória simples
+
+* Na *AAS*, tanto com ou sem reposição, são conhecidas as distribuições exatas para o estimador $\widehat p$. 
+
+  + Portanto, é possível obter os limites inferior e superior para intervalos de confiança para a proporção $p$, com um nível de significância $\alpha$ fixado. 
+
+.pull-left[
+Para isso, no caso de **AASc**, é necessário resolver o sistema de equações determinando os valores de $\widehat p_I$ e $\widehat p_S$ que satisfaçam:
+
+$$
+\begin{cases}
+\sum _{v=0}^{n_A} \binom {n}{v} \widehat p_S^v (1 - \widehat p_S)^{n-v} = \alpha / 2 \\
+\sum _{v=n_A}^n \binom {n}{v} \widehat p_I^v (1 - \widehat p_I)^{n-v} = \alpha / 2
+\end{cases}
+$$
+]  
+.pull-right[
+No caso da **AASs**, o sistema a ser resolvido é baseado na distribuição Hipergeométrica como se segue:
+
+$$
+\begin{cases}
+\sum_ {v=0}^{n_A}\frac {\binom{N\widehat p_S}{v} \binom{N-N\widehat p_S} {n-v}}{\binom{N}{n}} = \alpha / 2 \\
+\sum_ {v=n_A}^{n}\frac {\binom{N\widehat p_I}{v} \binom{N - N \widehat p_I} {n-v}} {\binom{N}{n}} = \alpha / 2
+\end{cases}
+$$
+]
+
+
+Em ambos os casos $1 - \alpha$ é o *nível de confiança* desejado. Por exemplo, para intervalos de 95% de confiança, deve-se usar $\alpha= 0,05$.
+
+---
+
+## Intervalos de confiança para proporções na amostragem aleatória simples
+
+* A solução desses sistemas costumava ser trabalhosa, exigindo aplicação de métodos iterativos que consumiam quantidade razoavelmente grande de recursos computacionais. 
+
+  + Atualmente, com o avanço dos métodos computacionais, esse problema pode facilmente ser resolvido, por exemplo, com o uso do R. Uma maneira é utilizar as funções *qbinom* e *qhyper* que podem calcular os quantis das distribuições Binomial e Hipergeométrica para $\alpha /2$ e $1 -\alpha /2$.
+
+* Além disso, há outros programas prontos facilmente utilizávies como, por exemplo, as funções *binconf* e *confCI* incluídas, respectivamente, nos pacotes *Hmisc* e *prevalence* do R. 
+  
+  + Essas funções estimam intervalos de confiança para vários métodos além do mostrado acima, como o da aproximação Normal, apresentado na próxima seção, além de outras abordagens.
+
+* Há, também, no pacote *survey* uma função específica, *svyciprop*, para calcular intervalos de confiança para proporções. Uma característica interessante do pacote *survey* é que é possível determinar a utilização do fator de correção para populações finitas, quando a seleção é sem reposição.
+
+<!-- **(#exm:exmprop2)** Voltando ao exemplo da escola com $N=1.000$ alunos, suponha que foi selecionada uma amostra aleatória simples de tamanho $n=125$ e foi investigado o sexo de cada um desses alunos, sendo que 60 são do sexo feminino. Construir um intervalo de aproximadamente 95% de confiança para a proporção de alunos do sexo feminino, utilizando os vários métodos  da linguagem R sugeridos acima. -->
+
+---
+
+## Intervalos de confiança utilizando a aproximação Normal
+
+* A distribuição do estimador da proporção, $\widehat P$, pode ser aproximada pela distribuição Normal de probabilidade. 
+
+  + Pode ser utilizada mesmo no caso da **AAS** onde os $y_i$ observados na amostra não são independentes, desde que se tenha valores de $N$ e $n$ suficientemente grandes e valor da fração amostral, $f=\frac n N$, pequeno.
+
+* Sob estas condições pode-se considerar que:
+
+$$\frac {\widehat p - p} {\sqrt {V_{p(s)}(\widehat p)}} \approx N(0;1)$$
+
+---
+
+## Intervalos de confiança utilizando a aproximação Normal
+Os histogramas abaixo mostram os valores estimados da proporção $P$ de unidades com uma determinada característica de interesse, a partir de 1.000 amostras aleatórias simples de tamanho $n=100$, de uma população de tamanho $N=5.000$, onde exatamente metade das unidades tem a característica de interesse $(p=1/2)$. Valores normalizados de acordo com a aproximação acima.
+
+.pull-left[
+Com reposição
+```{r,figprop1,echo=F,fig.cap="Aproximação Normal da distribuição do estimador de $p$ no caso de *AASC*"}
+y=NULL
+p_est=NULL
+p_norm=NULL
+p=0.5
+n=100
+
+for (i in 1:5000){ifelse (i/2-trunc(i/2)>0, y[i]<-1,y[i]<-0)}
+set.seed=20191112
+for(j in 1:1000){p_est[j]=mean(sample(y,n,replace=T))}
+
+p_norm=(p_est-p)/sqrt(p*(1-p)/n)
+
+hist(p_norm, freq = F,main=NULL, xlab="Abscissa da N(0;1)", ylab="Densidade da N(0;1)",ylim=c(0,0.5))
+
+curve(dnorm(x,0,1), col=2, lty=2, lwd=2, add=T)
+
+legend("topright", bty="n", seg.len=3, lty=c(2,1), lwd=c(2,2),col=c(2,1),
+       legend=c("N(0;1)","Histograma"), merge=TRUE, trace=FALSE)
+
+```
+]
+.pull-right[
+Sem reposição.
+```{r,figprop2,echo=F,fig.cap="Aproximação Normal da distribuição do estimador de $p$ no caso de *AAS*"}
+y=NULL
+p_est=NULL
+p_norm=NULL
+p=0.5
+n=100
+
+for (i in 1:5000){ifelse (i/2-trunc(i/2)>0, y[i]<-1,y[i]<-0)}
+set.seed=20191112
+for(j in 1:1000){p_est[j]=mean(sample(y,n,replace=F))}
+
+p_norm=(p_est-p)/sqrt(p*(1-p)/n)
+
+hist(p_norm, freq = F,main=NULL, xlab="Abscissa da N(0;1)", ylab="Densidade da N(0;1)",ylim=c(0,0.5))
+
+curve(dnorm(x,0,1), col=2, lty=2, lwd=2, add=T)
+
+legend("topright", bty="n", seg.len=3, lty=c(2,1), lwd=c(2,2),col=c(2,1),
+       legend=c("N(0;1)","Histograma"), merge=TRUE, trace=FALSE)
+
+```
+]
+
+Tanto nos casos de seleção com ou sem reposição pode-se considerar que as aproximações são satisfatórias, com os histogramas das distribuições amostrais do estimador $\widehat P$ aderindo consideravelmente à curva Normal padrão.
+
+---
+
+Cochran(1977) mostra uma tabela, com alguns valores mínimos do total de unidades observadas na amostra, $n_A$, onde a aproximação Normal pode ser utilizada.
+
+$p$ | $n_A$ | $n$
+--|--|--
+0,50  |       15  |   30
+0,40  |       20  |   50
+0,30  |       24  |   80
+0,20  |       40  |   200
+0,10  |       60  |   600
+0,05  |       70  |   1.400
+$\doteq 0$  | 80  |   $\infty$
+
+A Tabela \@ref(tab:tabprop3) foi construída considerando um nível de significância de $\alpha=0,05$, que é um valor comumente utilizado em muitas situações práticas.Tem-se, a partir daí, critérios práticos para assumir a utilização da aproximação Normal, notando-se que o tamanho mínimo da amostra requerido é de $n=30\small.$
+
+---
+
+Nas condições estabelecidas para a validade da aproximação Normal, tem-se que $S^2_y \doteq \sigma^2_y=p(1-p)$, portanto, $\displaystyle V_{AAS}(\widehat p) \doteq V_{AASC}(\widehat p)$. Então, para os dois tipos de seleção, pode-se considerar o intervalo de confiança para a proporção como:
+
+$$IC(p;{1-\alpha})=\left[\widehat p-z_{\alpha/ 2}\sqrt { \frac{p(1-p)}n}\,;\,\widehat p+z_{\alpha/2}\sqrt {\frac{p(1-p)}n}\,\, \right]$$
+Caso se deseje considerar o fator de correção para populacões finitas, quando a fração amostral não possa ser considerada pequena e a seleção for sem reposição, a expressão do intervalo de confiança passa a ser:
+
+$$IC(p;{1-\alpha})=\left[\widehat p \mp z_{\alpha/ 2}\sqrt { \left(\frac{N-n}{N-1} \right)\frac{p(1-p)}{n}}\ \right]$$
+
+---
+
+Em Cochran(1977) também é apresentada uma *correção de continuidade* acrescentando a fração $1/2n$ à margem de erro do intervalo de confiança pelo fato de se fazer uma aproximação de uma distribuição discreta (Binomial ou Hipergeométrica) pela distribuição Normal, que é contínua. Desse modo a expressão do intervalo de confiança passa a ser:
+
+$$IC(p;{1-\alpha})=\left[\widehat p \mp \left(z_{\alpha/ 2}\sqrt {\frac{p(1-p)}n}+\frac1{2n} \right) \right]$$
+Ou considerando a correção para população finita:
+
+$$IC(p;{1-\alpha})=\left[\widehat p \mp \left(z_{\alpha/ 2}\sqrt { \left(\frac {N-n}{N-1} \right) \frac{p(1-p)}{n}}+\frac 1 {2n} \right) \right]$$
+---
+
+Nas aplicações práticas o valor da variância do estimador da proporção $p$, geralmente, não é conhecido. Assim o que se pode fazer é estimar um intervalo de confiança, substituindo $S^2_y$ por $\widehat S^2_y$ na expressões anteriores:
+
+$$\widehat{IC}(p;{1-\alpha})=\left[\widehat p \mp \left(z_{\alpha/ 2}\sqrt {\frac{\widehat p \widehat q} {n-1}} + \frac 1{2n} \right) \right]$$
+
+$$\widehat{IC}(p;{1-\alpha})=\left[\widehat p \mp \left(z_{\alpha/ 2}\sqrt {\left(\frac{N-n}{N}\right) \frac{\widehat p \widehat q} {n-1}} + \frac 1{2n} \right) \right]$$
+
+Note que o efeito da correção de continuidade tende rapidamente a ser nulo quando o tamanho da amostra, $n$, cresce. Para uma amostra de tamanho $n=50$ esse fator já é de apenas 1%, o que pode ser desprezível dependendo da proporção que estiver sendo estimada, porém é preciso muito cuidado pois quando se está trabalhando com proporções são valores, às vezes, bastante pequenos.
+
+<!-- **(#exm:exmprop3)** Em um período pré-eleitoral, deseja-se estimar a intenção de votação dos eleitores nos candidatos A e B. Para isso foi selecionada e pesquisada uma amostra AAS de 2.000 eleitores. Desses, 900 declararam intenção de votar em A, 800 em B e os demais 300 se disseram indecisos. Supondo que o total de eleitores da população de pesquisa é de 4 milhões, responda às perguntas abaixo. -->
+
+---
+
+## Cálculo do tamanho da amostra
+
+O tamanho de uma amostra aleatória simples a ser selecionada, como já foi visto no capítulo anterior, é calculado a partir da definição do erro amostral ou margem de erro admissível para o caso, do nível de confiança desejado e se a seleção for com ou sem reposição.
+
+No caso de seleção com reposição, considerando uma margem de erro máxima admissível $D$ com um nível de confiança $1-\alpha$, basta utilizar a expressão da margem de erro:
+
+$$D \le z_{\alpha/2}\sqrt { \frac{p(1-p)}{n}} \implies n \ge \frac{z^2_{\alpha/2}{p(1-p)}}{D^2}$$
+Para a seleção sem reposição, o tamanho da amostra é calculado como:
+
+$$D \le z_{\alpha/2}\sqrt{\left(\frac {N-n}{N-1}\right)\frac{p(1-p)}n} \implies  n \ge \frac{z^2_{\alpha/2}p(1-p)} {D^2 \frac {N-1}N + \frac 1 N {z^2_{\alpha /2}p(1-p)}}$$
+
+---
+
+Considerando $\displaystyle\frac{N-1}{N}\doteq 1$, tem-se que:
+
+$$D \le z_{\alpha/2}\sqrt{\left(\frac {N-n}{N-1}\right)\frac{p(1-p)}n} \implies  n \ge  \frac {Np(1-p)}{ND^2 /{z^2_{\alpha /2}} + p(1-p)}$$
+
+Uma maneira prática de calcular o tamanho da amostra para uma *AAS* em dois passos é calcular primeiro:
+
+$$n_0=\frac{z^2_{\alpha/2}p(1-p)}{D^2}$$
+E depois fazer:
+
+$$n \ge \frac {n_0}{1+n_0 /N}$$
+
+Note que $n_0$ é equivalente ao tamanho da amostra para uma *AASC* e o valor de $n$ para a *AAS* é obtido pela correção para população finita do valor $n_0$. Também pode-se concluir que quando o tamanho da população, $N$, é grande o fator $n_0/N$ tende a se anular fazendo com que $n \doteq n_0$, ou seja, quando o tamanho da população é grande as amostras aleatórias simples com ou sem reposição são equivalentes.
+
+<!-- As fórmulas apresentadas dependem do nivel de significância $\alpha$ e da margem de erro $D$ que devem ser definidos pelo pesquisador de acordo com seu conhecimento relativo ao assunto pesquisado, pois esses valores estão diretamente  ligados à natureza da pesquisa. -->
+
+<!-- Pesquisas que utilizam medidas objetivas para alcançar seus resultados, como instrumentos para medir fisicamente o fenômeno estudado, podem ser mais exigentes quanto à precisão das estimativas desejadas, enquanto que pesquisas da área social, por exemplo, onde se utilizam questionários e que dependem da memória ou até da boa vontade dos entrevistados, frequentemente não podem ter o mesmo nível de exigência.  -->
+
+<!-- O tamanho da amostra também depende da variância da variável utilizada para seu cálculo, através do produto $p(1-p)$. Como $p$ é a proporção que se deseja estimar, se fosse conhecida não haveria a necessidade de uma amostra. Geralmente, como no caso de se pesquisar variáveis contínuas, utilizam-se pesquisas anteriores ou variáveis correlacionadas com a atual variável de interesse, ou mesmo uma pesquisa piloto com um tamanho arbitrário de amostra, para se ter uma estimativa inicial do fenômeno a ser medido e poder calcular o tamanho de amostra realmente necessário. Quando se utiliza uma pesquisa piloto, existem métodos para utilizar os resultados relativos às unidades já pesquisadas e selecionar outras unidades para complementar o tamanho da amostra. -->
+
+<!-- No caso da estimação de proporções, o valor de $p(1-p)$ é limitado variando de 0 a 0,25, sendo esse valor máximo atingido quando $p= 0,5$. O gráfico da Figura \@ref(fig:figprop3) mostra como variam os valores de $p(1-p)$ conforme a variação dos valores de $p$. -->
+
+<!-- <center> -->
+<!-- ```{r, figprop3,fig.cap="Variação de $p(1-p)$ em função dos valores de $p$",echo=F} -->
+<!-- p=seq(0,1, by=0.001) -->
+<!-- pq=p*(1-p) -->
+<!-- plot(p,pq, type="l", xlab="p",ylab="p(1-p)") -->
+<!-- ``` -->
+<!-- </center> -->
+
+<!-- Como o valor máximo de $S_y^2\doteq \sigma _y^2=p(1-p)$, que é a maior variabilidade da variável de interesse, é atingido quando $p=0,5$, caso não exista nenhuma informação sobre o a proporção a ser estimada, uma maneira de determinar um tamanho de amostra conservador é supor exatamente que $p=0,5$. Assim pode-se simplificar a fórmula de cálculo de $n$ para uma *AASC*:  -->
+
+<!-- $$  -->
+<!-- n \ge \frac {z^2_{\alpha /2}}{4D^2}(\#eq:eqpro39)  -->
+<!-- $$ -->
+<!-- No caso de uma *AAS* basta fazer: -->
+
+<!-- $$ -->
+<!-- n_0 = \frac {z^2_{\alpha /2}}{4D^2} \:\:\:\:\text{e}\:\:\:\:n \ge \frac {n_0}{1+n_0/N}(\#eq:eqpro40)  -->
+<!-- $$ -->
+
+<!-- Geralmente os resultados das fórmulas para cálculo do tamanho da amostra não são valores inteiros. Em todos esses casos o valor de $n$ calculado deverá ser arredondado para o valor inteiro imediatamente superior, preservando assim a precisão desejada. -->
+
+<!-- **(#exm:exmprop4)** Uma empresa precisa selecionar uma amostra de uma população composta de 30.000 domicílios para estimar a proporção de domicílios que consomem suprimentos para animais domésticos.  -->
+<!-- O diretor da empresa pergunta ao estatístico qual o tamanho de amostra que deve utilizar na pesquisa e diz que lhe foi sugerida a seguinte fórmula para determinar o tamanho da amostra: -->
+<!-- $$n\ge\frac {Np(1-p)}{ND^2 /{z^2_{\alpha /2}} + p(1-p)}$$ -->
+
+
+<!--   a)  A fórmula acima está correta? Sob que hipóteses ou condições? Se não, qual seria a fórmula correta? -->
+<!--   b)  Que tamanho deveria ter a amostra para estimar a proporção de domicílios que consomem suprimentos para animais domésticos, tal que a estimativa não se afaste do verdadeiro valor da proporção mais do que 1% com 95% de confiança? -->
+<!--   c)  Se o diretor da empresa informar ao estatístico que a proporção de domicílios que consomem suprimentos para animais domésticos varia no intervalo [0,10; 0,30], mudaria a resposta para o item b? Caso afirmativo, qual seria a nova resposta? -->
+
+<!--   A resposta para o item a é que a fórmula está correta, pois, sendo a população bastante grande, $N=30.000$, pode-se desprezar o fator de correção $(N-1)/N$ como mostrado na Expressão \@ref(eq:eqpro36). -->
+
+<!--   Para os demais itens pode-se recorrer ao R. -->
+
+<!-- ```{R,echo=T} -->
+<!-- # Opção para controlar impressão de valores grandes e evitar uso de notação científica -->
+<!-- options(scipen=8) -->
+<!-- # Item b -->
+<!-- # Especifica margem de erro -->
+<!-- (D <- 0.01) -->
+<!-- # Tamanho da população -->
+<!-- (N <- 30000) -->
+<!-- # Valor da Normal para o nível de significância desejado -->
+<!-- (z2alfa=qnorm(0.975)) -->
+
+<!-- # Item b -->
+<!-- # Usando fórmula 'exata' e proporção que maximiza variância, já que  -->
+<!-- # não há informação sobre o valor de p -->
+<!-- (p <- 1/2) -->
+<!-- (q <- 1-p) -->
+<!-- # Calculando o tamanho da amostra, arredondando o valor de n para cima -->
+<!-- (n <- ceiling(N * p * q/(N*D^2/z2alfa^2 +  p * q))) -->
+
+<!-- #Item c - nste caso há a indicação de um intervalo que deve conter o valor da proporção -->
+<!-- #a ser estimada. Deve-se, então, calcular os tamanhos de amostra para os limites do -->
+<!-- #intervalo e optar pelo maior tamanho de amostra obtido, pois esse valor satisfaz a -->
+<!-- #condição de maior exigência -->
+<!-- # Usando fórmula 'exata' e proporção no limite inferior  -->
+<!-- (p <- 0.1) -->
+<!-- (q <- 1-p) -->
+<!-- # Calculando o tamanho da amostra, arredondando o valor de n para cima -->
+<!-- (n <- ceiling(N * p * q/(N*D^2/z2alfa^2 +  p * q))) -->
+<!-- # Usando fórmula 'exata' e proporção no limite superior  -->
+<!-- (p <- 0.3) -->
+<!-- (q <- 1-p) -->
+<!-- # Calculando o tamanho da amostra,arredondando o valor de n para cima -->
+<!-- (n <- ceiling(N * p * q/(N*D^2/z2alfa^2 +  p * q))) -->
+<!-- ``` -->
+
+<!-- No caso de não existir nenhuma indicação sobre o valor de $p$, como no item b do exemplo, deve-se tomar $n=7.275$, supondo $p=0,5$. Já no item c, deve-se optar pelo maior tamanho de amostra necessário para suprir as exigências de precisão. Neste caso, como a informação é que $p$ deve estar no intervalo [0,10; 0,30] deve-se selecionar uma amostra de $n=6.358$ domicílios.  -->
+
+<!-- Sugere-se que o leitor refaça o exercício com uma margem de erro diferente, $D=0,03$, por exemplo, e observe o que acontece com os valores de $n$ calculados. -->
+
+<!-- ### Cálculo do $n$ utilizando outras formas de representar o erro amostral -->
+
+<!-- As fómulas apresentadas para o cálculo do tamanho da amostra utilizaram a margem de erro $D$ como parâmetro de entrada, porém o erro amostral pode ser representado de outras maneiras. Pode-se defini-lo como o *coeficiente de variação*, como a *variância* ou como o *erro relativo* do estimador a ser calculado. -->
+
+<!-- Para calcular um tamanho de amostra de maneira que o coeficiente de variação máximo esperado para o estimador $\widehat p$ seja um valor fixado $c$, pode-se utilizar a fórmula: -->
+
+<!-- $$ -->
+<!-- n \ge \frac {1-p} {c^2p}(\#eq:eqpro41)  -->
+<!-- $$ -->
+<!-- no caso da seleção com reposição. -->
+
+<!-- Para chegar a esse resultado, basta ver que $CV_{AASC}(\widehat p)= \displaystyle\frac {\sqrt {V_{AASC}(\widehat p)}}p$ e substituir na fórmula apresentada para o cálculo de $n$ a partir da margem de erro fixada. -->
+
+<!-- Para a seleção sem reposição pode-se fazer: -->
+
+<!-- $$ -->
+<!-- n_0 = \frac {1-p} {c^2p} \:\:\:\:\text{e}\:\:\:\: n \ge \frac {n_0} {1+n_0/N}(\#eq:eqpro42)  -->
+<!-- $$ -->
+
+<!-- Seguindo o mesmo raciocínio pode-se chegar às formulas para calcular *n* fixando a variância máxima esperada de $\widehat p$ em $v$ ou o seu erro relativo máximo em $r$. -->
+
+<!-- Para a seleção com reposição tem-se: -->
+
+<!-- $$ -->
+<!-- n \ge \frac {p(1-p)} {v}  { \quad\text { ou } \quad} n \ge \frac {z^2_{\alpha/2}}{r^2} \frac {1-p} p (\#eq:eqpro43)  -->
+<!-- $$ -->
+
+<!-- As expressões para a seleção sem reposição são derivadas como no caso em que foi fixado o valor máximo esperado para $CV(\widehat p$). -->
+
+
+<!-- ## Estimação de proporções para variáveis com mais de duas categorias -->
+
+<!-- Até o momento foi tratado o caso em que temos uma variável indicadora com duas categorias, definindo se uma determinada unidade na população (ou na amostra) tem ou não determinada característica de interesse. Muitas vezes temos a necessidade de definir mais de duas categorias como, por exemplo: -->
+
+<!-- * Estudar a distribuição por faixas etárias de um grupo de pessoas. -->
+<!-- * Estudar a classificação econômica das empresas de determinado país. -->
+<!-- * Estimar a intenção de votos dos candidatos em uma eleição com mais de 2 candidatos, além das possibilidades de voto em branco ou nulo ou, ainda, eleitores indecisos. -->
+
+<!-- Nesses casos, há interesse de estimar a proporção de unidades em cada uma das possíveis categorias e respectiva precisão. -->
+
+<!-- **(#exm:exmprop5)** Seja uma escola com 1.000 alunos distribuídos entre as 9 etapas do ensino fundamental como na Tabela  \@ref(tab:tabprop4): -->
+
+<!-- <center> -->
+<!-- ```{r,results="asis",echo=FALSE} -->
+<!-- cat("<table>",paste0("<caption>", "(#tab:tabprop4)","Distribuição dos alunos por etapa de ensino", "</caption>"),"</table>", sep ="\n") -->
+<!-- ``` -->
+<!-- ---------- -->
+<!-- Etapa de ensino   Alunos       Proporção -->
+<!-- ---------------- -----------  ------------- -->
+<!--  1° ano           110           0,110     -->
+
+<!--  2° ano           108           0,108     -->
+
+<!--  3° ano           110           0,110     -->
+
+<!--  4° ano           115           0,115     -->
+
+<!--  5° ano           104           0,104     -->
+
+<!--  6° ano           119           0,119     -->
+
+<!--  7° ano           116           0,116     -->
+
+<!--  8° ano           107           0,107     -->
+
+<!--  9° ano           111           0,111     -->
+
+<!--  **Total**       **1.000**     **1,000** -->
+
+<!-- ---------- -->
+<!-- </center> -->
+
+
+<!-- Observe que, para calcular as proporções em cada uma das categorias, na verdade o que se faz é atribuir o valor $1$ às unidades da categoria em questão e o valor $0$ para as unidades pertencentes às demais categorias. Em outras palavras, se a variável tem $M$ categorias é como se fossem $M$ problemas com duas categorias. -->
+
+<!-- A proporção de unidades da população pertencentes à categoria $c\in (1, 2,.., M)$, é dada por: -->
+
+<!-- $$ -->
+<!-- p_c=\frac {N_c} {N} (\#eq:eqpro44)  -->
+<!-- $$ -->
+<!-- 0nde $N_c$ é o número de unidades na categoria $c$ e $N$ é o tamanho total da população. -->
+
+<!-- Seja uma amostra aleatória simples (com ou sem reposição) de tamanho $n$ e seja a variável indicadora $y_i$ definida como: -->
+
+<!-- $$ -->
+<!-- \displaystyle y_i= \begin{cases} 1, \text { se a unidade} \textit{ i } \text{pertence à categoria $c$} \\ 0, \text { se a unidade}\textit{ i } \text{ pertence a outra categoria} \end{cases} -->
+<!-- (\#eq:eqpro45) -->
+<!-- $$ -->
+
+<!-- Com tal definição pode-se ver que o número de unidades da categoria $c$ na amostra será dado por: -->
+
+<!-- $$ -->
+<!-- \displaystyle n_c=\sum_{i=1}^{n} y_i(\#eq:eqpro46) -->
+<!-- $$ -->
+<!-- Um estimador para a proporção de unidades populacionais pertencentes à categoria $c$ é dado por: -->
+
+<!-- $$ -->
+<!-- \displaystyle \widehat p_c=\frac {1}{n} \sum_{i=1}^{n} y_i =\frac {n_c} {n}(\#eq:eqpro47) -->
+<!-- $$ -->
+<!-- O problema foi reduzido ao caso de estimar proporções em variáveis com duas categorias. -->
+<!-- Pode-se obter, também, estimativas de precisão utilizando as mesmas ferramentas já apresentadas neste capítulo. -->
+
+<!-- Muitas vezes pode-se estar interessado em estimar proporções para agrupamentos das categorias originais.  -->
+
+<!-- Voltando ao exemplo da escola do ensino fundamental, pode ser de interesse estudar a proporção de seus alunos que estão matriculados no primeiro segmento do ensino fundamental. Nesse caso, seriam contabilizados como pertencentes à categoria $c$ de interesse todos os alunos do 1º até o 5º ano, para os quais $y_c=1$, sendo $y_c=0$ para os demais alunos da escola. -->
+
+<!-- Outro caso de interesse ocorre quando, na aplicação de um questionário, por exemplo, aparecem respondentes que se recusaram a responder ou, mesmo, disseram que não sabiam a resposta. Num caso como esse, pode-se estar interessado em estimar a proporção das pessoas que responderam determinada alternativa, entre as pessoas que efetivamente responderam a pesquisa escolhendo uma das alternativas válidas. Um exemplo prático seria uma pesquisa sobre a intenção de voto numa eleição com apenas dois candidatos. Nesse caso, o entrevistado poderia responder que votará no canditato A, no candidato B, que votará nulo ou em branco, onde apenas as duas primeiras alternativas seriam consideradas como votos válidos. -->
+
+<!-- Pode-se estimar a proporção para cada uma das quatro categorias iniciais ou apenas a proporção de votos válidos para cada um dos dois candidatos: -->
+
+<!-- $$ -->
+<!-- \displaystyle \widehat p_A=\frac {n_A} {n_A+n_B} \quad\text { e } \quad\widehat p_B=\frac {n_B} {n_A+n_B}(\#eq:eqpro48) -->
+<!-- $$ -->
+
+<!-- Vale notar que em \@ref(eq:eqpro48) tanto o numerador como o denominador do estimador da proporção são variáveis aleatórias, pois a população (eleitores que efetivamente vão votar num dos candidatos) é desconhecida. -->

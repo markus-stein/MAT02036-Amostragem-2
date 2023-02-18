@@ -1,0 +1,343 @@
+---
+title: "MAT02036 - Amostragem 2"
+subtitle: "Aula 13 - Amostragem por Conglomerados - Cont. Estimação e Lab `R`" 
+author: "Markus Stein"
+institute: "Departamento de Estatística, IME/UFRGS"
+date: "2022/2"
+type: "lecture"
+# fontsize: 10pt
+output:
+  xaringan::moon_reader:
+    # css: ["assets/remark.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      titleSlideClass: [center, middle]
+---
+
+```{r libs, echo=FALSE, message=FALSE, warning=FALSE}
+library(xaringanExtra)
+library(emo)
+library(fontawesome)
+library(kableExtra)
+```
+
+```{r xaringan-logo, echo=FALSE}
+# install.packages("remotes")
+# remotes::install_github('yihui/xaringan')
+# remotes::install_github("gadenbuie/xaringanExtra")
+# xaringanExtra::use_logo(
+#   image_url = "https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/xaringan.png"
+# )
+xaringanExtra::use_logo( here::here('img/logo_dest.png'))
+```
+
+### *Housekeeping*
+
+* Aproveitem o momento presencial para tirar dúvidas
+
+* Se estivéssemos no ensino remoto ou à distância
+
+  + vocês poderiam estar somente ouvindo, sem interação
+  
+  + ou assistindo vídeos e material em outro momento
+  
+* Depois das aulas, rever material da aula passada
+
+  + fazer exercícios
+  
+  + se preparar para a próxima aula
+
+---
+
+## Aula passada `r emo::ji("disk")`
+### Amostragem por Conglomerados em 1 Estágio Simples
+
+Abaixo segue um resumo de estimadores do total, média e respectivas variâncias sob AC1S. 
+
+Estimador | $HT$ 
+--|:--:
+Total | $\widehat T_{AC1S/HT} = \frac {M}{m} \sum_{i \in a} T_i = M \overline y_C = \sum_{i \in a} \sum_{j \in C_i} d_{ij} y_{ij}$
+Média | $\overline y_{AC1S/HT} = \frac {\widehat T_{AC1S/HT}}{N} = \frac {M} {N} \frac{1}{m} \sum_{i \in a} Y_i = \overline y_C / \overline N$ 
+Variância do total | $\widehat Var_{AC1S} \left( \widehat T_{AC1S/HT} \right) = M^2 \left( \frac 1 m - \frac 1 M \right) \widehat S_{ec}^2$ 
+Variância da média | $\widehat Var_{AC1S} \left( \overline y_{AC1S/HT} \right) = \frac {1} {\overline N^2} \left( \frac 1 m - \frac 1 M \right) \widehat S_{ec}^2$
+
+---
+
+## Aula passada `r emo::ji("disk")`
+### Amostragem por Conglomerados em 1 Estágio Simples
+
+Abaixo segue um resumo de estimadores do total, média e respectivas variâncias sob AC1S. 
+
+Estimador | Razão                             
+--|:--:
+Total | $\widehat T_{AC1S}^R = \frac{N}{n} \sum_{i \in a} T_i = N \overline y = \sum_{i \in a} \sum_{j\in C_i} w_{ij}^R y_{ij}$
+Média | $\overline y_{AC1S}^R = \frac{\widehat T_{AC1S}^R}{N} = \frac{1}{n} \sum_{i \in a} T_i = \overline y_C / \overline  n = \overline y$
+Variância do total | $\widehat Var_{AC1S}\left( \widehat T_{AC1S}^R \right) = M^2 \left( \frac 1 m - \frac 1 M \right) \frac{1}{m-1} \sum_{i \in a} N_i^2 (\overline Y_i - \overline y)^2$
+Variância da média | $\widehat Var_{AC1S} \left( \overline y_{AC1S}^R \right) = \frac{1}{\overline n^2} \left( \frac1 m  - \frac 1 M \right) \frac{1}{m-1} \sum_{i\in a} N_i^2 \left( \overline Y_i - \overline y \right)^2$
+
+
+---
+
+
+class: inverse, middle, center
+
+# Continuação **AC1S** e Laboratório `R`
+
+---
+
+## Amostragem por Conglomerados em 1 Estágio Simples
+#### Exercício
+
+.pull-left[
+Um certo país possui $M = 10$ companhias aéreas com $N_i$ aviões cada. As milhas (*em milhares*) de cada avião $(y_{ij})$ num determinado período de tempo foram registradas.   
+]
+
+.pull-right[
+Cia $(i)$ | No. aviões $(N_i)$ | $T_i$ | $\overline Y_i$
+--|:--:|:--:|:--:
+1 | 10 | 40 | 4
+2 | 15 | 75 | 5
+3 | 15 | 75 | 5
+4 | 15 | 60 | 4
+5 | 10 | 60 | 6
+6 | 15 | 90 | 6
+7 | 15 | 75 | 5
+8 | 10 | 70 | 7
+9 | 10 | 40 | 4
+10 | 15 | 90 | 6
+**Total** | **130** | **675** | **52**
+]
+
+---
+
+## Amostragem por Conglomerados em 1 Estágio Simples
+#### Exercício
+
+**a.** Calcule os parâmetros total $(T)$ e média, individual $(\overline Y)$ e por conglomerados $(\overline Y_C)$ e a variância entre totaia dos conglomerados $S^2_{ec}$.
+
+**b*.** Calcule o viés dos estimadores **HT** e de **razão** para o total, $\widehat T$ (ou média, $\overline y$), são não viesados para os respectivos parâmetros que se destinam a estimar, $T$ e $\overline Y$. (Obs. mostrar analiticamente ou com os dados do exercício)
+
+**b.** Assumindo o plano **AC1S** com **AASs** de conglomerados, para amostras de tamanho $m=4$, calcule a variância do estimador natural $(HT)$ do total,  $Var_{AC1S} \left( \widehat T^{HT} \right)$, e a variância do estimador da média, $Var_{AC1S} \left( \overline y^{HT} \right)$.
+
+**c.** Repetir o item (b) para estimador o estimador de razão.
+
+**d.** Escolha um estimador para o total (ou para a média), selecione uma amostra e estime o parâmetro com base na amostra observada.
+
+---
+
+
+class: inverse, middle, center
+
+# Solução
+
+---
+
+## Amostragem por Conglomerados em 1 Estágio Simples
+#### Exercício
+
+```{r}
+## dados do problema
+i <- 1:10                                       # indice dos estratos
+Ni <- c(10, 15, 15, 15, 10, 15, 15, 10, 10, 15) # tamanhos dos estratos
+Ti <- c(40, 75, 75, 60, 60, 90, 75, 70, 40, 90) # totais dos estratos
+N <- sum(Ni)                 # tamanho da populacao
+M <- length(Ni)              # no. estratos na populacao 
+m <- 4                       # no. estratos na amostra   
+```
+
+**a.** Sabemos que
+
+Definição | Parâmetro
+--|--
+Total populacional |  $T = \sum_{i=1}^{M} T_i = \sum_{i \in C} T_i$
+Média populacional por unidade | $\overline Y = T / N = \frac 1 N \sum_{i \in C} T_i$
+Média populacional por conglomerado | $\overline Y_C = T / M = \frac 1 M \sum_{i \in C} T_i$ 
+Variância entre totais | $S_{ec}^2 = \frac {1} {M-1} \sum_{i \in C} \left( T_i - \overline Y_C \right)^2$
+
+---
+
+## Amostragem por Conglomerados em 1 Estágio Simples
+#### Exercício
+
+```{r}
+## (a) parametros
+Ty <- sum( Ti) 
+Ty
+Ybarra <- Ty / N
+Ybarra
+Ybarrac <- Ty / M
+Ybarrac
+S2ec <- (1/(M-1)) * sum((Ti - Ybarrac)^2)
+S2ec
+```
+
+---
+
+## Amostragem por Conglomerados em 1 Estágio Simples
+#### Exercício
+
+**b*.** Usando o `R` podemos gerar todas as ${M \choose m} = {10 \choose 4} = `r choose(M,m)`$ amostras possíveis, calcular a estimativa baseada em cada possível amostra e calcular a média das estimativas de todas as amostras. Sabemos que os estimadores $HT$ são
+
+$$t_{y,AC1S/HT} = \widehat T_{AC1S/HT} = \frac {M}{m} \sum_{i \in a} T_i \: \text{ e } \: \overline y_{AC1S/HT} = \frac {\widehat T_{AC1S/HT}}{N}$$
+
+```{r}
+## (b*) Distribuicao amostral dos estimadores do total e da média
+n_amostras <- choose(M, m)   # no. possiveis amostras
+Ti_amostras <- combn(Ti, m)  # lista possiveis amostras dos totais
+## estimadores HT
+ty_HT <- (M / m) * apply( Ti_amostras, 2, sum) # estimativas HT total
+mean(ty_HT - Ty)                            # vies HT total
+ybarra_HT <- ty_HT / N                      # estimativas HT media
+mean(ybarra_HT - Ybarra)                    # vies HT media
+```
+
+---
+
+## Amostragem por Conglomerados em 1 Estágio Simples
+#### Exercício
+E para o estimador de razão
+$$\widehat T_{AC1S}^R = \frac{N}{n} \sum_{i \in a} T_i = N \overline y \: \text{ e } \: \overline y_{AC1S}^R = \frac{\widehat T_{AC1S}^R}{N}$$
+
+```{r}
+## estimadores de RAZAO
+Ni_amostras <- combn(Ni, m)      # lista possiveis tamanhos de conglomerados
+n <- apply(Ni_amostras, 2, sum)  # tamanhos de amostras possiveis
+ty_R <- (N / n) * apply( Ti_amostras, 2, sum)  # estimativas de razao total
+mean(ty_R - Ty)                                # vies de razao total
+ybarra_R <- ty_R / N                           # estimativas de razao media
+mean(ybarra_R - Ybarra)                        # vies de razao media
+```
+
+---
+
+## Amostragem por Conglomerados em 1 Estágio Simples
+#### Exercício
+**b.** Sabemos que 
+$$Var_{AC1S} \left( \widehat T_{AC1S/HT} \right) = M^2 \left( \frac 1m - \frac 1M \right) S_{ec}^2$$
+e
+$$Var_{AC1S} \left( \overline y_{AC1S/HT} \right) = \frac{M^2}{N^2} \left( \frac 1m - \frac 1M \right) S_{ec}^2$$
+
+```{r}
+## (b) distribuicao amostral do total e media HT
+Vart_HT <- M^2 * (1/m - 1/M) * S2ec  # total
+Vart_HT
+Varybarra_HT <- Vart_HT / N^2        # media
+Varybarra_HT
+```
+
+---
+
+## Amostragem por Conglomerados em 1 Estágio Simples
+#### Exercício
+**c.** As variâncias para o estimador de razão são
+$$Var_{AC1S}\left( \widehat T_{AC1S}^R \right) = M^2 \left( \frac 1 m - \frac 1 M \right) \frac{1}{M-1} \sum_{i \in C} N_i^2 (\overline Y_i - \overline Y)^2$$
+e
+$$Var_{AC1S} \left( \overline y_{AC1S}^R \right) = \frac{Var_{AC1S}\left( \widehat T_{AC1S}^R \right)}{N^2}$$
+
+```{r}
+## (c) distribuicao amostral do total e media RAZAO
+Vart_R <-  M^2 * ( 1/m - 1/M) * 1/(M-1) * sum( Ni^2 * ( Ti / Ni - Ybarra)^2) # total
+Vart_R
+Varybarra_R <- Vart_R / N^2   # media
+Varybarra_R
+```
+
+---
+
+## Amostragem por Conglomerados em 1 Estágio Simples
+#### Exercício
+
+**d.**
+
+```{r}
+## (d) selecionar amostra de conglomerados e estimacao
+amostra <- sample(1:M, m)
+Ni <- Ni[amostra]
+Tiamostra <- Ti[amostra]
+ty <- sum(Tiamostra)
+ty
+```
+
+Estimamos que a distância total percorrida por todos os aviões do país pesquisado foi de $\widehat T = \sum_{i \in a} T_i = `r ty`$ *milhares* de milhas.
+
+---
+
+## Para casa `r emo::ji("house")`
+
+* Continuar o Exercício.
+
+<!-- * Mostrar tamanho de amostra $n$ para AASc dentro dos estratos. -->
+
+<!-- * Continuar exercícios do livro 'Amostragem: Teoria e Prática Usando R'    https://amostragemcomr.github.io/livro/estrat.html#exerc11 -->
+
+<!-- * Fazer exercícios da lista 1. -->
+
+* Ler o capítulo 12 do livro 'Amostragem: Teoria e Prática Usando R'.
+  
+* Rever os slides.
+
+<!-- * Ler BOlfarine e Bussab...da seção 11.3 do livro 'Amostragem: Teoria e Prática Usando R'. -->
+
+## Próxima aula `r emo::ji("stats")`
+
+* Acompanhar o material no moodle.
+
+Amostragem por Conglomerados
+
+  + Coeficiente de correlação intraclasse
+
+  + Tamanho de amostra e Intervalos de confiança
+  
+  <!-- + Laboratório de <i class="fa-duotone fa-people-group"></i>`r fa("r-project", fill = "steelblue")` -->
+
+---
+
+## Muito obrigado!
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='20%', out.height='20%', paged.print=FALSE}
+knitr::include_graphics(here::here('img', 'image_basu_elephant.jpg'))
+```
+.center[
+#### Fonte: imagem do livro *Combined Survey Sampling Inference: Weighing of Basu's Elephants*.
+]
+
+
+---
+
+## Referências
+
+<!-- Slides baseados no Capítulo 11 do livro -->
+
+* [Amostragem: Teoria e Prática Usando o R](https://amostragemcomr.github.io/livro/index.html)
+
+* **Elementos de Amostragem**, Bolfarine e Bussab.
+
+<!-- Citações do Capítulo -->
+
+<!-- * Neyman(1934) -->
+
+* Cochran(1977)
+
+
+<!-- * refazer calculos para amostagem aleatoria simples com reposicao -->
+<!-- * alocacao... ou lab R comparando alocação proporcional e igual tamanho -->
+
+<!-- listas de exercicios... -->
+<!-- dois aspectos da disciplina... ter flexibilidade com teoria... exercitar os conceitos com exercicios teoricos e praticos -->
+
+<!-- falar dos pesos na AES -->
+
+<!-- valor z_alpha/2 significa z ou t -->
+
+<!-- quem tiver interesse em conferir as fórmulas... mostra as conttas, gosta dessa pparte...posso contabilizar ponto extra... tem q ser o primeira... -->
+<!-- o mesmo pode valer para os códigos e texto... -->
+<!-- fazer o formulário -->
+<!-- resumo de formulas -->
+
+---
+
+## Resumo da notação
+

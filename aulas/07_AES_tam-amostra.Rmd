@@ -1,0 +1,341 @@
+---
+title: "MAT02036 - Amostragem 2"
+subtitle: "Aula 07 - Amostragem Estratificada - Tamanho Amostral" 
+author: "Markus Stein"
+institute: "Departamento de Estatística, IME/UFRGS"
+date: "2022/2"
+type: "lecture"
+# fontsize: 10pt
+output:
+  xaringan::moon_reader:
+    # css: ["assets/remark.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      titleSlideClass: [center, middle]
+---
+
+```{r libs, echo=FALSE, message=FALSE, warning=FALSE}
+library(xaringanExtra)
+library(emo)
+library(fontawesome)
+library(kableExtra)
+```
+
+```{r xaringan-logo, echo=FALSE}
+# install.packages("remotes")
+# remotes::install_github('yihui/xaringan')
+# remotes::install_github("gadenbuie/xaringanExtra")
+# xaringanExtra::use_logo(
+#   image_url = "https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/xaringan.png"
+# )
+xaringanExtra::use_logo( here::here('img/logo_dest.png'))
+```
+
+### *Housekeeping*
+
+* Aproveitem o momento presencial para tirar dúvidas
+
+* Se estivéssemos no ensino remoto ou à distância
+
+  + vocês poderiam estar somente ouvindo, sem interação
+  
+  + ou assistindo vídeos e material em outro momento
+  
+* Depois das aulas, rever material da aula passada
+
+  + fazer exercícios
+  
+  + se preparar para a próxima aula
+
+---
+
+## Aula passada `r emo::ji("disk")`
+**Comparação de alternativas de alocação da amostra**
+
+* Sob *alocação de Neyman*, 
+$$V_{AESne} \left( \overline y_{AES} \right) \le V_{AESpr} \left( \overline y_{AES} \right) \le V_{AAS} \left( \overline y \right)$$
+
+* **AES** com alocação de **Neyman** é **mais eficiente** que **AES** com alocação **proporcional**.
+
+* Ambas superam **AAS** como plano amostral para um mesmo tamanho especificado de amostra. 
+
+**Efeito do Plano Amostral/Delineamento** (*Design Effect*) de um *plano* amostral
+$$EPA_{plano} = deff_{plano} = \frac{Var(\overline y_{plano})}{Var(\overline y_{AAS_c})}.$$
+
+* se $deff_{plano} < 1$ então o **plano** é mais eficiente que a **AASc**.
+
+---
+
+## Aula passada `r emo::ji("disk")`
+**Comparação de alternativas de alocação da amostra**
+
+**Outro exemplo** de hoje: `r emo::ji("workout")`
+
+Sabemos mostrar $EPA_{AES_{pr}} = deff_{AES_{pr}}$ e $EPA_{AES_{pr}} = deff_{AES_{pr}}$ assumindo **AASc** dentro dos estratos`r emo::ji("question")`
+
+---
+
+class: inverse, middle, center
+
+# Tamanho da amostra na **AES**
+
+---
+
+## Tamanho da amostra na **AES**
+
+* Podemos determinar o **tamanho total da amostra** estratificada, a partir das expressões das variâncias dos estimadores, dado: 
+  + o tipo de **alocação**, $w_h = n_h / n$;
+  + a **variância máxima**, $V$, desejada para a estimativa do parâmetro.
+
+* Ex.: Estimação da **média populacional** sob **AASs** dentro dos estratos.
+  
+  + Substituindo $n_h = n \times w_h$ na expressão da variâcia do estimador, e fixando $V$ o valor máximo para sua estimativa,
+
+$$V \ge V_{AES} \left( \overline y_{AES} \right) = \sum_{h=1}^{H} W_h^2 S_{h,y}^2 \left( \frac{1}{n_h} - \frac{1}{N_h} \right) = \frac1n\sum_{h=1}^{H} \frac {W_h^2 S_{h,y}^2}{w_h} - \frac1N\sum_{h=1}^{H}{ W_h S_{h,y}^2}.$$
+Logo (`r emo::ji("question")`)
+$$n \ge \frac {\sum_{h=1}^{H} \frac {W_h^2 S_{h,y}^2}{w_h}}{V+\frac1N\sum_{h=1}^{H}{ W_h S_{h,y}^2}}$$
+
+* E sob **AASc** dentro dos estratos`r emo::ji("question")`
+
+---
+
+## Tamanho da amostra na **AES** - média
+### Estimação da **média populacional** sob **AASc**
+
+Supondo uma alocação $w_h = n_h / n$ e **AASc** dentro dos estratos, 
+
+`r fa("1", fill = "steelblue")`. A **variância do estimador** é dada por 
+$$V_{AES} \left( \overline y_{AES} \right) = \sum_{h=1}^{H} W_h^2 \frac{ Var_{h,y} }{n_h} = \sum_{h=1}^{H} W_h^2 \frac{ Var_{h,y} }{nw_h} = \frac{1}{n} \sum_{h=1}^{H} W_h^2 \frac{ Var_{h,y} }{w_h}.$$
+
+`r fa("2", fill = "steelblue")`. Então definindo uma **variância máxima** para a estimativa do parâmetro,
+
+$$\begin{eqnarray} V \ge V_{AES} \left( \overline y_{AES} \right) & \Leftrightarrow & V \ge \frac{1}{n} \sum_{h=1}^{H} W_h^2 \frac{ Var_{h,y} }{w_h} \end{eqnarray},$$
+
+ou seja,
+
+$$n \ge \frac{\sum_{h=1}^{H} W_h^2 \frac{ Var_{h,y} }{w_h} }{V}.$$
+
+---
+
+## Tamanho da amostra na **AES** - total
+### Estimação do **total populacional**
+
+* Sob **AASs** dentro dos estratos sabemos que 
+
+$$Var_{AES} \left( \widehat T_{AES} \right) = \sum_{h=1}^{H} N_h^2 S_{h,y}^2 \left( \frac{1}{n_h} - \frac{1}{N_h} \right) = \ldots = \frac{1}{N^2} V_{AES} \left( \overline y_{AES} \right)$$
+
+  + Fazendo $V_T \ge V_{AES} \left( \widehat T_{AES} \right) = \sum_{h=1}^{H} N_h^2 S_{h,y}^2 \left( \frac{1}{n_h} - \frac{1}{N_h} \right)$
+
+$$n \ge \frac {\sum_{h=1}^{H} \frac{N_h^2 S_{h,y}^2}{w_h}}{V_T + \sum_{h=1}^{H}{ N_h S_{h,y}^2}}$$
+
+* E na estimação do **total populacional** sob **AASc** dentro dos estratos`r emo::ji("question")``r emo::ji("question")``r emo::ji("question")`
+
+$$n \ge \frac{\sum_{h=1}^{H} \frac{N_h^2 Var_{h,y}}{w_h}}{V_T}$$
+
+---
+
+class: inverse, middle, center
+
+# E a margem de erro?
+
+---
+
+## Tamanho da amostra na **AES** - e a margem de erro?
+#### Margem de erro absoluta - estimação da **média**
+
+* Podemos pensar na **variância máxima** $V$ como uma **função** da **margem de erro** $e$, tal que 
+
+$$P \left( \left| \overline y - \overline Y \right| \leq e \right) = P \left( \frac{ \left| \overline y - \overline Y \right|}{\sqrt{Var(\overline y)}} \leq \frac{e}{\sqrt{Var(\overline y)}} \right) = 1 - \alpha.$$ 
+sendo $\alpha$ uma 'probabilidade pequena', ou valor de significância.
+ 
+* Usando a aproximação da distribuição de $\overline y$ para a distribuição **normal**,
+
+$$e = z_\frac{\alpha}{2} \sqrt{Var(\overline y)} \Leftrightarrow V = \frac{e^2}{z^2_\frac{\alpha}{2}},$$
+onde $z_\frac{\alpha}{2}$ é o quantil da normal padrão que deixa área $\alpha/2$ à sua direita.
+
+* Quais suposições são necessárias nesse caso`r emo::ji("question")`
+
+* A distância máxima assumida $e$ é absoluta portando denominada **margem de erro absoluta**.
+
+---
+
+## Tamanho da amostra na **AES** - e a margem de erro?
+#### Margem de erro relativa  - estimação da **média**
+
+* Muitas vezes queremos controlar o **erro relativo** $r$ na estimativa, tal que
+
+$$P \left( \left| \frac{\overline y_{AES} - \overline Y}{\overline Y} \right| \leq r \right) = P \left( \frac{ \left| \overline y_{AES} - \overline Y \right| }{\sqrt{Var(\overline y_{AES})}} \leq \frac{r \overline Y}{\sqrt{Var(\overline y_{AES})}} \right) = 1 - \alpha.$$ 
+
+* Novamente pela aproximação de $\overline y$ para a distribuição **normal**,
+
+$$r \overline Y = z_\frac{\alpha}{2} \sqrt{Var(\overline y_{AES})} \Leftrightarrow V_T = \frac{r^2 \overline Y^2}{z^2_\frac{\alpha}{2}}.$$
+
+* Expressões de $\sqrt{Var(\overline y)}$ na **AASc** ou **AASs**...(`r emo::ji("question")`)
+
+  + Pode ser útil utilizar a relação entre variâncias que já conhecemos 
+
+$$Var(\overline y) = \frac{N-n}{n} \frac{S^2}{n} \Leftrightarrow \sqrt{Var(\overline y)} = \sqrt{\frac{N-n}{n}} \frac{S}{\sqrt{n}}$$
+
+---
+
+## Tamanho da amostra na **AES** - e a margem de erro?
+#### Margem de erro relativa  - estimação do **total**
+
+* No caso da estimação do total o **erro relativo** $r$ se refere ao total, tal que
+
+$$P \left( \left| \frac{\widehat T_{AES} - \overline T}{\overline T} \right| \leq r \right) = P \left( \frac{ \left| N\overline y_{AES} - N\overline Y \right| }{\sqrt{Var(\overline T_{AES})}} \leq \frac{r N \overline Y}{\sqrt{Var(\overline T_{AES})}} \right) = 1 - \alpha.$$
+  + Novamente pela aproximação de $\overline y$ para a distribuição **normal**,
+
+$$r N \overline Y = z_\frac{\alpha}{2} \sqrt{Var(\overline T_{AES})} \Leftrightarrow V = \frac{r^2 N^2 \overline Y^2}{z^2_\frac{\alpha}{2}}.$$
+* O **tamanho da amostra** $n$ é o **mesmo** na estimação da **média** e **total**,
+  + se usar erro relativo $r \overline Y$ para definir $V$ e usar $V \ge Var_{AES} (\overline y)$;
+  + ou com erro relativo $r N \overline Y$ para definir $V_T$ e usar $V_T \ge Var_{AES} (\widehat T)$.
+
+* Expressões para **AASs** e **AASc** dentro dos estratos...(`r emo::ji("question")`)
+
+<!-- relacao entre erro relativo e definir CV... geralmente mais facil que definir V -->
+
+---
+
+## Tamanho da amostra e Alocações
+
+* Para obter a expressão para uma alocação particular basta substituir $w_h$ de forma adequada. 
+
+  + Ex. no caso da **AESpr** basta substituir $w_h$ por $W_h$ e obter a expressão para o cálculo do tamanho da amostra. 
+  
+  + Mostrar(`r emo::ji("question")`)
+
+<!-- * No caso da **AESot**, para um custo fixado $C$, basta substituir o valor de $n_h$, dado pela expressão adequada, na função de custo linear. -->
+
+<!-- $$n_{AESot} = \left( C - c_0 \right) \times \frac{\sum_{h=1}^{H} N_h S_{h,y} / \sqrt c_h} {\sum_{h=1}^{H} N_h S_{h,y} \sqrt c_h}$$ -->
+
+* Sabemos mostrar os resultados para diferentes $w_h$`r emo::ji("question")`
+
+Alocação | Uniforme | Proporcional | de Neyman (AASs)
+--|:--:|:--:|:--:
+$w_h$ | $\frac{1}{H}$ | $\frac{N_h}{N} = W_h$ | $\frac{S_h N_h}{\sum_{h=1}^H S_h N_h}$
+
+* E no caso de **AASc** dentro dos estratos?
+
+---
+
+## Exemplo `r emo::ji("workout")`
+
+**Exemplo 7 da Apostila** da Profa Vanessa: 
+
+Suponha que os restaurantes em uma cidade foram divididos em 3 estratos, de
+acordo com a zona de localização: $A$ $(N_1 = 600)$, $B$ $(N_2 = 300)$ e $C$ $(N_3 = 100)$. Queremos
+estimar o número médio de clientes por dia. Os valores do desvio padrão dos estratos são: 20, 30
+e 50 clientes, respectivamente. Determinar o tamanho de amostra pra estimar a média de clientes
+por dia com um erro máximo absoluto de 3 clientes e com 99,73% de confiança (isto é, $z$ = 3).
+Considere que será feita uma **AASs** em cada estrato.
+
+---
+
+## Exemplo `r emo::ji("workout")`
+
+*Ainda não falamos sobre estimação de proporções, mas será nosso próximo tópico*
+
+**Exemplo 8 da Apostila** da Profa Vanessa:: 
+
+Seja uma população de tamanho $N=1000$, estratificada em $H=2$ estratos de tamanhos
+iguais. Uma amostra piloto de tamanho $n_1 = 40$ foi retirada do primeiro estrato, e outra de $n_2 = 60$
+do segundo, com **AASs** em ambos. Na primeira amostra, houve 20 sucessos, e na segunda, 40.
+Calcular o tamanho da amostra necessário para estimar a proporção com 99% de confiança e erro
+máximo absoluto de 10%.
+
+---
+
+## Para casa `r emo::ji("house")`
+
+* Continuar os Exemplos.
+
+* Mostrar tamanho de amostra $n$ para **AASc** dentro dos estratos nas alocações **AESun**, **AESpr**, **AESne**.
+
+* Fazer exercícios 11.7 e 11.10 do livro 'Amostragem: Teoria e Prática Usando R'    https://amostragemcomr.github.io/livro/estrat.html#exerc11
+
+* Fazer exercício 5 da lista 1.
+
+* Rever os slides.
+
+<!-- * Ler BOlfarine e Bussab...da seção 11.3 do livro 'Amostragem: Teoria e Prática Usando R'. -->
+
+
+
+## Próxima aula `r emo::ji("stats")`
+
+* Amostragem Estratificada
+  + Estimação de proporções
+  + Exercícios e Intervalos de confiança
+  
+<!-- * Laboratório de `r fa("r-project", fill = "steelblue")` -->
+
+---
+
+## Muito obrigado!
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='30%', out.height='30%', paged.print=FALSE}
+knitr::include_graphics(here::here('img', 'image_basu_elephant.jpg'))
+```
+Fonte: imagem do livro *Combined Survey Sampling Inference: Weighing of Basu's Elephants: Weighing Basu's Elephants*.
+
+
+
+---
+
+## Resumo da notação
+
+* **Tamanho da amostra** na **AES** dado um tipo de **alocação**, $w_h$, e **fixando a variância** máxima que se deseja para a estimativa do parâmetro, $V$
+
+Parâmetro | Sob AASc dentro dos estratos | Sob AASs dentro dos estratos
+--|:--:|:--:
+Média | $n \ge \frac{\sum_{h=1}^{H} W_h^2 \frac{ Var_{h,y} }{w_h} }{V}$ | $n \ge \frac {\sum_{h=1}^{H} \frac {W_h^2 S_{h,y}^2}{w_h}}{V+\frac1N\sum_{h=1}^{H}{ W_h S_{h,y}^2}}$
+Total | $n \ge \frac{\sum_{h=1}^{H} N_h^2 \frac{ Var_{h,y} }{w_h} }{V}$ | $n \ge \frac {\sum_{h=1}^{H} \frac {N_h^2 S_{h,y}^2}{w_h}}{V +  \sum_{h=1}^{H}{ N_h S_{h,y}^2}}$
+
+* **Margem de erro** para o estimador $\widehat \theta$ (approx. normal para dist. de $\widehat \theta$)
+
+  + **Absoluta**: $e = z_\frac{\alpha}{2} \sqrt{ Var(\widehat \theta)} \Leftrightarrow V = \frac{e^2}{z^2_\frac{\alpha}{2}}$
+
+  + **Relativa**: $r \overline Y = z_\frac{\alpha}{2} \sqrt{Var(\widehat \theta)} \Leftrightarrow V = \frac{r^2 \overline Y^2}{z^2_\frac{\alpha}{2}}$
+
+* Pode ser útil utilizar a relação entre variâncias que já conhecemos $Var(\overline y) = \frac{N-n}{n} \frac{S^2}{n} \Leftrightarrow \sqrt{Var(\overline y)} = \sqrt{\frac{N-n}{n}} \frac{S}{\sqrt{n}}$
+
+---
+
+## Resumo da notação
+
+* Tamanho mínimo de amostra para **estimação da média** populacional
+
+.center[
+Alocação | **AASc** dentro dos estratos | **AASs** dentro dos estratos
+--|:--:|:--:
+$AES_{un}$ | $n \ge \frac{ H \sum_{h=1}^{H} W_h^2 Var_{h,y} }{V}$ | $n \ge \frac{ H \sum_{h=1}^{H} W_h^2 S^2_h }{V + \frac{1}{N} \sum_{h=1}^{H} W_h S^2_h}$
+$AES_{pr}$ | $n \ge \frac{ \sum_{h=1}^{H} W_h Var_{h,y} }{V}$ | $n \ge \frac{ \sum_{h=1}^{H} W_h S^2_h }{V + \frac{1}{N} \sum_{h=1}^{H} W_h S^2_h}$
+$AES_{ne}$ | $n \ge \frac{ \left( \sum_{h=1}^{H} W_h DP_{h,y} \right)^2 }{V}$ | $n \ge \frac{ \left( \sum_{h=1}^{H} W_h S_{h,y} \right)^2 }{V + \frac{1}{N} \sum_{h=1}^{H} W_h S^2_h}$
+$AES_{ot}$ | $n \ge \frac{ \left( \sum_{h=1}^{H} W_h DP_{h,y} \sqrt{C_h} \right)\left( \sum_{h=1}^{H} W_h DP_{h,y} / \sqrt{C_h} \right) }{V}$ | $n \ge \frac{  \left( \sum_{h=1}^{H} W_h S_{h,y} \sqrt{C_h} \right)\left( \sum_{h=1}^{H} W_h S_{h,y} / \sqrt{C_h} \right) }{V + \frac{1}{N} \sum_{h=1}^{H} W_h S^2_h}$
+]
+
+---
+
+## Referências
+
+Slides baseados no Capítulo 11 do livro
+
+* [Amostragem: Teoria e Prática Usando o R](https://amostragemcomr.github.io/livro/index.html)
+
+Citações do Capítulo
+
+* Neyman(1934)
+* Cochran(1977)
+
+
+<!-- * refazer calculos para amostagem aleatoria simples com reposicao -->
+<!-- * alocacao... ou lab R comparando alocação proporcional e igual tamanho -->
+
+<!-- listas de exercicios... -->
+<!-- dois aspectos da disciplina... ter flexibilidade com teoria... exercitar os conceitos com exercicios teoricos e praticos -->
+
+<!-- falar dos pesos na AES -->

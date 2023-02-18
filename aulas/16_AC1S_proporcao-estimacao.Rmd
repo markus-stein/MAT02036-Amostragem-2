@@ -1,0 +1,288 @@
+---
+title: "MAT02036 - Amostragem 2"
+subtitle: "Aula 16 - Amostragem por Conglomerados - Estimação de Proporções" 
+author: "Markus Stein"
+institute: "Departamento de Estatística, IME/UFRGS"
+date: "2022/2"
+type: "lecture"
+# fontsize: 10pt
+output:
+  xaringan::moon_reader:
+    # css: ["assets/remark.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      titleSlideClass: [center, middle]
+---
+
+```{r libs, echo=FALSE, message=FALSE, warning=FALSE}
+library(xaringanExtra)
+library(emo)
+library(fontawesome)
+library(kableExtra)
+```
+
+```{r xaringan-logo, echo=FALSE}
+# install.packages("remotes")
+# remotes::install_github('yihui/xaringan')
+# remotes::install_github("gadenbuie/xaringanExtra")
+# xaringanExtra::use_logo(
+#   image_url = "https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/xaringan.png"
+# )
+xaringanExtra::use_logo( here::here('img/logo_dest.png'))
+```
+
+### *Housekeeping*
+
+* Aproveitem o momento presencial para tirar dúvidas
+
+* Se estivéssemos no ensino remoto ou à distância
+
+  + vocês poderiam estar somente ouvindo, sem interação
+  
+  + ou assistindo vídeos e material em outro momento
+  
+* Depois das aulas, rever material da aula passada
+
+  + fazer exercícios
+  
+  + se preparar para a próxima aula
+
+---
+
+## Aula passada `r emo::ji("disk")`
+### Intervalos de Confiança na AC1S
+
+* Para a **média** (para $M$ e $m$ suficientemente grandes (`r emo::ji("question")`), então segue pelo TCL $IC_{AC1S} (\overline Y; 1-\alpha) = \left[ \overline y_{AC1S} \mp z_{\alpha/2} \sqrt{\widehat{Var}_{AC1S} \left( \overline y_{AC1S} \right)} \right]$,
+em que $\widehat{Var}_{AC1S} \left( \overline y_{AC1S} \right) = \frac{s^2_{ec}}{m}$.
+
+* Para o total: $IC_{AC1S} (T; 1-\alpha) = \left[ \widehat T_{AC1S} \pm z_{\alpha/2} \sqrt{\widehat{Var}_{AC1S} \left( \widehat T_{AC1S} \right)} \right]$
+
+* Para a proporção: $IC_{AC1S} (P; 1-\alpha) = \left[ \widehat P_{AC1S} \pm z_{\alpha/2} \sqrt{\widehat{Var}_{AC1S} \left( \widehat P_{AC1S} \right)} \right]$
+
+---
+
+## Aula passada `r emo::ji("disk")`
+### Tamanho de amostra na AC1S
+
+* Para planejar uma **AC1S**, é necessário **determinar** o **número de conglomerados** $m$ que serão sorteados
+para fazer parte da amostra. 
+
+  + Vimos que pode-se utilizar fórmulas que dependem do **erro relativo** $e_r$ ou do **erro absoluto** $e$.
+
+* Erro relativo
+
+Seja $CV = \frac{Var_{ec_T}}{\overline Y_c}$ então na **AASc** de conglomerados
+
+$$m = \frac{z_{\alpha/2} \: CV^2}{e_r^2},$$
+e na **AASs** de conglomerados
+
+$$m = \frac{M \: z_{\alpha/2} \: CV^2}{z_{\alpha/2} \: CV^2 + (M-1) \: e_r^2}.$$
+
+---
+
+## Tamanho de amostra na AC1S
+
+* Erro absoluto
+
+---
+
+class: inverse, middle, center
+
+# Estimação de Proporções
+
+---
+
+## Estimação de Proporções
+### Parâmetro
+
+* Assumimos a variável indicadora 
+
+$$y_{ij} = I \left[ (i,j) \in A \right] = \begin{cases} 
+1, \text{ se a unidade } j  \text{ do conglorerado } i \text{ possui o atributo, } A \subset U; \\ 
+0, \text{ caso contrário.} \end{cases}$$
+
+* O total populacional, representa o **número de unidades populacionais** com o **atributo** de interesse $A$,
+$$T = \sum_{i \in C} T_i = N_A.$$
+
+* A média populacional, representa a **propoção de unidades elementares** com o atributo $A$,
+$$\overline {Y} = \frac{1}{N} \sum_{i \in C} T_i = \frac {T}{M \overline N} = \frac{\overline Y_C}{\overline N} = \frac {N_A} {N} = P$$
+
+* A variância populacional,...
+
+---
+
+## Estimação de Proporções
+### Estimador natural
+
+* O **estimador natural** $HT$ é dado por
+
+$$\widehat P^{HT} = \frac{\overline y_C}{\overline N},$$
+
+em que $\overline y_C = \frac{\sum_{i \in a} T_i}{m}$.
+
+* $\widehat P^{HT}$ é **não viciado** para $P$`r emo::ji("question")``r emo::ji("question")``r emo::ji("question")`
+
+* Esse estimador pode resultar em uma **proporção estimada $\widehat P^{HT} > 1$** (`r emo::ji("question")`).
+
+* $\overline N = \frac{\sum{i \in C}N_i}{M}$ pode ser estimado por $\overline n = \frac{\sum{i \in a}N_i}{m}$.
+
+---
+
+## Estimação de Proporções
+### Variância do estimador natural
+
+A variância de $\widehat P^{HT}$ na **AC1S** é dada por:
+
+* **COM** reposição, 
+$$Var_{AC1S_c} \left( \widehat P^{HT} \right) = \frac{1}{\overline N^2} \frac{Var_{ec_T}}{m} = \frac{1}{\overline N^2} \left( 1 - \frac{1}{M} \right) \frac{S^2_{ec}}{m};$$  
+
+* **SEM** reposição, 
+$$Var_{AC1S_s} \left( \widehat P^{HT} \right) = \frac{1}{\overline N^2} \left( \frac{M - m}{M - 1} \right) \frac{Var^2_{ec_T}}{m} =  \frac{1}{\overline N^2} \left( 1 - \frac{m}{M} \right) \frac{S^2_{ec}}{m}.$$  
+
+* Lembrando, que $Var_{ec_T} = \frac{\sum_{i \in C} \left( T_i - \overline Y_C \right)^2}{M} = \frac{M-1}{M}S^2_{ec}$.
+
+---
+
+## Estimação de Proporções
+### Estimador da variância do estimador natural
+
+* O estimador não viciado da variância de $\widehat P^{HT}$ na **AC1S** é dada por:
+
+  + **COM** reposição, $\widehat Var_{AC1S_c} \left( \widehat P^{HT} \right) =  \frac{1}{\overline N^2} \left( 1 - \frac{1}{M} \right) \frac{s^2_{ec}}{m} \approx  \frac{1}{\overline N^2} \frac{s^2_{ec}}{m}$ (`r emo::ji("question")`);
+
+  + **SEM** reposição, $\widehat Var_{AC1S_s} \left( \widehat P^{HT} \right) = \frac{1}{\overline N^2} \left( 1 - \frac{m}{M} \right) \frac{s^2_{ec}}{m},$  
+  
+em que $s^2_{ec} = \frac{ \sum_{i \in a} \left( T_i - \overline y_C \right)^2}{m-1}$.
+
+* Lembrando que o estimador $s^2_{ec} = \widehat S^2_{ec} = \widehat Var_{ec_T}$ é não-viciado para:
+
+  + $Var_{ec_T}$ se a seleção dos conglomerados for COM reposição; 
+  
+  + e de $S^2_{ec}$ se a seleção for SEM reposição.
+
+---
+
+## Estimação de Proporções
+### Estimador de Razão
+
+---
+
+## Estimação de Proporções
+### Estimador de Razão
+
+---
+
+## Estimação de Proporções
+### Exemplo (Apostila pg. 27)
+
+Uma população universitária foi avaliada quanto à posse de bicicleta. Os conglomerados foram os campi da universidade. Os dados da população estão abaixo:
+
+Campus $(i)$ | No. pessoas com bicicleta $(T_i)$ | Número total de pessoas $(N_i)$
+--|--|--
+1 |2226 |2950
+2 |1512 |1726
+3 |315 |948
+Total | 4053 | 5624
+
+---
+
+## Estimação de Proporções
+### Exemplo (Apostila pg. 28)
+
+Considere os dados da população universitária, construa o IC 95% para a proporção.
+
+---
+
+## Estimação de Proporções
+### Exemplo (Apostila pg. 36)
+
+Em uma certa região, deseja-se fazer uma **AC1S** de fazendas criadores de gado. Em
+média, as fazendas têm 50 animais. O interesse é estimar a prevalência de uma doença, isto é,
+a proporção de animais doentes. Numa região vizinha, um estudo mostrou que 10% dos animais
+estavam doentes e $r_{int} = 0, 1225$. Quantas fazendas devem pertencer à amostra, considerando que
+se deseja uma margem de erro de 1% para mais ou para menos e 95% de confiança?
+
+
+---
+
+## Para casa `r emo::ji("house")`
+
+* Fazer a lista 2 de exercícios.
+
+* Continuar exercícios.
+
+<!-- Continuar o Exercício. -->
+
+<!-- * Mostrar tamanho de amostra $n$ para AASc dentro dos estratos. -->
+
+<!-- * Continuar exercícios do livro 'Amostragem: Teoria e Prática Usando R'    https://amostragemcomr.github.io/livro/estrat.html#exerc11 -->
+
+<!-- * Ler o capítulo 2 da apostila da Profa. Vanessa. -->
+
+<!-- do livro 'Amostragem: Teoria e Prática Usando R'. -->
+  
+* Rever os slides.
+
+<!-- * Ler BOlfarine e Bussab...da seção 11.3 do livro 'Amostragem: Teoria e Prática Usando R'. -->
+
+## Próxima aula `r emo::ji("stats")`
+
+* Acompanhar o material no moodle.
+
+Amostragem por Conglomerados
+
+  + Exercícios.
+  
+  + Laboratório de <i class="fa-duotone fa-people-group"></i>`r fa("r-project", fill = "steelblue")`
+
+---
+
+## Muito obrigado!
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='20%', out.height='20%', paged.print=FALSE}
+knitr::include_graphics(here::here('img', 'image_basu_elephant.jpg'))
+```
+.center[
+#### Fonte: imagem do livro *Combined Survey Sampling Inference: Weighing of Basu's Elephants*.
+]
+
+
+---
+
+## Referências
+
+<!-- Slides baseados no Capítulo 11 do livro -->
+
+* [Amostragem: Teoria e Prática Usando o R](https://amostragemcomr.github.io/livro/index.html)
+
+* **Elementos de Amostragem**, Bolfarine e Bussab.
+
+<!-- Citações do Capítulo -->
+
+<!-- * Neyman(1934) -->
+
+* Cochran(1977)
+
+
+<!-- * refazer calculos para amostagem aleatoria simples com reposicao -->
+<!-- * alocacao... ou lab R comparando alocação proporcional e igual tamanho -->
+
+<!-- listas de exercicios... -->
+<!-- dois aspectos da disciplina... ter flexibilidade com teoria... exercitar os conceitos com exercicios teoricos e praticos -->
+
+<!-- falar dos pesos na AES -->
+
+<!-- valor z_alpha/2 significa z ou t -->
+
+<!-- quem tiver interesse em conferir as fórmulas... mostra as conttas, gosta dessa pparte...posso contabilizar ponto extra... tem q ser o primeira... -->
+<!-- o mesmo pode valer para os códigos e texto... -->
+<!-- fazer o formulário -->
+<!-- resumo de formulas -->
+
+---
+
+## Resumo da notação
+

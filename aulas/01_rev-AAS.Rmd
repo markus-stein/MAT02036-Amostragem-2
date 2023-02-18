@@ -1,0 +1,793 @@
+---
+title: "MAT02036 - Amostragem 2"
+subtitle: "Aula 01 - Visão Geral e Revisão"
+author: "Markus Stein"
+institute: "Departamento de Estatística, IME/UFRGS"
+date: "2022/2"
+type: "lecture"
+# fontsize: 10pt
+output:
+  xaringan::moon_reader:
+    # css: ["assets/remark.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      titleSlideClass: [center, middle]
+---
+
+```{r libs, echo=FALSE, message=FALSE, warning=FALSE}
+library(xaringanExtra)
+library(emo)
+library(fontawesome)
+library(kableExtra)
+```
+
+### *Housekeeping*
+
+* Aproveitem o momento presencial para tirar dúvidas
+
+* Se estivéssemos no ensino remoto ou à distância
+
+  + vocês poderiam estar somente ouvindo, sem interação
+  
+  + ou assistindo vídeos e material em outro momento
+  
+* Depois das aulas, rever material da aula passada
+
+  + fazer exercícios
+  
+  + se preparar para a próxima aula
+
+---
+
+class: inverse, middle, center
+
+
+```{r xaringan-logo, echo=FALSE}
+# install.packages("remotes")
+# remotes::install_github('yihui/xaringan')
+# remotes::install_github("gadenbuie/xaringanExtra")
+# xaringanExtra::use_logo(
+#   image_url = "https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/xaringan.png"
+# )
+xaringanExtra::use_logo( here::here('img/logo_dest.png'))
+```
+
+# Visão geral de amostragem e AAS
+
+---
+
+## População de pesquisa 
+
+* Denominamos **população** qualquer conjunto contendo um número finito $N$ de unidades, que compartilham alguma(s) característica(s) em comum;
+
+  + $N$ é o **tamanho da população**.
+
+* As unidades deste conjunto são denominadas **unidades da população**, 
+
+  + representadas por um conjunto de $N$ rótulos distintos denotado 
+  $$U = \{ 1, 2, \ldots, i, \ldots, N\},$$ 
+  
+  + $i$ o **rótulo** para uma unidade genérica da população, $i \in U$. 
+  
+* Exemplos:
+  + domicílios e moradores de certa localidade; 
+  + indústrias instaladas num certo país; 
+  + fazendas situadas num certo estado; 
+  + alunos matriculados em uma série da rede escolar estadual em 2022. 
+
+* Definição clara e precisa da *população de pesquisa*. 
+
+---
+
+## População de pesquisa 
+
+* Queremos **estimar** ou **inferir** certas quantidades ou **parâmetros** de **características** (variáveis) **numéricas** medidas ou **observadas** para, em tese, toda **unidade da população**.
+
+* *Vetor populacional* é o conjunto de valores da variável correspondentes às unidades da população. 
+
+  + Exemplo, se $y$ é a variável de pesquisa (de interesse) e $y_i$ é o valor dessa variável $y$ para a unidade $i$, então 
+  $$Y_U = \{y_1,\;y_2,\;...,\;y_i,\;..., \;y_N\}$$ 
+  é o *vetor populacional* gerado pela variável $y$.
+
+#### **Parâmetros-alvo** (ou de interesse) podem ser quaisquer funções dos valores dos vetores populacionais: `r emo::ji("target")`
+
+**total populacional** (da variável $y$) | $T_y = T = \displaystyle \sum_{i=1}^{N}y_i=\sum_{i\in U}y_i$
+-----------------------------------------|---------------------------------------------
+
+---
+
+## População de pesquisa 
+#### mais *parâmetros-alvo*: `r emo::ji("target")`
+
+*média populacional* | $\overline{Y} = \displaystyle \frac{T_y}{N}=\frac{1}{N}\sum_{i\in U} y_i$; 
+---------------------|:-------------------------------------------:  
+*proporção populacional* $P$ | $P = \overline{Y}$, para $y \in \{0,1\}$.
+*variância populacional* | $Var_y = \displaystyle\frac{1}{N} \sum_{i\in U}({y_i-\overline{Y}})^2 = \frac{1}{N}\left[\sum_{i\in U}{y_i}^2-N\overline{Y}^2\right]$
+*variância populacional* | $S^2_y = \displaystyle\frac{1}{N-1} \sum_{i \in U}({y_i-\overline{Y}})^2 = \frac{N}{N-1} Var_y$
+*desvio padrão - DP populacional* | $DP_y = \sqrt{Var_y}$
+*desvio padrão - DP populacional* | $S_y = \sqrt{S^2_y}$
+*coeficiente de variação - CV populacional* | $CV_y = \displaystyle \frac{DP_y}{\overline Y} = \frac {S_y} {\overline Y}$
+
+---
+
+## População de pesquisa
+#### mais *parâmetros-alvo*: `r emo::ji("target")`
+
+  + a *função de distribuição cumulativa empírica populacional* - *FDCEP*, por consequência, *quantil populacional*, ex. a *mediana populacional*. $F_y(a) = \displaystyle \frac{1}{N} \sum_{i\in U} I(y_i \le a)$.
+  
+  + seja $z$ outra variável de pesquisa, tomando valores $z_i$, $i \in U$, a *razão de totais* das variáveis $y$ e $z$ como $R = {\displaystyle \frac{\sum_{i \in U} y_i} {\sum_{i \in U} z_i}} = \displaystyle {Y}/{Z}$
+  
+  + a *covariância populacional* e a *correlação populacional* das variáveis $y$ e $z$, $S_{yz}=\displaystyle\frac{1}{N-1}\sum_{i\in U}({y_i-\overline{Y}})({z_i-\overline{Z}})=\frac{1}{N-1}\left[\sum_{i\in U}{y_i}{z_i}-N\,\overline{Y}\,\overline{Z}\right]$ e ${\rho}_{yz}=\displaystyle\frac{S_{yz}}{S_y S_z}$
+ 
+---
+
+class: inverse, middle, center
+
+# **Censo** é possível?
+ 
+---
+
+## Amostragem de populações finitas
+
+* **pesquisa por amostragem** menor custo de obtenção dos dados, maior rapidez e redução da carga de coleta de informações.
+  + conhecendo **estimativas** dos **parâmetros** e **margem de erro** podemos ter bons resultados?
+
+* Uma **amostra** $s=\{i_1, i_2, \dots, i_n\}$ é qualquer subconjunto não vazio de unidades selecionadas da população $U$, $s \subset U$ $( 1 \leq n \leq N )$. 
+
+índice  | soma
+------------- | -------------
+$i \in s$: unidade $i$ incluída na amostra $s$. | $\sum_{i \in s}$: em $i$ sobre o conjunto de rótulos de unidades em $s$. 
+$s \ni i$: a amostra $s$ contém a unidade $i$.  | $\sum_{s \ni i}$: em $s$ sobre o conjunto de amostras possíveis que contêm a unidade $i$.
+
+ 
+
+* Consideraremos somente **amostras probabilísticas**,
+  + os dados amostrais para a variável $y$ são representados por 
+  $$Y_s = \{y_{i_1}, y_{i_2}, \dots, y_{i_n}\}$$.
+
+---
+
+## Amostragem probabilística
+#### Suposições
+
+1. $S$: *espaço amostral*; o conjunto de todas as amostras $s$ possíveis, bem definido e enumerável (teoricamente), 
+$S = \{ s_1,  s_2, \ldots, s_j, \ldots, s_{\nu} \}$;
+
+2. $p(s)$: uma probabilidade conhecida (ou calculável) associada a cada amostra $s \in S$, denominada *plano amostral*,
+$$\displaystyle \sum_{s \in S} p(s) = 1;$$
+
+3. Uma única amostra $s \in S$ é selecionada com probabilidade $p(s)$.
+
+4. Associada a cada unidade $i \in U$ existe uma probabilidade positiva, $\pi_i$, dessa ser selecionada, denominada **probabilidade de inclusão** (de primeira ordem) da unidade $i$, tal que 
+$$\pi_i = P(i \in s) = \displaystyle \sum_{s \ni i} p(s) > 0, \forall i \in U.$$ 
+
+5. $\pi_i$ das **unidades selecionadas** e outros aspectos do **plano amostral** são levados em conta ao fazer **inferência** sobre os parâmetros.
+
+---
+
+## Estatísticas, estimadores e estimativas
+
+* Uma **estatística** é uma função real dos valores observados numa amostra, qualquer $f( y_{i_1}, y_{i_2}, \dots, y_{i_n} )$. Exemplos:
+
+  
+**total amostral** ou **soma amostral** da variável $y$ | $t(s) = t = \displaystyle \sum_{i \in s} y_i$
+---|---
+**média amostral** da variável $y$ | $\overline{y} = \displaystyle \frac{t(s)}{n} = \frac{1}{n} \sum_{i \in s} y_i$
+  
+* Um **estimador** $\widehat{\theta}(s)$ é uma estatística usada para estimar um certo parâmetro $\theta$ de interesse. 
+  + Antes de observarmos $s$, $\widehat{\theta}(s)$ é uma variável aleatória (v.a.) cuja distribuição temos interesse em conhecer, dela derivamos propriedades importantes de $\widehat{\theta}(s)$. 
+  + Por simplicidade, denotamos $\widehat{\theta}$, sem explicitar sua dependência de $s$, sempre que possível.
+
+* Após a determinação da amostra $s$ e a coleta dos dados das unidades, o valor calculado (observado) de $\widehat{\theta}$ é chamado de **estimativa** do parâmetro.
+
+---
+
+class: inverse, middle, center
+
+# Como escolher **"bons" estimadores**?
+
+---
+
+## Propriedades dos estimadores
+
+* O *valor esperado* de $\widehat{\theta}$ é denotado por $E_p(\widehat{\theta})$. 
+  + $E_p(\cdot)$ designa o valor esperado sob a distribuição de probabilidades induzida pelo plano amostral:
+$$E_p (\widehat{\theta}) = \sum_{s \in S} \widehat{\theta}(s) p(s).$$
+
+* O **vício** (ou **viés** ou **tendência**) de $\widehat{\theta}$ é definido como:
+$$B_p(\widehat{\theta}) = E_p(\widehat{\theta}) - \theta.$$
+
+* o *vício relativo* de $\widehat{\theta}$ é dado por:
+$$RB_p(\widehat{\theta}) =\displaystyle\frac{B_p(\widehat{\theta})}{\theta}.$$
+
+---
+
+## Propriedades dos estimadores
+
+* $\widehat{\theta}$ é **não viciado** (ou **não enviesado** ou **não tendencioso**) para $\theta$ quando
+$$E_p(\widehat{\theta}) = \theta,$$
+ou
+$$B_p(\widehat{\theta}) = RB_p(\widehat{\theta}) = 0,$$
+
+#### **Primeiro critério** 
+
+* Para apoiar a **escolha de estimadores** sugere então que tratemos de usar *estimadores* sem vício, ou *não viciados*, ou ao menos *aproximadamente não viciados*. 
+
+* Quando isto for possível, teremos estimadores cuja distribuição será centrada no alvo desejado da inferência.  
+
+* Um mesmo parâmetro pode ter mais de um estimador não viciado disponível. Precisamos então de um segundo critério para ajudar na escolha de estimadores.
+
+---
+
+## Propriedades dos estimadores
+#### Quando um estimador é **não viciado**
+
+* Nesse caso a *variância* de $\widehat{\theta}$ mede a dispersão da distribuição do estimador em torno do alvo de inferência $\theta$. 
+
+* A *variância* do estimador $\widehat{\theta}$ é definida como:
+$$Var_p(\widehat{\theta}) = \displaystyle \sum_{s \in S} [\widehat{\theta}(s) - E_p(\widehat{\theta})]^2 p(s).$$
+
+* Medidas alternativas da dispersão de $\widehat{\theta}$ (que dependem da variância são): 
+
+**Desvio padrão** - *DP* (ou **erro padrão**) | $DP_p(\widehat{\theta}) = [Var_p(\widehat{\theta})]^{1/2}$.
+----------------------------------------------|--------------------------------------
+**Coeficiente de variação** - **CV**          | $CV_p(\widehat{\theta}) = \displaystyle\frac{DP_p(\widehat{\theta})}{\theta}$
+
+* O *DP* mede a dispersão em unidade de medida igual à usada na mensuração da variável de interesse; e o *CV* expressa essa medida em termos relativos. 
+
+---
+
+## Propriedades dos estimadores
+#### Quando um estimador é **viciado**
+
+* Uma medida mais adequada da dispersão da distribuição do estimador em torno do alvo de inferência $\theta$ é o **erro quadrático médio** - **EQM**:
+$$EQM_p(\widehat{\theta}) = \displaystyle \sum_{s\in S} [\widehat{\theta}(s) - \theta]^2 p(s)$$
+
+* Versões análogas ao $DP$ e do $CV$ para o caso de estimadores viciados: 
+
+*Erro médio* - *EM*           | $EM_p(\widehat{\theta}) = [EQM_p(\widehat{\theta})]^{1/2}$;
+------------------------------|--------------------------------------
+*Erro relativo médio* - *ERM* | $ERM_p(\widehat{\theta}) = \displaystyle\frac{EM_p(\widehat{\theta})}{\theta}$.
+
+#### Nosso segundo critério 
+* Queremos estimadores com os menores erros de estimação, 
+  + escolher sempre os estimadores com o menor *EQM*, 
+  + ou com a menor variância quando forem não viciados.
+
+---
+
+class: inverse, middle, center
+
+# Como obter estimadores "ótimos"?
+
+---
+
+## Obtenção de estimadores
+
+* Qual a diferença entre "Amostragem" ou "Inferência"?
+  + Ambas utlizam amostras probabilísticas e funções dos dados observados para inferir sobre parâmetros.
+
+### No **contexto da Amostragem** (de popuções finitas)
+
+* Não se estabelece uma distribuição de probabilidade (ou modelo) para os valores da variável $y$ na amostra (ou na população(?)).
+  + diferente do "contexto usual" da **Inferência** (Estatística).  
+  
+* Os parâmetros que se deseja estimar não são responsáveis pela especificação de uma tal distribuição de probabilidades (ou modelo). 
+  + Em geral os parâmetros de interesse são definidos como funções dos valores (considerados fixos, mas desconhecidos) da variável $y$ na população. 
+
+* Não há um procedimento geral para gerar estimadores que sejam ótimos nalgum sentido, 
+  + ex., em "Inferência" temos o *método da máxima verossimilhança*.
+  
+---
+
+## Obtenção de estimadores
+
+* Os princípios usados em "Amostragem" para derivar estimadores dos parâmetros de interesse são baseados na simplicidade e no *método dos momentos*.
+
+Suponha que o parâmetro-alvo é o *total populacional* $T_y = \displaystyle \sum_{i \in U} y_i$, queremos:  
+a. usar os *dados amostrais* $\{y_{i_1}, y_{i_2}, \dots, y_{i_n}\}$ para *estimar* $T$;  
+b. medir ou estimar a *precisão* ou a *margem de erro* da estimativa produzida para $T$.
+
+* Um **estimador linear** $\widehat T_w$ do total populacional $T$ é uma combinação linear dos valores amostrais $y_i$ com *pesos amostrais* $w_i$, a serem definidos,  
+
+$$\widehat T_w = \displaystyle \sum_{i \in s} {w_i}{y_i}.$$
+	 
+* Podemos usar os 2 critérios sugeridos para escolha de estimadores para determinar os pesos $w_i$,
+$$\widehat{\theta}_{opt} = arg \: min_{\widehat{\theta}} EQM_p(\widehat{\theta}).$$ 
+
+---
+
+## Obtenção de estimadores
+### Exemplo: estimação do total e AAS
+
+* Considere uma população fictícia com $N=4$ mulheres (unidades populacionais), de quem foi indagado o número de filhos tidos nascidos vivos (a variável $y$).
+
+.center[
+*Valor da variável $y$ por unidade da população de mulheres*
+]
+
+Rótulo da unidade $(i)$   | 1  |  2 |  3 |  4 | Total
+--------------------------|:-----:|:--:|:--:|:--:|:--:
+Valor da variável $(y_i)$ | 0  |  0 |  2 | 1  |   3
+
+* Existem ${4 \choose 2} = 6 = \nu$ amostras possíveis de duas **unidades distintas**. 
+
+* O conjunto de todas as amostras possíveis é dado por
+$$S = \{(1;2); (1;3); (1;4); (2;3); (2;4); (3;4)\}.$$ 
+
+---
+
+## Obtenção de estimadores
+### Exemplo: estimação do total e AAS
+
+* Considere também um **plano amostral** $p_1$:
+  + $p_1(s) = 1/6,  \forall s \in S$.  
+
+```{r}
+N <- 4               # no. elementos na pop.
+i <- 1:N             # indice dos elementos da pop.
+n <- 2               # no. elementos na amostra
+nu <- choose(N, n)   # no. possíveis amostras
+j <- 1:nu            # indice dos elementos dos espaço amostral
+S <- combn(N,n)      # espaço amostral
+p1s <- 1/nu           # plano amostral
+```
+
+---
+
+## Obtenção de estimadores
+### Exemplo: estimação do total e AAS
+
+* Apresentação detalhada do *plano amostral* $p_1$.
+
+.center[
+*Informações de cada amostra possível sob plano amostral $p_1$*
+]
+
+Amostra | Unidades na Amostra $s$ | Valores na Amostra $s$ | Soma Amostral $(t)$ | Probabilidades $p_1(s)$  
+:------:|:-----------------------:|:----------------------:|:-------------------:|:----------------------:
+ 1      |       {1;2}            |           {0;0}	       |         0	          |            1/6
+ 2      |       {1;3}            |           {0;2}	       |         2            |            1/6
+ 3      |       {1;4}            |           {0;1}	       |         1            |            1/6
+ 4      |       {2;3}            |           {0;2}	       |         2            |            1/6
+ 5      |       {2;4}            |           {0;1}	       |         1            |            1/6
+ 6      |       {3;4}            |           {2;1}	       |         3            |            1/6
+ Total  |         _              |               _         |             _        |             1
+
+---
+
+## Obtenção de estimadores
+### Exemplo: estimação do total e AAS
+
+.center[
+*Probabilidade sob $p_1$ para cada valor de $t$*
+]
+
+Valores possíveis de $t$  |   0   |  1  |   2   |  3
+--------------------------|-----|-----|-----|-----
+Com probabilidade $p_1(s)$|  1/6  | 2/6 |  2/6  | 1/6
+
+* O valor esperado de $t$ é 
+
+$$E_{p_1}(t) = \displaystyle\sum_{s \in S} t(s) \, p_1(s) = 0\times\frac{1}{6}+1\times\frac{2}{6}+2\times\frac{2}{6}+3\times\frac{1}{6}= \frac{9}{6} = 1,5$$
+* Porém o **total populacional** é $T_y = \displaystyle \sum_{i \in U} y_i = 3$. 
+
+* Como $1,5 =  E_{p_1}(t) \neq T = 3$, dizemos que $t$ seria um **estimador viciado** de $T$ sob o plano amostral $p_1$ adotado.
+
+---
+
+## Obtenção de estimadores
+### Exemplo: estimação do total e AAS
+
+* Podemos **"corrigir"** $t$ de modo que fique **não viciado** para o total populacional;
+  + Já que $Y / E_{p_1}(t) = 3 / 1,5 = 2$, multiplicando por 2 o valor de $t$ resulta num estimador cujo valor esperado deve ser igual a $Y$.
+
+* Considere o novo estimador de $T$ dado por: $\widehat{T} = 2 \times t = \displaystyle \sum_{i \in s} 2 \times y_i = \widehat T_w$. 
+
+.center[
+*Probabilidade sob $p_1$ para cada valor de $2t$*
+]
+
+Valores possíveis de $2t$ |     0   |  2  |   4   |  6
+--------------------------|:-----:|:-----:|:-----:|:-----: 
+Com probabilidade $p_1(s)$|   1/6 |  2/6  | 2/6   | 1/6
+
+$$E_{p_1}(\widehat T) = \displaystyle \sum_{s \in S} \widehat T(s) \, p_1(s) = 0 \times \frac{1}{6} + 2 \times \frac{2}{6} + 4 \times \frac{2}{6} + 6 \times \frac{1}{6} = \frac{18}{6} = 3.$$
+* Dizemos que $\widehat T = 2 \times t$ é um **estimador não viciado** de $T$ sob o plano amostral $p_1$ considerado.
+
+
+---
+
+class: inverse, middle, center
+
+# O método pelo qual deduzimos $\widehat T_w$ é viável na prática?
+
+---
+
+## A distribuição de aleatorização 
+### Plano amostral $p(s)$
+
+* Para deduzir os pesos do estimador $\widehat T_w$ **supomos**: 
+
+  + conhecer todos os valores da variável de pesquisa; 
+  
+  + para obter o valor esperado do estimador;
+  
+  + para então calcular pesos que levariam à obtenção do estimador ponderado não viciado.
+
+--
+
+* A função $p(s)$ definida no conjunto $S$ de todas as amostras possíveis é uma distribuição de probabilidades. 
+
+  + É possível obter a distribuição de probabilidades de estatísticas (ou estimadores) calculadas a partir  de $s$. 
+  
+* A distribuição de probabilidades assim obtida é chamada de **distribuição de aleatorização** da estatística ou estimador.
+
+---
+
+## A distribuição de aleatorização 
+### Plano amostral $p(s)$
+
+* Na **amostragem probabilística**, inferências são feitas considerando a **distribuição de aleatorização**.
+
+  + A única **suposição** é considerar como fonte de variação ou incerteza a possível repetição hipotética do processo de amostragem utilizando o **plano amostral** $p(s)$, que resultaria em diferentes amostras $s_1, s_2, ... \in S$.
+
+--
+
+* A distribuição de $\widehat T_w = 2 \times t = \displaystyle \sum_{i \in s} 2 \times y_i$ determinada por $p(s)$ é também chamada de **distribuição amostral** do estimador. 
+
+  + Estudamos suas propriedades para avaliar se $\widehat T_w$ é um bom estimador para o total populacional $T$.
+
+---
+
+## Estimadores não viciados para o total populacional
+
+* No Exemplo vimos como ober a *distribuição amostral* de um estimador induzida pelo plano amostral $p(s)$. 
+
+  + Os tamanhos da população $N$ e da amostra $n$ eram muito pequenos.    
+  
+  + conhecemos os valores da variável $y$ para todas as unidades da população $U$.  
+
+* Na prática, trabalhar com a distribuição $p(s)$ para derivar distribuições amostrais de estimadores é complicado. 
+
+.center[
+*Tamanhos do espaço amostral $S$ para valores selecionados de $N$ e $n$*
+]
+```{r, eval=FALSE}
+# Gera tabela com valores de binom(N,n)
+tabela <- as.data.frame(  
+          rbind( c(4, 2, choose(4,2)),
+                 c(10, 4, choose(10,4)),
+                 c(100, 10, choose(100,10)),
+                 c(1000, 20, choose(1000,20)),
+                 c(10000, 100, choose(10000,100))) )
+colnames(tabela) <- c("N", "n", "binom(N,n)")
+```
+
+---
+
+## Estimadores não viciados para o total populacional
+
+```{r, echo=FALSE}
+# Gera tabela com valores de binom(N,n)
+tabela <- as.data.frame(  
+          rbind( c(4, 2, choose(4,2)),
+                 c(10, 4, choose(10,4)),
+                 c(100, 10, choose(100,10)),
+                 c(1000, 20, choose(1000,20)),
+                 c(10000, 100, choose(10000,100))) )
+colnames(tabela) <- c("N", "n", "binom(N,n)")
+kable(tabela)
+```
+
+* Uma saída é usar propriedades simplificadoras da distribuição induzida pelo plano amostral. Tratamos disso na próxima aula.
+
+* Por hora vamos usar uma propriedade importante que pode ser deduzida a partir da distribuição de aleatorização. 
+
+---
+
+## Estimadores não viciados para o total populacional
+
+* A *probabilidade de inclusão* da unidade $i$ na amostra é dada por: 
+$$P({i \in s}) = \pi_i = \displaystyle \sum_{s \ni i} p(s).$$
+
+* Se tomarmos o *inverso da probabilidade de inclusão* ${1}/{\pi_i}$ como peso $(w_i)$ de uma unidade amostrada, é fácil verificar que o estimador dado por $\widehat T_w$ é *não viciado* para o total populacional $T$:
+
+$$\widehat T_w = \displaystyle \sum_{i \in s} w_i y_i = \displaystyle \sum_{i \in s}  \frac{1}{\pi_i} y_i = \displaystyle \sum_{i \in s} {\pi_i}^{-1} y_i.$$
+
+* Essa é propriedade importante e será demonstrada de maneira formal na próxima aula. 
+
+---
+
+## Estimadores não viciados para o total populacional
+### (cont.)  Exemplo: estimação do total e AAS
+
+* Usando a propriedade recém apresentada, os pesos amostrais nesse Exemplo são 
+$$w_i = {1}/{\pi_i} = \frac{1}{1/2} = 2, \forall i,$$ 
+para uma das amostras de tamanho $n=2$.
+
+* O estimador ponderado do total nesse caso seria dado por: 
+$$\widehat T_w = \displaystyle \sum_{i \in s} w_i y_i = \displaystyle \sum_{i \in s} {\pi_i}^{-1} y_i = \displaystyle \sum_{i \in s} 2 y_i = 2t.$$
+
+* Já sabemos que este estimador é não viciado para $T$.
+
+---
+
+## Estimadores não viciados para o total populacional
+### (cont.)  Exemplo: estimação do total e AAS
+
+* Considere a mesma população fictícia do exemplo anterior. 
+
+* Mas agora adote o plano amostral $p_2$ (para amostras de tamanho $n=2$). 
+
+.center[
+*Informações de cada amostra possível sob plano amostral $p_2$*
+]
+
+Amostra | Unidades na Amostra $s$ | Valores na Amostra $s$ | Soma Amostral $(t)$ | Probabilidades $p_2(s)$  
+--------|:-:|:-:|:-:|:-:
+ 1	   |       {1;2}         |             {0;0}	    |             0	         |              0,00
+ 2     |        {1;3}       |               {0;2}     |              2          |               0,20
+ 3     |        {1;4}       |                {0;1}    |               1        |                 0,15
+ 4     |        {2;3}       |                {0;2}    |               2        |                 0,20
+ 5    |         {2;4}       |                {0;1}    |               1        |                 0,15
+ 6    |         {3;4}        |                {2;1}   |                3       |                  0,30
+ Total    |        _         |             _        |             _           |              1,00
+
+---
+
+## Estimadores não viciados para o total populacional
+### (cont.)  Exemplo: estimação do total e AAS
+
+* Vamos agora usar as informações acima para:
+
+1.Verificar que a estatística soma amostral $(t)$ é viciada para estimar o total populacional $T$.    
+2.Obter / definir um estimador não viciado para o total populacional $T$.
+
+.center[
+*Probabilidade sob $p_2$ para cada valor de $t$*
+]
+
+Valores possíveis de $t$  |  0  |   1   |  2  |   3
+--------------------------|: -----:|:-----:|:-----:|:-----:
+Com probabilidade $p_2(s)$  | `r emo::ji("question")``r emo::ji("question")``r emo::ji("question")`   | `r emo::ji("question")``r emo::ji("question")``r emo::ji("question")`   | `r emo::ji("question")``r emo::ji("question")``r emo::ji("question")`  |  `r emo::ji("question")``r emo::ji("question")``r emo::ji("question")`
+
+---
+
+## Estimadores não viciados para o total populacional
+### (cont.)  Exemplo: estimação do total e AAS
+
+* Vamos agora usar as informações acima para:
+
+1.Verificar que a estatística soma amostral $(t)$ é viciada para estimar o total populacional $T$.    
+2.Obter / definir um estimador não viciado para o total populacional $T$.
+
+.center[
+*Probabilidade sob $p_2$ para cada valor de $t$*
+]
+
+Valores possíveis de $t$  |  0  |   1   |  2  |   3
+--------------------------|: -----:|:-----:|:-----:|:-----:
+Com probabilidade $p_2(s)$  |  0,0  |  0,3  |  0,4  |  0,3
+
+* O valor esperado de $t$ sob o plano amostral $p_2$ é:
+$$E_{p_2}(t) = `r emo::ji("question")``r emo::ji("question")``r emo::ji("question")`$$
+
+---
+
+## Estimadores não viciados para o total populacional
+### (cont.)  Exemplo: estimação do total e AAS
+
+* Vamos agora usar as informações acima para:
+
+1.Verificar que a estatística soma amostral $(t)$ é viciada para estimar o total populacional $T$.
+
+2.Obter / definir um estimador não viciado para o total populacional $T$.
+
+.center[
+*Probabilidade sob $p_2$ para cada valor de $t$*
+]
+
+Valores possíveis de $t$  |  0  |   1   |  2  |   3
+--------------------------|: -----:|:-----:|:-----:|:-----:
+Com probabilidade $p_2(s)$  |  0,0  |  0,3  |  0,4  |  0,3
+
+* O valor esperado de $t$ sob o plano amostral $p_2$ é:
+
+$$E_{p_2}(t) = \displaystyle \sum_{s \in S} t(s) p_2(s) = 0 \times 0,0 + 1 \times 0,3 + 2 \times 0,4 + 3\times 0,3 = 2<3 = T$$
+
+---
+
+## Estimadores não viciados para o total populacional
+### (cont.)  Exemplo: estimação do total e AAS
+
+* Para obter um estimador não viciado, devemos calcular pesos adequados para as unidades amostrais.
+
+.center[
+Probabilidade de inclusão e peso amostral de cada unidade sob o plano amostral $p_2$
+]
+
+Rótulo da unidade $(i)$ |      1        |  2      |      3    |      4        
+------------------------|:--------------:|: ------------:|: ------------:|:-----------:|:-----------: 
+Probabilidade de inclusão $({\pi}_i)$ |  `r emo::ji("question")``r emo::ji("question")``r emo::ji("question")`  |  `r emo::ji("question")``r emo::ji("question")``r emo::ji("question")`  |  `r emo::ji("question")``r emo::ji("question")``r emo::ji("question")`  | `r emo::ji("question")``r emo::ji("question")``r emo::ji("question")`  
+Peso $(w_i)$      | `r emo::ji("question")``r emo::ji("question")``r emo::ji("question")` |  `r emo::ji("question")``r emo::ji("question")``r emo::ji("question")` |  `r emo::ji("question")``r emo::ji("question")``r emo::ji("question")` | `r emo::ji("question")``r emo::ji("question")``r emo::ji("question")`
+
+---
+
+## Estimadores não viciados para o total populacional
+### (cont.)  Exemplo: estimação do total e AAS
+
+* Para obter um estimador não viciado, devemos calcular pesos adequados para as unidades amostrais. 
+
+.center[
+Probabilidade de inclusão e peso amostral de cada unidade sob o plano amostral $p_2$
+]
+
+Rótulo da unidade $(i)$ |      1        |  2      |      3    |      4        
+------------------------|:--------------:|: ------------:|: ------------:|:-----------:|:-----------: 
+Probabilidade de inclusão $({\pi}_i)$ |  7/20=0,35  |  7/20=0,35  |  7/10=0,70  | 3/5=0,60  
+Peso $(w_i)$      |                      20/7=2,857 |  20/7=2,857 |  10/7=1,429 | 5/3=1,667
+
+* Usando o estimador do total com os pesos adequados $\widehat T_w$, obtêm-se os valores das estimativas para cada amostra possível. 
+
+---
+
+## Estimadores não viciados para o total populacional
+### (cont.)  Exemplo: estimação do total e AAS
+
+.center[
+*Obtenção de estimativa sob plano amostral $p_2$ para cada amostra possível*
+]
+
+Amostra |  Valores na Amostra $s$ |  Total Amostral ponderado |  Probabilidades $p_2(s)$  | Total $\times$ probabilidade
+---------|:------------------------:|:--------------------------:|:-------------------------:|:---------------------:
+    1   |         {0;0}	      |         0	                     |          0,00	         |             0
+    2   |         {0;2}	      |         2x(10/7)               |           0,20         |             4/7
+    3   |         {0;1}       |          1x(5/3)               |            0,15         |             1/4
+    4   |         {0;2}       |          2x(10/7)             |             0,20        |              4/7
+    5   |         {0;1}       |          1x(5/3)              |             0,15         |             1/4
+    6   |         {2;1}       |          2x(10/7)+1x(5/3)     |             0,30        |            6/7+1/2
+  Total  |          	-      |           -                   |              1,00         |              3
+
+---
+
+## Estimadores não viciados para o total populacional
+### (cont.)  Exemplo: estimação do total e AAS
+
+1. O estimador $\widehat T_w$ obtido usando os pesos iguais a $1 / \pi_i$ tem valor esperado igual ao total populacional $T$. 
+
+  + $\widehat T_w$ é *não viciado* também sob o plano amostral $p_2$.  
+
+--
+
+2. Mesmo a **amostra 1** tendo **probabilidade nula** de ser selecionada **não viola** os critérios para que $p_2$ seja um plano de **amostragem probabilística**. 
+
+  + as unidades populacionais têm probabilidades positivas de inclusão na amostra. (Verificar`r emo::ji("exclamation")``r emo::ji("exclamation")``r emo::ji("exclamation")`)  
+
+--
+
+3. Temos agora duas opções de plano amostral (de tamanho $n=2$), para estimar o total populacional $T$. 
+
+  + para ambos os planos amostrais temos estimadores não viciados do total populacional. 
+
+#### Coloca-se então a pergunta: qual dos dois planos é melhor`r emo::ji("question")``r emo::ji("question")``r emo::ji("question")`
+
+
+---
+
+## Estimadores não viciados para o total populacional
+### (cont.)  Exemplo: estimação do total e AAS
+
+* **Estratégia 1:** seleção equiprovável de amostras com estimador de total ponderado $(\widehat T = 2t)$.
+
+.center[
+*Probabilidade de seleção sob $p_1(s)$ para cada valor do estimador ponderado*
+]
+
+Valores possíveis de $\widehat T=2t$  |  0  | 2 |    4  |  6      
+---------------------------------------|:----:|:----:|:----:|:----- 
+Com probabilidade $p(s)$ sob $p_1(s)$   | 1/6 | 2/6 |  2/6  | 1/6  
+
+--
+
+* **Estratégia 2:** seleção de amostras com probabilidades desiguais e estimador de total ponderado $(\widehat T_w)$. 
+
+.center[
+*Probabilidade de seleção sob $p_2(s)$ para cada valor do estimador ponderado*
+]
+
+Valores possíveis de $\widehat T_w$   |  5/3  | 20/7  |  20/7+5/3      
+-------------------------------------|:-----:|: ------ ---------- 
+Com probabilidade $p(s)$ sob $p_2(s)$ | 0,30  | 0,40  | 0,30
+
+---
+
+## Estimadores não viciados para o total populacional
+### (cont.)  Exemplo: estimação do total e AAS
+
+* Em ambos os casos o estimador é não viciado, então comparamos ad *variâncias dos estimadores*.
+
+.center[
+*Obtenção da variância dos estimadores sob os planos amostrais $p_2$ e $p_1$*
+]
+
+Amostra   |  Valores na Amostra $s$ |  Estimativa sob $p_2$ |   Probabilidade sob $p_2$ |  Estimativa sob $p_1$ |  Probabilidade sob $p_1$    
+-----------|:---:|:--:|:--:|:--:|:--:
+   1	   |         {0;0}	    |             0	                |        0,00	            |           0         |            1/6
+   2	   |         {0;2}	    |             2x(10/7)	        |          0,20           |              4     |                1/6
+   3     |         {0;1}	    |             1x(5/3)          |          0,15            |             2	     |              1/6
+   4     |         {0;2}	    |             2x(10/7)         |          0,20            |             4      |               1/6
+   5     |         {0;1}	    |             1x(5/3)          |          0,15            |             2      |               1/6
+   6      |        {2;1}      |            2x(10/7)+1x(5/3)  |          0,30             |            6      |               1/6
+Variância  |        -         |           1,24              |         -   	            |         3,67	    |               -
+
+---
+
+## Estimadores não viciados para o total populacional
+### (cont.)  Exemplo: estimação do total e AAS
+
+* O plano amostral $p_2$ fornece o *estimador não viciado com menor variância* em comparação com o plano $p_1$ e deve ser preferido, pois o tamanho das amostras (nossa medida de custo) é o mesmo.
+
+* **Minimizar a variância** é o critério de desempate para escolha entre *estratégias não viciadas de amostragem e estimação* de *igual custo total*. 
+
+#### Este será então nosso segundo critério para escolha de estimadores. `r emo::ji("+1")`
+
+---
+
+## Para casa `r emo::ji("house")`
+
+* Compare o $EQM$ dos estimadores $t$ e $2t$, sob o plano $p_1$, no Exemplo.
+* Verificar se todas unidades populacionais têm probabilidade positiva de inclusão na amostra sob $p_2$, no Exemplo.
+* Qual o peso $w_i$ para AASs e AASc?
+* Rever os slides.
+* Refazer o Exemplo.
+* Ler seção 3,7 do livro 'Amostragem: Teoria e Prática Usando R'.
+
+
+
+## Próxima aula `r emo::ji("stats")`
+
+* Teoria básica
+  + Estimador linear do total
+  + Propriedados do estimador Horvitz-Thompson
+
+* Laboratório de `r fa("r-project", fill = "steelblue")`
+
+
+
+
+---
+
+## Muito obrigado!
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='30%', out.height='30%', paged.print=FALSE}
+knitr::include_graphics(here::here('img', 'image_basu_elephant.jpg'))
+```
+Fonte: imagem do livro *Combined Survey Sampling Inference: Weighing of Basu's Elephants: Weighing Basu's Elephants*.
+
+---
+
+## Resumo da notação
+
+Notação | População | Amostra
+---|:---:|:---
+Índice (rótulo) | $U = \{ 1, 2, \ldots, i, \ldots, N\}$ | $s=\{i_1, i_2, \dots, i_n\}$
+Característica  | $Y_U = \{y_1,\;y_2,\;...,\;y_i,\;..., \;y_N\}$ | $Y_s = \{y_{i_1}, y_{i_2}, \dots, y_{i_n}\}$
+Total           | $T = \sum_{i=1}^{N}y_i=\sum_{i\in U}y_i$ | $\widehat{T} = t(s) = t = \sum_{i \in s} y_i$
+Média           | $\overline{Y} = \frac{T}{N}=\frac{1}{N}\sum_{i\in U} y_i$ | $\widehat{\overline{Y}} = \overline{y} = \frac{t(s)}{n} = \frac{1}{n} \sum_{i \in s} y_i$
+Variância       | $Var_y = \frac{1}{N} \sum_{i\in U}({y_i-\overline{Y}})^2$ | $var_y = \frac{1}{n} \sum_{i\in s}(y_i - \overline y)^2$
+Variância       | $S^2_y = \frac{1}{N-1} \sum_{i \in U}({y_i-\overline{Y}})^2$ | $s^2_y = \frac{1}{n-1} \sum_{i \in s}(y_i - \overline y)^2$
+
+
+<!-- Proporção       | $p = \overline{Y}$, para $Y \in \{0,1\}$ | -->
+
+<!-- Variância*       | $S^2_y = \displaystyle\frac{1}{N-1} \sum_{i\in}({y_i-\overline{Y}})^2 = \frac{1}{N-1}\left[\sum_{i\in U}{y_i}^2-N\overline{Y}^2\right]$ |  -->
+
+
+* Espaço amostral: $S = \{ s_1,  s_2, \ldots, s_j, \ldots, s_{\nu} \}$
+* Plano amostral: $p(s)$, em que $\sum_{s \in S} p(s) = 1$ 
+* Esperança em relação a $p(s)$: $E_p [t(s)] = \sum_{s \in S} t(s) p(s)$
+* Variância  em relação a $p(s)$: $Var_p [t(s)] = \sum_{s \in S} [t(s) - E_p(t)]^2 p(s)$

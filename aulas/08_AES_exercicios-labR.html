@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>MAT02036 - Amostragem 2</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Markus Stein" />
+    <script src="libs/header-attrs-2.18/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, title-slide
+
+.title[
+# MAT02036 - Amostragem 2
+]
+.subtitle[
+## Aula 08 - Amostragem Estratificada - Exercícios e Lab R
+]
+.author[
+### Markus Stein
+]
+.institute[
+### Departamento de Estatística, IME/UFRGS
+]
+.date[
+### 2022/2
+]
+
+---
+
+
+
+
+<div>
+<style type="text/css">.xaringan-extra-logo {
+width: 110px;
+height: 128px;
+z-index: 0;
+background-image: url(C:/Users/User/Downloads/MAT02036 - Amostragem 2/aulas/img/logo_dest.png);
+background-size: contain;
+background-repeat: no-repeat;
+position: absolute;
+top:1em;right:1em;
+}
+</style>
+<script>(function () {
+  let tries = 0
+  function addLogo () {
+    if (typeof slideshow === 'undefined') {
+      tries += 1
+      if (tries < 10) {
+        setTimeout(addLogo, 100)
+      }
+    } else {
+      document.querySelectorAll('.remark-slide-content:not(.title-slide):not(.inverse):not(.hide_logo)')
+        .forEach(function (slide) {
+          const logo = document.createElement('div')
+          logo.classList = 'xaringan-extra-logo'
+          logo.href = null
+          slide.appendChild(logo)
+        })
+    }
+  }
+  document.addEventListener('DOMContentLoaded', addLogo)
+})()</script>
+</div>
+
+### *Housekeeping*
+
+* Aproveitem o momento presencial para tirar dúvidas
+
+* Se estivéssemos no ensino remoto ou à distância
+
+  + vocês poderiam estar somente ouvindo, sem interação
+  
+  + ou assistindo vídeos e material em outro momento
+  
+* Depois das aulas, rever material da aula passada
+
+  + fazer exercícios
+  
+  + se preparar para a próxima aula
+
+---
+
+## Aula passada 📀
+* **Tamanho da amostra** na **AES** dado um tipo de **alocação**, `\(w_h\)`, e **fixando a variância** máxima que se deseja para a estimativa do parâmetro, `\(V\)`
+
+Parâmetro | Sob AASc dentro dos estratos | Sob AASs dentro dos estratos
+--|:--:|:--:
+Média | `\(n \ge \frac{\sum_{h=1}^{H} W_h^2 \frac{ Var_{h,y} }{w_h} }{V}\)` | `\(n \ge \frac {\sum_{h=1}^{H} \frac {W_h^2 S_{h,y}^2}{w_h}}{V+\frac1N\sum_{h=1}^{H}{ W_h S_{h,y}^2}}\)`
+Total | `\(n \ge \frac{\sum_{h=1}^{H} N_h^2 \frac{ Var_{h,y} }{w_h} }{V}\)` | `\(n \ge \frac {\sum_{h=1}^{H} \frac {N_h^2 S_{h,y}^2}{w_h}}{V +  \sum_{h=1}^{H}{ N_h S_{h,y}^2}}\)`
+
+* **Margem de erro** para o estimador `\(\widehat \theta\)` (approx. normal para dist. de `\(\widehat \theta\)`)
+
+  + **Absoluta**: `\(e = z_\frac{\alpha}{2} \sqrt{ Var(\widehat \theta)} \Leftrightarrow V = \frac{e^2}{z^2_\frac{\alpha}{2}}\)`
+
+  + **Relativa**: `\(r \overline Y = z_\frac{\alpha}{2} \sqrt{Var(\widehat \theta)} \Leftrightarrow V = \frac{r^2 \overline Y^2}{z^2_\frac{\alpha}{2}}\)`
+
+* Pode ser útil utilizar a relação entre variâncias que já conhecemos `\(Var(\overline y) = \frac{N-n}{n} \frac{S^2}{n} \Leftrightarrow \sqrt{Var(\overline y)} = \sqrt{\frac{N-n}{n}} \frac{S}{\sqrt{n}}\)`
+
+---
+
+## Aula passada 💿
+* Tamanho mínimo de amostra para **estimação da média** populacional
+
+.center[
+Alocação | **AASc** dentro dos estratos | **AASs** dentro dos estratos
+--|:--:|:--:
+`\(AES_{un}\)` | `\(n \ge \frac{ H \sum_{h=1}^{H} W_h^2 Var_{h,y} }{V}\)` | `\(n \ge \frac{ H \sum_{h=1}^{H} W_h^2 S^2_h }{V + \frac{1}{N} \sum_{h=1}^{H} W_h S^2_h}\)`
+`\(AES_{pr}\)` | `\(n \ge \frac{ \sum_{h=1}^{H} W_h Var_{h,y} }{V}\)` | `\(n \ge \frac{ \sum_{h=1}^{H} W_h S^2_h }{V + \frac{1}{N} \sum_{h=1}^{H} W_h S^2_h}\)`
+`\(AES_{ne}\)` | `\(n \ge \frac{ \left( \sum_{h=1}^{H} W_h DP_{h,y} \right)^2 }{V}\)` | `\(n \ge \frac{ \left( \sum_{h=1}^{H} W_h S_{h,y} \right)^2 }{V + \frac{1}{N} \sum_{h=1}^{H} W_h S^2_h}\)`
+`\(AES_{ot}\)` | `\(n \ge \frac{ \left( \sum_{h=1}^{H} W_h DP_{h,y} \sqrt{C_h} \right)\left( \sum_{h=1}^{H} W_h DP_{h,y} / \sqrt{C_h} \right) }{V}\)` | `\(n \ge \frac{  \left( \sum_{h=1}^{H} W_h S_{h,y} \sqrt{C_h} \right)\left( \sum_{h=1}^{H} W_h S_{h,y} / \sqrt{C_h} \right) }{V + \frac{1}{N} \sum_{h=1}^{H} W_h S^2_h}\)`
+]
+
+---
+
+## Aula passada 💿
+
+#### Exemplo 🏋️‍♀️
+
+Exemplo 7 da Apostila (da Profa. Vanessa): 
+
+Suponha que os restaurantes em uma cidade foram divididos em 3 estratos, de
+acordo com a zona de localização: `\(A\)` `\((N_1 = 600)\)`, `\(B\)` `\((N_2 = 300)\)` e `\(C\)` `\((N_3 = 100)\)`. Queremos
+estimar o número médio de clientes por dia. Os valores do desvio padrão dos estratos são: 20, 30
+e 50 clientes, respectivamente. Determinar o tamanho de amostra pra estimar a média de clientes
+por dia com um erro máximo absoluto de 3 clientes e com 99,73% de confiança (isto é, `\(z\)` = 3).
+Considere que será feita uma **AASs** em cada estrato.
+
+.center[
+### Alguém tentou❓❓❓ Dúvidas ❓
+]
+
+---
+
+class: inverse, middle, center
+
+# Exercícios para entregar
+
+---
+
+##  Aula de Hoje
+
+* São **três** exercícios para entregar. 🏃
+
+  + Pode ser feito **à mão** ou **em códigos**, de qualquer forma serão **postados no moodle**.
+  
+  + Indicar **notações** e **fórmulas** utilizadas.
+  
+  + Mostrar **desenvolvimento**, **interpretação** e **conclusão**.
+
+* Discutam as resoluções com os colegas, mas a **entrega** é **individual**.
+
+---
+
+##  Exercícios para entregar 1 💪
+
+* Exercício 4.1 (Elementos de Amostragem)
+
+  + Nos slides *Aula 06*, página 8, continuar ítens (c) e (d).
+  
+  + Interprete os resultados.
+
+---
+
+##  Exercícios para entregar 2 💦
+
+* Exercício 11.10 (Amostragem: Teoria e Prática Usando o R)
+
+(Adaptado de @Scheaffer2011) Uma empresa tem suas divisões localizadas em três continentes distintos: América, Europa e Ásia. Deseja-se realizar uma pesquisa sobre um de seus produtos através de uma amostra de clientes a serem entrevistados por telefone a partir da divisão localizada na América. O custo das ligações é diferente para cada uma das divisões. A Tabela abaixo contém as informações do custo, em dólares, de cada ligação/entrevista para cada uma das divisões, além da variância das taxas de satisfação e o número total de clientes em cada estrato. Calcule o tamanho total da amostra a ser selecionada e a alocação apropriada para essa amostra, sabendo que se deseja que a variância da estimativa da média populacional seja `\(V_{AES}(\overline y_{AES}) \le 0,1\)`. (assumindo **AASs** dentro dos estratos)
+
+Estrato | `\(N_h\)` | `\(S^2_{h,y}\)` | `\(C_h\)`
+--------|-------|------------|--------- 
+América |      112  |   2,25  |    9       
+Europa  |      68   |  3,24   |  25  
+Ásia    |      39   |  3,24   |  36     
+
+---
+
+##  Exercícios para entregar 3 💦
+
+* Exercício 11.7 (Amostragem: Teoria e Prática Usando o R)
+
+As 2.120 lojas de uma certa localidade foram estratificadas pelo número de empregados (única variável relativa ao tamanho da empresa encontrada no cadastro) numa pesquisa para estimar o faturamento total. A Tabela abaixo contém as informações da variável número de empregados, `\(x\)`, utilizadas no planejamento da amostra e os resultados sobre o faturamento, `\(y\)`, das lojas por estrato, obtidos na coleta dos dados na amostra. O faturamento foi medido em 1.000 Reais. (assumindo **AASs** dentro dos estratos)
+
+Estratos |    `\(N_h\)`   |       `\(T_{h,x}\)`    |     `\(S^2_{h,x}\)`|   `\(\overline y_h\)` (1.000 Reais) | `\(\widehat S^2_{h,y}\)`
+----------------------| ----------| --------------| -------------------| ------------------| ---------------------
+      5-14            |    1.100  |         9.020     |         8,30  |             3     |              2,53 
+     15-49          |        500  |        13.500     |       102,08  |            17     |             66,59
+     50-99           |       250  |        17.750     |       207,00  |            52     |            411,28
+    100-199          |       130  |        17.329     |       840,10  |           170     |          1.953,64
+    200-499          |       120  |        36.600     |     7.500,00  |           350     |         16.770,25
+   500 e mais        |        20  |        14.280     |    20.805,00  |         7.000     |      3.062.500,00
+  **Totais**         |    **2.120** | **108.479**    |   |   |
+
+---
+
+##  Exercícios para entregar 3 💪
+
+* (cont.) Exercício 11.7 (Amostragem: Teoria e Prática Usando o R)
+
+a. Dimensione, utilizando os dados referentes a `\(x\)`, a amostra necessária para estimar o numero total de empregados com um erro máximo admissível de 2% e com um nível de confiança de 95%, supondo alocação de Neyman.
+
+b. Suponha que a amostra alocada no item anterior tenha sido efetivamente selecionada fornecendo os resultados apresentados para `\(y\)`. Com estas informações estime o faturamento total, `\(Y\)`, e o coeficiente de variação desta estimativa.
+     
+---
+
+class: inverse, middle, center
+
+# Resoluções
+
+---
+
+####  Resolução Exercícios para entregar <svg aria-hidden="true" role="img" viewBox="0 0 256 512" style="height:1em;width:0.5em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M160 64c0-11.8-6.5-22.6-16.9-28.2s-23-5-32.9 1.6l-96 64C-.5 111.2-4.4 131 5.4 145.8s29.7 18.7 44.4 8.9L96 123.8V416H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h96 96c17.7 0 32-14.3 32-32s-14.3-32-32-32H160V64z"/></svg>
+
+
+```r
+## dados do problema - Exercício 4.1 (Elementos de Amostragem)
+H &lt;- 5                                    # no. de estratos
+h &lt;- 1:H                                  # indice dos estratos
+Nh &lt;- c( 117, 98, 74, 41, 45)             # tamanho dos estratos
+Ybarrah &lt;- c( 7.3, 6.9, 11.2, 9.1, 9.6)   # media pop. dos estratos
+S2h &lt;- c( 1.31, 2.03, 1.13, 1.96, 1.74)   # variancia do estrato 
+N &lt;- sum(Nh)                              # tamanho da populacao
+n &lt;- 80                                   # tamanho de amostra
+
+## a.
+## media populacional
+Ybarra &lt;- sum( Nh * Ybarrah) / N       # media pop global
+Ybarra
+```
+
+```
+## [1] 8.437867
+```
+
+```r
+## variancia populacional Var_y
+Vary_aux1 &lt;- sum((Nh - 1) * S2h) / N                 # primeiro termo
+Vary_aux2 &lt;- ( sum( Nh * Ybarrah^2) / N) - Ybarra^2  # segundo termo
+Vary &lt;- Vary_aux1 + Vary_aux2                        # variancia pop global
+Vary
+```
+
+```
+## [1] 4.301073
+```
+
+---
+
+####  Resolução Exercícios para entregar <svg aria-hidden="true" role="img" viewBox="0 0 256 512" style="height:1em;width:0.5em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M160 64c0-11.8-6.5-22.6-16.9-28.2s-23-5-32.9 1.6l-96 64C-.5 111.2-4.4 131 5.4 145.8s29.7 18.7 44.4 8.9L96 123.8V416H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h96 96c17.7 0 32-14.3 32-32s-14.3-32-32-32H160V64z"/></svg>
+
+
+```r
+## b.
+## alocacao proporcional
+nhpr &lt;- n * Nh / N                          # vetor de nh's na proporcional
+nhpr
+```
+
+```
+## [1] 24.960000 20.906667 15.786667  8.746667  9.600000
+```
+
+```r
+## alocancao de neyman SEM reposicao dentro dos estratos
+Sh &lt;- sqrt(S2h)                             # desvios SHy dos estratos Var_h,y, sob AASs dentro
+nhneAESs &lt;- n * (Nh * Sh) / (sum(Nh * Sh))  # vetor de nh's na de Neyman, sob AASs dentro
+nhneAESs
+```
+
+```
+## [1] 22.844026 23.819094 13.419060  9.791811 10.126008
+```
+
+```r
+## alocacao de neyman COM reposicao dentro dos estratos
+Varh &lt;- (Nh - 1) * S2h / Nh                 # variancias dos estratos Var_h,y, sob AASc dentro
+DPh &lt;- sqrt(Varh)                           # desvios padroes dos estratos DP_h,y, sob AASc dentro
+nhneAESc &lt;- n * (Nh * DPh) / (sum(Nh * DPh))# vetor de nh's na de Neyman, sob AASc dentro
+nhneAESc
+```
+
+```
+## [1] 22.901909 23.859484 13.419324  9.737872 10.081411
+```
+
+```r
+## pequena diferença entre AESne SEM e COM reposicao!!! neyman alocando mais em estratos com mais variabilidade
+```
+
+---
+
+####  Resolução Exercícios para entregar <svg aria-hidden="true" role="img" viewBox="0 0 256 512" style="height:1em;width:0.5em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M160 64c0-11.8-6.5-22.6-16.9-28.2s-23-5-32.9 1.6l-96 64C-.5 111.2-4.4 131 5.4 145.8s29.7 18.7 44.4 8.9L96 123.8V416H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h96 96c17.7 0 32-14.3 32-32s-14.3-32-32-32H160V64z"/></svg>
+
+
+```r
+## c.
+## na AASc
+Varybarra &lt;- Vary / n              # variancia de ybarra sob AASc
+Varybarra
+```
+
+```
+## [1] 0.05376341
+```
+
+```r
+## AESne sob AAS SEM reposicao dentro dos estratos
+Wh &lt;- Nh / N
+VarybarraAESnes &lt;- sum( Wh * Sh)^2 / n - sum( Wh * S2h) / N
+VarybarraAESnes
+```
+
+```
+## [1] 0.01532154
+```
+
+```r
+## AESne sob AAS COM reposicao dentro dos estratos
+VarybarraAESnec &lt;- sum( Wh * DPh)^2 / n
+VarybarraAESnec
+```
+
+```
+## [1] 0.01928409
+```
+
+```r
+## variancias reduzem com alocacao de neyman, vantagem sob ASSs dentro
+```
+
+---
+
+####  Resolução Exercícios para entregar <svg aria-hidden="true" role="img" viewBox="0 0 256 512" style="height:1em;width:0.5em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M160 64c0-11.8-6.5-22.6-16.9-28.2s-23-5-32.9 1.6l-96 64C-.5 111.2-4.4 131 5.4 145.8s29.7 18.7 44.4 8.9L96 123.8V416H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h96 96c17.7 0 32-14.3 32-32s-14.3-32-32-32H160V64z"/></svg>
+No item (a) calculamos `\(Var_y = 4.3010728\)` e do item (b) temos `\(n=80\)`.
+
+(c) 
+
+* Sabemos que na **AASc** (ignorando os estratos) a **variância** do **estimador** da **média** é dada por
+`$$Var_{AASc} (\overline y) = \frac{Var_y}{n} = \frac{4.3010728}{80} = 0.0538.$$`
+
+* Já na **AESne** considerando **AASs** dentro dos estratos sabemos que
+`$$Var_{AES_{ne}} \left( \overline y_{AES} \right) = \frac{1}{n} \left( \sum_{h=1}^{H} W_h S_h \right)^2 - \frac{1}{N} \left( \sum_{h=1}^{H} W_h S_h^2 \right)^2 = \frac{\overline{S}^2}{n} - \frac{\overline{S^2}}{N}.$$`
+
+* E na **AESne** considerando **AASc** dentro dos estratos
+`$$Var_{AES_{ne}} \left( \overline y_{AES} \right) = \frac{1}{n} \left( \sum_{h=1}^{H} W_h \sqrt{Var_h} \right)^2 = \frac{\overline{DP}^2}{n}.$$`
+---
+
+####  Resolução Exercícios para entregar <svg aria-hidden="true" role="img" viewBox="0 0 256 512" style="height:1em;width:0.5em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M160 64c0-11.8-6.5-22.6-16.9-28.2s-23-5-32.9 1.6l-96 64C-.5 111.2-4.4 131 5.4 145.8s29.7 18.7 44.4 8.9L96 123.8V416H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h96 96c17.7 0 32-14.3 32-32s-14.3-32-32-32H160V64z"/></svg>
+
+
+```r
+## d.
+## na AESpr sob AAS SEM reposicao dentro dos estratos
+VarybarraAESprs &lt;- sum(Wh * S2h) * ((1/n) - (1/N))  
+VarybarraAESprs
+```
+
+```
+## [1] 0.01558885
+```
+
+```r
+## na AESpr sob AAS COM reposicao dentro dos estratos
+VarybarraAESprc &lt;- sum(Wh * Varh) / n
+VarybarraAESprc
+```
+
+```
+## [1] 0.019544
+```
+
+```r
+## variancias um pouco maiores que na alocacao ne neyman, novamente vantagem sob AASs dentro
+```
+
+---
+
+####  Resolução Exercícios para entregar <svg aria-hidden="true" role="img" viewBox="0 0 256 512" style="height:1em;width:0.5em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M160 64c0-11.8-6.5-22.6-16.9-28.2s-23-5-32.9 1.6l-96 64C-.5 111.2-4.4 131 5.4 145.8s29.7 18.7 44.4 8.9L96 123.8V416H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h96 96c17.7 0 32-14.3 32-32s-14.3-32-32-32H160V64z"/></svg>
+
+(d) 
+
+* Para a variância na **AESpr** considerando **AASs** dentro dos estratos sabemos que
+
+`$$Var \left( \overline y_{AES_{pr}} \right) = \left( \frac{1}{n} - \frac{1}{N} \right) \sum_{h=1}^{H} W_h S_h^2$$`
+
+* E para a variância na **AESpr** considerando **AASc** dentro dos estratos
+
+`$$Var \left( \overline y_{AES_{pr}} \right) = \frac{1}{n} \sum_{h=1}^{H} W_h Var_h$$` 
+
+
+---
+
+####  Resolução Exercícios para entregar <svg aria-hidden="true" role="img" viewBox="0 0 320 512" style="height:1em;width:0.62em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M142.9 96c-21.5 0-42.2 8.5-57.4 23.8L54.6 150.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L40.2 74.5C67.5 47.3 104.4 32 142.9 32C223 32 288 97 288 177.1c0 38.5-15.3 75.4-42.5 102.6L109.3 416H288c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9L200.2 234.5c15.2-15.2 23.8-35.9 23.8-57.4c0-44.8-36.3-81.1-81.1-81.1z"/></svg>
+
+
+```r
+## dados do problema - Exercício 11.10 (Amostragem: Teoria e Prática Usando o R)
+H &lt;- 3                        # no. de estratos
+h &lt;- 1:H                      # indice dos estratos
+Nh &lt;- c( 112, 68, 39)         # tamanho dos estratos
+S2h &lt;- c( 2.25, 3.24, 3.24)   # variancia do estrato 
+Ch &lt;- c( 9, 25, 36)           # custo de amostragem no estrato
+N &lt;- sum(Nh)                  # tamanho da populacao
+V &lt;- 0.1                      # variancia maxima
+
+## calculo de n
+Wh &lt;- Nh / N        # peso do estrato h na pop. 
+Sh &lt;- sqrt(S2h)     # variancia do estrato h
+raizCh &lt;- sqrt(Ch)  # raiz quadrada do custo no estrato h
+num_part1 &lt;- sum( Wh * Sh * raizCh)
+num_part2 &lt;- sum( Wh * Sh / raizCh)
+denom &lt;- V + sum( Wh * S2h) / N
+n &lt;- num_part1 * num_part2 / denom # tamanho da amostra sob AESot e AASs dentro
+n     # arredondar para cima, ceiling(n)
+```
+
+```
+## [1] 26.26596
+```
+
+---
+
+####  Resolução Exercícios para entregar <svg aria-hidden="true" role="img" viewBox="0 0 320 512" style="height:1em;width:0.62em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M142.9 96c-21.5 0-42.2 8.5-57.4 23.8L54.6 150.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L40.2 74.5C67.5 47.3 104.4 32 142.9 32C223 32 288 97 288 177.1c0 38.5-15.3 75.4-42.5 102.6L109.3 416H288c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9L200.2 234.5c15.2-15.2 23.8-35.9 23.8-57.4c0-44.8-36.3-81.1-81.1-81.1z"/></svg>
+
+* Para calcular o tamanho total da amostra `\(n\)`, sob alocação ótima (*uma vez que o custo de observação das unidades difere de estrato para estrato*),  
+
+  + assumindo **AASs** dentro dos estratos,   
+  
+  + e definindo a variância da estimativa da média populacional tal que não ultrapasse `\(V = 0,1\)`
+
+`$$\begin{eqnarray} Var_{AES_{ot}} (\overline y_{AES}) \le 0,1 &amp; \Leftrightarrow &amp; \frac{  \left( \sum_{h=1}^{H} W_h S_{h,y} \sqrt{C_h} \right)\left( \sum_{h=1}^{H} W_h S_{h,y} / \sqrt{C_h} \right) }{0,1 + \frac{1}{N} \sum_{h=1}^{H} W_h S^2_h} \le n \\
+&amp; \Leftrightarrow &amp;  \frac{7.0191781 \times 0.4209132}{0.1124826} \le n \\
+&amp; \Leftrightarrow &amp;  26.2659638 \le n. \end{eqnarray}$$`
+
+* Arredondaremos `\(n\)` para o inteiro mais próximo. 
+
+  + Então `\(n = 27\)`.
+
+---
+
+####  Resolução Exercícios para entregar <svg aria-hidden="true" role="img" viewBox="0 0 320 512" style="height:1em;width:0.62em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M142.9 96c-21.5 0-42.2 8.5-57.4 23.8L54.6 150.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L40.2 74.5C67.5 47.3 104.4 32 142.9 32C223 32 288 97 288 177.1c0 38.5-15.3 75.4-42.5 102.6L109.3 416H288c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9L200.2 234.5c15.2-15.2 23.8-35.9 23.8-57.4c0-44.8-36.3-81.1-81.1-81.1z"/></svg>
+
+
+```r
+n &lt;- ceiling(n)
+nh &lt;- n * (Wh * Sh / raizCh) / sum( Wh * Sh / raizCh) # tamanho da amostra no estrato h
+```
+
+* A alocação apropriada para essa amostra, assumindo **AESot** e **AASs** dentro dos estratos, 
+
+`$$n_h = n \times \frac{N_h S_{h,y}}{\sum_{k=1}^{H} N_k S_{k,y}} = (16.4027, 7.1703, 3.427).$$`
+
+*Sob alocacao ótima arredondar para o inteiro mais próximo nos estratos com menor custo, maior variabilidade, maior tamanho?*
+
+.pull-left[
+
+```r
+## arredondando todos para mais
+ceiling(nh); sum( ceiling(nh))
+```
+
+```
+## [1] 17  8  4
+```
+
+```
+## [1] 29
+```
+]
+.pull-right[
+
+```r
+## arredondando inteiro mais proximo
+round( nh); sum(round( nh))
+```
+
+```
+## [1] 16  7  3
+```
+
+```
+## [1] 26
+```
+]
+
+---
+
+####  Resolução Exercícios para entregar <svg aria-hidden="true" role="img" viewBox="0 0 448 512" style="height:1em;width:0.88em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M64 64c0-17.7 14.3-32 32-32H336c13.2 0 25 8.1 29.8 20.4s1.5 26.3-8.2 35.2L226.3 208H248c75.1 0 136 60.9 136 136s-60.9 136-136 136H169.4c-42.4 0-81.2-24-100.2-61.9l-1.9-3.8c-7.9-15.8-1.5-35 14.3-42.9s35-1.5 42.9 14.3l1.9 3.8c8.1 16.3 24.8 26.5 42.9 26.5H248c39.8 0 72-32.2 72-72s-32.2-72-72-72H144c-13.2 0-25-8.1-29.8-20.4s-1.5-26.3 8.2-35.2L253.7 96H96C78.3 96 64 81.7 64 64z"/></svg>
+
+
+```r
+## dados do problema - Exercício 11.7 (Amostragem: Teoria e Prática Usando o R)
+H &lt;- 6                        # no. de estratos
+h &lt;- 1:H                      # indice dos estratos
+Nh &lt;- c( 1100, 500, 250, 130, 120, 20)  # tamanho dos estratos
+Thx &lt;- c( 9020, 13500, 17750, 17329, 36600, 14280)
+S2hx &lt;- c( 8.30, 102.08, 207.00, 840.10, 7500.00, 20805.00)   # variancia de x nos estratos 
+ybarrah &lt;- c( 3, 17, 52, 170, 350, 7000)                     # media amostral de y nos estratos
+s2hy &lt;- c(2.53, 66.59, 411.28, 1953.64, 16770.25, 3062500.00) # variancia amostral de y nos estratos
+N &lt;- sum(Nh)                  # tamanho da populacao
+
+## a.
+## valor de V
+r &lt;- 0.02                        # erro relativo 2%
+alfa &lt;- 0.05                     # confianca (1 - alfa) = 95%
+z_alfa_2 &lt;- qnorm(1-alfa/2)      # usando aproximacao pela normal
+Wh &lt;- Nh / N                     # peso do estrato h na pop. 
+Tx &lt;- sum(Thx)                   # total populacional de x
+Xbarra &lt;- Tx / N                 # media populacional de x
+Shx &lt;- sqrt(S2hx)                # variancia de x do estrato h
+```
+
+---
+
+####  Resolução Exercícios para entregar <svg aria-hidden="true" role="img" viewBox="0 0 448 512" style="height:1em;width:0.88em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M64 64c0-17.7 14.3-32 32-32H336c13.2 0 25 8.1 29.8 20.4s1.5 26.3-8.2 35.2L226.3 208H248c75.1 0 136 60.9 136 136s-60.9 136-136 136H169.4c-42.4 0-81.2-24-100.2-61.9l-1.9-3.8c-7.9-15.8-1.5-35 14.3-42.9s35-1.5 42.9 14.3l1.9 3.8c8.1 16.3 24.8 26.5 42.9 26.5H248c39.8 0 72-32.2 72-72s-32.2-72-72-72H144c-13.2 0-25-8.1-29.8-20.4s-1.5-26.3 8.2-35.2L253.7 96H96C78.3 96 64 81.7 64 64z"/></svg>
+
+
+```r
+## calculo de n
+## se fosse estimacao da media
+V &lt;- r^2 * Xbarra^2 / z_alfa_2^2 # variancia maxima - erro relativo para media
+num &lt;- sum( Wh * Shx)^2          # num. formula n para media
+denom &lt;- V + sum( Wh * S2hx) / N # denom. formula n para media
+n &lt;- num / denom  # tamanho da amostra sob AESot e AASs dentro para a media
+n                 # arredondar para cima, ceiling(n)
+```
+
+```
+## [1] 301.5521
+```
+
+```r
+## na estimacao do total
+V &lt;- r^2 * Tx^2 / z_alfa_2^2 # variancia maxima - erro relativo para total
+num &lt;- sum( Nh * Shx)^2      # num. formula n para total
+denom &lt;- V + sum( Nh * S2hx) # denom. formula n para total
+n &lt;- num / denom  # tamanho da amostra sob AESot e AASs dentro para o total
+n                 # arredondar para cima, ceiling(n)
+```
+
+```
+## [1] 301.5521
+```
+
+```r
+## usando formula de n para media com V adequado para media é igual ao 
+## n usando a formula para o total e V adequado para total
+```
+
+---
+
+####  Resolução Exercícios para entregar <svg aria-hidden="true" role="img" viewBox="0 0 448 512" style="height:1em;width:0.88em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M64 64c0-17.7 14.3-32 32-32H336c13.2 0 25 8.1 29.8 20.4s1.5 26.3-8.2 35.2L226.3 208H248c75.1 0 136 60.9 136 136s-60.9 136-136 136H169.4c-42.4 0-81.2-24-100.2-61.9l-1.9-3.8c-7.9-15.8-1.5-35 14.3-42.9s35-1.5 42.9 14.3l1.9 3.8c8.1 16.3 24.8 26.5 42.9 26.5H248c39.8 0 72-32.2 72-72s-32.2-72-72-72H144c-13.2 0-25-8.1-29.8-20.4s-1.5-26.3 8.2-35.2L253.7 96H96C78.3 96 64 81.7 64 64z"/></svg>
+
+(a) 
+
+* Utilizando os dados referentes a `\(x\)`, o tamanho de amostra necessária para estimar o número total de empregados com um erro máximo admissível de 2% e com um nível de confiança de 95%, supondo alocação de Neyman, na **AASs** dentro do estratos 
+
+  + Se fossemos usar a fórmula para a estimação da média, 
+
+`$$\overline X = \frac{T_x}{N} = \sum_{h=1}^H T_{h,x} / N = (9020 + 13500 + 17750 + 17329 + 36600 + 14280) / N = 51.1693396.$$`
+
+  + A variância mínima é dada por `\(V = \frac{r^2 \overline X^2}{z^2_\frac{\alpha}{2}}\)`, para estimação da média quanto do total(?)  
+
+`$$n \ge \frac{ \left( \sum_{h=1}^{H} W_h S_{h,x} \right)^2 }{V + \frac{1}{N} \sum_{h=1}^{H} W_h S^2_{h,x}} = 301.5520596.$$`
+
+  + Então, `\(n = 302\)`.
+
+---
+
+####  Resolução Exercícios para entregar <svg aria-hidden="true" role="img" viewBox="0 0 448 512" style="height:1em;width:0.88em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M64 64c0-17.7 14.3-32 32-32H336c13.2 0 25 8.1 29.8 20.4s1.5 26.3-8.2 35.2L226.3 208H248c75.1 0 136 60.9 136 136s-60.9 136-136 136H169.4c-42.4 0-81.2-24-100.2-61.9l-1.9-3.8c-7.9-15.8-1.5-35 14.3-42.9s35-1.5 42.9 14.3l1.9 3.8c8.1 16.3 24.8 26.5 42.9 26.5H248c39.8 0 72-32.2 72-72s-32.2-72-72-72H144c-13.2 0-25-8.1-29.8-20.4s-1.5-26.3 8.2-35.2L253.7 96H96C78.3 96 64 81.7 64 64z"/></svg>
+
+* E na **estimação do total**??? 
+
+`$$n \ge \frac {\sum_{h=1}^{H} \frac {N_h^2 S_{h,x}^2}{w_h}}{V_T +  \sum_{h=1}^{H}{ N_h S_{h,x}^2}}$$`
+
+No caso da estimação do total `\(V_T\)` segue sendo uma variância máxima, porém agora será máxima para a variância do estimador do total
+
+`$$r N \overline X = z_\frac{\alpha}{2} \sqrt{Var(\overline T_{AES})} \Leftrightarrow V_T = \frac{r^2 N^2 \overline X^2}{z^2_\frac{\alpha}{2}}.$$`
+
+* O **tamanho da amostra** `\(n\)` é o **mesmo** na estimação da **média** e **total**,
+  + se usar erro relativo `\(r \overline Y\)` para definir `\(V\)` e usar `\(V \ge Var_{AES} (\overline x)\)`;
+  + ou com erro relativo `\(r N \overline Y\)` para definir `\(V_T\)` e usar `\(V_T \ge Var_{AES} (\widehat T)\)`.
+
+---
+
+####  Resolução Exercícios para entregar <svg aria-hidden="true" role="img" viewBox="0 0 448 512" style="height:1em;width:0.88em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M64 64c0-17.7 14.3-32 32-32H336c13.2 0 25 8.1 29.8 20.4s1.5 26.3-8.2 35.2L226.3 208H248c75.1 0 136 60.9 136 136s-60.9 136-136 136H169.4c-42.4 0-81.2-24-100.2-61.9l-1.9-3.8c-7.9-15.8-1.5-35 14.3-42.9s35-1.5 42.9 14.3l1.9 3.8c8.1 16.3 24.8 26.5 42.9 26.5H248c39.8 0 72-32.2 72-72s-32.2-72-72-72H144c-13.2 0-25-8.1-29.8-20.4s-1.5-26.3 8.2-35.2L253.7 96H96C78.3 96 64 81.7 64 64z"/></svg>
+
+```r
+## b.
+## alocacao de neyman
+nh &lt;- ceiling(n * Shx * Nh / sum(Shx * Nh))      # arredondando para mais
+nh
+```
+
+```
+## [1]  34  53  38  40 109  31
+```
+
+```r
+## maior que a população no estrato 6???
+Nh
+```
+
+```
+## [1] 1100  500  250  130  120   20
+```
+
+```r
+## estimativa do faturamento total sob AASs dentro 
+ty &lt;- sum(Nh * ybarrah)                      # estimativa do total
+ty
+```
+
+```
+## [1] 228900
+```
+
+```r
+## variancia estimada do estimador do total
+s2ty &lt;- sum( Nh^2 * (1/nh - 1/Nh) *  s2hy)   # estimativa da variancia do estimador do total
+cvty &lt;- sqrt( s2ty) / ty                     # coeficiente de variacao estimado do estimador do total 
+```
+
+```
+## Warning in sqrt(s2ty): NaNs produced
+```
+
+```r
+cvty
+```
+
+```
+## [1] NaN
+```
+
+---
+
+####  Resolução Exercícios para entregar <svg aria-hidden="true" role="img" viewBox="0 0 448 512" style="height:1em;width:0.88em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M64 64c0-17.7 14.3-32 32-32H336c13.2 0 25 8.1 29.8 20.4s1.5 26.3-8.2 35.2L226.3 208H248c75.1 0 136 60.9 136 136s-60.9 136-136 136H169.4c-42.4 0-81.2-24-100.2-61.9l-1.9-3.8c-7.9-15.8-1.5-35 14.3-42.9s35-1.5 42.9 14.3l1.9 3.8c8.1 16.3 24.8 26.5 42.9 26.5H248c39.8 0 72-32.2 72-72s-32.2-72-72-72H144c-13.2 0-25-8.1-29.8-20.4s-1.5-26.3 8.2-35.2L253.7 96H96C78.3 96 64 81.7 64 64z"/></svg>
+
+(b)
+
+* Supondo que a amostra alocada no item (a) tenha sido efetivamente selecionada fornecendo os resultados apresentados para `\(y\)`. 
+a estimativa do faturamento total, `\(Ty\)`, 
+
+`$$\widehat T_{y,AES} = \sum_{h=1}^{H} \widehat T_{h,y}  = \sum_{h=1}^{H} N_h \overline y_h$$`
+
+* E o coeficiente de variação desta estimativa, ...
+  
+  + Para o cálculo de
+  
+`$$\widehat{Var}_{AES} \left( \widehat T_{AES} \right) = \sum_{h=1}^{H} N_h^2 \left( \frac{1}{n_h} - \frac{1}{N_h} \right)\widehat S_{h}^2$$`
+
+  + temos `\(n_h &gt; N_h\)`(❓)
+
+---
+
+## Para casa 🏠
+
+* Continuar os Exercícios e Entregar.
+
+&lt;!-- * Mostrar tamanho de amostra `\(n\)` para AASc dentro dos estratos. --&gt;
+
+* Continuar exercícios do livro 'Amostragem: Teoria e Prática Usando R'    https://amostragemcomr.github.io/livro/estrat.html#exerc11
+
+* Fazer exercícios da lista 1.
+
+* Rever os slides.
+
+&lt;!-- * Ler BOlfarine e Bussab...da seção 11.3 do livro 'Amostragem: Teoria e Prática Usando R'. --&gt;
+
+
+
+## Próxima aula 📊
+
+* Amostragem Estratificada
+  + Estimação de proporções
+  + Exercícios e Intervalos de confiança
+  
+&lt;!-- * Laboratório de <svg aria-hidden="true" role="img" viewBox="0 0 581 512" style="height:1em;width:1.13em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/></svg> --&gt;
+
+---
+
+## Muito obrigado!
+
+&lt;img src="img/image_basu_elephant.jpg" width="30%" height="30%" style="display: block; margin: auto;" /&gt;
+Fonte: imagem do livro *Combined Survey Sampling Inference: Weighing of Basu's Elephants: Weighing Basu's Elephants*.
+
+
+
+---
+
+## Resumo da notação
+
+
+---
+
+## Referências
+
+&lt;!-- Slides baseados no Capítulo 11 do livro --&gt;
+
+* [Amostragem: Teoria e Prática Usando o R](https://amostragemcomr.github.io/livro/index.html)
+
+&lt;!-- Citações do Capítulo --&gt;
+
+&lt;!-- * Neyman(1934) --&gt;
+&lt;!-- * Cochran(1977) --&gt;
+
+
+&lt;!-- * refazer calculos para amostagem aleatoria simples com reposicao --&gt;
+&lt;!-- * alocacao... ou lab R comparando alocação proporcional e igual tamanho --&gt;
+
+&lt;!-- listas de exercicios... --&gt;
+&lt;!-- dois aspectos da disciplina... ter flexibilidade com teoria... exercitar os conceitos com exercicios teoricos e praticos --&gt;
+
+&lt;!-- falar dos pesos na AES --&gt;
+
+&lt;!-- valor z_alpha/2 significa z ou t --&gt;
+
+&lt;!-- quem tiver interesse em conferir as fórmulas... mostra as conttas, gosta dessa pparte...posso contabilizar ponto extra... tem q ser o primeira... --&gt;
+&lt;!-- o mesmo pode valer para os códigos e texto... --&gt;
+&lt;!-- fazer o formulário --&gt;
+&lt;!-- resumo de formulas --&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

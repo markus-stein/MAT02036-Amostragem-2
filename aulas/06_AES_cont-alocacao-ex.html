@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>MAT02036 - Amostragem 2</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Markus Stein" />
+    <script src="libs/header-attrs-2.18/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, title-slide
+
+.title[
+# MAT02036 - Amostragem 2
+]
+.subtitle[
+## Aula 06 - Amostragem Estratificada - Mais sobre Alocações e comparações
+]
+.author[
+### Markus Stein
+]
+.institute[
+### Departamento de Estatística, IME/UFRGS
+]
+.date[
+### 2022/2
+]
+
+---
+
+
+
+
+<div>
+<style type="text/css">.xaringan-extra-logo {
+width: 110px;
+height: 128px;
+z-index: 0;
+background-image: url(C:/Users/User/Downloads/MAT02036 - Amostragem 2/aulas/img/logo_dest.png);
+background-size: contain;
+background-repeat: no-repeat;
+position: absolute;
+top:1em;right:1em;
+}
+</style>
+<script>(function () {
+  let tries = 0
+  function addLogo () {
+    if (typeof slideshow === 'undefined') {
+      tries += 1
+      if (tries < 10) {
+        setTimeout(addLogo, 100)
+      }
+    } else {
+      document.querySelectorAll('.remark-slide-content:not(.title-slide):not(.inverse):not(.hide_logo)')
+        .forEach(function (slide) {
+          const logo = document.createElement('div')
+          logo.classList = 'xaringan-extra-logo'
+          logo.href = null
+          slide.appendChild(logo)
+        })
+    }
+  }
+  document.addEventListener('DOMContentLoaded', addLogo)
+})()</script>
+</div>
+
+### *Housekeeping*
+
+* Aproveitem o momento presencial para tirar dúvidas
+
+* Se estivéssemos no ensino remoto ou à distância
+
+  + vocês poderiam estar somente ouvindo, sem interação
+  
+  + ou assistindo vídeos e material em outro momento
+  
+* Depois das aulas, rever material da aula passada
+
+  + fazer exercícios
+  
+  + se preparar para a próxima aula
+
+---
+
+## Aula passada 💿
+**Alocação ótima**: **função custo linear**, `\(C = c_0 + \sum_{h=1}^{H} n_h c_h\)` ou `\(C' = C - c_0 = \sum_{h=1}^{H} n_h c_h\)`.
+
+Alocação | sob **AASc** dentro | sob **AASs** dentro
+--|--|--
+Ótima | `\(n_h = n \times \frac {W_h \sqrt{Var_{h,y}} / \sqrt c_h} { \sum_{k=1}^{H} W_k \sqrt{Var_{k,y}} / \sqrt c_k}\)` | `\(n_h = n \times \frac {W_h S_{h,y} / \sqrt c_h} { \sum_{k=1}^{H} W_k S_{k,y} / \sqrt c_k}\)` 
+de Neyman | `\(n_h = n \times \frac {N_h \sqrt{Var_{h,y}}}{\sum_{k=1}^{H} N_k \sqrt{Var_{k,y}}}\)` | `\(n_h = n \times \frac {N_h S_{h,y}}{ \sum_{k=1}^{H} N_k S_{k,y}}\)`
+
+* Variâncias na **AESne**
+
+Plano dentro | Variância `\(\overline y_{AES}\)` na **AESne**
+-------------|--
+**AASc**     |  `\(Var_{AES_{ne}} \left( \overline y_{AES} \right) = \frac{1}{n} \left( \sum_{h=1}^{H} W_h \sqrt{Var_h} \right)^2 = \frac{\overline{DP}^2}{n}\)`
+**AASs**     |  `\(Var_{AES_{ne}} \left( \overline y_{AES} \right) = \frac{1}{n} \left( \sum_{h=1}^{H} W_h S_{h,y} \right)^2 - \frac{1}{N} \left( \sum_{h=1}^{H} W_h S_{h,y}^2 \right)\)`
+
+em que `\(DP_h = \sqrt{Var_h}\)` e `\(\overline{DP} = \sum_{h=1}^H W_h DP_h\)`.
+
+---
+
+## Aula passada 💽
+#### Exercício 4.1 (Bolfarine e Bussab)💪
+
+Uma população está dividida em 5 estratos. Os tamanhos dos estratos `\(N_h\)`, médias `\(\overline Y\)` e variâncias `\(S^2_h\)` são dados na tabela abaixo.
+
+`\(h\)` | `\(Nh\)` | `\(\overline Y\)` | `\(S^2_h\)` 
+--|--|--|--
+1 | 117 | 7,3 | 1,31
+2 | 98 | 6,9 | 2,03
+3 | 74 | 11,2 | 1,13
+4 | 41 | 9,1 | 1,96
+5 | 45 | 9,6 | 1,74
+
+a. Calcule os parämetros globais `\(\overline Y\)` e `\(Var_y\)`.  
+b. Para uma amostra de tamanho `\(n=80\)`, determine as alocações proporcional e (ótima) de Neyman.  
+c. Compare as variâncias dos estimadores obtidos sob **AASc** e **AESne**.  
+d. Faça o mesmo para a **AASc** e a **AESpr**.
+
+---
+
+#### Exercício 4.1 (Bolfarine e Bussab)🏋️‍♀️
+Dados do problema:
+
+```r
+H &lt;- 5                                    # no. de estratos
+h &lt;- 1:H                                  # indice dos estratos
+Nh &lt;- c( 117, 98, 74, 41, 45)             # tamanho dos estratos
+Ybarrah &lt;- c( 7.3, 6.9, 11.2, 9.1, 9.6)   # media pop. dos estratos
+S2h &lt;- c( 1.31, 2.03, 1.13, 1.96, 1.74)   # variancia do estrato 
+N &lt;- sum(Nh)                              # tamanho da populacao
+n &lt;- 80                                   #tamanho de amostra
+```
+
+a. No <svg aria-hidden="true" role="img" viewBox="0 0 581 512" style="height:1em;width:1.13em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/></svg> temos (ver expressões nos próximos slides)
+
+```r
+## a.
+Ybarra &lt;- sum( Nh * Ybarrah) / N       # media pop global
+Ybarra
+```
+
+```
+## [1] 8.437867
+```
+
+```r
+Vary_aux1 &lt;- sum((Nh - 1) * S2h) / N                 # primeiro termo
+Vary_aux2 &lt;- ( sum( Nh * Ybarrah^2) / N) - Ybarra^2  # segundo termo
+Vary &lt;- Vary_aux1 - Vary_aux2                        # variancia pop global
+Vary
+```
+
+```
+## [1] -1.174033
+```
+---
+
+#### Exercício 4.1 (Bolfarine e Bussab)🏃‍♀
+
+Seguindo as **expressões** vistas em aula a média global é dada por
+
+`$$\begin{eqnarray} \overline Y = \frac{1}{N} \sum_{i \in U} y_i &amp; = &amp; \frac{1}{N} \sum_{h=1}^H \sum_{i \in U_h} y_i = \frac{1}{N} \sum_{h=1}^H N_h \frac{\sum_{i \in U_h} y_i}{N_h} =  \sum_{h=1}^H \frac{N_h}{N} \frac{\sum_{i \in U_h} y_i}{N_h}  = \sum_{h=1}^H W_h \overline Y_h \\ 
+&amp; = &amp; \frac{117 \times 7.3 + 98 \times 6.9 + 74 \times 11.2 + 41 \times 9.1 + 45 \times 9.6}{375} = 8.438 \end{eqnarray}$$`
+
+e para a variância sabemos que
+
+`$$\begin{eqnarray} Var_y = \frac{1}{N} \sum_{i \in U} \left( y_i - \overline Y \right)^2 &amp; = &amp; \frac{1}{N} \sum_{h=1}^H \sum_{i \in s_h} \left( y_i - \overline Y \right)^2 = \frac{1}{N} \sum_{h=1}^H \sum_{i \in s_h} \left( y_i - \overline Y_h + \overline  Y_h - \overline Y \right)^2 \\
+&amp; = &amp; \frac{1}{N} \sum_{h=1}^H N_h Var_{h, y} + \frac{1}{N} \sum_{h=1}^H N_h \left( \overline Y_h - \overline Y \right)^2 \end{eqnarray}.$$`
+
+No primeiro termo, note que `\(Var_{h,y} = \frac{N_h - 1}{N_h} S^2_h\)`, então 
+`$$\begin{eqnarray} \frac{1}{N} \sum_{h=1}^H N_h Var_{h, y} &amp; = &amp; \frac{1}{N} \sum_{h=1}^H N_h \frac{N_h - 1}{N_h} S^2_h = \frac{1}{N} \sum_{h=1}^H (N_h - 1) S^2_h \\ 
+&amp; = &amp; \frac{116 \times 1.31 + 97 \times 2.03 + 73 \times 1.13 + 40 \times 1.96 + 44 \times 1.74}{N} = 1.5635 \end{eqnarray}.$$`
+
+---
+
+#### Exercício 4.1 (Bolfarine e Bussab)💦
+
+No segundo termo, podemos mostar (❓) que
+`$$\begin{eqnarray} \frac{1}{N} \sum_{h=1}^H N_h \left( \overline Y_h - \overline Y \right)^2 &amp; = &amp; \ldots = \left( \frac{1}{N} \sum_{h=1}^H N_h \overline Y_h^2 \right) - \overline Y^2 \\
+&amp; = &amp; \frac{117 \times 7.3^2 + 98 \times 6.9^2 + 74 \times 11.2^2 + 41 \times 9.1^2 + 45 \times 9.6^2}{375} - 8.438^2 \\ 
+&amp; = &amp; 73.9351 - 71.1976 = 2.7376 \end{eqnarray}$$`
+
+Então 
+`$$Var_y = 1.5635 + 2.7376 = 4.3011$$`
+
+b. No <svg aria-hidden="true" role="img" viewBox="0 0 581 512" style="height:1em;width:1.13em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/></svg> temos (ver expressões nos próximos slides)
+
+
+```r
+## b.
+nhpr &lt;- n * Nh / N                                    # vetor de nh's na proporcional
+nhpr
+```
+
+```
+## [1] 24.960000 20.906667 15.786667  8.746667  9.600000
+```
+
+```r
+nhne &lt;- n * (Nh * sqrt(S2h)) / (sum(Nh * sqrt(S2h)))  # vetor de nh's na de Neyman
+nhne
+```
+
+```
+## [1] 22.844026 23.819094 13.419060  9.791811 10.126008
+```
+
+---
+
+#### Exercício 4.1 (Bolfarine e Bussab)🏋
+
+No plano **AESpr** temos `\(n_h = n \times W_h\)`, em que `\(W_h = N_h / N\)`, assim
+`$$n_1 = 80 \times \frac{117}{375}, \ldots, n_5 = 80 \times \frac{45}{375}$$`
+
+No plano **AESne** temos `\(n_h = n \times \frac {N_h S_{h,y}}{ \sum_{k=1}^{H} N_k S_{k,y}}\)`, calculando primeiro o denominador
+`$$\begin{eqnarray} \sum_{k=1}^{H} N_k S_{k,y} &amp; = &amp; \sum_{k=1}^{H} N_k \sqrt{S^2_{k,y}} \\
+&amp; = &amp; 117 \times \sqrt{ 1.31 } + 98 \times \sqrt{ 2.03 } + 74 \times \sqrt{ 1.13 } + 41 \times \sqrt{ 1.96 } + 45 \times \sqrt{ 1.74 } \\
+&amp; = &amp; 473 \end{eqnarray}$$`
+e assim
+`$$n_1 = 80 \times \frac{117 \times \sqrt{1.31}}{473}, \ldots, n_5 = 80 \times \frac{45 \times \sqrt{1.74}}{473}$$`
+
+c. continuar...  
+d. continuar...
+
+---
+
+class: inverse, middle, center
+
+# Comparação de alternativas de alocação da amostra
+
+---
+
+### Comparação de alternativas de alocação da amostra
+
+* Particionando a **soma de quadrados total** em parcelas devidas à **variação dentro e entre** estratos (e ignorando termos de ordem `\(1/N_h\)`),
+
+  + sob *alocação de Neyman*, asssumindo 
+
+**AASs** dentro dos estratos | ou **AASc** dentro dos estratos
+:--:|:--:
+`\(n_h \propto N_h S_{h,y}\)`  | `\(n_h \propto N_h Var_{h,y}\)`
+
+pode-se mostrar que (Cochran, 1977; página 99):
+
+`$$V_{AESne} \left( \overline y_{AES} \right) \le V_{AESpr} \left( \overline y_{AES} \right) \le V_{AAS} \left( \overline y \right)$$`
+
+* **AES** com alocação de **Neyman** é **mais eficiente** que **AES** com alocação **proporcional**.
+
+* Ambas superam **AAS** como plano amostral para um mesmo tamanho especificado de amostra. 
+
+---
+
+### Comparação de alternativas de alocação da amostra
+Para o estimador da **média**, assumindo **AASc** dentro dos estratos, temos que
+
+<svg aria-hidden="true" role="img" viewBox="0 0 256 512" style="height:1em;width:0.5em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M160 64c0-11.8-6.5-22.6-16.9-28.2s-23-5-32.9 1.6l-96 64C-.5 111.2-4.4 131 5.4 145.8s29.7 18.7 44.4 8.9L96 123.8V416H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h96 96c17.7 0 32-14.3 32-32s-14.3-32-32-32H160V64z"/></svg>. Usando a partição da variâcia global de `\(Y\)` e **ignorando os estratos**, 
+`$$Var_{AAS_c}(\overline y) = \frac{Var_y}{n} = \frac{Var_D}{n} + \frac{Var_E}{n}.$$`
+
+<svg aria-hidden="true" role="img" viewBox="0 0 320 512" style="height:1em;width:0.62em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M142.9 96c-21.5 0-42.2 8.5-57.4 23.8L54.6 150.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L40.2 74.5C67.5 47.3 104.4 32 142.9 32C223 32 288 97 288 177.1c0 38.5-15.3 75.4-42.5 102.6L109.3 416H288c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9L200.2 234.5c15.2-15.2 23.8-35.9 23.8-57.4c0-44.8-36.3-81.1-81.1-81.1z"/></svg>. Na **AESpr** A variâcia do estimador da média, `\(Var_{AES_{pr}} = \frac{Var_D}{n}\)` então,
+`$$Var_{AAS_c}(\overline y) = Var_{AES_{pr}} +  \frac{Var_E}{n}, \text{ sendo que } \frac{Var_E}{n} \geq0.$$`
+
+<svg aria-hidden="true" role="img" viewBox="0 0 448 512" style="height:1em;width:0.88em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M64 64c0-17.7 14.3-32 32-32H336c13.2 0 25 8.1 29.8 20.4s1.5 26.3-8.2 35.2L226.3 208H248c75.1 0 136 60.9 136 136s-60.9 136-136 136H169.4c-42.4 0-81.2-24-100.2-61.9l-1.9-3.8c-7.9-15.8-1.5-35 14.3-42.9s35-1.5 42.9 14.3l1.9 3.8c8.1 16.3 24.8 26.5 42.9 26.5H248c39.8 0 72-32.2 72-72s-32.2-72-72-72H144c-13.2 0-25-8.1-29.8-20.4s-1.5-26.3 8.2-35.2L253.7 96H96C78.3 96 64 81.7 64 64z"/></svg>. Na **AESne** temos `\(Var_{AES_{ne}} \left( \overline y_{AES} \right) = \frac{1}{n} \left( \sum_{h=1}^{H} W_h \sqrt{Var_h} \right)^2 = \frac{1}{n} \left( \sum_{h=1}^{H} W_h DP_h \right)^2 = \frac{\overline{DP}^2}{n}\)`.
+
+Escrevendo `\(Var_{AES_{pr}} = \sum_{h=1}^H W_h Var_h = \sum_{h=1}^H W_h \left( DP_h \right)^2\)` temos
+`$$\begin{eqnarray} Var_{AES_{pr}} \left( \overline y_{AES} \right) - Var_{AES_{ne}} \left( \overline y_{AES} \right) &amp; = &amp; \frac{1}{n} \left\{ \sum_{h=1}^H W_h \left( DP_h \right)^2 - \left( \sum_{h=1}^{H} W_h DP_h \right)^2 \right\} \\ 
+&amp; = &amp; \frac{1}{n} \sum_{h=1}^H W_h \left( DP_h - \overline{DP} \right)^2 = \frac{Var_{DP}}{n} \end{eqnarray}$$`
+
+---
+
+### Comparação de alternativas de alocação da amostra
+<svg aria-hidden="true" role="img" viewBox="0 0 384 512" style="height:1em;width:0.75em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M189 77.6c7.5-16 .7-35.1-15.3-42.6s-35.1-.7-42.6 15.3L3 322.4c-4.7 9.9-3.9 21.5 1.9 30.8S21 368 32 368H256v80c0 17.7 14.3 32 32 32s32-14.3 32-32V368h32c17.7 0 32-14.3 32-32s-14.3-32-32-32H320V160c0-17.7-14.3-32-32-32s-32 14.3-32 32V304H82.4L189 77.6z"/></svg>. O termo `\(Var_{AES_{pr}} \left( \overline y_{AES} \right) - Var_{AES_{ne}} \left( \overline y_{AES} \right) = \frac{Var_{DP}}{n}\)` representa a variabilidade entre os desvios padrões entre os estratos.
+
+Então, fazendo 
+`$$Var_{AES_{pr}} \left( \overline y_{AES} \right) = Var_{AES_{ne}} \left( \overline y_{AES} \right) + \frac{Var_{DP}}{n},$$` 
+mostramos 
+`$$Var_{AAS_c}(\overline y) = Var_{AES_{pr}} + \frac{Var_E}{n} = Var_{AES_{ne}} \left( \overline y_{AES} \right) + \frac{Var_{DP}}{n} + \frac{Var_E}{n}.$$`
+
+* Sempre que os estratos tem **médias distintas**, `\(\frac{Var_E}{n}\)` grande, **AESpr** e **AESne** serão **vantajosas**.
+
+* Se os devios padrões dos estratos também diferirem muito, `\(Var_{DP}\)` grande, recomenda-se a **AESne**.
+
+---
+
+## Efeito do Plano Amostral (EPA) 
+
+* Também chamado Efeito de Delineamento, em inglês `\(deff\)` (*Design Effect*)
+
+  + Seja *plano* um plano amostral
+
+`$$EPA_{plano} = deff_{plano} = \frac{Var(\overline y_{plano})}{Var(\overline y_{AAS_c})}.$$`
+
+* se `\(deff_{plano} &lt; 1\)` então o **plano** é mais eficiente que a **AASc**.
+
+
+**Exemplo**: 🏃‍♀
+
+Sabemos mostrar `\(EPA_{AES_{pr}} = deff_{AES_{pr}}\)` e `\(EPA_{AES_{pr}} = deff_{AES_{pr}}\)` assumindo **AASc** dentro dos estratos❓
+
+---
+
+## Efeito do Plano Amostral (EPA) 
+
+#### *Já havíamos falado sobre efeito de planejamento*
+
+`\(\vspace{1cm}\)`
+
+**Exemplo 6 da Apostila** da Profa Vanessa: 🏋 
+
+Seja os dados do exemplo 1, da população de 8 domicílios. 
+
+(trabalhamos nos dados do exemplo 1 nos nossos slides **Aula 03** e **Aula 04**)
+
+
+---
+
+## Para casa 🏠
+
+* Continuar os Exemplos.
+
+* Mostrar tamanho de amostra `\(n\)` para AASc dentro dos estratos.
+
+* Fazer exercícios 11.7 e 11.10 do livro 'Amostragem: Teoria e Prática Usando R'    https://amostragemcomr.github.io/livro/estrat.html#exerc11
+
+* Fazer exercícios :: da lista 1.
+
+* Rever os slides.
+
+&lt;!-- * Ler BOlfarine e Bussab...da seção 11.3 do livro 'Amostragem: Teoria e Prática Usando R'. --&gt;
+
+
+
+## Próxima aula 📊
+
+* Amostragem Estratificada
+  + Estimação de proporções
+  + Exercícios e Intervalos de confiança
+  
+&lt;!-- * Laboratório de <svg aria-hidden="true" role="img" viewBox="0 0 581 512" style="height:1em;width:1.13em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/></svg> --&gt;
+
+---
+
+## Muito obrigado!
+
+&lt;img src="img/image_basu_elephant.jpg" width="30%" height="30%" style="display: block; margin: auto;" /&gt;
+Fonte: imagem do livro *Combined Survey Sampling Inference: Weighing of Basu's Elephants: Weighing Basu's Elephants*.
+
+
+
+---
+
+## Resumo da notação
+Para o estimador da **média**, assumindo **AASc** dentro dos estratos
+
+`$$Var_{AAS_c}(\overline y) = Var_{AES_{pr}} + \frac{Var_E}{n} = Var_{AES_{ne}} \left( \overline y_{AES} \right) + \frac{Var_{DP}}{n} + \frac{Var_E}{n}.$$`
+
+*  Efeito do Plano Amostral/Delineamento (*Design Effect*)
+  + Seja *plano* um plano amostral
+
+`$$EPA_{plano} = deff_{plano} = \frac{Var(\overline y_{plano})}{Var(\overline y_{AAS_c})}.$$`
+
+---
+
+## Referências
+
+Slides baseados no Capítulo 11 do livro
+
+* [Amostragem: Teoria e Prática Usando o R](https://amostragemcomr.github.io/livro/index.html)
+
+Citações do Capítulo
+
+* Neyman(1934)
+* Cochran(1977)
+
+
+&lt;!-- * refazer calculos para amostagem aleatoria simples com reposicao --&gt;
+&lt;!-- * alocacao... ou lab R comparando alocação proporcional e igual tamanho --&gt;
+
+&lt;!-- listas de exercicios... --&gt;
+&lt;!-- dois aspectos da disciplina... ter flexibilidade com teoria... exercitar os conceitos com exercicios teoricos e praticos --&gt;
+
+&lt;!-- falar dos pesos na AES --&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

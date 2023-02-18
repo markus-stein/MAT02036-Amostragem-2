@@ -1,0 +1,256 @@
+---
+title: "MAT02036 - Amostragem 2"
+subtitle: "Aula 15 - Amostragem por Conglomerados - IC e tamanho de amostra" 
+author: "Markus Stein"
+institute: "Departamento de Estatística, IME/UFRGS"
+date: "2022/2"
+type: "lecture"
+# fontsize: 10pt
+output:
+  xaringan::moon_reader:
+    # css: ["assets/remark.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      titleSlideClass: [center, middle]
+---
+
+```{r libs, echo=FALSE, message=FALSE, warning=FALSE}
+library(xaringanExtra)
+library(emo)
+library(fontawesome)
+library(kableExtra)
+```
+
+```{r xaringan-logo, echo=FALSE}
+# install.packages("remotes")
+# remotes::install_github('yihui/xaringan')
+# remotes::install_github("gadenbuie/xaringanExtra")
+# xaringanExtra::use_logo(
+#   image_url = "https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/xaringan.png"
+# )
+xaringanExtra::use_logo( here::here('img/logo_dest.png'))
+```
+
+### *Housekeeping*
+
+* Aproveitem o momento presencial para tirar dúvidas
+
+* Se estivéssemos no ensino remoto ou à distância
+
+  + vocês poderiam estar somente ouvindo, sem interação
+  
+  + ou assistindo vídeos e material em outro momento
+  
+* Depois das aulas, rever material da aula passada
+
+  + fazer exercícios
+  
+  + se preparar para a próxima aula
+
+---
+
+## Aula passada `r emo::ji("disk")`
+### Coeficiente de Correlação Intraclasse
+
+Se os **tamanhos** dos conglomerados forem todos *iguais*, $N_i = \overline N, \,\, \forall\, i = 1, \dots, M$, então, de acordo com @Cochran1977, página 242, tem-se:
+
+$$EPA({AC1S}^R;\,AAS) \doteq 1 + (\overline N - 1) \rho$$
+
+onde:
+
+$$\rho = \frac {\sum_{i \in C} \sum_{j \in C_i} \sum_{k \ne j \in C_i} \left( y_{ij} - \overline Y \right) \left( y_{ik} - \overline Y \right)} {\left( \overline N - 1 \right) \left( M \overline N - 1 \right) S_y^2} \doteq 1 - \frac {S_d^2} {S_y^2}$$ 
+
+é o **coeficiente de correlação intraconglomerado** ou **intraclasse**; e $S_d^2$ é a medida da variância *dentro* dos conglomerados, dada por: 
+
+$$S_{dc}^2 = \frac {1} {M} \sum_{i \in C} \frac {1} {\overline N - 1} \sum_{j \in C_i} \left (y_{ij} - \overline {Y_i} \right)^2 = \frac {1} {M} \sum_{i \in C} S_i^2$$ 
+
+com:  
+
+$$S_i^2 = \frac {1} {\overline N - 1} \sum_{j \in C_i} \left( y_{ij} - \overline {Y_i} \right)^2$$ 
+
+---
+
+## Aula passada `r emo::ji("disk")`
+### Coeficiente de Correlação Intraclasse
+
+### Exemplo: (cont. Exemplo slides `Aula 12`)
+
+Considere a população de tamanho $N = 6$ agrupada em $M = 3$ conglomerados, de três maneiras diferentes:
+
+$$YA = ((7, 8); (9, 10); (12, 14))$$
+
+$$YB = ((7, 10); (12, 8); (9, 14))$$
+
+$$YC = ((7, 14); (12, 8); (9, 10))$$
+
+
+---
+
+## Aula passada `r emo::ji("disk")`
+### Coeficiente de Correlação Intraclasse
+
+A expressão para o $EPA({AC1S}^R;\,AAS)$ resulta do uso das expressões de acordo com @Cochran1977, página 241:
+
+$$Var_{AC1S} (\overline y_{AC1S}^R) \doteq \left( \frac 1 {m \overline N} - \frac 1 {M \overline N} \right) S_y^2[1 + (\overline N - 1) \rho]$$
+
+$$Var_{AAS} (\overline y) = \left( \frac 1 {m \overline N} - \frac 1 {M \overline N} \right)S_y^2$$
+
+* Numa **amostra** retirada **com reposição**, o **coeficiente de correlação intraclasse** pode ser **estimado**
+por:
+
+$$r = \frac{s^2_{ec} \frac{s^2_{dc}}{\overline N}}{s^2_{ec} + s^2_{dc}}$$
+
+
+---
+
+class: inverse, middle, center
+
+# Intervalos de Confiança na AC1S
+
+---
+
+## Intervalos de Confiança na AC1S
+
+* Para a **média**, se os conglomerados são de tamanhos iguais, a normalidade de $\overline y_{AC1S}$ segue da média amostral na **AAS**.
+
+Para $M$ e $M$ suficientemente grandes (`r emo::ji("question")`), então pelo TCL
+
+$$\frac{ \overline y_{AC1S} - \overline Y}{\sqrt{ Var_{AC1S} \left( \overline y_{AC1S} \right)}} \approx Normal(0;1)$$
+em que $Var_{AC1S} \left( \overline y_{AC1S} \right) = \frac{Var_{ec}}{m}$.
+
+Logo, um intervalo de confiança de nível $1-\alpha$ para $\overline Y$ é dado por:
+
+$$IC_{AC1S} (\overline Y; 1-\alpha) = \left[ \overline y_{AC1S} \mp z_{\alpha/2} \sqrt{\widehat{Var}_{AC1S} \left( \overline y_{AC1S} \right)} \right]$$
+em que $\widehat{Var}_{AC1S} \left( \overline y_{AC1S} \right) = \frac{s^2_{ec}}{m}$.
+
+---
+
+## Intervalos de Confiança na AC1S
+
+* Para o total: 
+
+$$IC_{AC1S} (T; 1-\alpha) = \left[ \widehat T_{AC1S} \pm z_{\alpha/2} \sqrt{\widehat{Var}_{AC1S} \left( \widehat T_{AC1S} \right)} \right]$$
+
+* Para a proporção: 
+
+$$IC_{AC1S} (P; 1-\alpha) = \left[ \widehat P_{AC1S} \pm z_{\alpha/2} \sqrt{\widehat{Var}_{AC1S} \left( \widehat P_{AC1S} \right)} \right]$$
+
+
+### Exemplo - Dados de companhias aéreas - aula passada
+
+Considere os dados das companias aéreas, construa o $IC$ 95% para a média e para
+o total.
+
+---
+
+class: inverse, middle, center
+
+# Tamanho de amostra na AC1S
+
+---
+
+## Tamanho de amostra na AC1S
+
+* Para planejar uma **AC1S**, é necessário **determinar** o **número de conglomerados** $m$ que serão sorteados
+para fazer parte da amostra. 
+
+  + Vimos que pode-se utilizar fórmulas que dependem do **erro relativo** $e_r$ ou do **erro absoluto** $e$.
+
+* Erro relativo
+
+Seja $CV = \frac{Var_{ec_T}}{\overline Y_c}$ então na **AASc** de conglomerados
+
+$$m = \frac{z_{\alpha/2} \: CV^2}{e_r^2},$$
+e na **AASs** de conglomerados
+
+$$m = \frac{M \: z_{\alpha/2} \: CV^2}{z_{\alpha/2} \: CV^2 + (M-1) \: e_r^2}.$$
+
+---
+
+## Tamanho de amostra na AC1S
+
+* Erro absoluto
+
+---
+
+## Para casa `r emo::ji("house")`
+
+* Fazer a lista 2 de exercícios.
+
+<!-- Continuar o Exercício. -->
+
+<!-- * Mostrar tamanho de amostra $n$ para AASc dentro dos estratos. -->
+
+<!-- * Continuar exercícios do livro 'Amostragem: Teoria e Prática Usando R'    https://amostragemcomr.github.io/livro/estrat.html#exerc11 -->
+
+<!-- * Fazer exercícios da lista 1. -->
+
+* Ler o capítulo 2 da apostila da Profa. Vanessa.
+
+<!-- do livro 'Amostragem: Teoria e Prática Usando R'. -->
+  
+* Rever os slides.
+
+<!-- * Ler BOlfarine e Bussab...da seção 11.3 do livro 'Amostragem: Teoria e Prática Usando R'. -->
+
+## Próxima aula `r emo::ji("stats")`
+
+* Acompanhar o material no moodle.
+
+Amostragem por Conglomerados
+
+  + Estimação de proporção na **AC1S**.
+  
+  + Laboratório de <i class="fa-duotone fa-people-group"></i>`r fa("r-project", fill = "steelblue")`
+
+---
+
+## Muito obrigado!
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='20%', out.height='20%', paged.print=FALSE}
+knitr::include_graphics(here::here('img', 'image_basu_elephant.jpg'))
+```
+.center[
+#### Fonte: imagem do livro *Combined Survey Sampling Inference: Weighing of Basu's Elephants*.
+]
+
+
+---
+
+## Referências
+
+<!-- Slides baseados no Capítulo 11 do livro -->
+
+* [Amostragem: Teoria e Prática Usando o R](https://amostragemcomr.github.io/livro/index.html)
+
+* **Elementos de Amostragem**, Bolfarine e Bussab.
+
+<!-- Citações do Capítulo -->
+
+<!-- * Neyman(1934) -->
+
+* Cochran(1977)
+
+
+<!-- * refazer calculos para amostagem aleatoria simples com reposicao -->
+<!-- * alocacao... ou lab R comparando alocação proporcional e igual tamanho -->
+
+<!-- listas de exercicios... -->
+<!-- dois aspectos da disciplina... ter flexibilidade com teoria... exercitar os conceitos com exercicios teoricos e praticos -->
+
+<!-- falar dos pesos na AES -->
+
+<!-- valor z_alpha/2 significa z ou t -->
+
+<!-- quem tiver interesse em conferir as fórmulas... mostra as conttas, gosta dessa pparte...posso contabilizar ponto extra... tem q ser o primeira... -->
+<!-- o mesmo pode valer para os códigos e texto... -->
+<!-- fazer o formulário -->
+<!-- resumo de formulas -->
+
+---
+
+## Resumo da notação
+

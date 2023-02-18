@@ -1,0 +1,553 @@
+---
+title: "MAT02036 - Amostragem 2"
+subtitle: "Aula 08 - Amostragem Estratificada - Exercícios e Lab R" 
+author: "Markus Stein"
+institute: "Departamento de Estatística, IME/UFRGS"
+date: "2022/2"
+type: "lecture"
+# fontsize: 10pt
+output:
+  xaringan::moon_reader:
+    # css: ["assets/remark.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      titleSlideClass: [center, middle]
+---
+
+```{r libs, echo=FALSE, message=FALSE, warning=FALSE}
+library(xaringanExtra)
+library(emo)
+library(fontawesome)
+library(kableExtra)
+```
+
+```{r xaringan-logo, echo=FALSE}
+# install.packages("remotes")
+# remotes::install_github('yihui/xaringan')
+# remotes::install_github("gadenbuie/xaringanExtra")
+# xaringanExtra::use_logo(
+#   image_url = "https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/xaringan.png"
+# )
+xaringanExtra::use_logo( here::here('img/logo_dest.png'))
+```
+
+### *Housekeeping*
+
+* Aproveitem o momento presencial para tirar dúvidas
+
+* Se estivéssemos no ensino remoto ou à distância
+
+  + vocês poderiam estar somente ouvindo, sem interação
+  
+  + ou assistindo vídeos e material em outro momento
+  
+* Depois das aulas, rever material da aula passada
+
+  + fazer exercícios
+  
+  + se preparar para a próxima aula
+
+---
+
+## Aula passada `r emo::ji("disk")`
+* **Tamanho da amostra** na **AES** dado um tipo de **alocação**, $w_h$, e **fixando a variância** máxima que se deseja para a estimativa do parâmetro, $V$
+
+Parâmetro | Sob AASc dentro dos estratos | Sob AASs dentro dos estratos
+--|:--:|:--:
+Média | $n \ge \frac{\sum_{h=1}^{H} W_h^2 \frac{ Var_{h,y} }{w_h} }{V}$ | $n \ge \frac {\sum_{h=1}^{H} \frac {W_h^2 S_{h,y}^2}{w_h}}{V+\frac1N\sum_{h=1}^{H}{ W_h S_{h,y}^2}}$
+Total | $n \ge \frac{\sum_{h=1}^{H} N_h^2 \frac{ Var_{h,y} }{w_h} }{V}$ | $n \ge \frac {\sum_{h=1}^{H} \frac {N_h^2 S_{h,y}^2}{w_h}}{V +  \sum_{h=1}^{H}{ N_h S_{h,y}^2}}$
+
+* **Margem de erro** para o estimador $\widehat \theta$ (approx. normal para dist. de $\widehat \theta$)
+
+  + **Absoluta**: $e = z_\frac{\alpha}{2} \sqrt{ Var(\widehat \theta)} \Leftrightarrow V = \frac{e^2}{z^2_\frac{\alpha}{2}}$
+
+  + **Relativa**: $r \overline Y = z_\frac{\alpha}{2} \sqrt{Var(\widehat \theta)} \Leftrightarrow V = \frac{r^2 \overline Y^2}{z^2_\frac{\alpha}{2}}$
+
+* Pode ser útil utilizar a relação entre variâncias que já conhecemos $Var(\overline y) = \frac{N-n}{n} \frac{S^2}{n} \Leftrightarrow \sqrt{Var(\overline y)} = \sqrt{\frac{N-n}{n}} \frac{S}{\sqrt{n}}$
+
+---
+
+## Aula passada `r emo::ji("disk")`
+* Tamanho mínimo de amostra para **estimação da média** populacional
+
+.center[
+Alocação | **AASc** dentro dos estratos | **AASs** dentro dos estratos
+--|:--:|:--:
+$AES_{un}$ | $n \ge \frac{ H \sum_{h=1}^{H} W_h^2 Var_{h,y} }{V}$ | $n \ge \frac{ H \sum_{h=1}^{H} W_h^2 S^2_h }{V + \frac{1}{N} \sum_{h=1}^{H} W_h S^2_h}$
+$AES_{pr}$ | $n \ge \frac{ \sum_{h=1}^{H} W_h Var_{h,y} }{V}$ | $n \ge \frac{ \sum_{h=1}^{H} W_h S^2_h }{V + \frac{1}{N} \sum_{h=1}^{H} W_h S^2_h}$
+$AES_{ne}$ | $n \ge \frac{ \left( \sum_{h=1}^{H} W_h DP_{h,y} \right)^2 }{V}$ | $n \ge \frac{ \left( \sum_{h=1}^{H} W_h S_{h,y} \right)^2 }{V + \frac{1}{N} \sum_{h=1}^{H} W_h S^2_h}$
+$AES_{ot}$ | $n \ge \frac{ \left( \sum_{h=1}^{H} W_h DP_{h,y} \sqrt{C_h} \right)\left( \sum_{h=1}^{H} W_h DP_{h,y} / \sqrt{C_h} \right) }{V}$ | $n \ge \frac{  \left( \sum_{h=1}^{H} W_h S_{h,y} \sqrt{C_h} \right)\left( \sum_{h=1}^{H} W_h S_{h,y} / \sqrt{C_h} \right) }{V + \frac{1}{N} \sum_{h=1}^{H} W_h S^2_h}$
+]
+
+---
+
+## Aula passada `r emo::ji("disk")`
+
+#### Exemplo `r emo::ji("workout")`
+
+Exemplo 7 da Apostila (da Profa. Vanessa): 
+
+Suponha que os restaurantes em uma cidade foram divididos em 3 estratos, de
+acordo com a zona de localização: $A$ $(N_1 = 600)$, $B$ $(N_2 = 300)$ e $C$ $(N_3 = 100)$. Queremos
+estimar o número médio de clientes por dia. Os valores do desvio padrão dos estratos são: 20, 30
+e 50 clientes, respectivamente. Determinar o tamanho de amostra pra estimar a média de clientes
+por dia com um erro máximo absoluto de 3 clientes e com 99,73% de confiança (isto é, $z$ = 3).
+Considere que será feita uma **AASs** em cada estrato.
+
+.center[
+### Alguém tentou`r emo::ji("question")``r emo::ji("question")``r emo::ji("question")` Dúvidas `r emo::ji("question")`
+]
+
+---
+
+class: inverse, middle, center
+
+# Exercícios para entregar
+
+---
+
+##  Aula de Hoje
+
+* São **três** exercícios para entregar. `r emo::ji("workout")`
+
+  + Pode ser feito **à mão** ou **em códigos**, de qualquer forma serão **postados no moodle**.
+  
+  + Indicar **notações** e **fórmulas** utilizadas.
+  
+  + Mostrar **desenvolvimento**, **interpretação** e **conclusão**.
+
+* Discutam as resoluções com os colegas, mas a **entrega** é **individual**.
+
+---
+
+##  Exercícios para entregar 1 `r emo::ji("workout")`
+
+* Exercício 4.1 (Elementos de Amostragem)
+
+  + Nos slides *Aula 06*, página 8, continuar ítens (c) e (d).
+  
+  + Interprete os resultados.
+
+---
+
+##  Exercícios para entregar 2 `r emo::ji("workout")`
+
+* Exercício 11.10 (Amostragem: Teoria e Prática Usando o R)
+
+(Adaptado de @Scheaffer2011) Uma empresa tem suas divisões localizadas em três continentes distintos: América, Europa e Ásia. Deseja-se realizar uma pesquisa sobre um de seus produtos através de uma amostra de clientes a serem entrevistados por telefone a partir da divisão localizada na América. O custo das ligações é diferente para cada uma das divisões. A Tabela abaixo contém as informações do custo, em dólares, de cada ligação/entrevista para cada uma das divisões, além da variância das taxas de satisfação e o número total de clientes em cada estrato. Calcule o tamanho total da amostra a ser selecionada e a alocação apropriada para essa amostra, sabendo que se deseja que a variância da estimativa da média populacional seja $V_{AES}(\overline y_{AES}) \le 0,1$. (assumindo **AASs** dentro dos estratos)
+
+Estrato | $N_h$ | $S^2_{h,y}$ | $C_h$
+--------|-------|------------|--------- 
+América |      112  |   2,25  |    9       
+Europa  |      68   |  3,24   |  25  
+Ásia    |      39   |  3,24   |  36     
+
+---
+
+##  Exercícios para entregar 3 `r emo::ji("workout")`
+
+* Exercício 11.7 (Amostragem: Teoria e Prática Usando o R)
+
+As 2.120 lojas de uma certa localidade foram estratificadas pelo número de empregados (única variável relativa ao tamanho da empresa encontrada no cadastro) numa pesquisa para estimar o faturamento total. A Tabela abaixo contém as informações da variável número de empregados, $x$, utilizadas no planejamento da amostra e os resultados sobre o faturamento, $y$, das lojas por estrato, obtidos na coleta dos dados na amostra. O faturamento foi medido em 1.000 Reais. (assumindo **AASs** dentro dos estratos)
+
+Estratos |    $N_h$   |       $T_{h,x}$    |     $S^2_{h,x}$|   $\overline y_h$ (1.000 Reais) | $\widehat S^2_{h,y}$
+----------------------| ----------| --------------| -------------------| ------------------| ---------------------
+      5-14            |    1.100  |         9.020     |         8,30  |             3     |              2,53 
+     15-49          |        500  |        13.500     |       102,08  |            17     |             66,59
+     50-99           |       250  |        17.750     |       207,00  |            52     |            411,28
+    100-199          |       130  |        17.329     |       840,10  |           170     |          1.953,64
+    200-499          |       120  |        36.600     |     7.500,00  |           350     |         16.770,25
+   500 e mais        |        20  |        14.280     |    20.805,00  |         7.000     |      3.062.500,00
+  **Totais**         |    **2.120** | **108.479**    |   |   |
+
+---
+
+##  Exercícios para entregar 3 `r emo::ji("workout")`
+
+* (cont.) Exercício 11.7 (Amostragem: Teoria e Prática Usando o R)
+
+a. Dimensione, utilizando os dados referentes a $x$, a amostra necessária para estimar o numero total de empregados com um erro máximo admissível de 2% e com um nível de confiança de 95%, supondo alocação de Neyman.
+
+b. Suponha que a amostra alocada no item anterior tenha sido efetivamente selecionada fornecendo os resultados apresentados para $y$. Com estas informações estime o faturamento total, $Y$, e o coeficiente de variação desta estimativa.
+     
+---
+
+class: inverse, middle, center
+
+# Resoluções
+
+---
+
+####  Resolução Exercícios para entregar `r fa("1", fill = "steelblue")`
+
+```{r}
+## dados do problema - Exercício 4.1 (Elementos de Amostragem)
+H <- 5                                    # no. de estratos
+h <- 1:H                                  # indice dos estratos
+Nh <- c( 117, 98, 74, 41, 45)             # tamanho dos estratos
+Ybarrah <- c( 7.3, 6.9, 11.2, 9.1, 9.6)   # media pop. dos estratos
+S2h <- c( 1.31, 2.03, 1.13, 1.96, 1.74)   # variancia do estrato 
+N <- sum(Nh)                              # tamanho da populacao
+n <- 80                                   # tamanho de amostra
+
+## a.
+## media populacional
+Ybarra <- sum( Nh * Ybarrah) / N       # media pop global
+Ybarra
+## variancia populacional Var_y
+Vary_aux1 <- sum((Nh - 1) * S2h) / N                 # primeiro termo
+Vary_aux2 <- ( sum( Nh * Ybarrah^2) / N) - Ybarra^2  # segundo termo
+Vary <- Vary_aux1 + Vary_aux2                        # variancia pop global
+Vary
+```
+
+---
+
+####  Resolução Exercícios para entregar `r fa("1", fill = "steelblue")`
+
+```{r}
+## b.
+## alocacao proporcional
+nhpr <- n * Nh / N                          # vetor de nh's na proporcional
+nhpr
+## alocancao de neyman SEM reposicao dentro dos estratos
+Sh <- sqrt(S2h)                             # desvios SHy dos estratos Var_h,y, sob AASs dentro
+nhneAESs <- n * (Nh * Sh) / (sum(Nh * Sh))  # vetor de nh's na de Neyman, sob AASs dentro
+nhneAESs
+## alocacao de neyman COM reposicao dentro dos estratos
+Varh <- (Nh - 1) * S2h / Nh                 # variancias dos estratos Var_h,y, sob AASc dentro
+DPh <- sqrt(Varh)                           # desvios padroes dos estratos DP_h,y, sob AASc dentro
+nhneAESc <- n * (Nh * DPh) / (sum(Nh * DPh))# vetor de nh's na de Neyman, sob AASc dentro
+nhneAESc
+## pequena diferença entre AESne SEM e COM reposicao!!! neyman alocando mais em estratos com mais variabilidade
+```
+
+---
+
+####  Resolução Exercícios para entregar `r fa("1", fill = "steelblue")`
+
+```{r}
+## c.
+## na AASc
+Varybarra <- Vary / n              # variancia de ybarra sob AASc
+Varybarra
+## AESne sob AAS SEM reposicao dentro dos estratos
+Wh <- Nh / N
+VarybarraAESnes <- sum( Wh * Sh)^2 / n - sum( Wh * S2h) / N
+VarybarraAESnes
+## AESne sob AAS COM reposicao dentro dos estratos
+VarybarraAESnec <- sum( Wh * DPh)^2 / n
+VarybarraAESnec
+## variancias reduzem com alocacao de neyman, vantagem sob ASSs dentro
+```
+
+---
+
+####  Resolução Exercícios para entregar `r fa("1", fill = "steelblue")`
+No item (a) calculamos $Var_y = `r Vary`$ e do item (b) temos $n=`r n`$.
+
+(c) 
+
+* Sabemos que na **AASc** (ignorando os estratos) a **variância** do **estimador** da **média** é dada por
+$$Var_{AASc} (\overline y) = \frac{Var_y}{n} = \frac{`r Vary`}{`r n`} = `r round( Varybarra, 4)`.$$
+
+* Já na **AESne** considerando **AASs** dentro dos estratos sabemos que
+$$Var_{AES_{ne}} \left( \overline y_{AES} \right) = \frac{1}{n} \left( \sum_{h=1}^{H} W_h S_h \right)^2 - \frac{1}{N} \left( \sum_{h=1}^{H} W_h S_h^2 \right)^2 = \frac{\overline{S}^2}{n} - \frac{\overline{S^2}}{N}.$$
+
+* E na **AESne** considerando **AASc** dentro dos estratos
+$$Var_{AES_{ne}} \left( \overline y_{AES} \right) = \frac{1}{n} \left( \sum_{h=1}^{H} W_h \sqrt{Var_h} \right)^2 = \frac{\overline{DP}^2}{n}.$$
+---
+
+####  Resolução Exercícios para entregar `r fa("1", fill = "steelblue")`
+
+```{r}
+## d.
+## na AESpr sob AAS SEM reposicao dentro dos estratos
+VarybarraAESprs <- sum(Wh * S2h) * ((1/n) - (1/N))  
+VarybarraAESprs
+## na AESpr sob AAS COM reposicao dentro dos estratos
+VarybarraAESprc <- sum(Wh * Varh) / n
+VarybarraAESprc
+## variancias um pouco maiores que na alocacao ne neyman, novamente vantagem sob AASs dentro
+```
+
+---
+
+####  Resolução Exercícios para entregar `r fa("1", fill = "steelblue")`
+
+(d) 
+
+* Para a variância na **AESpr** considerando **AASs** dentro dos estratos sabemos que
+
+$$Var \left( \overline y_{AES_{pr}} \right) = \left( \frac{1}{n} - \frac{1}{N} \right) \sum_{h=1}^{H} W_h S_h^2$$
+
+* E para a variância na **AESpr** considerando **AASc** dentro dos estratos
+
+$$Var \left( \overline y_{AES_{pr}} \right) = \frac{1}{n} \sum_{h=1}^{H} W_h Var_h$$ 
+
+
+---
+
+####  Resolução Exercícios para entregar `r fa("2", fill = "steelblue")`
+
+```{r}
+## dados do problema - Exercício 11.10 (Amostragem: Teoria e Prática Usando o R)
+H <- 3                        # no. de estratos
+h <- 1:H                      # indice dos estratos
+Nh <- c( 112, 68, 39)         # tamanho dos estratos
+S2h <- c( 2.25, 3.24, 3.24)   # variancia do estrato 
+Ch <- c( 9, 25, 36)           # custo de amostragem no estrato
+N <- sum(Nh)                  # tamanho da populacao
+V <- 0.1                      # variancia maxima
+
+## calculo de n
+Wh <- Nh / N        # peso do estrato h na pop. 
+Sh <- sqrt(S2h)     # variancia do estrato h
+raizCh <- sqrt(Ch)  # raiz quadrada do custo no estrato h
+num_part1 <- sum( Wh * Sh * raizCh)
+num_part2 <- sum( Wh * Sh / raizCh)
+denom <- V + sum( Wh * S2h) / N
+n <- num_part1 * num_part2 / denom # tamanho da amostra sob AESot e AASs dentro
+n     # arredondar para cima, ceiling(n)
+```
+
+---
+
+####  Resolução Exercícios para entregar `r fa("2", fill = "steelblue")`
+
+* Para calcular o tamanho total da amostra $n$, sob alocação ótima (*uma vez que o custo de observação das unidades difere de estrato para estrato*),  
+
+  + assumindo **AASs** dentro dos estratos,   
+  
+  + e definindo a variância da estimativa da média populacional tal que não ultrapasse $V = 0,1$
+
+$$\begin{eqnarray} Var_{AES_{ot}} (\overline y_{AES}) \le 0,1 & \Leftrightarrow & \frac{  \left( \sum_{h=1}^{H} W_h S_{h,y} \sqrt{C_h} \right)\left( \sum_{h=1}^{H} W_h S_{h,y} / \sqrt{C_h} \right) }{0,1 + \frac{1}{N} \sum_{h=1}^{H} W_h S^2_h} \le n \\
+& \Leftrightarrow &  \frac{`r num_part1` \times `r num_part2`}{`r denom`} \le n \\
+& \Leftrightarrow &  `r num_part1 * num_part2 / denom` \le n. \end{eqnarray}$$
+
+* Arredondaremos $n$ para o inteiro mais próximo. 
+
+  + Então $n = `r ceiling(n)`$.
+
+---
+
+####  Resolução Exercícios para entregar `r fa("2", fill = "steelblue")`
+
+```{r}
+n <- ceiling(n)
+nh <- n * (Wh * Sh / raizCh) / sum( Wh * Sh / raizCh) # tamanho da amostra no estrato h
+```
+
+* A alocação apropriada para essa amostra, assumindo **AESot** e **AASs** dentro dos estratos, 
+
+$$n_h = n \times \frac{N_h S_{h,y}}{\sum_{k=1}^{H} N_k S_{k,y}} = (`r paste0( round( nh, 4), collapse=", ")`).$$
+
+*Sob alocacao ótima arredondar para o inteiro mais próximo nos estratos com menor custo, maior variabilidade, maior tamanho?*
+
+.pull-left[
+```{r}
+## arredondando todos para mais
+ceiling(nh); sum( ceiling(nh))
+```
+]
+.pull-right[
+```{r}
+## arredondando inteiro mais proximo
+round( nh); sum(round( nh))
+```
+]
+
+---
+
+####  Resolução Exercícios para entregar `r fa("3", fill = "steelblue")`
+
+```{r}
+## dados do problema - Exercício 11.7 (Amostragem: Teoria e Prática Usando o R)
+H <- 6                        # no. de estratos
+h <- 1:H                      # indice dos estratos
+Nh <- c( 1100, 500, 250, 130, 120, 20)  # tamanho dos estratos
+Thx <- c( 9020, 13500, 17750, 17329, 36600, 14280)
+S2hx <- c( 8.30, 102.08, 207.00, 840.10, 7500.00, 20805.00)   # variancia de x nos estratos 
+ybarrah <- c( 3, 17, 52, 170, 350, 7000)                     # media amostral de y nos estratos
+s2hy <- c(2.53, 66.59, 411.28, 1953.64, 16770.25, 3062500.00) # variancia amostral de y nos estratos
+N <- sum(Nh)                  # tamanho da populacao
+
+## a.
+## valor de V
+r <- 0.02                        # erro relativo 2%
+alfa <- 0.05                     # confianca (1 - alfa) = 95%
+z_alfa_2 <- qnorm(1-alfa/2)      # usando aproximacao pela normal
+Wh <- Nh / N                     # peso do estrato h na pop. 
+Tx <- sum(Thx)                   # total populacional de x
+Xbarra <- Tx / N                 # media populacional de x
+Shx <- sqrt(S2hx)                # variancia de x do estrato h
+```
+
+---
+
+####  Resolução Exercícios para entregar `r fa("3", fill = "steelblue")`
+
+```{r}
+## calculo de n
+## se fosse estimacao da media
+V <- r^2 * Xbarra^2 / z_alfa_2^2 # variancia maxima - erro relativo para media
+num <- sum( Wh * Shx)^2          # num. formula n para media
+denom <- V + sum( Wh * S2hx) / N # denom. formula n para media
+n <- num / denom  # tamanho da amostra sob AESot e AASs dentro para a media
+n                 # arredondar para cima, ceiling(n)
+
+## na estimacao do total
+V <- r^2 * Tx^2 / z_alfa_2^2 # variancia maxima - erro relativo para total
+num <- sum( Nh * Shx)^2      # num. formula n para total
+denom <- V + sum( Nh * S2hx) # denom. formula n para total
+n <- num / denom  # tamanho da amostra sob AESot e AASs dentro para o total
+n                 # arredondar para cima, ceiling(n)
+## usando formula de n para media com V adequado para media é igual ao 
+## n usando a formula para o total e V adequado para total
+```
+
+---
+
+####  Resolução Exercícios para entregar `r fa("3", fill = "steelblue")`
+
+(a) 
+
+* Utilizando os dados referentes a $x$, o tamanho de amostra necessária para estimar o número total de empregados com um erro máximo admissível de 2% e com um nível de confiança de 95%, supondo alocação de Neyman, na **AASs** dentro do estratos 
+
+  + Se fossemos usar a fórmula para a estimação da média, 
+
+$$\overline X = \frac{T_x}{N} = \sum_{h=1}^H T_{h,x} / N = (`r paste0( Thx, collapse=" + ")`) / N = `r Tx / N`.$$
+
+  + A variância mínima é dada por $V = \frac{r^2 \overline X^2}{z^2_\frac{\alpha}{2}}$, para estimação da média quanto do total(?)  
+
+$$n \ge \frac{ \left( \sum_{h=1}^{H} W_h S_{h,x} \right)^2 }{V + \frac{1}{N} \sum_{h=1}^{H} W_h S^2_{h,x}} = `r n`.$$
+
+  + Então, $n = `r ceiling(n)`$.
+
+---
+
+####  Resolução Exercícios para entregar `r fa("3", fill = "steelblue")`
+
+* E na **estimação do total**??? 
+
+$$n \ge \frac {\sum_{h=1}^{H} \frac {N_h^2 S_{h,x}^2}{w_h}}{V_T +  \sum_{h=1}^{H}{ N_h S_{h,x}^2}}$$
+
+No caso da estimação do total $V_T$ segue sendo uma variância máxima, porém agora será máxima para a variância do estimador do total
+
+$$r N \overline X = z_\frac{\alpha}{2} \sqrt{Var(\overline T_{AES})} \Leftrightarrow V_T = \frac{r^2 N^2 \overline X^2}{z^2_\frac{\alpha}{2}}.$$
+
+* O **tamanho da amostra** $n$ é o **mesmo** na estimação da **média** e **total**,
+  + se usar erro relativo $r \overline Y$ para definir $V$ e usar $V \ge Var_{AES} (\overline x)$;
+  + ou com erro relativo $r N \overline Y$ para definir $V_T$ e usar $V_T \ge Var_{AES} (\widehat T)$.
+
+---
+
+####  Resolução Exercícios para entregar `r fa("3", fill = "steelblue")`
+```{r}
+## b.
+## alocacao de neyman
+nh <- ceiling(n * Shx * Nh / sum(Shx * Nh))      # arredondando para mais
+nh
+## maior que a população no estrato 6???
+Nh
+## estimativa do faturamento total sob AASs dentro 
+ty <- sum(Nh * ybarrah)                      # estimativa do total
+ty
+## variancia estimada do estimador do total
+s2ty <- sum( Nh^2 * (1/nh - 1/Nh) *  s2hy)   # estimativa da variancia do estimador do total
+cvty <- sqrt( s2ty) / ty                     # coeficiente de variacao estimado do estimador do total 
+cvty
+```
+
+---
+
+####  Resolução Exercícios para entregar `r fa("3", fill = "steelblue")`
+
+(b)
+
+* Supondo que a amostra alocada no item (a) tenha sido efetivamente selecionada fornecendo os resultados apresentados para $y$. 
+a estimativa do faturamento total, $Ty$, 
+
+$$\widehat T_{y,AES} = \sum_{h=1}^{H} \widehat T_{h,y}  = \sum_{h=1}^{H} N_h \overline y_h$$
+
+* E o coeficiente de variação desta estimativa, ...
+  
+  + Para o cálculo de
+  
+$$\widehat{Var}_{AES} \left( \widehat T_{AES} \right) = \sum_{h=1}^{H} N_h^2 \left( \frac{1}{n_h} - \frac{1}{N_h} \right)\widehat S_{h}^2$$
+
+  + temos $n_h > N_h$(`r emo::ji("question")`)
+
+---
+
+## Para casa `r emo::ji("house")`
+
+* Continuar os Exercícios e Entregar.
+
+<!-- * Mostrar tamanho de amostra $n$ para AASc dentro dos estratos. -->
+
+* Continuar exercícios do livro 'Amostragem: Teoria e Prática Usando R'    https://amostragemcomr.github.io/livro/estrat.html#exerc11
+
+* Fazer exercícios da lista 1.
+
+* Rever os slides.
+
+<!-- * Ler BOlfarine e Bussab...da seção 11.3 do livro 'Amostragem: Teoria e Prática Usando R'. -->
+
+
+
+## Próxima aula `r emo::ji("stats")`
+
+* Amostragem Estratificada
+  + Estimação de proporções
+  + Exercícios e Intervalos de confiança
+  
+<!-- * Laboratório de `r fa("r-project", fill = "steelblue")` -->
+
+---
+
+## Muito obrigado!
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='30%', out.height='30%', paged.print=FALSE}
+knitr::include_graphics(here::here('img', 'image_basu_elephant.jpg'))
+```
+Fonte: imagem do livro *Combined Survey Sampling Inference: Weighing of Basu's Elephants: Weighing Basu's Elephants*.
+
+
+
+---
+
+## Resumo da notação
+
+
+---
+
+## Referências
+
+<!-- Slides baseados no Capítulo 11 do livro -->
+
+* [Amostragem: Teoria e Prática Usando o R](https://amostragemcomr.github.io/livro/index.html)
+
+<!-- Citações do Capítulo -->
+
+<!-- * Neyman(1934) -->
+<!-- * Cochran(1977) -->
+
+
+<!-- * refazer calculos para amostagem aleatoria simples com reposicao -->
+<!-- * alocacao... ou lab R comparando alocação proporcional e igual tamanho -->
+
+<!-- listas de exercicios... -->
+<!-- dois aspectos da disciplina... ter flexibilidade com teoria... exercitar os conceitos com exercicios teoricos e praticos -->
+
+<!-- falar dos pesos na AES -->
+
+<!-- valor z_alpha/2 significa z ou t -->
+
+<!-- quem tiver interesse em conferir as fórmulas... mostra as conttas, gosta dessa pparte...posso contabilizar ponto extra... tem q ser o primeira... -->
+<!-- o mesmo pode valer para os códigos e texto... -->
+<!-- fazer o formulário -->
+<!-- resumo de formulas -->

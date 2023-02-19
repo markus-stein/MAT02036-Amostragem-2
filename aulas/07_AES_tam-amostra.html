@@ -38,7 +38,7 @@ class: center, middle, title-slide
 width: 110px;
 height: 128px;
 z-index: 0;
-background-image: url(C:/Users/User/Downloads/MAT02036 - Amostragem 2/aulas/img/logo_dest.png);
+background-image: url(C:/Users/User/Documents/MAT02036-Amostragem-2/img/logo_dest.png);
 background-size: contain;
 background-repeat: no-repeat;
 position: absolute;
@@ -85,7 +85,7 @@ top:1em;right:1em;
 
 ---
 
-## Aula passada 💿
+## Aula passada 💾
 **Comparação de alternativas de alocação da amostra**
 
 * Sob *alocação de Neyman*, 
@@ -102,10 +102,10 @@ top:1em;right:1em;
 
 ---
 
-## Aula passada 💾
+## Aula passada 📀
 **Comparação de alternativas de alocação da amostra**
 
-**Outro exemplo** de hoje: 🏃
+**Outro exemplo** de hoje: 💪
 
 Sabemos mostrar `\(EPA_{AES_{pr}} = deff_{AES_{pr}}\)` e `\(EPA_{AES_{pr}} = deff_{AES_{pr}}\)` assumindo **AASc** dentro dos estratos❓
 
@@ -198,9 +198,9 @@ onde `\(z_\frac{\alpha}{2}\)` é o quantil da normal padrão que deixa área `\(
 ## Tamanho da amostra na **AES** - e a margem de erro?
 #### Margem de erro relativa  - estimação da **média**
 
-* Muitas vezes queremos controlar o **erro relativo** `\(r\)` na estimativa, tal que
+* Muitas vezes queremos controlar o **erro relativo** `\(e_r\)` na estimativa, tal que
 
-`$$P \left( \left| \frac{\overline y_{AES} - \overline Y}{\overline Y} \right| \leq r \right) = P \left( \frac{ \left| \overline y_{AES} - \overline Y \right| }{\sqrt{Var(\overline y_{AES})}} \leq \frac{r \overline Y}{\sqrt{Var(\overline y_{AES})}} \right) = 1 - \alpha.$$` 
+`$$P \left( \left| \frac{\overline y_{AES} - \overline Y}{\overline Y} \right| \leq e_r \right) = P \left( \frac{ \left| \overline y_{AES} - \overline Y \right| }{\sqrt{Var(\overline y_{AES})}} \leq \frac{e_r \left| \overline Y \right|}{\sqrt{Var(\overline y_{AES})}} \right) = 1 - \alpha.$$` 
 
 * Novamente pela aproximação de `\(\overline y\)` para a distribuição **normal**,
 
@@ -224,8 +224,8 @@ onde `\(z_\frac{\alpha}{2}\)` é o quantil da normal padrão que deixa área `\(
 
 `$$r N \overline Y = z_\frac{\alpha}{2} \sqrt{Var(\overline T_{AES})} \Leftrightarrow V = \frac{r^2 N^2 \overline Y^2}{z^2_\frac{\alpha}{2}}.$$`
 * O **tamanho da amostra** `\(n\)` é o **mesmo** na estimação da **média** e **total**,
-  + se usar erro relativo `\(r \overline Y\)` para definir `\(V\)` e usar `\(V \ge Var_{AES} (\overline y)\)`;
-  + ou com erro relativo `\(r N \overline Y\)` para definir `\(V_T\)` e usar `\(V_T \ge Var_{AES} (\widehat T)\)`.
+  + se usar erro relativo `\(e_r \overline Y\)` para definir `\(V\)` e usar `\(V \ge Var_{AES} (\overline y)\)`;
+  + ou com erro relativo `\(e_r N \overline Y\)` para definir `\(V_T\)` e usar `\(V_T \ge Var_{AES} (\widehat T)\)`.
 
 * Expressões para **AASs** e **AASc** dentro dos estratos...(❓)
 
@@ -255,7 +255,7 @@ Alocação | Uniforme | Proporcional | de Neyman (AASs)
 
 ---
 
-## Exemplo 🏃
+## Exemplo 💪
 
 **Exemplo 7 da Apostila** da Profa Vanessa: 
 
@@ -268,7 +268,7 @@ Considere que será feita uma **AASs** em cada estrato.
 
 ---
 
-## Exemplo 🏋️‍♀️
+## Exemplo 💪
 
 *Ainda não falamos sobre estimação de proporções, mas será nosso próximo tópico*
 
@@ -330,7 +330,7 @@ Total | `\(n \ge \frac{\sum_{h=1}^{H} N_h^2 \frac{ Var_{h,y} }{w_h} }{V}\)` | `\
 
   + **Absoluta**: `\(e = z_\frac{\alpha}{2} \sqrt{ Var(\widehat \theta)} \Leftrightarrow V = \frac{e^2}{z^2_\frac{\alpha}{2}}\)`
 
-  + **Relativa**: `\(r \overline Y = z_\frac{\alpha}{2} \sqrt{Var(\widehat \theta)} \Leftrightarrow V = \frac{r^2 \overline Y^2}{z^2_\frac{\alpha}{2}}\)`
+  + **Relativa**: `\(e_r \left| \overline Y \right| = z_\frac{\alpha}{2} \sqrt{Var(\widehat \theta)} \Leftrightarrow V = \frac{e_r^2 \overline Y^2}{z^2_\frac{\alpha}{2}}\)`
 
 * Pode ser útil utilizar a relação entre variâncias que já conhecemos `\(Var(\overline y) = \frac{N-n}{n} \frac{S^2}{n} \Leftrightarrow \sqrt{Var(\overline y)} = \sqrt{\frac{N-n}{n}} \frac{S}{\sqrt{n}}\)`
 

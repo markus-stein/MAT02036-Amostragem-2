@@ -381,7 +381,7 @@ Amostragem por Conglomerados
 ## Muito obrigado!
 
 ```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='20%', out.height='20%', paged.print=FALSE}
-knitr::include_graphics(here::here('img', 'image_basu_elephant.jpg'))
+knitr::include_graphics('img/image_basu_elephant.jpg')
 ```
 .center[
 #### Fonte: imagem do livro *Combined Survey Sampling Inference: Weighing of Basu's Elephants*.

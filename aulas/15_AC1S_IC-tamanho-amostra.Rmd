@@ -116,7 +116,7 @@ class: inverse, middle, center
 
 * Para a **média**, se os conglomerados são de tamanhos iguais, a normalidade de $\overline y_{AC1S}$ segue da média amostral na **AAS**.
 
-Para $M$ e $M$ suficientemente grandes (`r emo::ji("question")`), então pelo TCL
+Para $M$ e $m$ "suficientemente grandes" (`r emo::ji("question")`), então pelo TCL
 
 $$\frac{ \overline y_{AC1S} - \overline Y}{\sqrt{ Var_{AC1S} \left( \overline y_{AC1S} \right)}} \approx Normal(0;1)$$
 em que $Var_{AC1S} \left( \overline y_{AC1S} \right) = \frac{Var_{ec}}{m}$.
@@ -159,20 +159,61 @@ para fazer parte da amostra.
 
   + Vimos que pode-se utilizar fórmulas que dependem do **erro relativo** $e_r$ ou do **erro absoluto** $e$.
 
-* Erro relativo
+* **Erro relativo** $e_r$
 
-Seja $CV = \frac{Var_{ec_T}}{\overline Y_c}$ então na **AASc** de conglomerados
+Ao utilizar o **erro relativo**, deseja-se que a estimativa do parâmetro não difira mais do que
+$100 \times e_r$% do seu verdadeiro valor, com $100 \times (1 − \alpha)$% de confiança. Isto é:
+$$P \left( \left| \frac{\overline y_{AES} - \overline Y}{\overline Y} \right| \leq e_r \right) = P \left( \frac{ \left| \overline y_{AES} - \overline Y \right| }{\sqrt{Var(\overline y_{AES})}} \leq \frac{e_r \left| \overline Y \right|}{\sqrt{Var(\overline y_{AES})}} \right) = 1 - \alpha.$$
 
-$$m = \frac{z_{\alpha/2} \: CV^2}{e_r^2},$$
-e na **AASs** de conglomerados
-
-$$m = \frac{M \: z_{\alpha/2} \: CV^2}{z_{\alpha/2} \: CV^2 + (M-1) \: e_r^2}.$$
+.pull-left[
+**AASc** de conglomerados $CV = \frac{Var_{ec_T}}{\overline Y_c}$, 
+$$m = \frac{z^2_{\alpha/2} \: CV^2}{e_r^2}.$$
+]
+.pull-right[
+**AASs** de conglomerados $CV = \frac{S^2_{ec}}{\overline Y_c}$,
+$$m = \frac{M \: z^2_{\alpha/2} \: CV^2}{z_{\alpha/2} \: CV^2 + (M-1) \: e_r^2}.$$
+]
 
 ---
 
 ## Tamanho de amostra na AC1S
 
-* Erro absoluto
+* **Erro absoluto** $e = e_r \left| \overline Y \right|$
+
+Ao utilizar o erro absoluto, deseja-se que a estimativa do parâmetro não difira mais do que e
+unidades do seu verdadeiro valor, com $100 \times (1 − \alpha)$% de confiança. Isto é:
+
+$$P \left( \left| \overline y - \overline Y \right| \leq e \right) = P \left( \frac{ \left| \overline y - \overline Y \right|}{\sqrt{Var(\overline y)}} \leq \frac{e}{\sqrt{Var(\overline y)}} \right) = 1 - \alpha.$$ 
+
+* Para média e proporção:
+
+.pull-left[
+Na **AASc**, $m = \frac{z^2_{\alpha/2} \: Var_{ec_T}}{\overline N e^2};$
+]
+.pull-right[
+Na **AASs**, $m = \frac{M \: z^2_{\alpha/2} \: S^2_{ec}}{z^2_{\alpha/2} \: S^2_{ec} + \overline N (M-1) \: e^2}.$
+]
+
+* Para o total:
+
+.pull-left[
+Na **AASc**, $m = \frac{M^2 z^2_{\alpha/2} \: Var_{ec_T}}{e^2};$
+]
+.pull-right[
+Na **AASs**, $m = \frac{M^3 \: z^2_{\alpha/2} \: S_{ec}^2}{M^2 z^2_{\alpha/2} \: S_{ec}^2 + (M-1) \: e^2}.$
+]
+
+---
+
+## Tamanho de amostra na AC1S
+
+* O coeficiente de variação $CV$, ou variâncias entre totais de conglomerados, $Var_{ec_T}$ ou $S^2_{ec}$, necessários para os cálculos de $m$ devem ser **estimados**, por estudos prévios, similares, ou piloto.
+
+#### Exemplo: pg. 30 da Apostila da Profa. Vanessa
+
+Suponha que se deseja estimar a média de renda familiar em certa cidade com um
+erro não maior que 10% e 99,57% de confiança $(z = 3)$. Para tanto, vai se fazer **AC1S** nos bairros
+da cidade $(M = 5)$. Num estudo anterior, obteve-se $CV = 0, 077$.
 
 ---
 
@@ -211,7 +252,7 @@ Amostragem por Conglomerados
 ## Muito obrigado!
 
 ```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='20%', out.height='20%', paged.print=FALSE}
-knitr::include_graphics(here::here('img', 'image_basu_elephant.jpg'))
+knitr::include_graphics('img/image_basu_elephant.jpg')
 ```
 .center[
 #### Fonte: imagem do livro *Combined Survey Sampling Inference: Weighing of Basu's Elephants*.

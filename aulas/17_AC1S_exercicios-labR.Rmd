@@ -71,38 +71,31 @@ $$y_{ij} = I \left[ (i,j) \in A \right] = \begin{cases}
 
 * O **estimador natural** $HT$, $\widehat P^{HT} = \frac{\overline y_C}{\overline N},$
 
-em que $\overline y_C = \frac{\sum_{i \in a} T_i}{m}$.
+* A **variância** de $\widehat P^{HT}$ na **AC1S** é dada por:
+  + **COM** reposição, $Var_{AC1S_c} \left( \widehat P^{HT} \right) = \frac{1}{\overline N^2} \frac{Var_{ec_T}}{m} = \frac{1}{\overline N^2} \left( 1 - \frac{1}{M} \right) \frac{S^2_{ec}}{m};$  
+  + **SEM** reposição, $Var_{AC1S_s} \left( \widehat P^{HT} \right) = \frac{1}{\overline N^2} \left( \frac{M - m}{M - 1} \right) \frac{Var^2_{ec_T}}{m} =  \frac{1}{\overline N^2} \left( 1 - \frac{m}{M} \right) \frac{S^2_{ec}}{m}.$
 
-* $\widehat P^{HT}$ é **não viciado** para $P$`r emo::ji("question")``r emo::ji("question")``r emo::ji("question")`
-
-* Esse estimador pode resultar em uma **proporção estimada $\widehat P^{HT} > 1$** (`r emo::ji("question")`).
-
-* $\overline N = \frac{\sum{i \in C}N_i}{M}$ pode ser estimado por $\overline n = \frac{\sum{i \in a}N_i}{m}$.
-
----
-
-## Aula passada `r emo::ji("disk")`
-### Estimação de Proporções
-#### Variância do estimador natural
-
-A variância de $\widehat P^{HT}$ na **AC1S** é dada por:
-
-* **COM** reposição, $Var_{AC1S_c} \left( \widehat P^{HT} \right) = \frac{1}{\overline N^2} \frac{Var_{ec_T}}{m} = \frac{1}{\overline N^2} \left( 1 - \frac{1}{M} \right) \frac{S^2_{ec}}{m};$  
-
-* **SEM** reposição, $Var_{AC1S_s} \left( \widehat P^{HT} \right) = \frac{1}{\overline N^2} \left( \frac{M - m}{M - 1} \right) \frac{Var^2_{ec_T}}{m} =  \frac{1}{\overline N^2} \left( 1 - \frac{m}{M} \right) \frac{S^2_{ec}}{m}.$
-
-* O estimador não viciado da variância de $\widehat P^{HT}$ na **AC1S** é dada por:
-
+* O **estimador** não viciado **da variância** de $\widehat P^{HT}$ na **AC1S** é dada por:
   + **COM** reposição, $\widehat Var_{AC1S_c} \left( \widehat P^{HT} \right) =  \frac{1}{\overline N^2} \left( 1 - \frac{1}{M} \right) \frac{s^2_{ec}}{m} \approx  \frac{1}{\overline N^2} \frac{s^2_{ec}}{m}$ (`r emo::ji("question")`);
-
   + **SEM** reposição, $\widehat Var_{AC1S_s} \left( \widehat P^{HT} \right) = \frac{1}{\overline N^2} \left( 1 - \frac{m}{M} \right) \frac{s^2_{ec}}{m},$  
   
 ---
 
 ## Aula passada `r emo::ji("disk")`
 ### Estimação de Proporções
-#### Estimador de Razão
 
+* **Estimador do tipo razão**: $\widehat P^R = \frac{\sum_{i \in a} T_i}{\sum_{i \in a} N_i} = \frac{\overline y_C}{\overline n}.$
+
+* A **variância** de $\widehat P^R$ na **AC1S** é dada por:
+  + **COM** reposição, $Var_{AC1S_c} \left( \widehat P^R \right) = \frac{1}{m \overline N^2} \frac{ \sum_{i \in C} \left(T_i - P \times N_i \right)^2}{M-1};$
+  + **SEM** reposição, $Var_{AC1S_s} \left( \widehat P^R \right) = \frac{ \left( 1 -  \frac{m}{M} \right) }{m \overline N^2} \frac{ \sum_{i \in C} \left(T_i - P \times N_i \right)^2}{M-1}.$  
+
+* O **estimador** não viciado **da variância** de $\widehat P^R$ na **AC1S** é dada por:
+  + **COM** reposição, $\widehat{Var}_{AC1S_c} \left( \widehat P^R \right) = \frac{1}{m \overline n^2} \frac{ \sum_{i \in a} \left(T_i - \widehat P^R \times N_i \right)^2}{m-1};$
+  + **SEM** reposição, $\widehat{Var}_{AC1S_s} \left( \widehat P^R \right) = \frac{ \left( 1 -  \frac{m}{M} \right) }{m \overline n^2} \frac{ \sum_{i \in a} \left(T_i - \widehat P^R \times N_i \right)^2}{m-1}.$  
+
+  
+  
 ---
 
 ## Aula passada `r emo::ji("disk")`

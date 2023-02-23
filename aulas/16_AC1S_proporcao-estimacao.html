@@ -97,29 +97,50 @@ em que `\(\widehat{Var}_{AC1S} \left( \overline y_{AC1S} \right) = \frac{s^2_{ec
 
 ---
 
-## Aula passada 💿
+## Aula passada 💽
 ### Tamanho de amostra na AC1S
 
-* Para planejar uma **AC1S**, é necessário **determinar** o **número de conglomerados** `\(m\)` que serão sorteados
-para fazer parte da amostra. 
+* **Determinar** o **número de conglomerados** `\(m\)` que serão sorteados para fazer parte da amostra. 
 
-  + Vimos que pode-se utilizar fórmulas que dependem do **erro relativo** `\(e_r\)` ou do **erro absoluto** `\(e\)`.
+* **Erro relativo** `\(e_r\)`
 
-* Erro relativo
-
-Seja `\(CV = \frac{Var_{ec_T}}{\overline Y_c}\)` então na **AASc** de conglomerados
-
-`$$m = \frac{z_{\alpha/2} \: CV^2}{e_r^2},$$`
-e na **AASs** de conglomerados
-
-`$$m = \frac{M \: z_{\alpha/2} \: CV^2}{z_{\alpha/2} \: CV^2 + (M-1) \: e_r^2}.$$`
+.pull-left[
+**AASc** de conglomerados `\(CV = \frac{Var_{ec_T}}{\overline Y_c}\)`, 
+`$$m = \frac{z^2_{\alpha/2} \: CV^2}{e_r^2}.$$`
+]
+.pull-right[
+**AASs** de conglomerados `\(CV = \frac{S^2_{ec}}{\overline Y_c}\)`,
+`$$m = \frac{M \: z^2_{\alpha/2} \: CV^2}{z_{\alpha/2} \: CV^2 + (M-1) \: e_r^2}.$$`
+]
 
 ---
 
-## Tamanho de amostra na AC1S
+## Aula passada 📀
+### Tamanho de amostra na AC1S
 
-* Erro absoluto
+* **Erro absoluto** `\(e = e_r \left| \overline Y \right|\)`
 
+Para média e proporção:
+
+.pull-left[
+Na **AASc**, `\(m = \frac{z^2_{\alpha/2} \: Var_{ec_T}}{\overline N e^2};\)`
+]
+.pull-right[
+Na **AASs**, `\(m = \frac{M \: z^2_{\alpha/2} \: S^2_{ec}}{z^2_{\alpha/2} \: S^2_{ec} + \overline N (M-1) \: e^2}.\)`
+]
+
+Para o total:
+
+.pull-left[
+Na **AASc**, `\(m = \frac{M^2 z^2_{\alpha/2} \: Var_{ec_T}}{e^2};\)`
+]
+.pull-right[
+Na **AASs**, `\(m = \frac{M^3 \: z^2_{\alpha/2} \: S_{ec}^2}{M^2 z^2_{\alpha/2} \: S_{ec}^2 + (M-1) \: e^2}.\)`
+]
+
+#### Uso de `\(EPA\)` `\((deff)\)` para cálculo de tamanho de amostra
+`$$m \approx \frac{n_{AASc} \times EPA_{AC1S}}{\overline N} (❓).$$`
+  
 ---
 
 class: inverse, middle, center
@@ -160,7 +181,7 @@ em que `\(\overline y_C = \frac{\sum_{i \in a} T_i}{m}\)`.
 
 * Esse estimador pode resultar em uma **proporção estimada `\(\widehat P^{HT} &gt; 1\)`** (❓).
 
-* `\(\overline N = \frac{\sum{i \in C}N_i}{M}\)` pode ser estimado por `\(\overline n = \frac{\sum{i \in a}N_i}{m}\)`.
+* Veremos adiante que `\(\overline N = \frac{\sum{i \in C}N_i}{M}\)` pode ser estimado por `\(\overline n = \frac{\sum{i \in a}N_i}{m}\)`.
 
 ---
 
@@ -201,10 +222,34 @@ em que `\(s^2_{ec} = \frac{ \sum_{i \in a} \left( T_i - \overline y_C \right)^2}
 ## Estimação de Proporções
 ### Estimador de Razão
 
+* Se estimamos `\(\overline N\)` por `\(\overline n\)` então o estimador do tipo razão é dado por
+
+`$$\widehat P^R = \frac{\sum_{i \in a} T_i}{\sum_{i \in a} N_i} = \frac{\overline y_C}{\overline n},$$`
+
+* É fácil ver que este estimador sempre produz estimativas menores ou guais a 1. (❓)
+
+#### Variância do estimador de razão
+
+A variância de `\(\widehat P^R\)` na **AC1S** é dada por:
+
+* **COM** reposição, `\(Var_{AC1S_c} \left( \widehat P^{HT} \right) = \frac{1}{\overline N^2} \frac{Var_{ec_T}}{m} = \frac{1}{\overline N^2} \left( 1 - \frac{1}{M} \right) \frac{S^2_{ec}}{m};\)`
+
+* **SEM** reposição, `\(Var_{AC1S_s} \left( \widehat P^{HT} \right) = \frac{1}{\overline N^2} \left( \frac{M - m}{M - 1} \right) \frac{Var^2_{ec_T}}{m} = \frac{1}{\overline N^2} \left( 1 - \frac{m}{M} \right) \frac{S^2_{ec}}{m}.\)`  
+
 ---
 
 ## Estimação de Proporções
 ### Estimador de Razão
+
+#### Estimador da variância do estimador de razão
+
+* O estimador não viciado da variância de `\(\widehat P^R\)` na **AC1S** é dada por:
+
+  + **COM** reposição, `\(\widehat Var_{AC1S_c} \left( \widehat P^{HT} \right) =  \frac{1}{\overline N^2} \left( 1 - \frac{1}{M} \right) \frac{s^2_{ec}}{m} \approx  \frac{1}{\overline N^2} \frac{s^2_{ec}}{m}\)` (❓);
+
+  + **SEM** reposição, `\(\widehat Var_{AC1S_s} \left( \widehat P^{HT} \right) = \frac{1}{\overline N^2} \left( 1 - \frac{m}{M} \right) \frac{s^2_{ec}}{m},\)`
+  
+* Rao (2000) menciona que, se os `\(T_i\)`'s forem altamente correlacionados com os `\(N_i\)`'s, então `\(\widehat P^R\)` terá menor variância que `\(\widehat P^{HT}\)`.
 
 ---
 
@@ -225,7 +270,7 @@ Total | 4053 | 5624
 ## Estimação de Proporções
 ### Exemplo (Apostila pg. 28)
 
-Considere os dados da população universitária, construa o IC 95% para a proporção.
+Considere os dados da população universitária, construa o IC `\(95\%\)` para a proporção.
 
 ---
 

@@ -97,12 +97,8 @@ onde:
 `$$\rho = \frac {\sum_{i \in C} \sum_{j \in C_i} \sum_{k \ne j \in C_i} \left( y_{ij} - \overline Y \right) \left( y_{ik} - \overline Y \right)} {\left( \overline N - 1 \right) \left( M \overline N - 1 \right) S_y^2} \doteq 1 - \frac {S_d^2} {S_y^2}$$` 
 
 é o **coeficiente de correlação intraconglomerado** ou **intraclasse**; e `\(S_d^2\)` é a medida da variância *dentro* dos conglomerados, dada por: 
-
 `$$S_{dc}^2 = \frac {1} {M} \sum_{i \in C} \frac {1} {\overline N - 1} \sum_{j \in C_i} \left (y_{ij} - \overline {Y_i} \right)^2 = \frac {1} {M} \sum_{i \in C} S_i^2$$` 
-
-com:  
-
-`$$S_i^2 = \frac {1} {\overline N - 1} \sum_{j \in C_i} \left( y_{ij} - \overline {Y_i} \right)^2$$` 
+com `\(S_i^2 = \frac {1} {\overline N - 1} \sum_{j \in C_i} \left( y_{ij} - \overline {Y_i} \right)^2.\)` 
 
 ---
 
@@ -113,16 +109,16 @@ com:
 
 Considere a população de tamanho `\(N = 6\)` agrupada em `\(M = 3\)` conglomerados, de três maneiras diferentes:
 
-`$$YA = ((7, 8); (9, 10); (12, 14))$$`
+`$$Y_A = ((7, 8); (9, 10); (12, 14))$$`
 
-`$$YB = ((7, 10); (12, 8); (9, 14))$$`
+`$$Y_B = ((7, 10); (12, 8); (9, 14))$$`
 
-`$$YC = ((7, 14); (12, 8); (9, 10))$$`
+`$$Y_C = ((7, 14); (12, 8); (9, 10))$$`
 
 
 ---
 
-## Aula passada 💿
+## Aula passada 💾
 ### Coeficiente de Correlação Intraclasse
 
 A expressão para o `\(EPA({AC1S}^R;\,AAS)\)` resulta do uso das expressões de acordo com @Cochran1977, página 241:
@@ -240,13 +236,33 @@ Na **AASs**, `\(m = \frac{M^3 \: z^2_{\alpha/2} \: S_{ec}^2}{M^2 z^2_{\alpha/2} 
 
 ## Tamanho de amostra na AC1S
 
-* O coeficiente de variação `\(CV\)`, ou variâncias entre totais de conglomerados, `\(Var_{ec_T}\)` ou `\(S^2_{ec}\)`, necessários para os cálculos de `\(m\)` devem ser **estimados**, por estudos prévios, similares, ou piloto.
+* O coeficiente de variação `\(CV\)`, ou variâncias entre totais de conglomerados, `\(Var_{ec_T}\)` ou `\(S^2_{ec}\)`, são necessários para os cálculos de `\(m\)`;
+
+  + geralmente devemos **estimar**, por estudos prévios, similares, ou piloto.
+
 
 #### Exemplo: pg. 30 da Apostila da Profa. Vanessa
 
 Suponha que se deseja estimar a média de renda familiar em certa cidade com um
 erro não maior que 10% e 99,57% de confiança `\((z = 3)\)`. Para tanto, vai se fazer **AC1S** nos bairros
 da cidade `\((M = 5)\)`. Num estudo anterior, obteve-se `\(CV = 0, 077\)`.
+
+
+
+---
+
+## Tamanho de amostra na AC1S
+### Uso de `\(EPA\)` `\((deff)\)` para cálculo de tamanho de amostra
+
+Um método aproximado para obter-se o tamanho de amostra necessário na **AC1S** é multiplicar o
+tamanho de amostra necessário para uma **AASc**, `\(n_{AASc}\)`, pelo `\(EPA_{AC1S}\)` `\((deff_{AC1S})\)` e então dividir pelo tamanho médio
+dos conglomerados `\(\overline N\)`. 
+
+`$$m \approx \frac{n_{AASc} \times EPA_{AC1S}}{\overline N} (❓).$$`
+
+#### Exemplo: pg. 36 da Apostila da Profa. Vanessa
+
+Em uma certa região, deseja-se fazer uma **AC1S** de fazendas criadores de gado. Em média, as fazendas têm 50 animais. O interesse é estimar a prevalência de uma doença, isto é, a proporção de animais doentes. Numa região vizinha, um estudo mostrou que 10% dos animais estavam doentes e `\(r_{int} = 0, 1225\)`. Quantas fazendas devem pertencer à amostra, considerando que se deseja uma margem de erro de `\(1\%\)` para mais ou para menos e `\(95\%\)` de confiança?
 
 ---
 

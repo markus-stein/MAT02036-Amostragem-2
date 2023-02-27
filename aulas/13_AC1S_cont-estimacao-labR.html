@@ -38,7 +38,7 @@ class: center, middle, title-slide
 width: 110px;
 height: 128px;
 z-index: 0;
-background-image: url(C:/Users/User/Downloads/MAT02036 - Amostragem 2/aulas/img/logo_dest.png);
+background-image: url(C:/Users/User/Documents/MAT02036-Amostragem-2/img/logo_dest.png);
 background-size: contain;
 background-repeat: no-repeat;
 position: absolute;
@@ -85,7 +85,7 @@ top:1em;right:1em;
 
 ---
 
-## Aula passada 💽
+## Aula passada 💿
 ### Amostragem por Conglomerados em 1 Estágio Simples
 
 Abaixo segue um resumo de estimadores do total, média e respectivas variâncias sob AC1S. 
@@ -99,7 +99,7 @@ Variância da média | `\(\widehat Var_{AC1S} \left( \overline y_{AC1S/HT} \righ
 
 ---
 
-## Aula passada 💿
+## Aula passada 💽
 ### Amostragem por Conglomerados em 1 Estágio Simples
 
 Abaixo segue um resumo de estimadores do total, média e respectivas variâncias sob AC1S. 
@@ -364,17 +364,17 @@ Varybarra_R
 ```r
 ## (d) selecionar amostra de conglomerados e estimacao
 amostra &lt;- sample(1:M, m)
-Ni &lt;- Ni[amostra]
+Niamostra &lt;- Ni[amostra]
 Tiamostra &lt;- Ti[amostra]
-ty &lt;- sum(Tiamostra)
+ty &lt;- (sum(Ni) / sum(Niamostra)) * sum(Tiamostra)       # estimador de razao
 ty
 ```
 
 ```
-## [1] 245
+## [1] 689
 ```
 
-Estimamos que a distância total percorrida por todos os aviões do país pesquisado foi de `\(\widehat T = \sum_{i \in a} T_i = 245\)` *milhares* de milhas.
+Estimamos que a distância total percorrida por todos os aviões do país pesquisado foi de `\(\widehat T = \sum_{i \in a} T_i = 689\)` *milhares* de milhas.
 
 ---
 

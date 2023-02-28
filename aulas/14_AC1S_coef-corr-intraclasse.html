@@ -4,7 +4,7 @@
     <title>MAT02036 - Amostragem 2</title>
     <meta charset="utf-8" />
     <meta name="author" content="Markus Stein" />
-    <script src="libs/header-attrs-2.20/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.18/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
   </head>
@@ -38,7 +38,7 @@ class: center, middle, title-slide
 width: 110px;
 height: 128px;
 z-index: 0;
-background-image: url(/cloud/project/img/logo_dest.png);
+background-image: url(C:/Users/User/Documents/MAT02036-Amostragem-2/img/logo_dest.png);
 background-size: contain;
 background-repeat: no-repeat;
 position: absolute;
@@ -85,7 +85,7 @@ top:1em;right:1em;
 
 ---
 
-## Aula passada 💽
+## Aula passada 📀
 ### Amostragem por Conglomerados em 1 Estágio Simples
 #### Exercício
 
@@ -111,7 +111,7 @@ Cia `\((i)\)` | No. aviões `\((N_i)\)` | `\(T_i\)` | `\(\overline Y_i\)`
 
 ---
 
-## Aula passada 💽
+## Aula passada 💿
 ### Amostragem por Conglomerados em 1 Estágio Simples
 #### Exercício
 
@@ -225,9 +225,8 @@ Elemento | `\((i,1)\)` |  `\((i,1)\)` | `\(\ldots\)` | `\((i,j)\)`| `\(\ldots\)`
 
 * O **CCI** é coeficiente de correlação de Pearson para todos os `\(\sum_{i \in C} N_i(N_i-1)\)` pares do tipo `\((Y_1', Y_2')\)`, 
 `$$\rho = \frac{Cov(Y_1', Y_2')}{\sqrt{Var(Y_1')Var(Y_2')}}$$`
-  + `\(Y_1'\)` significa possíveis valores da da primeira posição do par 
-  + `\(Y_2'\)` significa a segunda posição do par.
-
+  + `\(Y_1'\)` significa possíveis valores da primeira posição do par 
+  + `\(Y_2'\)` significa possíveis valores da segunda posição do par.
 
 #### Exemplo: (cont. Exemplo slides `Aula 12`)
 
@@ -248,11 +247,15 @@ e
 então 
 `$$\rho = \frac{Var_{ec} - \frac{Var_{dc}}{\overline N - 1}}{Var_y}$$`
 
+Mostrar???
+
+
+---
+
+## Coeficiente de Correlação Intraclasse
+### **Tamanhos** dos conglomerados *iguais*
+
 * Sob **AASs** dentro dos conglomerados, de acordo com @Cochran1977, página 242, tem-se:
-
-`$$EPA({AC1S}^R;\,AAS) \doteq 1 + (\overline N - 1) \rho$$`
-
-onde:
 
 `$$\rho = \frac {\sum_{i \in C} \sum_{j \in C_i} \sum_{k \ne j \in C_i} \left( y_{ij} - \overline Y \right) \left( y_{ik} - \overline Y \right)} {\left( \overline N - 1 \right) \left( M \overline N - 1 \right) S_y^2} \doteq 1 - \frac {S_d^2} {S_y^2}$$` 
 
@@ -267,15 +270,25 @@ com:
 ---
 
 ## Coeficiente de Correlação Intraclasse
+### **Tamanhos** dos conglomerados *iguais*
 
-* Lembrando, variância **total** é dada por: 
+* Sob **AASs** de conglomerados, lembrando, variância **total** é dada por: 
 
 `$$S_y^2 = \frac {1} {N - 1} \sum_{i \in C} \sum_{j \in C_i} \left( y_{ij} - \overline Y \right)^2$$`
 
-* Vimos que a variância **total** também pode ser expressa em função das variâncias *entre* conglomerados, `\(S_e^2\)`, e *dentro* dos conglomerados, `\(S_d^2\)`, através da expressão:
+* Vimos que a variância **total** também pode ser expressa em função das variâncias *entre* conglomerados, `\(S_{ec}^2\)`, e *dentro* dos conglomerados, `\(S_{dc}^2\)`, através da expressão:
 
 `$$S_y^2 = \frac {(\overline N - 1) M S_{dc}^2 + \overline N (M-1) \overline S_{ec}^2} {M \overline N - 1}$$`
-onde, `\(\overline S_{ec}^2 = \frac {S_e^2} {\overline N}\)`.
+onde, `\(\overline S_{ec}^2 = \frac {S_{ec}^2} {\overline N}\)`.
+
+---
+
+## Coeficiente de Correlação Intraclasse
+### **Tamanhos** dos conglomerados *iguais*
+
+* Sob `\(AASs\)` de conglomerados
+
+`$$EPA({AC1S}^R;\,AAS) \doteq 1 + (\overline N - 1) \rho$$`
 
 A expressão para o `\(EPA({AC1S}^R;\,AAS)\)` resulta do uso das expressões de acordo com @Cochran1977, página 241:
 

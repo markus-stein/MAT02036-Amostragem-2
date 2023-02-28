@@ -175,11 +175,11 @@ Podemos definir:
 
 * A **variância dentro** dos conglomerados
 
-$$Var_{dc} = \frac{ \sum_{i=1}^{M} \sum_{j=1}^{N_i} \left( y_{ij} - \overline Y_i \right)^2}{N}.$$
+$$Var_{dc} = \frac{ \sum_{i=1}^{M} \sum_{j=1}^{N_i} \left( y_{ij} - \overline Y_i \right)^2}{N} = \frac{ 1 }{\overline N M} \sum_{i=1}^{M} \frac{N_i}{N_i} \sum_{j=1}^{N_i} \left( y_{ij} - \overline Y_i \right)^2 = \frac{ 1 }{M} \sum_{i=1}^{M} \frac{N_i}{\overline N} \sum_{j=1}^{N_i} Var_{i,y}.$$
 
 * A **variância entre** os conglomerados
 
-$$Var_{ec} = \frac{ \sum_{i=1}^{M} \left( \overline Y_i - \overline Y \right)^2}{N}$$
+$$Var_{ec} = \frac{ \sum_{i=1}^{M} N_i \left( \overline Y_i - \overline Y \right)^2}{N}$$
 
 #### Exercício
 Mostre: (`r emo::ji("question")`)
@@ -557,7 +557,7 @@ Amostragem por Conglomerados
 ## Muito obrigado!
 
 ```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='20%', out.height='20%', paged.print=FALSE}
-knitr::include_graphics(here::here('img', 'image_basu_elephant.jpg'))
+knitr::include_graphics('img/image_basu_elephant.jpg')
 ```
 .center[
 #### Fonte: imagem do livro *Combined Survey Sampling Inference: Weighing of Basu's Elephants*.

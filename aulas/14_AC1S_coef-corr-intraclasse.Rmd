@@ -19,7 +19,7 @@ output:
 
 ```{r libs, echo=FALSE, message=FALSE, warning=FALSE}
 library(xaringanExtra)
-library(emo)
+library(emo) # devtools::install_github("hadley/emo")
 library(fontawesome)
 library(kableExtra)
 ```
@@ -170,7 +170,55 @@ class: inverse, middle, center
 
 ## Coeficiente de Correlação Intraclasse
 
-Se os **tamanhos** dos conglomerados forem todos *iguais*, $N_i = \overline N, \,\, \forall\, i = 1, \dots, M$, então, de acordo com @Cochran1977, página 242, tem-se:
+Vimos que a eficiência na **AC1S** depende do grau de similaridade dos seus elementos. 
+
+* Uma medida para indicar esse grau de similaridade é o coeficiente de correlação intraclasse (**CCI**), *intraclass correlation coeficient* ou *intracluster correlation coeficient* (**ICC**).
+	
+* Considere a população dividida em $M$ conglomerados: 
+  + Dentro do $i$-ésimo conglomerado existem $N_i(N_i-1)$ pares de valores  distintos da variável $Y$.
+  
+Elemento | $(i,1)$ |  $(i,1)$ | $\ldots$ | $(i,j)$| $\ldots$ | $(i,N_i)$
+--|--|--|--|--
+$(i,1)$ | - | $(Y_{i1}, Y_{i2})$ | $\ldots$ | $(Y_{i1}, Y_{ij})$ | $\ldots$ | $(Y_{i1}, Y_{iN_i})$
+$(i,2)$ | $(Y_{i2}, Y_{i1})$ | - | $\ldots$ | $(Y_{i2}, Y_{ij})$ | $\ldots$ | $(Y_{i2}, Y_{iN_i})$
+$\vdots$ | $\vdots$ | $\vdots$ | $\vdots$ | $\vdots$ | $\vdots$ | $\vdots$
+$(i,j)$ | $(Y_{ij}, Y_{i1})$ | $(Y_{ij}, Y_{i2})$ | $\ldots$ | - | $\ldots$ | $(Y_{ij}, Y_{iN_i})$
+$\vdots$ | $\vdots$ | $\vdots$ | $\vdots$ | $\vdots$ | $\vdots$ | $\vdots$
+$(i,N_i)$ | $(Y_{iN_i}, Y_{i1})$ | $(Y_{iN_i}, Y_{i2})$ | $\ldots$ | $(Y_{iN_i}, Y_{ij})$ | $\ldots$ | -
+
+---
+
+## Coeficiente de Correlação Intraclasse
+
+* O **CCI** é coeficiente de correlação de Pearson para todos os $\sum_{i \in C} N_i(N_i-1)$ pares do tipo $(Y_1', Y_2')$, 
+$$\rho = \frac{Cov(Y_1', Y_2')}{\sqrt{Var(Y_1')Var(Y_2')}}$$
+  + $Y_1'$ significa possíveis valores da da primeira posição do par 
+  + $Y_2'$ significa a segunda posição do par.
+
+
+#### Exemplo: (cont. Exemplo slides `Aula 12`)
+
+Considere a população de tamanho $N = 6$ agrupada em $M = 3$ conglomerados, de três maneiras diferentes:
+$$\boldsymbol{Y}_A = ((7, 8); (9, 10); (12, 14))$$
+$$\boldsymbol{Y}_B = ((7, 10); (12, 8); (9, 14))$$
+$$\boldsymbol{Y}_C = ((7, 14); (12, 8); (9, 10))$$
+
+---
+
+## Coeficiente de Correlação Intraclasse
+### **Tamanhos** dos conglomerados *iguais*
+
+* Se $N_i = \overline N, \,\, \forall\, i = 1, \dots, M$, sob **AASc** dentro dos conglomerados,
+$$Cov(Y_1', Y_2') = \frac{\sum_{i \in C} \sum_{j \in C_i} \sum_{k \ne j \in C_i} \left( y_{ij} - \overline Y \right) \left( y_{ik} - \overline Y \right)} {M \overline N (\overline N - 1)}$$
+e
+$$Var(Y_1') = Var(Y_2') = Var_y,$$
+então 
+$$\rho = \frac{Var_{ec} - \frac{Var_{dc}}{\overline N - 1}}{Var_y}$$
+
+Mostrar???
+
+
+* Sob **AASs** dentro dos conglomerados, de acordo com @Cochran1977, página 242, tem-se:
 
 $$EPA({AC1S}^R;\,AAS) \doteq 1 + (\overline N - 1) \rho$$
 
@@ -185,20 +233,6 @@ $$S_{dc}^2 = \frac {1} {M} \sum_{i \in C} \frac {1} {\overline N - 1} \sum_{j \i
 com:  
 
 $$S_i^2 = \frac {1} {\overline N - 1} \sum_{j \in C_i} \left( y_{ij} - \overline {Y_i} \right)^2$$ 
----
-
-## Coeficiente de Correlação Intraclasse
-
-### Exemplo: (cont. Exemplo slides `Aula 12`)
-
-Considere a população de tamanho $N = 6$ agrupada em $M = 3$ conglomerados, de três maneiras diferentes:
-
-$$\boldsymbol{Y}_A = ((7, 8); (9, 10); (12, 14))$$
-
-$$\boldsymbol{Y}_B = ((7, 10); (12, 8); (9, 14))$$
-
-$$\boldsymbol{Y}_C = ((7, 14); (12, 8); (9, 10))$$
-
 
 ---
 

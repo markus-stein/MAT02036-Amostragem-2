@@ -306,19 +306,25 @@ Tamanho | $\rho=0,01$ | $\rho=0,05$ | $\rho=0,1$ | $\rho=0,2$ | $\rho=0,3$ | $\r
 
 Observe que quando aumenta o tamanho do conglomerado, aumenta a perda de precisão da AC1S em relação à AAS. Note também que à medida que aumenta o coeficiente de correlação intraclasse diminui a eficiência da AC1S em comparação com a AAS.  
 
-
 ---
 
 ## Coeficiente de Correlação Intraclasse
+### Estimação
 
 * Numa **amostra** retirada **com reposição**, o **coeficiente de correlação intraclasse** pode ser **estimado**
 por:
 
 $$r = \frac{s^2_{ec} \frac{s^2_{dc}}{\overline N}}{s^2_{ec} + s^2_{dc}}$$
+em que 
+$$s^2_{ec} = \frac{1}{m-1} \sum_{i \in a} \left( \overline Y_i - \overline y^{HT} \right)^2 \: \: \: \: \text{ e } \: \: \: \: s^2_{dc} = \frac{1}{m} \sum_{i \in a} \frac{N_i}{\overline N} Var_i$$
+
+---
+
+## Coeficiente de Correlação Intraclasse
 
 #### Exemplo - continuação: Considerando a divisão A:
 
-### Para conglomerados de tamanhos diferentes
+Para conglomerados de tamanhos diferentes.
 
 #### Exemplo - 
 

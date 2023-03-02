@@ -454,7 +454,7 @@ $$\overline y_{AC1S/HT} = \frac {\widehat T_{AC1S/HT}} {N} = \frac {M} {N} \frac
   + **SEM reposição**, 
 $$Var_{AC1S} \left( \overline y_{AC1/HT} \right) = \frac {M^2} {N^2} \left( \frac 1 m - \frac 1 M \right) S_{ec}^2 = \frac {1} {\overline N^2} \left( \frac 1 m - \frac 1 M \right) S_{ec}^2;$$
   + **COM reposição**, 
-$$Var_{AC1S} \left( \overline y_{AC1/HT} \right) = \frac {1} {\overline N^2} \frac{Var_{ec}^2}{m}.$$
+$$Var_{AC1S} \left( \overline y_{AC1/HT} \right) = \frac {1} {\overline N^2} \frac{Var_{ec_T}^2}{m}.$$
 
 ---
 
@@ -513,7 +513,7 @@ com $\overline n$ em lugar de $\overline N$ quando este for desconhecido.
 * Ainda não foi tratado explicitamente do problema da estimação de proporções, $P$. 
 
 $$y_{ij} = I \left[ (i,j) \in A \right] = \begin{cases} 
-1, \text { se a unidade } j do conglorerado i \text{ possui o atributo, } A \subset U; \\ 
+1, \text { se a unidade } j \text{ do conglorerado } i \text{ possui o atributo, } A \subset U; \\ 
 0, \text{ caso contrário.} \end{cases}$$
 
 * Lembrando que **proporção é equivalente à média** de uma variável do tipo indicadora, que só pode assumir valores $0$ (não possui a característica de interesse) ou $1$ (possui a característica de interesse) e, novamente, é fácil derivar as expressões para estimar proporções e avaliar a precisão das estimativas a partir das expressões para estimação de média:

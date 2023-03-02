@@ -4,7 +4,7 @@
     <title>MAT02036 - Amostragem 2</title>
     <meta charset="utf-8" />
     <meta name="author" content="Markus Stein" />
-    <script src="libs/header-attrs-2.20/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.18/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
   </head>
@@ -38,7 +38,7 @@ class: center, middle, title-slide
 width: 110px;
 height: 128px;
 z-index: 0;
-background-image: url(/cloud/project/img/logo_dest.png);
+background-image: url(C:/Users/User/Documents/MAT02036-Amostragem-2/img/logo_dest.png);
 background-size: contain;
 background-repeat: no-repeat;
 position: absolute;
@@ -85,7 +85,7 @@ top:1em;right:1em;
 
 ---
 
-## Aula passada 📀
+## Aula passada 💿
 ### Amostragem por Conglomerados (*Cluster*)
 
 A população de unidades `\(U\)` é particionada em `\(M\)` grupos **mutuamente exclusivos e exaustivos**, 
@@ -102,7 +102,7 @@ Selecione uma amostra `\(a = \{i_1,\dots,i_m\}\)` de tamanho `\(m\,\, (m&gt;0)\)
 
 ---
 
-## Aula passada 💽
+## Aula passada 💾
 ### Amostragem por conglomerados em um estágio  
 
 * Num plano de **Amostragem por Conglomerados em 1 estágio** **(AC1)**, todas as unidades populacionais dos conglomerados selecionados em `\(a = \left(i_1, \ldots, i_m \right)\)` farão parte da amostra,
@@ -118,7 +118,7 @@ Portanto, a amostragem do tipo **AC1** é caracterizada pelos seguintes aspectos
 
 ---
 
-## Aula passada 📀
+## Aula passada 💽
 ### Amostragem conglomerada em vários estágios 
 
 * Numa **amostragem conglomerada em três estágios**: 
@@ -131,7 +131,7 @@ Portanto, a amostragem do tipo **AC1** é caracterizada pelos seguintes aspectos
 
 ---
 
-## Aula passada 💽
+## Aula passada 💿
 ### Notação na amostragem por conglomerados em um estágio
 
 Os **tamanhos populacionais** e da **amostra** na **AC1** para uma dada população são 
@@ -148,7 +148,7 @@ Tamanho da população/amostra |  `\(N = \sum_{i\in C}N_i\)` | `\(n = \displayst
 
 ---
 
-## Aula passada 💽
+## Aula passada 💾
 ### Notação na amostragem por conglomerados em um estágio
 
 Os parâmetros populacionais **total** e **média** por conglomerado e na população como um todo são dados por
@@ -487,7 +487,7 @@ c) Usar estimadores tipo razão, com a variável auxiliar sendo o tamanho do con
   + **SEM reposição**, 
 `$$Var_{AC1S} \left( \overline y_{AC1/HT} \right) = \frac {M^2} {N^2} \left( \frac 1 m - \frac 1 M \right) S_{ec}^2 = \frac {1} {\overline N^2} \left( \frac 1 m - \frac 1 M \right) S_{ec}^2;$$`
   + **COM reposição**, 
-`$$Var_{AC1S} \left( \overline y_{AC1/HT} \right) = \frac {1} {\overline N^2} \frac{Var_{ec}^2}{m}.$$`
+`$$Var_{AC1S} \left( \overline y_{AC1/HT} \right) = \frac {1} {\overline N^2} \frac{Var_{ec_T}^2}{m}.$$`
 
 ---
 
@@ -546,7 +546,7 @@ com `\(\overline n\)` em lugar de `\(\overline N\)` quando este for desconhecido
 * Ainda não foi tratado explicitamente do problema da estimação de proporções, `\(P\)`. 
 
 `$$y_{ij} = I \left[ (i,j) \in A \right] = \begin{cases} 
-1, \text { se a unidade } j do conglorerado i \text{ possui o atributo, } A \subset U; \\ 
+1, \text { se a unidade } j \text{ do conglorerado } i \text{ possui o atributo, } A \subset U; \\ 
 0, \text{ caso contrário.} \end{cases}$$`
 
 * Lembrando que **proporção é equivalente à média** de uma variável do tipo indicadora, que só pode assumir valores `\(0\)` (não possui a característica de interesse) ou `\(1\)` (possui a característica de interesse) e, novamente, é fácil derivar as expressões para estimar proporções e avaliar a precisão das estimativas a partir das expressões para estimação de média:

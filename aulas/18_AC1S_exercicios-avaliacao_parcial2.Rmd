@@ -102,7 +102,7 @@ Considere uma população com $N=8$ indivíduos, onde
 $$\boldsymbol{Y} = (9,10,11,17,20,31,32,30).$$
 
 a. Seja a divisão $A$ desta população: 
-$$U_A = (C_1, C_2) = \left( (9,10,11,17), (20,31,32,30) \right)$$. 
+$$U_A = (C_1, C_2) = \left( (9,10,11,17), (20,31,32,30) \right).$$ 
 Calcule o coeficiente de correlação intraclasse e o interprete. Qual é o menor valor que o coeficiente pode assumir nesse caso? 
 
 b. Considere agora a divisão $B$: 
@@ -136,13 +136,88 @@ library(SDaA)
 data(agpop)
 ```
 
-Responda:
-
+Responda:  
 a. Usando o seu cartão UFRGS como semente aleatória (`set.seed(XXXXXXXX)`, onde `XXXXXXXX` é o número do seu cartão), sorteie uma **AC1S** de 15 estados (variável `state`) sem reposição.
 
 b. A partir da amostra sorteada, obtenha e apresente a estimativa pontual e por $IC$ $95\%$ da média da variável `largef92`. Interprete os resultados.
 
 c. Produza dois gráficos que descrevam a variável `largef92`: um na população, outro na **AC1S** sem reposição sorteada. Comente sobre as diferenças encontradas.
+
+---
+
+class: inverse, middle, center
+
+# Solução
+
+---
+
+## Avaliação Parcial 2
+### Questão 1 - solução
+
+Do enunciado temos:  
+* $N=8$ unidades elementares na população,
+* $M=2$ conglomerados.
+```{r}
+## exercicio 1
+## dados do problema
+Y <- c(9,10,11,17,20,31,32,30)    # vetor pop. de valores Y
+CA <- c(1,1,1,1,2,2,2,2)          # indices cluster A
+CB <- c(2,1,1,2,1,2,2,1)          # indices cluster B
+```
+
+a) O coeficiente de correlação intraclasse é dada pelo coeficiente de correlação linear de Pearson dos dos possíveis pares dentro dos conglomerados $(Y_1', Y_2')$, $\rho = \frac{Cov(Y_1', Y_2')}{\sqrt{Var(Y_1') Var(Y_2')}}$.
+* $Y_1'$ significa possíveis valores da primeira posição do par 
+* $Y_2'$ significa possíveis valores da segunda posição do par. 
+
+---
+
+## Avaliação Parcial 2
+### Questão 1 - solução
+
+Adaptando o código da `Aula 14`: 
+```{r, warning=FALSE}
+library(gtools)
+
+## divisao A
+Ni <- mean(table(CA))                # tamanho de cada conglomerado, igual a Nbarra
+## cria os pares
+YlinhaCA1 = permutations( length( Y[CA == 1]), 2, Y[CA == 1] ,set=F) # pares cluster 1
+YlinhaCA2 = permutations( length( Y[CA == 2]), 2, Y[CA == 2] ,set=F) # pares cluster 2
+YlinhaCA = rbind( YlinhaCA1, YlinhaCA2)   # pares de toda a pop.
+rhoCA = cor( YlinhaCA[,1], YlinhaCA[,2])  # coef. corr. intraclasse (corr. de pearson dos pares)
+rhoCA
+```
+
+O coeficiente de correlação intraclasse (CCI) para a divisão $A$ é aproximadamente $`r CA`$. O valor mínimo para o CCI é $-\frac{1}{\overline N - 1} = `r round(-1/(Ni - 1),3)`$, o que indica uma grande ineficiência da $AC1S$ usando a conglomeração $A$ em relação a **AASc**, pois $\rho_{int}$ está próximo de 1.
+
+---
+
+## Avaliação Parcial 2
+### Questão 1 - solução
+
+b) Para a divisão $B$ temos
+```{r, warning=FALSE}
+## divisao B
+Ni <- mean(table(CB))                # tamanho de cada conglomerado, igual a Nbarra
+## cria os pares
+YlinhaCB1 = permutations( length( Y[CB == 1]), 2, Y[CB == 1] ,set=F) # pares cluster 1
+YlinhaCB2 = permutations( length( Y[CB == 2]), 2, Y[CB == 2] ,set=F) # pares cluster 2
+YlinhaCB = rbind( YlinhaCB1, YlinhaCB2)   # pares de toda a pop.
+rhoCB = cor( YlinhaCB[,1], YlinhaCB[,2])  # coef. corr. intraclasse (corr. de pearson dos pares)
+rhoCB
+```
+
+O coeficiente de correlação intraclasse (CCI) para a divisão $B$ é aproximadamente $`r rhoCB`$, o que indica uma grande eficiência da $AC1S$ usando a conglomeração $A$ em relação a **AAS**, pois $\rho_{int}$ está próximo do mínimo `r round(-1/(Ni - 1),3)`.
+
+---
+
+## Avaliação Parcial 2
+### Questão 2 - solução
+
+---
+
+## Avaliação Parcial 2
+### Questão 3 - solução
 
 ---
 

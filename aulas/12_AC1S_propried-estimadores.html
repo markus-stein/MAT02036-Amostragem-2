@@ -4,7 +4,7 @@
     <title>MAT02036 - Amostragem 2</title>
     <meta charset="utf-8" />
     <meta name="author" content="Markus Stein" />
-    <script src="libs/header-attrs-2.18/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.20/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
   </head>
@@ -38,7 +38,7 @@ class: center, middle, title-slide
 width: 110px;
 height: 128px;
 z-index: 0;
-background-image: url(C:/Users/User/Documents/MAT02036-Amostragem-2/img/logo_dest.png);
+background-image: url(/cloud/project/img/logo_dest.png);
 background-size: contain;
 background-repeat: no-repeat;
 position: absolute;
@@ -85,7 +85,7 @@ top:1em;right:1em;
 
 ---
 
-## Aula passada 💿
+## Aula passada 📀
 ### Amostragem por Conglomerados (*Cluster*)
 
 A população de unidades `\(U\)` é particionada em `\(M\)` grupos **mutuamente exclusivos e exaustivos**, 
@@ -131,7 +131,7 @@ Portanto, a amostragem do tipo **AC1** é caracterizada pelos seguintes aspectos
 
 ---
 
-## Aula passada 💿
+## Aula passada 📀
 ### Notação na amostragem por conglomerados em um estágio
 
 Os **tamanhos populacionais** e da **amostra** na **AC1** para uma dada população são 
@@ -148,7 +148,7 @@ Tamanho da população/amostra |  `\(N = \sum_{i\in C}N_i\)` | `\(n = \displayst
 
 ---
 
-## Aula passada 💾
+## Aula passada 💿
 ### Notação na amostragem por conglomerados em um estágio
 
 Os parâmetros populacionais **total** e **média** por conglomerado e na população como um todo são dados por
@@ -636,7 +636,7 @@ Abaixo segue um resumo de estimadores do total, média e respectivas variâncias
 Estimador | `\(HT\)` 
 --|:--:
 Total | `\(\widehat T_{AC1S/HT} = \frac {M}{m} \sum_{i \in a} T_i = M \overline y_C = \sum_{i \in a} \sum_{j \in C_i} d_{ij} y_{ij}\)`
-Média | `\(\overline y_{AC1S/HT} = \frac {\widehat T_{AC1S/HT}}{N} = \frac {M} {N} \frac{1}{m} \sum_{i \in a} Y_i = \overline y_C / \overline N\)` 
+Média | `\(\overline y_{AC1S/HT} = \frac {\widehat T_{AC1S/HT}}{N} = \frac {M} {N} \frac{1}{m} \sum_{i \in a} T_i = \overline y_C / \overline N\)` 
 Variância do total | `\(\widehat Var_{AC1S} \left( \widehat T_{AC1S/HT} \right) = M^2 \left( \frac 1 m - \frac 1 M \right) \widehat S_{ec}^2\)` 
 Variância da média | `\(\widehat Var_{AC1S} \left( \overline y_{AC1S/HT} \right) = \frac {1} {\overline N^2} \left( \frac 1 m - \frac 1 M \right) \widehat S_{ec}^2\)`
 

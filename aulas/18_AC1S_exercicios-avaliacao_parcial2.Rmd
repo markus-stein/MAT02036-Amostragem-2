@@ -209,10 +209,56 @@ rhoCB
 
 O coeficiente de correlação intraclasse (CCI) para a divisão $B$ é aproximadamente $`r rhoCB`$, o que indica uma grande eficiência da $AC1S$ usando a conglomeração $A$ em relação a **AAS**, pois $\rho_{int}$ está próximo do mínimo `r round(-1/(Ni - 1),3)`.
 
+c) Não recomendaria na conglomeração $A$ e recomendaria na $B$. Percebemos uma maior heterogeneidade dentro dos conglomerados formados pale divisão $B$, o que fica evidenciado no vlor do **CCI**, sendo negativo para $B$ e positivo póximo de 1 para a $A$.
+
 ---
 
 ## Avaliação Parcial 2
 ### Questão 2 - solução
+
+Do enunciado temos:  
+* $N = \overline N \times M = 4 \times 175 = 700$ pneus, unidades elementares, na população,
+* $M=175$ táxis, conglomerados.
+* $m=10$ táxis foram selecionadosa com reposição 
+* $T_i$ é o número de pneus (dentre os 4 pneus em uso) que estavam fora de condições de segurança. 
+
+**Variável de interesse** $Y_{ij}$: indicadora do pneu $j$ do táxi $i$ estar em condições de segurança. 
+
+```{r}
+## exercicio 2
+## dados do problema
+M <- 175         # no. conglomerados
+Ni <- 4          # tamanho conglomerados
+N <- Ni * M      # tamanho pop
+Ti <- c(2,4,0,1,2,0,4,1,3,1)  # totais obtidos
+```
+
+---
+
+## Avaliação Parcial 2
+### Questão 2 - solução
+
+a) Para estimar pontualmente a proporção de pneus da frota fora de condições, temos dois possíveis estimadores
+
+$$\widehat P_{AC1S}^{HT} = \frac {\widehat T_{AC1S/HT}}{N} = \frac {M} {N} \frac{1}{m} \sum_{i \in a} T_i = \overline y_C / \overline N$$
+
+ou
+
+$$\widehat P_{AC1S}^R = \frac{\widehat T_{AC1S}^R}{N} = \frac{1}{n} \sum_{i \in a} T_i = \overline y_C / \overline  n = \overline y$$
+
+---
+
+## Avaliação Parcial 2
+### Questão 2 - solução
+
+E por $IC$ $95\%$.
+
+---
+
+## Avaliação Parcial 2
+### Questão 2 - solução
+
+b) Usando os resultados como um estudo piloto, o número de táxis necessário para obter uma estimativa da proporção de pneus fora das condições, com um erro absoluto de $2,5\%$ e $95\%$ de confiança, considerando **AC1s** com reposição, ...
 
 ---
 
@@ -223,9 +269,9 @@ O coeficiente de correlação intraclasse (CCI) para a divisão $B$ é aproximad
 
 ## Para casa `r emo::ji("house")`
 
-* Fazer a lista 2 de exercícios.
+<!-- * Fazer a lista 2 de exercícios. -->
 
-* Continuar exercícios.
+<!-- * Continuar exercícios. -->
 
 <!-- Continuar o Exercício. -->
 
@@ -233,25 +279,27 @@ O coeficiente de correlação intraclasse (CCI) para a divisão $B$ é aproximad
 
 <!-- * Continuar exercícios do livro 'Amostragem: Teoria e Prática Usando R'    https://amostragemcomr.github.io/livro/estrat.html#exerc11 -->
 
-<!-- * Ler o capítulo 2 da apostila da Profa. Vanessa. -->
+* Ler o capítulo 2 da apostila da Profa. Vanessa.
 
-<!-- do livro 'Amostragem: Teoria e Prática Usando R'. -->
+* Ler o capítulo 8 do livro 'Amostragem: Teoria e Prática Usando R'.
   
 * Rever os slides.
 
 <!-- * Ler BOlfarine e Bussab...da seção 11.3 do livro 'Amostragem: Teoria e Prática Usando R'. -->
 
-* Preparação para avaliação parcial 2
+<!-- * Preparação para avaliação parcial 2 -->
 
 ## Próxima aula `r emo::ji("stats")`
 
 * Acompanhar o material no moodle.
 
-Amostragem por Conglomerados
+* Amostragem Sistemática
 
-  + Exercícios.
+  + Introdução.
   
-  + Laboratório de <i class="fa-duotone fa-people-group"></i>`r fa("r-project", fill = "steelblue")`
+  + Parâmetros e Estimação
+  
+<!-- Laboratório de <i class="fa-duotone fa-people-group"></i>`r fa("r-project", fill = "steelblue")` -->
 
 ---
 

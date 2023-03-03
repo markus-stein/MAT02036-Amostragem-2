@@ -605,7 +605,7 @@ Abaixo segue um resumo de estimadores do total, média e respectivas variâncias
 Estimador | $HT$ 
 --|:--:
 Total | $\widehat T_{AC1S/HT} = \frac {M}{m} \sum_{i \in a} T_i = M \overline y_C = \sum_{i \in a} \sum_{j \in C_i} d_{ij} y_{ij}$
-Média | $\overline y_{AC1S/HT} = \frac {\widehat T_{AC1S/HT}}{N} = \frac {M} {N} \frac{1}{m} \sum_{i \in a} Y_i = \overline y_C / \overline N$ 
+Média | $\overline y_{AC1S/HT} = \frac {\widehat T_{AC1S/HT}}{N} = \frac {M} {N} \frac{1}{m} \sum_{i \in a} T_i = \overline y_C / \overline N$ 
 Variância do total | $\widehat Var_{AC1S} \left( \widehat T_{AC1S/HT} \right) = M^2 \left( \frac 1 m - \frac 1 M \right) \widehat S_{ec}^2$ 
 Variância da média | $\widehat Var_{AC1S} \left( \overline y_{AC1S/HT} \right) = \frac {1} {\overline N^2} \left( \frac 1 m - \frac 1 M \right) \widehat S_{ec}^2$
 

@@ -227,10 +227,12 @@ Do enunciado temos:
 ```{r}
 ## exercicio 2
 ## dados do problema
-M <- 175         # no. conglomerados
+M <- 175         # no. conglomerados pop.
 Ni <- 4          # tamanho conglomerados
 N <- Ni * M      # tamanho pop
 Ti <- c(2,4,0,1,2,0,4,1,3,1)  # totais obtidos
+m <- length(Ti)  # no. conglomerados amostra
+n <- Ni * m      # tamanho amostra 
 ```
 
 ---
@@ -238,20 +240,30 @@ Ti <- c(2,4,0,1,2,0,4,1,3,1)  # totais obtidos
 ## Avaliação Parcial 2
 ### Questão 2 - solução
 
-a) Para estimar pontualmente a proporção de pneus da frota fora de condições, temos dois possíveis estimadores
+a) Para estimar pontualmente a proporção de pneus da frota fora de condições, temos dois possíveis estimadores. Aqui conhecemos o tamanho da população $N$ então ambos os estimadores são possíveis. Além disso, lembre que ambos os estimadores são iguais no caso de $N_i = \overline N$, temos 
 
-$$\widehat P_{AC1S}^{HT} = \frac {\widehat T_{AC1S/HT}}{N} = \frac {M} {N} \frac{1}{m} \sum_{i \in a} T_i = \overline y_C / \overline N$$
-
+$$\widehat P_{AC1S}^{HT} = \frac {\widehat T_{AC1S/HT}}{N} = \frac {M} {N} \frac{1}{m} \sum_{i \in a} T_i = \frac{ \frac{`r M`}{`r m`} `r sum(Ti)`}{`r N`} = `r (M/m) * sum(Ti) / N`$$
 ou
+$$\widehat P_{AC1S}^R = \frac{\widehat T_{AC1S}^R}{N} = \frac{1}{n} \sum_{i \in a} T_i = \frac{ \frac{`r N`}{`r n`} `r sum(Ti)`}{`r N`} = `r sum(Ti) / n`.$$
 
-$$\widehat P_{AC1S}^R = \frac{\widehat T_{AC1S}^R}{N} = \frac{1}{n} \sum_{i \in a} T_i = \overline y_C / \overline  n = \overline y$$
+**Estimamos** que a **proporção de pneus fora das condições** de segurança é aproximadamente `r (M/m) * sum(Ti) / N` em cada carro da empresa investigada.
 
 ---
 
 ## Avaliação Parcial 2
 ### Questão 2 - solução
 
-E por $IC$ $95\%$.
+Um intervalo de confiança para $\widehat P$ é dados por
+
+$$IC_{AC1S} (P; 1-\alpha) = \left[ \widehat P_{AC1S} \pm z_{\alpha/2} \sqrt{\widehat{Var}_{AC1S} \left( \widehat P_{AC1S} \right)} \right]$$
+
+*  O estimador não viciado da variância de $\widehat P^{HT}$ na **AC1S** é dada por:
+  + **COM** reposição,  $\widehat Var_{AC1S_c} \left( \widehat P^{HT} \right) =  \frac{1}{\overline N^2} \left( 1 - \frac{1}{M} \right) \frac{s^2_{ec}}{m} \approx  \frac{1}{\overline N^2} \frac{s^2_{ec}}{m}$  
+  + **SEM** reposição, $\widehat Var_{AC1S_s} \left( \widehat P^{HT} \right) = \frac{1}{\overline N^2} \left( 1 - \frac{m}{M} \right) \frac{s^2_{ec}}{m},$  
+em que $s^2_{ec} = \frac{ \sum_{i \in a} \left( T_i - \overline y_C \right)^2}{m-1}$.
+
+Com os dados do problema $\overline y_C = \frac{\sum_{1 \in a} T_i}{m} = \frac{`r sum(Ti)`}{`r m`} = `r sum(Ti)/m`$ e 
+$$s^2_{ec} = $$
 
 ---
 

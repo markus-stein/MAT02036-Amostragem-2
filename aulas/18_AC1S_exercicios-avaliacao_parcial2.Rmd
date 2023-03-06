@@ -220,19 +220,25 @@ Do enunciado temos:
 * $N = \overline N \times M = 4 \times 175 = 700$ pneus, unidades elementares, na população,
 * $M=175$ táxis, conglomerados.
 * $m=10$ táxis foram selecionadosa com reposição 
-* $T_i$ é o número de pneus (dentre os 4 pneus em uso) que estavam fora de condições de segurança. 
+* $T_i$ número de pneus (dentre os 4 pneus em uso) fora de condições de segurança. 
 
 **Variável de interesse** $Y_{ij}$: indicadora do pneu $j$ do táxi $i$ estar em condições de segurança. 
+
+---
+
+## Avaliação Parcial 2
+### Questão 2 - solução
 
 ```{r}
 ## exercicio 2
 ## dados do problema
-M <- 175         # no. conglomerados pop.
-Ni <- 4          # tamanho conglomerados
-N <- Ni * M      # tamanho pop
-Ti <- c(2,4,0,1,2,0,4,1,3,1)  # totais obtidos
-m <- length(Ti)  # no. conglomerados amostra
-n <- Ni * m      # tamanho amostra 
+M <- 175          # no. conglomerados pop.
+Ni <- rep(4, 175) # tamanho conglomerados
+N <- mean(Ni) * M       # tamanho pop
+Ti_amostra <- c(2,4,0,1,2,0,4,1,3,1)  # totais obtidos
+m <- length(Ti_amostra)    # no. conglomerados amostra
+Ni_amostra <- Ni[1:m]      # tamanho dos cong.
+n <- mean(Ni_amostra) * m  # tamanho amostra 
 ```
 
 ---
@@ -240,13 +246,20 @@ n <- Ni * m      # tamanho amostra
 ## Avaliação Parcial 2
 ### Questão 2 - solução
 
+```{r}
+## a) 
+PchapeuHT <- (M/m) * sum(Ti_amostra) / N  # estimador HT
+PchapeuR <- sum(Ti_amostra) / n           # estimador R
+```
+
+
 a) Para estimar pontualmente a proporção de pneus da frota fora de condições, temos dois possíveis estimadores. Aqui conhecemos o tamanho da população $N$ então ambos os estimadores são possíveis. Além disso, lembre que ambos os estimadores são iguais no caso de $N_i = \overline N$, temos 
 
-$$\widehat P_{AC1S}^{HT} = \frac {\widehat T_{AC1S/HT}}{N} = \frac {M} {N} \frac{1}{m} \sum_{i \in a} T_i = \frac{ \frac{`r M`}{`r m`} `r sum(Ti)`}{`r N`} = `r (M/m) * sum(Ti) / N`$$
+$$\widehat P_{AC1S}^{HT} = \frac {\widehat T_{AC1S/HT}}{N} = \frac {M} {N} \frac{1}{m} \sum_{i \in a} T_i = \frac{ \frac{`r M`}{`r m`} `r sum(Ti_amostra)`}{`r N`} = `r PchapeuHT`$$
 ou
-$$\widehat P_{AC1S}^R = \frac{\widehat T_{AC1S}^R}{N} = \frac{1}{n} \sum_{i \in a} T_i = \frac{ \frac{`r N`}{`r n`} `r sum(Ti)`}{`r N`} = `r sum(Ti) / n`.$$
+$$\widehat P_{AC1S}^R = \frac{\widehat T_{AC1S}^R}{N} = \frac{1}{n} \sum_{i \in a} T_i = \frac{ \frac{`r N`}{`r n`} `r sum(Ti_amostra)`}{`r N`} = `r PchapeuR`.$$
 
-**Estimamos** que a **proporção de pneus fora das condições** de segurança é aproximadamente `r (M/m) * sum(Ti) / N` em cada carro da empresa investigada.
+**Estimamos** que a **proporção de pneus fora das condições** de segurança é aproximadamente `r (M/m) * sum(Ti_amostra) / N` em cada carro da empresa investigada.
 
 ---
 
@@ -254,23 +267,47 @@ $$\widehat P_{AC1S}^R = \frac{\widehat T_{AC1S}^R}{N} = \frac{1}{n} \sum_{i \in 
 ### Questão 2 - solução
 
 Um intervalo de confiança para $\widehat P$ é dados por
-
 $$IC_{AC1S} (P; 1-\alpha) = \left[ \widehat P_{AC1S} \pm z_{\alpha/2} \sqrt{\widehat{Var}_{AC1S} \left( \widehat P_{AC1S} \right)} \right]$$
 
-*  O estimador não viciado da variância de $\widehat P^{HT}$ na **AC1S** é dada por:
-  + **COM** reposição,  $\widehat Var_{AC1S_c} \left( \widehat P^{HT} \right) =  \frac{1}{\overline N^2} \left( 1 - \frac{1}{M} \right) \frac{s^2_{ec}}{m} \approx  \frac{1}{\overline N^2} \frac{s^2_{ec}}{m}$  
-  + **SEM** reposição, $\widehat Var_{AC1S_s} \left( \widehat P^{HT} \right) = \frac{1}{\overline N^2} \left( 1 - \frac{m}{M} \right) \frac{s^2_{ec}}{m},$  
-em que $s^2_{ec} = \frac{ \sum_{i \in a} \left( T_i - \overline y_C \right)^2}{m-1}$.
+Assim, temos o erro absoluto, $e = z_{0,05} * \sqrt{\widehat{Var}_{AC1S} \left( \widehat P_{AC1S} \right)}$ 
 
-Com os dados do problema $\overline y_C = \frac{\sum_{1 \in a} T_i}{m} = \frac{`r sum(Ti)`}{`r m`} = `r sum(Ti)/m`$ e 
-$$s^2_{ec} = $$
+*  O estimador não viciado da variância de $\widehat P^{HT}$ na **AC1S** é dada por:
+  + **COM** reposição, $\widehat Var_{AC1S_c} \left( \widehat P^{HT} \right) =  \frac{1}{\overline N^2} \left( 1 - \frac{1}{M} \right) \frac{s^2_{ec}}{m} \approx  \frac{1}{\overline N^2} \frac{s^2_{ec}}{m}$  
+  + **SEM** reposição, $\widehat Var_{AC1S_s} \left( \widehat P^{HT} \right) = \frac{1}{\overline N^2} \left( 1 - \frac{m}{M} \right) \frac{s^2_{ec}}{m}.$   
+em que $s^2_{ec} = \frac{ \sum_{i \in a} \left( T_i - \overline y_C \right)^2}{m-1}$.  
 
 ---
 
 ## Avaliação Parcial 2
 ### Questão 2 - solução
 
-b) Usando os resultados como um estudo piloto, o número de táxis necessário para obter uma estimativa da proporção de pneus fora das condições, com um erro absoluto de $2,5\%$ e $95\%$ de confiança, considerando **AC1s** com reposição, ...
+```{r}
+## IC para a proporcao
+pbarraC <- sum(Ti_amostra) / m
+s2_ec <- 1/(m-1) * sum((Ti_amostra - pbarraC)^2)    # estimativa variancia entre totais cong.
+var_PchapeuHT <- (1 / mean(Ni)^2) * (1 - 1/M) * s2_ec / m  # estimativa variancia da prop.
+eHT <- -qnorm(0.025) * sqrt(var_PchapeuHT)  # erro (absoluto) de estimacao
+ICHT <- PchapeuHT + c(-1, 1) * eHT     # intervalo de confianca para o total
+ICHT
+```
+
+Então, temos que $IC( P_{AC1S}^{HT}; 0,95) = \left[ `r ICHT[1]`; `r ICHT[2]` \right]$. Ou seja, o intervalo de `r ICHT[1]` a `r ICHT[2]` deve conter a proporção de pneus em conformidade com as especificações de segurança de toda a frota de táxis da empresa, com 95% de confiança.
+
+```{r}
+## IC para a proporcao - de razao
+nbarra <- mean(Ni_amostra)    # estimativa do tamanho da amostra (num. de pneus amostrados)
+var_PchapeuR <- (1 / (m * nbarra^2)) * sum((Ti_amostra - PchapeuR * Ni_amostra)^2) / (m-1)  # estimativa variancia da prop.
+eR <- -qnorm(0.025) * sqrt(var_PchapeuR)  # erro (absoluto) de estimacao
+ICR <- PchapeuR + c(-1, 1) * eR            # intervalo de confianca para o total
+ICR
+```
+
+---
+
+## Avaliação Parcial 2
+### Questão 2 - solução
+
+b) Usando os resultados como um estudo piloto, o número de táxis necessário para obter uma estimativa da proporção de pneus fora das condições, com um erro relativo de $2,5\%$ e $95\%$ de confiança, considerando **AC1s** com reposição, ...
 
 ---
 

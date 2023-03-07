@@ -188,7 +188,7 @@ rhoCA = cor( YlinhaCA[,1], YlinhaCA[,2])  # coef. corr. intraclasse (corr. de pe
 rhoCA
 ```
 
-O coeficiente de correlação intraclasse (CCI) para a divisão $A$ é aproximadamente $`r CA`$. O valor mínimo para o CCI é $-\frac{1}{\overline N - 1} = `r round(-1/(Ni - 1),3)`$, o que indica uma grande ineficiência da $AC1S$ usando a conglomeração $A$ em relação a **AASc**, pois $\rho_{int}$ está próximo de 1.
+O coeficiente de correlação intraclasse (CCI) para a divisão $A$ é aproximadamente $`r CA`$. O valor mínimo para o CCI é $-\frac{1}{\overline N - 1} = `r round(-1/(Ni - 1),3)`,$ o que indica grande ineficiência da $AC1S$ usando a conglomeração $A$ em relação a **AASc**, $\rho_{int}$ está próximo de 1.
 
 ---
 
@@ -293,6 +293,11 @@ ICHT
 
 Então, temos que $IC( P_{AC1S}^{HT}; 0,95) = \left[ `r ICHT[1]`; `r ICHT[2]` \right]$. Ou seja, o intervalo de `r ICHT[1]` a `r ICHT[2]` deve conter a proporção de pneus em conformidade com as especificações de segurança de toda a frota de táxis da empresa, com 95% de confiança.
 
+---
+
+## Avaliação Parcial 2
+### Questão 2 - solução EXTRA
+
 ```{r}
 ## IC para a proporcao - de razao
 nbarra <- mean(Ni_amostra)    # estimativa do tamanho da amostra (num. de pneus amostrados)
@@ -307,12 +312,58 @@ ICR
 ## Avaliação Parcial 2
 ### Questão 2 - solução
 
-b) Usando os resultados como um estudo piloto, o número de táxis necessário para obter uma estimativa da proporção de pneus fora das condições, com um erro relativo de $2,5\%$ e $95\%$ de confiança, considerando **AC1s** com reposição, ...
+b) Usando os resultados como um estudo piloto, queremos calcular o número mínimo de táxis necessário para obter uma estimativa da proporção de pneus fora das condições com erro relativo de $2,5\%$ e $95\%$ de confiança, considerando **AC1S**
+
+.pull-left[
+**AASc** de conglomerados $CV = \frac{Var_{ec_T}}{\overline Y_c}$, 
+$$m = \frac{z^2_{\alpha/2} \: CV^2}{e_r^2}.$$
+]
+.pull-right[
+**AASs** de conglomerados $CV = \frac{S^2_{ec}}{\overline Y_c}$,
+$$m = \frac{M \: z^2_{\alpha/2} \: CV^2}{z_{\alpha/2} \: CV^2 + (M-1) \: e_r^2}.$$
+]
 
 ---
 
 ## Avaliação Parcial 2
 ### Questão 3 - solução
+
+```{r, warning=FALSE}
+## exercicio 3
+## dados do problema
+library(SDaA)
+data(agpop)
+```
+
+a) Usando o no. cartão como semente aleatória (`set.seed(XXXXXXXX)`, sorteamos uma **AC1S** de 15 estados (variável `state`) sem reposição.
+
+```{r, warning=FALSE}
+## (a) selecao de estados
+m <- 15                 # no. conglomerados
+set.seed(00119502)     # semesnte aleatoria com meu no. cartao
+estados_amostra <- sample( unique(agpop$state), m )  # estados selecionados
+estados_amostra
+```
+
+---
+
+## Avaliação Parcial 2
+### Questão 3 - solução
+
+b. A partir da amostra sorteada, obtenha e apresente a estimativa pontual e por $IC$ $95\%$ da média da variável `largef92`. Interprete os resultados.
+
+```{r, warning=FALSE}
+## (b) medidas agregadas e estimacao
+agpop_amostra <- agpop[agpop$state %in% estados_amostra,]
+Ni <- aggregate( largef92 ~ state, data=agpop_amostra, sum)      # ou tapply(), tamanho dos cong.
+Ti <- aggregate( largef92 ~ state, data=agpop_amostra, length)   # totais cong.
+#ybarrac
+#s2ec
+#varybarraC
+```
+
+
+c. Produza dois gráficos que descrevam a variável `largef92`: um na população, outro na **AC1S** sem reposição sorteada. Comente sobre as diferenças encontradas.
 
 ---
 

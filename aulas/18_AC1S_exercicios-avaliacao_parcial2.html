@@ -228,7 +228,7 @@ rhoCA
 ## [1] 0.7406312
 ```
 
-O coeficiente de correlação intraclasse (CCI) para a divisão `\(A\)` é aproximadamente `\(1, 1, 1, 1, 2, 2, 2, 2\)`. O valor mínimo para o CCI é `\(-\frac{1}{\overline N - 1} = -0.333\)`, o que indica uma grande ineficiência da `\(AC1S\)` usando a conglomeração `\(A\)` em relação a **AASc**, pois `\(\rho_{int}\)` está próximo de 1.
+O coeficiente de correlação intraclasse (CCI) para a divisão `\(A\)` é aproximadamente `\(1, 1, 1, 1, 2, 2, 2, 2\)`. O valor mínimo para o CCI é `\(-\frac{1}{\overline N - 1} = -0.333,\)` o que indica grande ineficiência da `\(AC1S\)` usando a conglomeração `\(A\)` em relação a **AASc**, `\(\rho_{int}\)` está próximo de 1.
 
 ---
 
@@ -345,6 +345,11 @@ ICHT
 
 Então, temos que `\(IC( P_{AC1S}^{HT}; 0,95) = \left[ 0.2219918; 0.6780082 \right]\)`. Ou seja, o intervalo de 0.2219918 a 0.6780082 deve conter a proporção de pneus em conformidade com as especificações de segurança de toda a frota de táxis da empresa, com 95% de confiança.
 
+---
+
+## Avaliação Parcial 2
+### Questão 2 - solução EXTRA
+
 
 ```r
 ## IC para a proporcao - de razao
@@ -364,12 +369,66 @@ ICR
 ## Avaliação Parcial 2
 ### Questão 2 - solução
 
-b) Usando os resultados como um estudo piloto, o número de táxis necessário para obter uma estimativa da proporção de pneus fora das condições, com um erro relativo de `\(2,5\%\)` e `\(95\%\)` de confiança, considerando **AC1s** com reposição, ...
+b) Usando os resultados como um estudo piloto, queremos calcular o número mínimo de táxis necessário para obter uma estimativa da proporção de pneus fora das condições com erro relativo de `\(2,5\%\)` e `\(95\%\)` de confiança, considerando **AC1S**
+
+.pull-left[
+**AASc** de conglomerados `\(CV = \frac{Var_{ec_T}}{\overline Y_c}\)`, 
+`$$m = \frac{z^2_{\alpha/2} \: CV^2}{e_r^2}.$$`
+]
+.pull-right[
+**AASs** de conglomerados `\(CV = \frac{S^2_{ec}}{\overline Y_c}\)`,
+`$$m = \frac{M \: z^2_{\alpha/2} \: CV^2}{z_{\alpha/2} \: CV^2 + (M-1) \: e_r^2}.$$`
+]
 
 ---
 
 ## Avaliação Parcial 2
 ### Questão 3 - solução
+
+
+```r
+## exercicio 3
+## dados do problema
+library(SDaA)
+data(agpop)
+```
+
+a) Usando o no. cartão como semente aleatória (`set.seed(XXXXXXXX)`, sorteamos uma **AC1S** de 15 estados (variável `state`) sem reposição.
+
+
+```r
+## (a) selecao de estados
+m &lt;- 15                 # no. conglomerados
+set.seed(00119502)     # semesnte aleatoria com meu no. cartao
+estados_amostra &lt;- sample( unique(agpop$state), m )  # estados selecionados
+estados_amostra
+```
+
+```
+##  [1] PA LA NY OR RI SD KY NM OH VA AK TX GA CT VT
+## 50 Levels: AK AL AR AZ CA CO CT DE FL GA HI IA ID IL IN KS KY LA MA MD ... WY
+```
+
+---
+
+## Avaliação Parcial 2
+### Questão 3 - solução
+
+b. A partir da amostra sorteada, obtenha e apresente a estimativa pontual e por `\(IC\)` `\(95\%\)` da média da variável `largef92`. Interprete os resultados.
+
+
+```r
+## (b) medidas agregadas e estimacao
+agpop_amostra &lt;- agpop[agpop$state %in% estados_amostra,]
+Ni &lt;- aggregate( largef92 ~ state, data=agpop_amostra, sum)      # ou tapply(), tamanho dos cong.
+Ti &lt;- aggregate( largef92 ~ state, data=agpop_amostra, length)   # totais cong.
+#ybarrac
+#s2ec
+#varybarraC
+```
+
+
+c. Produza dois gráficos que descrevam a variável `largef92`: um na população, outro na **AC1S** sem reposição sorteada. Comente sobre as diferenças encontradas.
 
 ---
 

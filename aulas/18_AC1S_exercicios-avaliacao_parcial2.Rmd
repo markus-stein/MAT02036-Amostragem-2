@@ -379,11 +379,11 @@ c. Produza dois gráficos que descrevam a variável `largef92`: um na populaçã
 
 <!-- * Continuar exercícios do livro 'Amostragem: Teoria e Prática Usando R'    https://amostragemcomr.github.io/livro/estrat.html#exerc11 -->
 
-* Ler o capítulo 2 da apostila da Profa. Vanessa.
+* Ler o capítulo 3 da apostila da Profa. Vanessa.
 
 * Ler o capítulo 8 do livro 'Amostragem: Teoria e Prática Usando R'.
   
-* Rever os slides.
+<!-- * Rever os slides. -->
 
 <!-- * Ler BOlfarine e Bussab...da seção 11.3 do livro 'Amostragem: Teoria e Prática Usando R'. -->
 
@@ -397,7 +397,7 @@ c. Produza dois gráficos que descrevam a variável `largef92`: um na populaçã
 
   + Introdução.
   
-  + Parâmetros e Estimação
+  <!-- + Parâmetros e Estimação -->
   
 <!-- Laboratório de <i class="fa-duotone fa-people-group"></i>`r fa("r-project", fill = "steelblue")` -->
 

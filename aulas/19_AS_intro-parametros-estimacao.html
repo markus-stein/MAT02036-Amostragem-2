@@ -85,7 +85,7 @@ top:1em;right:1em;
 
 ---
 
-## Aula passada 💿
+## Aula passada 📀
 ### Avaliação Parcial 2
 #### Questão 1
 
@@ -105,7 +105,7 @@ c. Na divisão `\(A\)` você recomendaria utilizar um plano **AC1S** ou **AAS**?
 
 ---
 
-## Aula passada 💽
+## Aula passada 💿
 ### Avaliação Parcial 2
 #### Questão 2 
 
@@ -119,7 +119,7 @@ b. Usando esses resultados como um estudo piloto, qual seria o número de táxis
 
 ---
 
-## Aula passada 📀
+## Aula passada 💽
 ### Avaliação Parcial 2
 #### Questão 3
 
@@ -202,9 +202,9 @@ Suponha que se deseja aplicar um questionário a uma amostra dos espectadores de
 ## Amostragem Sistemática Simples
 ### Introdução
 
-Duas características funcionam como um apelo para a adoção da **AS**: 
+*Vantagens* para a adoção da **AS**: 
 
-* simplicidade, pois ao selecionar a primeira unidade a ser incluída na amostra, todas as demais estarão automaticamente escolhidas; 
+* simplicidade; selecionando a primeira unidade da amostra, todas as demais estarão automaticamente escolhidas; 
 
 * possibilidade de aplicação mesmo quando não se tem disponível um cadastro prévio da população.
 
@@ -295,7 +295,7 @@ s_r                         # AS selecionada
 ```
 
 ```
-## [1]  3  8 13 18
+## [1]  1  6 11 16
 ```
 
 ---
@@ -359,48 +359,13 @@ Como `\(N = 19 = 4 \times 4 + 3\)`, temos que `\(K=4\)` e `\(c=3\)`. Logo, as qu
 #### Exemplo 5:
 
 ```r
-N=19  # Tamanho da População
-print(paste("Tamanho da população N:", N), quote=FALSE)
-```
-
-```
-## [1] Tamanho da população N: 19
-```
-
-```r
-n=4  # Tamanho desejado da amostra
-print(paste("Tamanho desejado da amostra n:", n), quote=FALSE)
-```
-
-```
-## [1] Tamanho desejado da amostra n: 4
-```
-
-```r
-K=trunc(N/n)  # Cálculo do intervalo de seleção
-print(paste("Intervalo de seleção K:", K), quote=FALSE)
-```
-
-```
-## [1] Intervalo de seleção K: 4
-```
-
-```r
-c=N-n*K       # Cálculo da constante c
-print(paste("Constante c:", c), quote=FALSE)
-```
-
-```
-## [1] Constante c: 3
-```
-
-```r
-# Vetor para guardar nomes das amostras possíveis
-nomes_amostras = paste0("s_", 1:K)
-# Matriz para guardar os índices das unidades das amostras possíveis
-amostras_possiveis=matrix(c(1:N,NA),K,n+1,byrow=FALSE)
-# Monta arquivo com resultado das amostras possíveis
-amostras_possiveis = as.data.frame(cbind(nomes_amostras, amostras_possiveis))
+N=19  # Tamanho da População # print(paste("Tamanho da população N:", N), quote=FALSE)
+n=4  # Tamanho desejado da amostra # print(paste("Tamanho desejado da amostra n:", n), quote=FALSE)
+K=trunc(N/n)  # Cálculo do intervalo de seleção # print(paste("Intervalo de seleção K:", K), quote=FALSE)
+c=N-n*K       # Cálculo da constante c # print(paste("Constante c:", c), quote=FALSE)
+nomes_amostras = paste0("s_", 1:K) # Vetor para guardar nomes das amostras possíveis
+amostras_possiveis=matrix(c(1:N,NA),K,n+1,byrow=FALSE) # Matriz para guardar os índices das unidades das amostras possíveis
+amostras_possiveis = as.data.frame(cbind(nomes_amostras, amostras_possiveis)) # Monta arquivo com resultado das amostras possíveis
 colnames(amostras_possiveis) = c("Amostra", paste("Unidade", 1:(n+1)))
 amostras_possiveis
 ```
@@ -486,9 +451,9 @@ Com base nas propriedades do estimador de Horvitz-Thompson para o total, já sab
 
 ## Para casa 🏠
 
-* Fazer a lista 2 de exercícios.
+&lt;!-- * Fazer a lista 2 de exercícios. --&gt;
 
-* Continuar exercícios.
+&lt;!-- * Continuar exercícios. --&gt;
 
 &lt;!-- Continuar o Exercício. --&gt;
 
@@ -496,10 +461,10 @@ Com base nas propriedades do estimador de Horvitz-Thompson para o total, já sab
 
 &lt;!-- * Continuar exercícios do livro 'Amostragem: Teoria e Prática Usando R'    https://amostragemcomr.github.io/livro/estrat.html#exerc11 --&gt;
 
-&lt;!-- * Ler o capítulo 2 da apostila da Profa. Vanessa. --&gt;
+* Ler o capítulo 3 da apostila da Profa. Vanessa.
 
-&lt;!-- do livro 'Amostragem: Teoria e Prática Usando R'. --&gt;
-  
+* Ler o capítulo 8 do livro 'Amostragem: Teoria e Prática Usando R'.
+
 * Rever os slides.
 
 &lt;!-- * Ler BOlfarine e Bussab...da seção 11.3 do livro 'Amostragem: Teoria e Prática Usando R'. --&gt;
@@ -510,11 +475,11 @@ Com base nas propriedades do estimador de Horvitz-Thompson para o total, já sab
 
 * Acompanhar o material no moodle.
 
-Amostragem por Conglomerados
+Amostragem Sistemática
 
-  + Exercícios.
-  
-  + Laboratório de &lt;i class="fa-duotone fa-people-group"&gt;&lt;/i&gt;<svg aria-hidden="true" role="img" viewBox="0 0 581 512" style="height:1em;width:1.13em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/></svg>
+  + Estimação.
+
+  &lt;!-- + Laboratório de &lt;i class="fa-duotone fa-people-group"&gt;&lt;/i&gt;<svg aria-hidden="true" role="img" viewBox="0 0 581 512" style="height:1em;width:1.13em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/></svg> --&gt;
 
 ---
 

@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>MAT02036 - Amostragem 2</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Markus Stein" />
+    <script src="libs/header-attrs-2.18/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, title-slide
+
+.title[
+# MAT02036 - Amostragem 2
+]
+.subtitle[
+## Aula 20 - Amostragem Sistemática - Parâmetros e Estimação
+]
+.author[
+### Markus Stein
+]
+.institute[
+### Departamento de Estatística, IME/UFRGS
+]
+.date[
+### 2022/2
+]
+
+---
+
+
+
+
+<div>
+<style type="text/css">.xaringan-extra-logo {
+width: 110px;
+height: 128px;
+z-index: 0;
+background-image: url(C:/Users/User/Documents/MAT02036-Amostragem-2/img/logo_dest.png);
+background-size: contain;
+background-repeat: no-repeat;
+position: absolute;
+top:1em;right:1em;
+}
+</style>
+<script>(function () {
+  let tries = 0
+  function addLogo () {
+    if (typeof slideshow === 'undefined') {
+      tries += 1
+      if (tries < 10) {
+        setTimeout(addLogo, 100)
+      }
+    } else {
+      document.querySelectorAll('.remark-slide-content:not(.title-slide):not(.inverse):not(.hide_logo)')
+        .forEach(function (slide) {
+          const logo = document.createElement('div')
+          logo.classList = 'xaringan-extra-logo'
+          logo.href = null
+          slide.appendChild(logo)
+        })
+    }
+  }
+  document.addEventListener('DOMContentLoaded', addLogo)
+})()</script>
+</div>
+
+### *Housekeeping*
+
+* Aproveitem o momento presencial para tirar dúvidas
+
+* Se estivéssemos no ensino remoto ou à distância
+
+  + vocês poderiam estar somente ouvindo, sem interação
+  
+  + ou assistindo vídeos e material em outro momento
+  
+* Depois das aulas, rever material da aula passada
+
+  + fazer exercícios
+  
+  + se preparar para a próxima aula
+
+---
+
+## Aula passada 💾
+### Amostragem Sistemática Simples
+
+* *O método*: selecionar cada `\(K\)`-ésima unidade da população; 
+  + `\(N\)` - tamanho da população; `$$N = nK+c, \: \: \: \text{0 \leq c &lt; K}$$`
+  + `\(K\)` - **intervalo de selação**;
+  + `\(n = \lfloor N/K \rfloor\)` tamanho da amostra;
+  + `\(c\)` - é o resto da divisão `\(N/K\)`;
+  + `\(r\)` - **valor inicial**, número inteiro de `\(1\)` a `\(K\)`, `$$r \sim Uniforme-Discreta(K);$$`
+
+* Na **AS** a amostra `\(s_r = \{ i : i = r + l K \leq N; \,\,\, l = 0, \ldots, n \},\)` satisfaz   
+`$$p(s) = \left\{ \begin{array}{ll} 1/K, \, \text{se} \,\,\, s=s_r \,\,\text{para} \,\,r=1,\,\,\,2,\,\,\,...,\,\,\,K \\ 0, \,\,\, \textrm{caso contrário}   \end{array} \right.$$`
+
+---
+
+## Aula passada 💽
+### Amostragem Sistemática Simples
+
+* A probabilidade de inclusão na amostra de uma unidade `\(i\)` qualquer é dada por:
+`$$\pi_i=\frac1K,\,\,i=1,\,\dots,\,\,N$$`
+
+* A probabilidade de inclusão das unidades `\(i \ne j\)` na amostra é dada por:
+`$$\pi_{ij}=\left\{\begin{array}{ll} 1/K, \,\,\textrm{se }i \ne j \,\in s_r\,\,\,\text{para}\,\,\  r=1,\,\dots,\,K\\\ 0,\,\,\, \textrm{caso contrário} \end{array}\right.\,\,\,$$`
+
+* As variáveis indicadoras associadas às amostras possíveis `\(s_r\)`:
+`$$I(r)=\left\{\begin{array}{ll} 1,\,\,\textrm{se a amostra é}\,s_r\,\ \textrm {para}\,\,1\le r\le K \\ 0,\,\, \textrm{caso contrário} \end{array}\right.\,\,\,$$`
+
+* O valor esperado de `\(I(r)\)` é
+`$$E_{AS}[I(r)]=1/K\,,\,\,r=1,\,\dots,\,K,$$`
+a variância
+`$$Var_{AS}[I(r)]=E_{AS}\{[I(r)]^2\}-\{E_{AS}[I(r)]\}^2=\frac1{K}-\frac1{K^2}=\frac{1}{K}\left(1-\frac{1}{K}\right)$$`
+
+e a covariância entre `\(I(r)\)` e `\(I(q)\)` quando `\(r \ne q\)` é:
+`$$Cov_{AS}[I(r),I(q)]=E_{AS}[I(r)I(q)]-E_{AS}[I(r)]E_{AS}[I(r)]=0-\frac{1}{K^2}=-\frac{1}{K^2}$$`
+já que apenas uma das duas partidas `\(r\)` ou `\(q\)` pode ser selecionada.
+
+---
+
+class: inverse, middle, center
+
+# Estimação
+
+---
+
+## Amostragem Sistemática Simples
+### Estimação de totais na **AS**
+
+* O estimador tipo Horvitz-Thompson do total sob **AS**, 
+  + o peso amostral das unidades da amostra é sempre igual a `\(d_i = 1 / \pi_i = K\)`, então
+`$$\widehat{T}_{AS} = K t_r = K \sum_{i \in s_r} y_i$$`
+em que `\(t_r = \sum_{i \in s_r} y_i\)` é a soma amostral dos valores observados da variável `\(y\)`.
+
+* Já sabemos que este estimador é não viciado para o total populacional. 
+`$$\begin{array}{ll}
+E_{AS}(\widehat{T}_{AS}) &amp; = E_{AS} \left[ K t_r \right] = K E_{AS} \left[ \sum_{r=1}^{K} I(r) t_r \right] \\ &amp; = K \sum_{r=1}^{K}E_{AS} \left [I(r) \right] t_r = K \sum_{r=1}^{K} \frac{1}{K} t_r = \sum_{r=1}^{K} t_r = T
+\end{array}$$`
+
+---
+
+## Amostragem Sistemática Simples
+### Estimação de totais na **AS**
+
+#### Exemplo
+Considere a população composta de `\(N=19\)` unidades, cujos dados da variável de interesse `\(y\)`, da qual se deseja retirar uma amostra sistemática simples com intervalo de seleção com `\(K=4\)` para estimar o total populacional. Verifique numericamente que o estimador `\(\widehat Y_{AS}\)` é não viciado.
+
+`\(s_1\)` | `\(s_2\)` |	`\(s_3\)` | `\(s_4\)`
+--|--|--|-- 
+99  |  54 |	 96 |   54
+85  |  88	|  55 |   83
+62  |  85	|  96 |   55
+91  |  92	|  67 |   68
+54  |  79	|  76 |   
+
+Para mostrar que o estimador é não viciado, basta verificar que a média dos seus valores possíveis é igual ao parâmetro populacional a ser estimado.
+
+---
+
+## Amostragem Sistemática Simples
+### Estimação de totais na **AS**
+
+
+
+```r
+K=4     # Intervalo de seleção        #print(paste("Intervalo de seleção K:", K), quote=FALSE)
+pop=matrix(c(99,54,96,54,85,88,55,83,62,85,96,55,91,92,67,68,54,79,76,NA),5,K,byrow=T) # Carregando os valores populacionais da variável y
+## Calculando a estimativa do total para cada uma das AS possíveis
+Yhatr=NULL
+for(l in (1:K)) Yhatr[l] = K*sum(pop[,l],na.rm=T)
+EYhat=mean(Yhatr)    # Calculando a média das estimativas de total
+EYhat
+```
+
+```
+## [1] 1439
+```
+
+```r
+## Calculando o total populacional Y
+Y=sum(pop,na.rm=T)
+Y
+```
+
+```
+## [1] 1439
+```
+
+
+---
+
+## Amostragem Sistemática Simples
+### Estimação de médias na **AS**
+
+A média populacional `\(\overline Y=Y/N\)` pode ser vista como uma razão entre o total da variável `\(y\)` e o total de unidades populacionais:
+$$
+\overline Y = \frac Y N = \displaystyle \frac {\sum_{r=1}^{K} t_r} {\sum_{r=1}^{K} n_r}
+$$
+Para estimá-la deve-se considerar duas situações: quando o tamanho `\(N\)` da população é conhecido, ou quando esse valor é desconhecido. Um estimador não viciado para a média quando `\(N\)` é conhecido é dado por: 
+
+$$
+\overline y_{AS} = \frac {\widehat Y_{AS}} N = \frac {K t_r}{N}  (\#eq:eqsis4)
+$$ 
+Este estimador é não viciado para `\(\overline Y\)`, pois foi visto que `\(\widehat Y_{AS}\)` é não viciado para o total populacional `\(Y\)`. Também é interessante observar que este estimador não é igual à média amostral, a menos no caso em que `\(N = nK\)`.
+
+**(#exm:exmsis6)** Considerando a mesma população do Exemplo \@ref(exm:exmsis5), pode-se verificar que `\(\overline y_{AS}\)` é não viciado para a média populacional `\(\overline Y\)`. Neste caso, basta calcular a estimativa da média para cada coluna (amostra sistemática possível) da Tabela \@ref(tab:tabsis2), calcular o valor médio das estimativas e comparar com média populacional. Pode-se utilizar o R para realizar a tarefa.
+
+
+```r
+# Alterando o separador de decimais para vírgula
+options(OutDec=",")
+# Intervalo de seleção e tamanho da população conhecido
+K=4
+print(paste("Intervalo de seleção K:", K), quote=FALSE)
+```
+
+```
+## [1] Intervalo de seleção K: 4
+```
+
+```r
+# Carregando os valores populacionais da variável y
+pop=matrix(c(99,54,96,54,85,88,55,83,62,85,96,55,91,92,67,68,54,79,76,NA),5,K,byrow=T)
+print("Dados populacionais", quote=FALSE)
+```
+
+```
+## [1] Dados populacionais
+```
+
+```r
+print(pop)
+```
+
+```
+##      [,1] [,2] [,3] [,4]
+## [1,]   99   54   96   54
+## [2,]   85   88   55   83
+## [3,]   62   85   96   55
+## [4,]   91   92   67   68
+## [5,]   54   79   76   NA
+```
+
+```r
+# Calcula tamanho da população
+N=sum(!is.na(pop))
+print(paste("Tamanho da população N:", N), quote=FALSE)
+```
+
+```
+## [1] Tamanho da população N: 19
+```
+
+```r
+# Calculando a estimativa da média para cada uma das AS possíveis
+ybarAS.r=NULL
+for(i in (1:K)) ybarAS.r[i] = K*sum(pop[,i],na.rm=T)/N
+print("Valores possíveis do estimador não viciado da média", quote=FALSE)
+```
+
+```
+## [1] Valores possíveis do estimador não viciado da média
+```
+
+```r
+print(ybarAS.r)
+```
+
+```
+## [1] 82,31579 83,78947 82,10526 54,73684
+```
+
+```r
+# Calculando a média das estimativas
+EybarAS=mean(ybarAS.r)
+print(paste("Média das estimativas possíveis da média:", EybarAS), quote=FALSE)
+```
+
+```
+## [1] Média das estimativas possíveis da média: 75,7368421052632
+```
+
+```r
+# Calculando a média populacional
+Ybar=mean(pop,na.rm=T)
+print(paste("Média populacional:", Ybar), quote=FALSE)
+```
+
+```
+## [1] Média populacional: 75,7368421052632
+```
+
+```r
+# Alterando o separador de decimais para ponto
+options(OutDec=".")
+```
+
+**(#exm:exmsis7)** Utilizando a mesma população, pode-se verificar que o estimador da  média amostral simples `\((\overline y)\)` para a média populacional de `\(y\)` não coincide com o estimador `\(\overline y_{AS}\)` e, além disso, é viciado.
+
+
+```r
+# Alterando o separador de decimais para vírgula
+options(OutDec=",")
+# Intervalo de seleção e tamanho da população conhecido
+K=4
+# Carregando os valores populacionais da variável y
+pop=matrix(c(99,54,96,54,85,88,55,83,62,85,96,55,91,92,67,68,54,79,76,NA),5,K,byrow=T)
+# Calculando a média amostral simples para cada uma das AS possíveis
+ybar.r=NULL
+for(i in (1:K)) ybar.r[i] = mean(pop[,i],na.rm=T)
+ybar.r
+```
+
+```
+## [1] 78,2 79,6 78,0 65,0
+```
+
+```r
+# Calculando a média das estimativas
+Eybar=mean(ybar.r)
+print(paste("Média das estimativas possíveis da média:", Eybar), quote=FALSE)
+```
+
+```
+## [1] Média das estimativas possíveis da média: 75,2
+```
+
+```r
+# Alterando o separador de decimais para ponto
+options(OutDec=".")
+```
+
+Quando `\(N\)` é desconhecido, um estimador alternativo para a média é dado pela razão entre os estimadores do total e do tamanho populacionais: 
+
+$$
+\overline y_{AS}=\frac {\widehat Y_{AS}}{\widehat N_{AS}}=\frac {Kt_r}{Kn_r}=\frac {t_r}{n_r}=\overline y_r=\overline y(\#eq:eqsis5)
+$$ 
+que é a média amostral.
+
+Verifica-se assim que a média amostral simples é um estimador para uma razão, sendo portanto viciado para estimar a média populacional. Tal estimador só será exatamente não viciado quando `\(N=nK\)`, pois:
+
+$$
+\begin{align} E_{AS}(\overline{y}_{AS})&amp;=  E_{AS}(\overline y)= E_{AS} \left[\sum_{r=1} ^{K}I(r) \overline y_r \right] \\ &amp;= \frac{1}{K} \sum_{r=1}^{K}\overline y_r = \frac{1}{K} \sum_{r=1}^{K}\frac {t_r}{n_r} \\&amp;\neq \frac {\sum_{r=1}^{K}t_r} {\sum_{r=1}^{K}n_r} = \overline Y \end{align}
+$$
+
+O vício desse estimador (quando `\(N \ne nK\)`) é o preço pago quando não se conhece o tamanho `\(N\)` da população!
+
+## Estimação de uma proporção na amostragem sistemática simples
+
+Como já foi visto no Capítulo \@ref(proporc), muitas vezes o interesse é estimar a proporção de unidades da população que possuem uma determinada característica de interesse. Nesse caso, para as unidades com a característica de interesse presente, a variável `\(y\)` recebe o valor `\(1\)` e para as demais unidades, `\(y\)` recebe o valor `\(0\)`.
+
+Como já foi visto que a proporção equivale à média de uma variável do tipo indicadora, quando o tamanho total da população, `\(N\)`, for conhecido um estimador não viciado para a proporção é dado por:
+
+$$
+\widehat p_{AS} = \frac K N \sum_{i \in s_r} y_i = \frac K N t_r = \frac K N n_a (\#eq:eqsis6)
+$$
+onde `\(n_a\)` denota o número de unidades na amostra que têm a característica de interesse.
+
+**(#exm:exmsis8)** Utilizando o R pode-se ver numericamente que o estimador `\(\widehat p_{AS}\)` para a proporção `\(p\)` é não viciado quando `\(N\)` é conhecido.
+
+
+```r
+# Alterando o separador de decimais para vírgula
+options(OutDec=",")
+# Intervalo de seleção e tamanho da população conhecido
+K=4
+print(paste("Intervalo de seleção K:", K), quote=FALSE)
+```
+
+```
+## [1] Intervalo de seleção K: 4
+```
+
+```r
+# Carregando os valores populacionais da variável y
+(pop=matrix(c(0,1,0,1,1,1,0,0,0,0,1,0,0,0,1,1,1,0,1,NA),5,K,byrow=T))
+```
+
+```
+##      [,1] [,2] [,3] [,4]
+## [1,]    0    1    0    1
+## [2,]    1    1    0    0
+## [3,]    0    0    1    0
+## [4,]    0    0    1    1
+## [5,]    1    0    1   NA
+```
+
+```r
+# Calcula tamanho da população
+N=sum(!is.na(pop))
+print(paste("Tamanho da população N:", N), quote=FALSE)
+```
+
+```
+## [1] Tamanho da população N: 19
+```
+
+```r
+# Calcula estimativas da proporção para cada uma das AS possíveis
+p_AS=NULL
+for(i in (1:K)) p_AS[i] = K*sum(pop[,i],na.rm=T)/N
+print("Valores possíveis do estimador não viciado da proporção", quote=FALSE)
+```
+
+```
+## [1] Valores possíveis do estimador não viciado da proporção
+```
+
+```r
+print(p_AS)
+```
+
+```
+## [1] 0,4210526 0,4210526 0,6315789 0,4210526
+```
+
+```r
+# Calculando a média das estimativas
+Ep_AS=mean(p_AS)
+print(paste("Média das estimativas possíveis da proporção:", Ep_AS), quote=FALSE)
+```
+
+```
+## [1] Média das estimativas possíveis da proporção: 0,473684210526316
+```
+
+```r
+# Calculando proporção populacional p
+p=mean(pop,na.rm=TRUE)
+print(paste("Proporção na população p:", p), quote=FALSE)
+```
+
+```
+## [1] Proporção na população p: 0,473684210526316
+```
+
+```r
+# Alterando o separador de decimais para ponto
+options(OutDec=".")
+```
+
+No caso em que o tamanho `\(N\)` da população é desconhecido, pode-se utilizar o estimador tipo razão que, nesse caso, é igual à proporção amostral:
+$$
+\widehat p_{AS} = \frac {n_a} {n_r}
+$$
+Este estimador é viciado, a menos que `\(N=nK\)`, como já foi visto.
+
+
+## Variância dos estimadores sob amostragem sistemática simples
+
+A variância de `\(\widehat Y_{AS}\)` sob amostragem sistemática simples é dada por: 
+
+$$
+\begin{array}{ll}\hspace{-0,6cm}
+V_{AS}(\widehat{Y}_{AS})&amp;=&amp;V_{AS}\left[K\sum_{r=1}^{K}I(r)t_r\right]\\&amp;=&amp;K^2\left[{\sum_{r=1}^{K}{t_r}^2 V_{AS}[I(r)]}+\sum_{r\neq K}COV_{AS}[I(r),I(q)]t_rt_q\right]\\&amp;=&amp; K^2\left[\sum_{r=1}^{K}{t_r}^2\frac{1}{K}\left(1-\frac{1}{K}\right)+\sum_{r\neq K}t_rt_q\left(-\frac{1}{K^2}\right)\right]\\&amp;=&amp; K^2\left[\frac{1}{K}\sum_{r=1}^{K}{t_r}^2 - \frac{1}{K^2}\left(\sum_{r=1}^{K}{t_r}^2+\sum_{r\neq K}t_rt_q\right)\right]\\&amp;=&amp;K\left[\sum_{r=1}^{K}{t_r}^2 - \left(\sum_{r=1}^{K}{t_r}\right)^2/K\right]\\&amp;=&amp;K\sum_{r=1}^{K}(t_r-\overline t)^2 (\#eq:eqsis7)
+\end{array}
+$$
+
+onde: `\(\overline t = \displaystyle \frac 1 K \sum_{r=1}^{K} t_r = \frac Y K\)`
+
+Portanto a variância é calculada a partir da soma de quadrados dos desvios entre totais das amostras possíveis em relacão à média destes totais.
+
+Quando `\(N\)` é conhecido, a variância do estimador da média populacional é dada por:
+
+$$
+V_{AS}(\overline y_{AS}) = \frac1{N^2} V_{AS}(\widehat Y_{AS})
+$$
+
+Um problema que ocorre com a amostragem sistemática simples é o fato da ordenação da população em relação aos valores da variável de interesse afetar a variância (precisão) dos estimadores. Para demonstrar esse problema, pode-se utilizar a população apresentada nos exemplos acima, alterando a ordem de suas unidades, para mostrar como isso afeta a composição das possíveis amostras sistemáticas.
+
+**(#exm:exmsis9)** Em primeiro lugar, consideramos a população ordenada tal como foi apresentada na Tabela \@ref(tab:tabsis2) e calculamos a variância do estimador do total considerando as possíveis amostras listadas no Exemplo \@ref(exm:exmsis5). Em seguida, ordenamos a população em ordem crescente (ou decrescente) dos valores de `\(y\)` e repetimos o cálculo da variância. Observa-se que a variância do estimador do total com a população ordenada diminui consideravelmente em comparação com o caso em que não havíamos ordenado a população. 
+
+
+```r
+# Alterando o separador de decimais para vírgula
+options(OutDec=",")
+
+# Comparando a variância do estimador do total na AS
+# com a população em ordem natural e ordenada
+
+# Intervalo de seleção e tamanho da população conhecido
+K=4
+print(paste("Intervalo de seleção K:", K), quote=FALSE)
+```
+
+```
+## [1] Intervalo de seleção K: 4
+```
+
+```r
+# População na ordem natural
+# Carregando os valores populacionais da variável y
+pop=matrix(c(99,54,96,54,85,88,55,83,62,85,96,55,91,92,67,68,54,79,76,NA),5,K,byrow=T)
+print("Dados populacionais", quote=FALSE)
+```
+
+```
+## [1] Dados populacionais
+```
+
+```r
+print(pop)
+```
+
+```
+##      [,1] [,2] [,3] [,4]
+## [1,]   99   54   96   54
+## [2,]   85   88   55   83
+## [3,]   62   85   96   55
+## [4,]   91   92   67   68
+## [5,]   54   79   76   NA
+```
+
+```r
+# Calcula tamanho da população
+N=sum(!is.na(pop))
+# Calculando a estimativa do total para cada uma das AS possíveis
+tr=NULL
+for(i in (1:K)) tr[i] = sum(pop[,i],na.rm=T)
+# Calculando a variância do estimador do total
+V_YhatAS= K*(var(tr)*(K-1))
+# Ordenando a população em ordem crescente de y
+pop_ord = matrix(sort(pop,na.last=T),5,K,byrow=T)
+print("Dados populacionais ordenados", quote=FALSE)
+```
+
+```
+## [1] Dados populacionais ordenados
+```
+
+```r
+print(pop_ord)
+```
+
+```
+##      [,1] [,2] [,3] [,4]
+## [1,]   54   54   54   55
+## [2,]   55   62   67   68
+## [3,]   76   79   83   85
+## [4,]   85   88   91   92
+## [5,]   96   96   99   NA
+```
+
+```r
+# Calculando a estimativa do total para cada uma das AS possíveis
+for(i in (1:K)) tr[i] = sum(pop_ord[,i],na.rm=T)
+# Calculando a variância do estimador do total
+V_YhatAS_ord=K*(var(tr)*(K-1))
+print(paste("Variância do estimador de total - ordem natural:  ", V_YhatAS), quote=FALSE)
+```
+
+```
+## [1] Variância do estimador de total - ordem natural:   53219
+```
+
+```r
+print(paste("Variância do estimador de total - ordem crescente:", V_YhatAS_ord), quote=FALSE)
+```
+
+```
+## [1] Variância do estimador de total - ordem crescente: 20611
+```
+
+```r
+# Alterando o separador de decimais para ponto
+options(OutDec=".")
+```
+Embora este seja um exemplo extremo, pois na prática não teríamos como ordenar a população pelos valores da variável de interesse, ele mostra bem o efeito que a ordenação pode ter na precisão dos estimadores baseados em amostras sistemáticas simples. Podemos concluir que em populações onde a(s) variável(eis) de interesse seguem, pelo menos aproximadamente, uma ordenação, a AS pode ter um bom desempenho.
+
+Fica como exercício para o leitor verificar que o mesmo não ocorre quando se utiliza uma AAS ou AASC, pois nestes casos a ordenação dos valores de `\(y\)` na população não tem influência na precisão das estimativas.
+
+**Notas:**
+
+1. Como `\(r\)` pode tomar apenas um valor, `\(V_{AS}(\widehat Y_{AS})\)` não pode ser diretamente estimada a partir da amostra.    
+2. Em @Cochran1977 é apresentada uma boa discussão sobre como a ordenação dos valores da variável de pesquisa para unidades populacionais pode afetar a eficiência de amostras sistemáticas. Para uma definição de eficiência ver a Expressão \@ref(eq:eqdom24).   
+3. Para populações em 'ordem aleatória', o desempenho da amostragem sistemática simples é semelhante ao da amostragem aleatória simples sem reposição (@Cochran1977, Seção 8.5).     
+4. Para populações com tendência linear, amostragem sistemática simples é melhor que AAS (@Cochran1977, Seção 8.6).     
+5. Para populações periódicas, amostragem sistemática simples com intervalo de seleção em sincronia com o período é um desastre (@Cochran1977, página 218).
+
+**Considere o caso especial onde `\(N = nK\)`**
+
+Da Tabela 8.2 do @Cochran1977, página 207, é fácil ver que `\(\overline y_r = t_r/n_r\)` é um estimador não viciado para `\(\overline Y\)`. Como
+
+$$
+\displaystyle \sum_{r=1}^{K} \sum_{i \in s_r} (y_i - \overline Y)^2 = n \sum_{r=1}^{K} (\overline y_r - \overline Y)^2 + \sum_{r=1}^{K} \sum_{i \in s_r} (y_i - \overline y_r)^2
+$$
+
+tem-se que: 
+$$
+(N-1) S_y^2 = n K V_{AS}(\overline y_{AS}) + K (n-1) S_D^2
+$$
+
+onde `\(S_y^2\)` é a variância populacional total, `\(S_D^2\)` é a variância *dentro* das amostras sistemáticas e `\(V_{AS}(\overline y_{AS})\)` é a variância de `\(\overline y_{AS}\)` sob amostragem sistemática simples.
+
+Portanto, conforme @Cochran1977, página 208, o estimador de média é mais eficiente sob amostragem sistemática que sob AAS se e somente se `\(S_D^2 &gt; S_y^2\)`.
+
+**Uma expressão alternativa para `\(V_{AS}(\overline y_{AS})\)` quando `\(N = nK\)`**
+
+De acordo com o Teorema 8.2 de @Cochran1977, página 209, tem-se:
+
+$$
+\begin{array}{ll}
+V_{AS}(\overline y_{AS}) &amp; = &amp; \displaystyle\left( \frac {N-1} {N} \right) [1 + (n-1) \rho \,] \frac {S_y^2} {n} 
+\\&amp; \doteq  &amp; \displaystyle\left[ 1 + (n-1)\rho \right] \frac {S_y^2} {n} \, \,  (\#eq:eqsis8)
+\end{array}
+$$ 
+
+onde:
+
+$$
+\rho = \frac {1} {(n-1) (N-1) S_y^2} \displaystyle \sum_{r=1}^{K} \sum_{i \neq j \in s_r} (y_i - \overline Y) (y_j - \overline Y) (\#eq:eqsis9)
+$$
+
+é a *correlação intraclasse* das amostras sistemáticas possíveis.
+
+Este resultado mostra que a correlação positiva entre unidades de uma mesma amostra aumenta a variância da média amostral sob seleção sistemática simples quando comparada com a variância da média amostral sob seleção AAS.
+
+Lembrando que sob AAS, `\(V_{AAS}(\overline y_{AAS}) = \displaystyle \left( 1 - \frac {n} {N} \right) \frac {S_y^2} {n}\)`.
+
+Então, tem-se a relação aproximada:
+
+$$
+\frac {V_{AS}(\overline y_{AS})} {V_{AAS}(\overline y_{AAS})} = 1 + (n-1) \rho \, \left\{\begin{array}{lll} &lt; 1, &amp; \textrm{se} \,\,\, \rho&lt;0\, \\ = 1, &amp; \textrm{se} \,\,\,\rho=0 \,\\ &gt; 1, &amp; \textrm{se} \,\,\, \rho&gt;0 \, \end{array} \right. (\#eq:eqsis10)
+$$ 
+
+Cabe notar que razões do tipo `\(V_{AS}(\overline y_{AS})/V_{AAS}(\overline y_{AAS})\)` são chamadas de *Efeito do Plano Amostral (EPA)*. Em inglês, usa-se o termo *design effect*, abreviado como *deff*.
+
+## Estimação de variâncias dos estimadores na amostragem sistemática simples
+
+Quando se usa amostragem sistemática simples não há um estimador não viciado para a variância dos estimadores do total e da média. O que se faz é utilizar estimadores mais adequados de acordo com a ordenação da população.
+
+No caso de se poder supor que não há uma ordenação ou que a população esteja espalhada aleatoriamente no cadastro de seleção em relação à(s) variável(eis) de interesse, de modo que as médias dentro de cada intervalo de seleção sejam pelo menos aproximadamente iguais `\((\overline Y_r \doteq constante)\)`, o que se pode fazer é utilizar um estimador para a variância da média equivalente ao usado quando se tem uma AAS, dado pela expressão:
+
+$$
+\widehat V_{1AS} (\overline y_{AS}) = \left( \frac {1}{n} - \frac 1 {N} \right) \frac {1}{n-1} \sum_{i \in s_r} (y_i - \overline y_{AS})^2 (\#eq:eqsis11)
+$$
+Esse estimador serve para o caso de `\(N\)` conhecido e será não viciado caso a suposição de ordenação aleatória das unidades na população esteja correta. No caso de não se conhecer `\(N\)`, pode-se utilizar as alternativas dadas pelos estimadores de razão.
+
+No caso de `\(N\)` conhecido e não houver ordenação das unidades da população, um estimador para a variância do estimador do total é dado por:
+
+$$
+\widehat V_{1AS} (\widehat Y_{AS}) =  N^2\widehat V_{1AS} (\overline y_{AS})(\#eq:eqsis12)
+$$
+No caso em que a população esteja ordenada segundo uma "estratificação" de modo que as médias em cada intervalo de seleção variem (p.ex.: a população é ordenada segundo os valores de `\(y\)`), @Cochran1977 sugere, para estimar a variância do estimador da média, a expressão:
+
+$$
+ \widehat V_{2AS}(\overline y_{AS}) = \left( \frac {1}{n} - \frac 1 {N} \right) \frac {1}{2(n-1)} \sum_{i \in s_r} (y_i - y_{i+K})^2 (\#eq:eqsis13)
+$$
+Neste caso, um estimador para a variância do estimador do total é dado por:
+
+$$
+\widehat V_{2AS} (\widehat Y_{AS}) =  N^2\widehat V_{2AS} (\overline y_{AS})(\#eq:eqsis14)
+$$
+
+Alternativamente e independentemente da ordenação da população, pode-se usar um estimador do tipo replicação, onde são selecionadas `\(q\)` amostras sistemáticas de tamanhos `\(n/q\)` cada uma, tomando a variância das estimativas dadas por cada uma das amostras. Essa técnica, também chamada *amostra sistemática repetida*, está descrita em @Scheaffer2011.
+
+Quando a seleção de uma AS for realizada a partir de um cadastro conhecido, é sempre possível reordenar as unidades aleatoriamente antes proceder a seleção. Esse é um artifício muito útil e que permite que se utilizem os estimadores equivalentes aos da AAS para estimar a variância dos estimadores. Se por um lado essa técnica viabiliza o emprego de estimadores simplificados de variância, por outro se espera que acabe resultando em menor precisão para a estimação pontual.
+
+Pode-se encontrar boas discussões sobre a estimação da variância sob amostragem sistemática simples em @Cochran1977 ou @Thompson2012.
+
+A Tabela \@ref(tab:tabsis3) apresenta os estimadores do total, média  e respectivas variâncias sob AS.
+
+&lt;center&gt;
+&lt;table&gt;
+&lt;caption&gt;(#tab:tabsis3)Estimadores do total, média e respectivas variâncias sob AS&lt;/caption&gt;
+&lt;/table&gt;
+----------
+Estimador  
+----------------------------------
+`\(\widehat{Y}_{AS}=Kt_r=K \displaystyle \sum_{r=1}^{K}I(r)t_r\)`
+
+`\(\displaystyle \overline {y}_{AS}=\frac KNt_r,\,\,\text{ se } N \text{ é conhecido }\)`
+
+`\(\displaystyle  \overline{y}_{AS}= \frac {t_r}{n_r}=\overline y,\,\,\text{ se }N \text{ é desconhecido }\)`
+
+`\(\widehat V_{1AS} (\widehat Y_{AS}) = N^2\widehat V_{1AS} (\overline y_{AS}),\,\,\text{se}\, N\text{ é conhecido}\)`\
+                                                                        `\(\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\text{e não houver ordenação das unidades na população}\)`                           `\(\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\)`                                                                                                                                                                          `\(\widehat V_{2AS}(\widehat Y_{AS}) = N^2\widehat V_{2AS}(\overline y_{AS}),\,\,\text{se}\, N\text{ é conhecido}\)`
+                                                                        `\(\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\text{e houver ordenação das unidades na população}\)`                         
+
+`\(\widehat V_{1AS} (\overline y_{AS}) = \displaystyle\left(\frac {1}{n} - \frac 1 {N} \right) \frac {1}{n-1}\displaystyle \sum_{i \in s_r} (y_i - \overline y_{AS})^2,\,\, \text{ se  } N \text{ é conhecido }\)` 
+                                                                        `\(\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\text{e não houver ordenação das unidades na população}\)`\                                                          `\(\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\)`                                                                                                 `\(\widehat V_{2AS}(\overline y_{AS}) = \displaystyle\left( \frac {1}{n} - \frac 1 {N} \right) \frac {1}{2(n-1)} \displaystyle\sum_{i \in s_r} (y_i - y_{i+K})^2,\,\, \text{ se  } N \text{ é conhecido }\)`
+                                                                        `\(\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\text{e houver ordenação das unidades na população}\)`                 
+----------
+&lt;/center&gt;  
+    
+## Alternativas para seleção com amostragem sistemática simples
+
+Como foi visto, existem dificuldades quando o tamanho da população, `\(N\)`, não é um múltiplo de `\(K\)`, ou seja, quando `\(N \ne n K\)`. Neste caso, o estimador simples da média tem vício. @Cochran1977 indica que esse vício pode ser considerado desprezível quando se trabalha com tamanhos de amostra razoavelmente grandes, podendo-se considerar como tal amostras com tamanhos iguais ou maiores que `\(n=50\)`.
+
+Há também alternativas que podem ser utilizadas quando a seleção da amostra sistemática for feita a partir de um cadastro ou lista das unidades populacionais. @Murthy1967, página 139, recomenda usar um método de seleção 'circular' proposto por Lahiri em 1952, para obter uma amostra sistemática. Esse método consiste em:
+
+  1)  Tomar como `\(K\)` o inteiro mais próximo de `\(N/n\)`, ou `\(K=round(N/n)\)`.
+  2)  Selecionar como partida aleatória um número inteiro `\(r \in[1;\: N]\)`.
+  3)  Tomar como primeira unidade da amostra a unidade `\(r\)`.
+  4)  Em seguida, selecionar as unidades seguintes sempre somando `\(K\)` ao índice da última unidade selecionada; quando `\(r+jK &gt; N\)`, subtrair `\(N\)` e continuar o processo até obter as `\(n\)` unidades amostrais desejadas.
+  
+**(\#exm:exmsis10)**  Seja uma população de `\(N=21\)` unidades da qual se deseja selecionar uma amostra sistemática de exatamente `\(n=5\)` unidades. O *script* a seguir seleciona uma amostra sistemática circular com o tamanho desejado. Note que nesse caso `\(K=4\)`.
+  
+
+```r
+# Alterando o separador de decimais para vírgula
+options(OutDec=",")
+# Definindo a semente para permitir replicação
+set.seed(77099)
+# Tamanho da população
+N=21
+# Tamanho exato da amostra desejada
+n=5
+# Passo 1: calculando o valor de K
+(K=round(N/n))
+```
+
+```
+## [1] 4
+```
+
+```r
+# Passo 2: selecionando a partida aleatória r
+r=sample(1:N,1)
+# Definindo a primeira unidade amostral
+sr=NULL
+sr[1]=r
+# Definindo as demais unidades amostrais
+for(i in (2:n)){
+  sr[i]=sr[i-1]+K
+  if(sr[i]&gt;N) sr[i]=sr[i]-N
+}
+# Exibindo a partida
+r
+```
+
+```
+## [1] 18
+```
+
+```r
+# Exibindo a amostra selecionada
+sr
+```
+
+```
+## [1] 18  1  5  9 13
+```
+
+```r
+# Alterando o separador de decimais para ponto
+options(OutDec=".")
+```
+
+Note que com uma *Amostra Sistemática circular - ASc*, o número de amostras possíveis é `\(N\)` e pode-se definir estimadores não viciados para a média e o total da variável de interesse `\(y\)`, como:
+
+$$
+\overline y_{ASc}=\overline y=\frac 1n \sum_{i=1}^n y_i (\#eq:eqsis15)
+$$ 
+
+e
+
+$$
+\widehat Y_{ASc}=N\overline y_{ASc} (\#eq:eqsis16)
+$$
+
+Neste método a seleção é feita com equiprobabilidade e sem reposição, como na AS tradicional, porém é necessário que `\(N\)` seja conhecido e a seleção é um pouco mais trabalhosa. A vantagem é que os estimadores são sempre não viciados.
+
+Fica para o leitor verificar que os estimadores para a média e total são não viciados.
+
+---
+
+## Para casa 🏠
+
+&lt;!-- * Fazer a lista 2 de exercícios. --&gt;
+
+* Continuar exercícios.
+
+&lt;!-- Continuar o Exercício. --&gt;
+
+&lt;!-- * Mostrar tamanho de amostra `\(n\)` para AASc dentro dos estratos. --&gt;
+
+&lt;!-- * Continuar exercícios do livro 'Amostragem: Teoria e Prática Usando R'    https://amostragemcomr.github.io/livro/estrat.html#exerc11 --&gt;
+
+* Ler o capítulo 3 da apostila da Profa. Vanessa.
+
+* Ler o capítulo 8 do livro 'Amostragem: Teoria e Prática Usando R'.
+
+* Rever os slides.
+
+&lt;!-- * Ler BOlfarine e Bussab...da seção 11.3 do livro 'Amostragem: Teoria e Prática Usando R'. --&gt;
+
+* Preparação para avaliação parcial 2
+
+## Próxima aula 📊
+
+* Acompanhar o material no moodle.
+
+Amostragem Sistemática
+
+  + Estimação.
+
+  &lt;!-- + Laboratório de &lt;i class="fa-duotone fa-people-group"&gt;&lt;/i&gt;<svg aria-hidden="true" role="img" viewBox="0 0 581 512" style="height:1em;width:1.13em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/></svg> --&gt;
+
+---
+
+## Muito obrigado!
+
+&lt;img src="img/image_basu_elephant.jpg" width="20%" height="20%" style="display: block; margin: auto;" /&gt;
+.center[
+#### Fonte: imagem do livro *Combined Survey Sampling Inference: Weighing of Basu's Elephants*.
+]
+
+
+---
+
+## Referências
+
+&lt;!-- Slides baseados no Capítulo 11 do livro --&gt;
+
+* [Amostragem: Teoria e Prática Usando o R](https://amostragemcomr.github.io/livro/index.html)
+
+* **Elementos de Amostragem**, Bolfarine e Bussab.
+
+&lt;!-- Citações do Capítulo --&gt;
+
+&lt;!-- * Neyman(1934) --&gt;
+
+* Cochran(1977)
+
+
+&lt;!-- * refazer calculos para amostagem aleatoria simples com reposicao --&gt;
+&lt;!-- * alocacao... ou lab R comparando alocação proporcional e igual tamanho --&gt;
+
+&lt;!-- listas de exercicios... --&gt;
+&lt;!-- dois aspectos da disciplina... ter flexibilidade com teoria... exercitar os conceitos com exercicios teoricos e praticos --&gt;
+
+&lt;!-- falar dos pesos na AES --&gt;
+
+&lt;!-- valor z_alpha/2 significa z ou t --&gt;
+
+&lt;!-- quem tiver interesse em conferir as fórmulas... mostra as conttas, gosta dessa pparte...posso contabilizar ponto extra... tem q ser o primeira... --&gt;
+&lt;!-- o mesmo pode valer para os códigos e texto... --&gt;
+&lt;!-- fazer o formulário --&gt;
+&lt;!-- resumo de formulas --&gt;
+
+---
+
+## Resumo da notação
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

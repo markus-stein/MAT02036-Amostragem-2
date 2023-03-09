@@ -168,9 +168,9 @@ Suponha que se deseja aplicar um questionário a uma amostra dos espectadores de
 ## Amostragem Sistemática Simples
 ### Introdução
 
-Duas características funcionam como um apelo para a adoção da **AS**: 
+*Vantagens* para a adoção da **AS**: 
 
-* simplicidade, pois ao selecionar a primeira unidade a ser incluída na amostra, todas as demais estarão automaticamente escolhidas; 
+* simplicidade; selecionando a primeira unidade da amostra, todas as demais estarão automaticamente escolhidas; 
 
 * possibilidade de aplicação mesmo quando não se tem disponível um cadastro prévio da população.
 
@@ -319,20 +319,13 @@ $s_4 = \{ 4 ; 8 ; 12 ; 16 \}$ com $n_4=4$.
 
 #### Exemplo 5:
 ```{R,echo=T}
-N=19  # Tamanho da População
-print(paste("Tamanho da população N:", N), quote=FALSE)
-n=4  # Tamanho desejado da amostra
-print(paste("Tamanho desejado da amostra n:", n), quote=FALSE)
-K=trunc(N/n)  # Cálculo do intervalo de seleção
-print(paste("Intervalo de seleção K:", K), quote=FALSE)
-c=N-n*K       # Cálculo da constante c
-print(paste("Constante c:", c), quote=FALSE)
-# Vetor para guardar nomes das amostras possíveis
-nomes_amostras = paste0("s_", 1:K)
-# Matriz para guardar os índices das unidades das amostras possíveis
-amostras_possiveis=matrix(c(1:N,NA),K,n+1,byrow=FALSE)
-# Monta arquivo com resultado das amostras possíveis
-amostras_possiveis = as.data.frame(cbind(nomes_amostras, amostras_possiveis))
+N=19  # Tamanho da População # print(paste("Tamanho da população N:", N), quote=FALSE)
+n=4  # Tamanho desejado da amostra # print(paste("Tamanho desejado da amostra n:", n), quote=FALSE)
+K=trunc(N/n)  # Cálculo do intervalo de seleção # print(paste("Intervalo de seleção K:", K), quote=FALSE)
+c=N-n*K       # Cálculo da constante c # print(paste("Constante c:", c), quote=FALSE)
+nomes_amostras = paste0("s_", 1:K) # Vetor para guardar nomes das amostras possíveis
+amostras_possiveis=matrix(c(1:N,NA),K,n+1,byrow=FALSE) # Matriz para guardar os índices das unidades das amostras possíveis
+amostras_possiveis = as.data.frame(cbind(nomes_amostras, amostras_possiveis)) # Monta arquivo com resultado das amostras possíveis
 colnames(amostras_possiveis) = c("Amostra", paste("Unidade", 1:(n+1)))
 amostras_possiveis
 ```
@@ -410,9 +403,9 @@ Com base nas propriedades do estimador de Horvitz-Thompson para o total, já sab
 
 ## Para casa `r emo::ji("house")`
 
-* Fazer a lista 2 de exercícios.
+<!-- * Fazer a lista 2 de exercícios. -->
 
-* Continuar exercícios.
+<!-- * Continuar exercícios. -->
 
 <!-- Continuar o Exercício. -->
 
@@ -420,10 +413,10 @@ Com base nas propriedades do estimador de Horvitz-Thompson para o total, já sab
 
 <!-- * Continuar exercícios do livro 'Amostragem: Teoria e Prática Usando R'    https://amostragemcomr.github.io/livro/estrat.html#exerc11 -->
 
-<!-- * Ler o capítulo 2 da apostila da Profa. Vanessa. -->
+* Ler o capítulo 3 da apostila da Profa. Vanessa.
 
-<!-- do livro 'Amostragem: Teoria e Prática Usando R'. -->
-  
+* Ler o capítulo 8 do livro 'Amostragem: Teoria e Prática Usando R'.
+
 * Rever os slides.
 
 <!-- * Ler BOlfarine e Bussab...da seção 11.3 do livro 'Amostragem: Teoria e Prática Usando R'. -->
@@ -434,11 +427,11 @@ Com base nas propriedades do estimador de Horvitz-Thompson para o total, já sab
 
 * Acompanhar o material no moodle.
 
-Amostragem por Conglomerados
+Amostragem Sistemática
 
-  + Exercícios.
-  
-  + Laboratório de <i class="fa-duotone fa-people-group"></i>`r fa("r-project", fill = "steelblue")`
+  + Estimação.
+
+  <!-- + Laboratório de <i class="fa-duotone fa-people-group"></i>`r fa("r-project", fill = "steelblue")` -->
 
 ---
 

@@ -386,7 +386,7 @@ $$\widehat Var_{1AS} (\overline y_{AS}) = \left( \frac {1}{n} - \frac 1 {N} \rig
 
 * No caso de $N$ conhecido e não haer ordenação das unidades da população, um estimador para a variância do estimador do total é dado por:
 
-$$\widehat V_{1AS} (\widehat Y_{AS}) =  N^2\widehat V_{1AS} (\overline y_{AS})$$
+$$\widehat{Var}_{1AS} (\widehat T_{AS}) =  N^2 \widehat{Var}_{1AS} (\overline y_{AS})$$
 
 * No caso em que a população esteja ordenada segundo uma "estratificação" de modo que as médias em cada intervalo de seleção variem (p.ex.: a população é ordenada segundo os valores de $y$), @Cochran1977 sugere, para estimar a variância do estimador da média, a expressão:
 
@@ -394,7 +394,7 @@ $$\widehat Var_{2AS}(\overline y_{AS}) = \left( \frac {1}{n} - \frac 1 {N} \righ
 
 Neste caso, um estimador para a variância do estimador do total é dado por:
 
-$$\widehat V_{2AS} (\widehat Y_{AS}) =  N^2\widehat V_{2AS} (\overline y_{AS})$$
+$$\widehat{Var}_{2AS} (\widehat T_{AS}) =  N^2 \widehat{Var}_{2AS} (\overline y_{AS})$$
 
 ---
 
@@ -410,7 +410,6 @@ Pode-se encontrar boas discussões sobre a estimação da variância sob amostra
 ---
 
 ## Amostragem Sistemática Simples
-### Estimação de variâncias dos estimadores sob **AS**
 
 Estimadores do total, média  e respectivas variâncias sob AS.
 
@@ -419,10 +418,95 @@ Estimador | Observação
 $\widehat T_{AS}=Kt_r=K \sum_{r=1}^{K}I(r)t_r$ | 
 $\overline {y}_{AS}=\frac KNt_r$ | se $N$ é conhecido
 $\overline{y}_{AS}= \frac {t_r}{n_r}=\overline y$ | se $N$ é desconhecido
-$\widehat V_{1AS} (\widehat T_{AS}) = N^2\widehat V_{1AS} (\overline y_{AS})$ | se $N$ é conhecido e não houver ordenação das unidades na população
-$\widehat V_{2AS}(\widehat T_{AS}) = N^2\widehat V_{2AS}(\overline y_{AS})$ | se $N$ é conhecido e houver ordenação das unidades na população
-$\widehat V_{1AS} (\overline y_{AS}) = \left(\frac {1}{n} - \frac 1 {N} \right) \frac {1}{n-1} \sum_{i \in s_r} (y_i - \overline y_{AS})^2$ | se  $N$ é conhecido e não houver ordenação das unidades na população}
-$\widehat V_{2AS}(\overline y_{AS}) = \left( \frac {1}{n} - \frac 1 {N} \right) \frac {1}{2(n-1)} \sum_{i \in s_r} (y_i - y_{i+K})^2$ | se $N$ é conhecido e houver ordenação das unidades na população
+$\widehat{Var}_{1AS} (\widehat T_{AS}) = N^2\widehat{Var}_{1AS} (\overline y_{AS})$ | se $N$ é conhecido e sem ordenação
+$\widehat{Var}_{2AS}(\widehat T_{AS}) = N^2 \widehat{Var}_{2AS}(\overline y_{AS})$ | se $N$ é conhecido e houver ordenação
+$\widehat{Var}_{1AS} (\overline y_{AS}) = \left( \frac {1}{n} - \frac 1 {N} \right) \frac {1}{n-1} \sum_{i \in s_r} (y_i - \overline y_{AS})^2$ | se  $N$ é conhecido e sem ordenação
+$\widehat{Var}_{2AS}(\overline y_{AS}) = \left( \frac {1}{n} - \frac 1 {N} \right) \frac {1}{2(n-1)} \sum_{i \in s_r} (y_i - y_{i+K})^2$ | se $N$ é conhecido e houver ordenação
+
+---
+
+## Para casa `r emo::ji("house")`
+
+<!-- * Fazer a lista 2 de exercícios. -->
+
+* Continuar exercícios.
+
+<!-- Continuar o Exercício. -->
+
+<!-- * Mostrar tamanho de amostra $n$ para AASc dentro dos estratos. -->
+
+<!-- * Continuar exercícios do livro 'Amostragem: Teoria e Prática Usando R'    https://amostragemcomr.github.io/livro/estrat.html#exerc11 -->
+
+* Ler o capítulo 3 da apostila da Profa. Vanessa.
+
+* Ler o capítulo 8 do livro 'Amostragem: Teoria e Prática Usando R'.
+
+* Rever os slides.
+
+<!-- * Ler BOlfarine e Bussab...da seção 11.3 do livro 'Amostragem: Teoria e Prática Usando R'. -->
+
+<!-- * Preparação para avaliação parcial 2 -->
+
+## Próxima aula `r emo::ji("stats")`
+
+* Acompanhar o material no moodle.
+
+Amostragem Sistemática
+
+  + Estimação.
+
+  + Laboratório de <i class="fa-duotone fa-people-group"></i>`r fa("r-project", fill = "steelblue")`
+
+---
+
+## Muito obrigado!
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='20%', out.height='20%', paged.print=FALSE}
+knitr::include_graphics('img/image_basu_elephant.jpg')
+```
+.center[
+#### Fonte: imagem do livro *Combined Survey Sampling Inference: Weighing of Basu's Elephants*.
+]
+
+
+---
+
+## Referências
+
+<!-- Slides baseados no Capítulo 11 do livro -->
+
+* [Amostragem: Teoria e Prática Usando o R](https://amostragemcomr.github.io/livro/index.html)
+
+* **Elementos de Amostragem**, Bolfarine e Bussab.
+
+<!-- Citações do Capítulo -->
+
+<!-- * Neyman(1934) -->
+
+* Cochran(1977)
+
+
+<!-- * refazer calculos para amostagem aleatoria simples com reposicao -->
+<!-- * alocacao... ou lab R comparando alocação proporcional e igual tamanho -->
+
+<!-- listas de exercicios... -->
+<!-- dois aspectos da disciplina... ter flexibilidade com teoria... exercitar os conceitos com exercicios teoricos e praticos -->
+
+<!-- falar dos pesos na AES -->
+
+<!-- valor z_alpha/2 significa z ou t -->
+
+<!-- quem tiver interesse em conferir as fórmulas... mostra as conttas, gosta dessa pparte...posso contabilizar ponto extra... tem q ser o primeira... -->
+<!-- o mesmo pode valer para os códigos e texto... -->
+<!-- fazer o formulário -->
+<!-- resumo de formulas -->
+
+---
+
+## Resumo da notação
+
+
+
 
 <!-- ## Alternativas para seleção com amostragem sistemática simples -->
 
@@ -481,86 +565,4 @@ $\widehat V_{2AS}(\overline y_{AS}) = \left( \frac {1}{n} - \frac 1 {N} \right) 
 <!-- Neste método a seleção é feita com equiprobabilidade e sem reposição, como na AS tradicional, porém é necessário que $N$ seja conhecido e a seleção é um pouco mais trabalhosa. A vantagem é que os estimadores são sempre não viciados. -->
 
 <!-- Fica para o leitor verificar que os estimadores para a média e total são não viciados. -->
-
----
-
-## Para casa `r emo::ji("house")`
-
-<!-- * Fazer a lista 2 de exercícios. -->
-
-* Continuar exercícios.
-
-<!-- Continuar o Exercício. -->
-
-<!-- * Mostrar tamanho de amostra $n$ para AASc dentro dos estratos. -->
-
-<!-- * Continuar exercícios do livro 'Amostragem: Teoria e Prática Usando R'    https://amostragemcomr.github.io/livro/estrat.html#exerc11 -->
-
-* Ler o capítulo 3 da apostila da Profa. Vanessa.
-
-* Ler o capítulo 8 do livro 'Amostragem: Teoria e Prática Usando R'.
-
-* Rever os slides.
-
-<!-- * Ler BOlfarine e Bussab...da seção 11.3 do livro 'Amostragem: Teoria e Prática Usando R'. -->
-
-* Preparação para avaliação parcial 2
-
-## Próxima aula `r emo::ji("stats")`
-
-* Acompanhar o material no moodle.
-
-Amostragem Sistemática
-
-  + Estimação.
-
-  <!-- + Laboratório de <i class="fa-duotone fa-people-group"></i>`r fa("r-project", fill = "steelblue")` -->
-
----
-
-## Muito obrigado!
-
-```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='20%', out.height='20%', paged.print=FALSE}
-knitr::include_graphics('img/image_basu_elephant.jpg')
-```
-.center[
-#### Fonte: imagem do livro *Combined Survey Sampling Inference: Weighing of Basu's Elephants*.
-]
-
-
----
-
-## Referências
-
-<!-- Slides baseados no Capítulo 11 do livro -->
-
-* [Amostragem: Teoria e Prática Usando o R](https://amostragemcomr.github.io/livro/index.html)
-
-* **Elementos de Amostragem**, Bolfarine e Bussab.
-
-<!-- Citações do Capítulo -->
-
-<!-- * Neyman(1934) -->
-
-* Cochran(1977)
-
-
-<!-- * refazer calculos para amostagem aleatoria simples com reposicao -->
-<!-- * alocacao... ou lab R comparando alocação proporcional e igual tamanho -->
-
-<!-- listas de exercicios... -->
-<!-- dois aspectos da disciplina... ter flexibilidade com teoria... exercitar os conceitos com exercicios teoricos e praticos -->
-
-<!-- falar dos pesos na AES -->
-
-<!-- valor z_alpha/2 significa z ou t -->
-
-<!-- quem tiver interesse em conferir as fórmulas... mostra as conttas, gosta dessa pparte...posso contabilizar ponto extra... tem q ser o primeira... -->
-<!-- o mesmo pode valer para os códigos e texto... -->
-<!-- fazer o formulário -->
-<!-- resumo de formulas -->
-
----
-
-## Resumo da notação
 

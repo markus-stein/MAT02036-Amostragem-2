@@ -399,6 +399,21 @@ $$\widehat{Var}_{2AS} (\widehat T_{AS}) =  N^2 \widehat{Var}_{2AS} (\overline y_
 ---
 
 ## Amostragem Sistemática Simples
+
+#### Exemplo (Bussab e Bolfarine, apostila pg. 37)
+
+Exemplo: Considere a população abaixo e $n = 2$:
+$$X = (2, 6, 10, 8, 10, 12)$$
+a. Calcule $E( \overline y_{AS})$ e $Var( \overline y_{AS})$.
+
+b. Calcule $E \left[ \widehat{Var}_{AS} (\overline y_{AS}) \right]$.
+
+c. $\overline y_{AS}$ e $\widehat{Var}_{AS} (\overline y_{AS})$ são **ENV** para os respectivos parâmetros a que se destinam estimar?
+
+
+---
+
+## Amostragem Sistemática Simples
 ### Consideração finais
 
 Alternativamente e independentemente da ordenação da população, pode-se usar um estimador do tipo replicação, onde são selecionadas $q$ amostras sistemáticas de tamanhos $n/q$ cada uma, tomando a variância das estimativas dadas por cada uma das amostras. Essa técnica, também chamada *amostra sistemática repetida*, está descrita em @Scheaffer2011.
@@ -505,64 +520,51 @@ knitr::include_graphics('img/image_basu_elephant.jpg')
 
 ## Resumo da notação
 
+---
 
+## Amostragem Sistemática Simples
+### Alternativas para seleção com amostragem sistemática simples
 
+* Vimos que existem dificuldades quando o tamanho da população, $N$, não é um múltiplo de $K$, $N \ne n K$. O estimador simples da média tem vício, ams @Cochran1977 indica que esse vício pode ser considerado desprezível quando se trabalha com tamanhos de amostra razoavelmente grandes, podendo-se considerar como tal amostras com tamanhos iguais ou maiores que $n=50$.
 
-<!-- ## Alternativas para seleção com amostragem sistemática simples -->
+* Uma alternativa é o método de seleção 'circular' **ASc** (proposto por Lahiri em 1952):
+1. Tomar como $K$ o inteiro mais próximo de $N/n$, ou $K=round(N/n)$.
+2. Selecionar como partida aleatória um número inteiro $r \in[1;\: N]$.
+3. Tomar como primeira unidade da amostra a unidade $r$.
+4. Em seguida, selecionar as unidades seguintes sempre somando $K$ ao índice da última unidade selecionada; quando $r+jK > N$, subtrair $N$ e continuar o processo até obter as $n$ unidades amostrais desejadas.
 
-<!-- Como foi visto, existem dificuldades quando o tamanho da população, $N$, não é um múltiplo de $K$, ou seja, quando $N \ne n K$. Neste caso, o estimador simples da média tem vício. @Cochran1977 indica que esse vício pode ser considerado desprezível quando se trabalha com tamanhos de amostra razoavelmente grandes, podendo-se considerar como tal amostras com tamanhos iguais ou maiores que $n=50$. -->
+---
 
-<!-- Há também alternativas que podem ser utilizadas quando a seleção da amostra sistemática for feita a partir de um cadastro ou lista das unidades populacionais. @Murthy1967, página 139, recomenda usar um método de seleção 'circular' proposto por Lahiri em 1952, para obter uma amostra sistemática. Esse método consiste em: -->
+## Amostragem Sistemática Simples
+### Alternativas para seleção com amostragem sistemática simples
 
-<!--   1)  Tomar como $K$ o inteiro mais próximo de $N/n$, ou $K=round(N/n)$. -->
-<!--   2)  Selecionar como partida aleatória um número inteiro $r \in[1;\: N]$. -->
-<!--   3)  Tomar como primeira unidade da amostra a unidade $r$. -->
-<!--   4)  Em seguida, selecionar as unidades seguintes sempre somando $K$ ao índice da última unidade selecionada; quando $r+jK > N$, subtrair $N$ e continuar o processo até obter as $n$ unidades amostrais desejadas. -->
+#### Exemplo 6:
+Seja uma população de $N=21$ unidades da qual se deseja selecionar uma **AS** de $n=5$ unidades. Selecione uma **ASc** com o tamanho desejado. Note que nesse caso $K=4$.
 
-<!-- **(\#exm:exmsis10)**  Seja uma população de $N=21$ unidades da qual se deseja selecionar uma amostra sistemática de exatamente $n=5$ unidades. O *script* a seguir seleciona uma amostra sistemática circular com o tamanho desejado. Note que nesse caso $K=4$. -->
+```{r,echo=TRUE}
+## exemplo 6
+N <- 21 # tamanho da populacao
+n <- 5  # tamanho exato da amostra desejada
+(K=round(N/n))  # Passo 1: calculando o valor de K
+r <- sample(1:N,1) # Passo 2: selecionando a partida aleatoria r
+sr <- r                # primeira unidade amostral
+for(i in (2:n)){       # demais unidades amostrais
+  sr[i] <-  sr[i-1]+K
+  if(sr[i]>N) sr[i] <- sr[i]-N
+}
+sr              # amostra selecionada
+```
 
-<!-- ```{r,echo=T} -->
-<!-- # Alterando o separador de decimais para vírgula -->
-<!-- options(OutDec=",") -->
-<!-- # Definindo a semente para permitir replicação -->
-<!-- set.seed(77099) -->
-<!-- # Tamanho da população -->
-<!-- N=21 -->
-<!-- # Tamanho exato da amostra desejada -->
-<!-- n=5 -->
-<!-- # Passo 1: calculando o valor de K -->
-<!-- (K=round(N/n)) -->
-<!-- # Passo 2: selecionando a partida aleatória r -->
-<!-- r=sample(1:N,1) -->
-<!-- # Definindo a primeira unidade amostral -->
-<!-- sr=NULL -->
-<!-- sr[1]=r -->
-<!-- # Definindo as demais unidades amostrais -->
-<!-- for(i in (2:n)){ -->
-<!--   sr[i]=sr[i-1]+K -->
-<!--   if(sr[i]>N) sr[i]=sr[i]-N -->
-<!-- } -->
-<!-- # Exibindo a partida -->
-<!-- r -->
-<!-- # Exibindo a amostra selecionada -->
-<!-- sr -->
-<!-- # Alterando o separador de decimais para ponto -->
-<!-- options(OutDec=".") -->
-<!-- ``` -->
+---
 
-<!-- Note que com uma *Amostra Sistemática circular - ASc*, o número de amostras possíveis é $N$ e pode-se definir estimadores não viciados para a média e o total da variável de interesse $y$, como: -->
+## Amostragem Sistemática Simples
+### Alternativas para seleção com amostragem sistemática simples
 
-<!-- $$ -->
-<!-- \overline y_{ASc}=\overline y=\frac 1n \sum_{i=1}^n y_i (\#eq:eqsis15) -->
-<!-- $$  -->
+* Note que com uma *Amostra Sistemática circular* - **ASc**, o número de amostras possíveis é $N$ e pode-se definir estimadores não viciados para a média e o total da variável de interesse $y$, como:
 
-<!-- e -->
+$$\overline y_{ASc}=\overline y=\frac 1n \sum_{i=1}^n y_i \: \: \: e \: \: \: \widehat T_{ASc}=N\overline y_{ASc}$$
 
-<!-- $$ -->
-<!-- \widehat Y_{ASc}=N\overline y_{ASc} (\#eq:eqsis16) -->
-<!-- $$ -->
+* Neste método a seleção é feita com equiprobabilidade e sem reposição, como na AS tradicional, porém é necessário que $N$ seja conhecido e a seleção é um pouco mais trabalhosa. A vantagem é que os estimadores são sempre não viciados.
 
-<!-- Neste método a seleção é feita com equiprobabilidade e sem reposição, como na AS tradicional, porém é necessário que $N$ seja conhecido e a seleção é um pouco mais trabalhosa. A vantagem é que os estimadores são sempre não viciados. -->
-
-<!-- Fica para o leitor verificar que os estimadores para a média e total são não viciados. -->
+* Fica para o leitor verificar que os estimadores para a média e total são não viciados.
 

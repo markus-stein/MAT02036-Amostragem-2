@@ -140,8 +140,8 @@ That_r <- K * colSums(pop, na.rm = TRUE)  # estimativas para cada amostra possí
 That_r                       
 EThat <- mean(That_r)        # media das estimativas de total
 EThat
-T <- sum(pop,na.rm=T)        # total populacional T
-T
+Ty <- sum(pop,na.rm=T)        # total populacional T
+Ty
 ```
 
 ---
@@ -149,8 +149,8 @@ T
 ## Amostragem Sistemática Simples
 ### Estimação de médias na **AS**
 
-* Para estimar a média populacional $\overline Y = \frac Y N = \frac {\sum_{r=1}^{K} t_r} {\sum_{r=1}^{K} n_r}$ um estimador não viciado (`r emo::ji("question")`) é dado por (quando $N$ é conhecido)
-$$\overline y_{AS} = \frac {\widehat Y_{AS}} N = \frac {K t_r}{N}.$$
+* Para estimar a média populacional $\overline Y = \frac T N = \frac {\sum_{r=1}^{K} t_r} {\sum_{r=1}^{K} n_r}$ um estimador não viciado (`r emo::ji("question")`) é dado por (quando $N$ é conhecido)
+$$\overline y_{AS} = \frac {\widehat T_{AS}} N = \frac {K t_r}{N}.$$
  
 * $\overline y_{AS}$ é não viciado para $\overline Y$, pois $\widehat T_{AS}$ é não viciado para $T$. 
 
@@ -168,7 +168,7 @@ Com a mesma população do Exemplo 1, verificar que $\overline y_{AS}$ é não v
 
 ```{r}
 ## exemplo 2
-N <- sum(pop, na.rm = TRUE)   # tamanho da populacao
+N <- sum(!is.na(pop))         # tamanho da populacao
 ybarAS_r <- That_r/N          # estimativas para cada amostra possivel
 ybarAS_r
 EybarAS <- mean(ybarAS_r)     # media das estimativas
@@ -183,7 +183,7 @@ YbarAS
 ### Estimação de médias na **AS**
 
 * Quando $N$ é desconhecido, uma alternativa é o estimador do tipo razão
-$$\overline y_{AS}=\frac {\widehat Y_{AS}}{\widehat N_{AS}}=\frac {Kt_r}{Kn_r}=\frac {t_r}{n_r}=\overline y_r=\overline y$$
+$$\overline y_{AS}=\frac {\widehat T_{AS}}{\widehat N_{AS}}=\frac {Kt_r}{Kn_r}=\frac {t_r}{n_r}=\overline y_r=\overline y$$
 
 #### Exemplo 3
 Ainda com a mesma população, verificar que a média amostral $\overline y$ não coincide com $\overline y_{AS}$ e, além disso, é viciado.
@@ -200,7 +200,6 @@ Eybar
 
 ## Amostragem Sistemática Simples
 ### Estimação de médias na **AS**
-
 
 Verifica-se assim que a média amostral simples é um estimador para uma razão, sendo portanto viciado para estimar a média populacional. Tal estimador só será exatamente não viciado quando $N=nK$, pois:
 
@@ -258,7 +257,7 @@ $$\begin{array}{ll}\hspace{-0,6cm}
 Var_{AS}(\widehat{T}_{AS}) &=& Var_{AS}\left[K\sum_{r=1}^{K}I(r)t_r\right]\\&=&K^2\left[{\sum_{r=1}^{K}{t_r}^2 Var_{AS}[I(r)]}+\sum_{r\neq K}COV_{AS}[I(r),I(q)]t_rt_q\right]\\&=& K^2\left[\sum_{r=1}^{K}{t_r}^2\frac{1}{K}\left(1-\frac{1}{K}\right)+\sum_{r\neq K}t_rt_q\left(-\frac{1}{K^2}\right)\right]\\&=& K^2\left[\frac{1}{K}\sum_{r=1}^{K}{t_r}^2 - \frac{1}{K^2}\left(\sum_{r=1}^{K}{t_r}^2+\sum_{r\neq K}t_rt_q\right)\right]\\&=&K\left[\sum_{r=1}^{K}{t_r}^2 - \left(\sum_{r=1}^{K}{t_r}\right)^2/K\right]\\&=&K\sum_{r=1}^{K}(t_r-\overline t)^2
 \end{array}$$
 
-onde: $\overline t = \displaystyle \frac 1 K \sum_{r=1}^{K} t_r = \frac T K$
+onde: $\overline t = \frac 1 K \sum_{r=1}^{K} t_r = \frac T K$
 
 ---
 
@@ -271,7 +270,7 @@ Quando $N$ é conhecido, a variância do estimador da média populacional é dad
 
 $$Var_{AS}(\overline y_{AS}) = \frac1{N^2} Var_{AS}(\widehat T_{AS})$$
 
-* Na **AS** ordenação da população em relação aos valores de $y$ afeta a variância (precisão) dos estimadores. 
+* Na **AS** a ordenação da população em relação aos valores de $y$ afeta a variância (precisão) dos estimadores. 
 
   + O que ocorre se compararmos com uma estratégia **AAS**`r emo::ji("question")`
   
@@ -307,13 +306,13 @@ c. observar que a variância do estimador do total em (a) e (b).
 pop <- matrix(c(99,54,96,54,85,88,55,83,62,85,96,55,91,92,67,68,54,79,76,NA),5,K,byrow=T)
 N <- sum(!is.na(pop)) # tamanho da população
 tr <- colSums( pop, na.rm=T)
-V_YhatAS <- K * (var(tr) * (K-1)) # variancia do estimador do total
-V_YhatAS
+Var_ThatAS <- K * (var(tr) * (K-1)) # variancia do estimador do total
+Var_ThatAS
 ## ordenando a populacao em ordem crescente de y
 pop_ord <- matrix(sort(pop,na.last=T),5,K,byrow=T)
 tr <- colSums( pop_ord, na.rm=T)
-V_YhatAS_ord <- K * (var(tr) * (K-1))    # variancia do estimador do total
-V_YhatAS_ord
+Var_ThatAS_ord <- K * (var(tr) * (K-1))    # variancia do estimador do total
+Var_ThatAS_ord
 ```
 
 ---
@@ -323,7 +322,7 @@ V_YhatAS_ord
 
 **Notas:**
 
-1. Como $r$ pode tomar apenas um valor, $Var_{AS}(\widehat Y_{AS})$ não pode ser diretamente estimada a partir da amostra.    
+1. Como $r$ pode tomar apenas um valor, $Var_{AS}(\widehat T_{AS})$ não pode ser diretamente estimada a partir da amostra.    
 
 2. Em @Cochran1977 é apresentada uma boa discussão sobre como a ordenação dos valores da variável de pesquisa para unidades populacionais pode afetar a eficiência de amostras sistemáticas.
 
@@ -347,7 +346,7 @@ $$(N-1) S_y^2 = n  \times K  \times Var_{AS}(\overline y_{AS}) + K (n-1) S_{dc}^
 
 onde $S_y^2$ é a variância populacional total, $S_{dc}^2$ é a variância *dentro* das amostras sistemáticas e $Var_{AS}(\overline y_{AS})$ é a variância de $\overline y_{AS}$ sob amostragem sistemática simples.
 
-O estimador de média é mais eficiente sob amostragem sistemática que sob **AAS** se e somente se $S_{dc}^2 > S_y^2$ (@Cochran1977, página 208).
+* O estimador de média é mais eficiente sob amostragem sistemática que sob **AAS** se e somente se $S_{dc}^2 > S_y^2$ (@Cochran1977, página 208).
 
 ---
 
@@ -356,7 +355,7 @@ O estimador de média é mais eficiente sob amostragem sistemática que sob **AA
 
 Expressão alternativa para $Var_{AS}(\overline y_{AS})$ quando $N = nK$: (Teorema 8.2 de @Cochran1977, página 209)
 
-$$Var_{AS}(\overline y_{AS})  = \left( \frac {N-1} {N} \right) \left[ 1 + (n-1) \rho \right] \frac {S_y^2} {n} \doteq \left[ 1 + (n-1)\rho \right] \frac {S_y^2} {n},$$ 
+$$Var_{AS}(\overline y_{AS})  = \left( \frac {N-1} {N} \right) \left[ 1 + (n-1) \rho \right] \frac {S_y^2} {n} \doteq \left[ 1 + (n-1)\rho_{int} \right] \frac {S_y^2} {n},$$ 
 onde
 $$\rho_{int} = \frac {1} {(n-1) (N-1) S_y^2} \sum_{r=1}^{K} \sum_{i \neq j \in s_r} (y_i - \overline Y) (y_j - \overline Y)$$
 é a *correlação intraclasse* das amostras sistemáticas possíveis.

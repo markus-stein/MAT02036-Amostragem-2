@@ -4,7 +4,7 @@
     <title>MAT02036 - Amostragem 2</title>
     <meta charset="utf-8" />
     <meta name="author" content="Markus Stein" />
-    <script src="libs/header-attrs-2.18/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.20/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
   </head>
@@ -38,7 +38,7 @@ class: center, middle, title-slide
 width: 110px;
 height: 128px;
 z-index: 0;
-background-image: url(C:/Users/User/Documents/MAT02036-Amostragem-2/img/logo_dest.png);
+background-image: url(/cloud/project/img/logo_dest.png);
 background-size: contain;
 background-repeat: no-repeat;
 position: absolute;
@@ -85,7 +85,7 @@ top:1em;right:1em;
 
 ---
 
-## Aula passada 💿
+## Aula passada 📀
 ### Amostragem Sistemática Simples
 
 * *O método*: selecionar cada `\(K\)`-ésima unidade da população; 
@@ -100,7 +100,7 @@ top:1em;right:1em;
 
 ---
 
-## Aula passada 💽
+## Aula passada 💿
 ### Amostragem Sistemática Simples
 
 * A probabilidade de inclusão na amostra de uma unidade `\(i\)` qualquer é dada por:
@@ -188,8 +188,8 @@ EThat
 ```
 
 ```r
-T &lt;- sum(pop,na.rm=T)        # total populacional T
-T
+Ty &lt;- sum(pop,na.rm=T)        # total populacional T
+Ty
 ```
 
 ```
@@ -201,8 +201,8 @@ T
 ## Amostragem Sistemática Simples
 ### Estimação de médias na **AS**
 
-* Para estimar a média populacional `\(\overline Y = \frac Y N = \frac {\sum_{r=1}^{K} t_r} {\sum_{r=1}^{K} n_r}\)` um estimador não viciado (❓) é dado por (quando `\(N\)` é conhecido)
-`$$\overline y_{AS} = \frac {\widehat Y_{AS}} N = \frac {K t_r}{N}.$$`
+* Para estimar a média populacional `\(\overline Y = \frac T N = \frac {\sum_{r=1}^{K} t_r} {\sum_{r=1}^{K} n_r}\)` um estimador não viciado (❓) é dado por (quando `\(N\)` é conhecido)
+`$$\overline y_{AS} = \frac {\widehat T_{AS}} N = \frac {K t_r}{N}.$$`
  
 * `\(\overline y_{AS}\)` é não viciado para `\(\overline Y\)`, pois `\(\widehat T_{AS}\)` é não viciado para `\(T\)`. 
 
@@ -221,13 +221,13 @@ Com a mesma população do Exemplo 1, verificar que `\(\overline y_{AS}\)` é n�
 
 ```r
 ## exemplo 2
-N &lt;- sum(pop, na.rm = TRUE)   # tamanho da populacao
+N &lt;- sum(!is.na(pop))         # tamanho da populacao
 ybarAS_r &lt;- That_r/N          # estimativas para cada amostra possivel
 ybarAS_r
 ```
 
 ```
-## [1] 1.0868659 1.1063238 1.0840862 0.7227241
+## [1] 82.31579 83.78947 82.10526 54.73684
 ```
 
 ```r
@@ -236,7 +236,7 @@ EybarAS
 ```
 
 ```
-## [1] 1
+## [1] 75.73684
 ```
 
 ```r
@@ -254,7 +254,7 @@ YbarAS
 ### Estimação de médias na **AS**
 
 * Quando `\(N\)` é desconhecido, uma alternativa é o estimador do tipo razão
-`$$\overline y_{AS}=\frac {\widehat Y_{AS}}{\widehat N_{AS}}=\frac {Kt_r}{Kn_r}=\frac {t_r}{n_r}=\overline y_r=\overline y$$`
+`$$\overline y_{AS}=\frac {\widehat T_{AS}}{\widehat N_{AS}}=\frac {Kt_r}{Kn_r}=\frac {t_r}{n_r}=\overline y_r=\overline y$$`
 
 #### Exemplo 3
 Ainda com a mesma população, verificar que a média amostral `\(\overline y\)` não coincide com `\(\overline y_{AS}\)` e, além disso, é viciado.
@@ -283,7 +283,6 @@ Eybar
 
 ## Amostragem Sistemática Simples
 ### Estimação de médias na **AS**
-
 
 Verifica-se assim que a média amostral simples é um estimador para uma razão, sendo portanto viciado para estimar a média populacional. Tal estimador só será exatamente não viciado quando `\(N=nK\)`, pois:
 
@@ -360,7 +359,7 @@ A variância de `\(\widehat Y_{AS}\)` sob amostragem sistemática simples é dad
 Var_{AS}(\widehat{T}_{AS}) &amp;=&amp; Var_{AS}\left[K\sum_{r=1}^{K}I(r)t_r\right]\\&amp;=&amp;K^2\left[{\sum_{r=1}^{K}{t_r}^2 Var_{AS}[I(r)]}+\sum_{r\neq K}COV_{AS}[I(r),I(q)]t_rt_q\right]\\&amp;=&amp; K^2\left[\sum_{r=1}^{K}{t_r}^2\frac{1}{K}\left(1-\frac{1}{K}\right)+\sum_{r\neq K}t_rt_q\left(-\frac{1}{K^2}\right)\right]\\&amp;=&amp; K^2\left[\frac{1}{K}\sum_{r=1}^{K}{t_r}^2 - \frac{1}{K^2}\left(\sum_{r=1}^{K}{t_r}^2+\sum_{r\neq K}t_rt_q\right)\right]\\&amp;=&amp;K\left[\sum_{r=1}^{K}{t_r}^2 - \left(\sum_{r=1}^{K}{t_r}\right)^2/K\right]\\&amp;=&amp;K\sum_{r=1}^{K}(t_r-\overline t)^2
 \end{array}$$`
 
-onde: `\(\overline t = \displaystyle \frac 1 K \sum_{r=1}^{K} t_r = \frac T K\)`
+onde: `\(\overline t = \frac 1 K \sum_{r=1}^{K} t_r = \frac T K\)`
 
 ---
 
@@ -373,7 +372,7 @@ Quando `\(N\)` é conhecido, a variância do estimador da média populacional é
 
 `$$Var_{AS}(\overline y_{AS}) = \frac1{N^2} Var_{AS}(\widehat T_{AS})$$`
 
-* Na **AS** ordenação da população em relação aos valores de `\(y\)` afeta a variância (precisão) dos estimadores. 
+* Na **AS** a ordenação da população em relação aos valores de `\(y\)` afeta a variância (precisão) dos estimadores. 
 
   + O que ocorre se compararmos com uma estratégia **AAS**❓
   
@@ -410,8 +409,8 @@ c. observar que a variância do estimador do total em (a) e (b).
 pop &lt;- matrix(c(99,54,96,54,85,88,55,83,62,85,96,55,91,92,67,68,54,79,76,NA),5,K,byrow=T)
 N &lt;- sum(!is.na(pop)) # tamanho da população
 tr &lt;- colSums( pop, na.rm=T)
-V_YhatAS &lt;- K * (var(tr) * (K-1)) # variancia do estimador do total
-V_YhatAS
+Var_ThatAS &lt;- K * (var(tr) * (K-1)) # variancia do estimador do total
+Var_ThatAS
 ```
 
 ```
@@ -422,8 +421,8 @@ V_YhatAS
 ## ordenando a populacao em ordem crescente de y
 pop_ord &lt;- matrix(sort(pop,na.last=T),5,K,byrow=T)
 tr &lt;- colSums( pop_ord, na.rm=T)
-V_YhatAS_ord &lt;- K * (var(tr) * (K-1))    # variancia do estimador do total
-V_YhatAS_ord
+Var_ThatAS_ord &lt;- K * (var(tr) * (K-1))    # variancia do estimador do total
+Var_ThatAS_ord
 ```
 
 ```
@@ -437,7 +436,7 @@ V_YhatAS_ord
 
 **Notas:**
 
-1. Como `\(r\)` pode tomar apenas um valor, `\(Var_{AS}(\widehat Y_{AS})\)` não pode ser diretamente estimada a partir da amostra.    
+1. Como `\(r\)` pode tomar apenas um valor, `\(Var_{AS}(\widehat T_{AS})\)` não pode ser diretamente estimada a partir da amostra.    
 
 2. Em @Cochran1977 é apresentada uma boa discussão sobre como a ordenação dos valores da variável de pesquisa para unidades populacionais pode afetar a eficiência de amostras sistemáticas.
 
@@ -461,7 +460,7 @@ tem-se que:
 
 onde `\(S_y^2\)` é a variância populacional total, `\(S_{dc}^2\)` é a variância *dentro* das amostras sistemáticas e `\(Var_{AS}(\overline y_{AS})\)` é a variância de `\(\overline y_{AS}\)` sob amostragem sistemática simples.
 
-O estimador de média é mais eficiente sob amostragem sistemática que sob **AAS** se e somente se `\(S_{dc}^2 &gt; S_y^2\)` (@Cochran1977, página 208).
+* O estimador de média é mais eficiente sob amostragem sistemática que sob **AAS** se e somente se `\(S_{dc}^2 &gt; S_y^2\)` (@Cochran1977, página 208).
 
 ---
 

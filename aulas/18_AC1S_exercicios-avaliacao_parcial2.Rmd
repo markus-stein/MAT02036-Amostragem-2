@@ -218,8 +218,8 @@ c) Não recomendaria na conglomeração $A$ e recomendaria na $B$. Percebemos um
 
 Do enunciado temos:  
 * $N = \overline N \times M = 4 \times 175 = 700$ pneus, unidades elementares, na população,
-* $M=175$ táxis, conglomerados.
-* $m=10$ táxis foram selecionadosa com reposição 
+* $M = 175$ táxis, conglomerados.
+* $m = 10$ táxis foram selecionadosa com reposição 
 * $T_i$ número de pneus (dentre os 4 pneus em uso) fora de condições de segurança. 
 
 **Variável de interesse** $Y_{ij}$: indicadora do pneu $j$ do táxi $i$ estar em condições de segurança. 
@@ -335,7 +335,7 @@ library(SDaA)
 data(agpop)
 ```
 
-a) Usando o no. cartão como semente aleatória (`set.seed(XXXXXXXX)`, sorteamos uma **AC1S** de 15 estados (variável `state`) sem reposição.
+a) Usando o meu no. cartão a amostra **AC1Ss** de 15 estados (variável `state`) é
 
 ```{r, warning=FALSE}
 ## (a) selecao de estados
@@ -350,17 +350,27 @@ estados_amostra
 ## Avaliação Parcial 2
 ### Questão 3 - solução
 
-b. A partir da amostra sorteada, obtenha e apresente a estimativa pontual e por $IC$ $95\%$ da média da variável `largef92`. Interprete os resultados.
+b. A partir da amostra sorteada, uma estimativa pontualmente da média... de fazendas... `largef92`.  
 
 ```{r, warning=FALSE}
 ## (b) medidas agregadas e estimacao
+N <- 
+M <- nrow(agpop)
 agpop_amostra <- agpop[agpop$state %in% estados_amostra,]
-Ni <- aggregate( largef92 ~ state, data=agpop_amostra, sum)      # ou tapply(), tamanho dos cong.
-Ti <- aggregate( largef92 ~ state, data=agpop_amostra, length)   # totais cong.
+Ni_amostra <- aggregate( largef92 ~ state, data=agpop_amostra, length) # ou tapply(), tamanho dos cong.
+Ti_amostra <- aggregate( largef92 ~ state, data=agpop_amostra, sum)    # totais cong.
+ybarraAC1S <- (M/m) * sum(Ti_amostra$largef92) / N
 #ybarrac
 #s2ec
 #varybarraC
 ```
+Assim, estimamos que... é aproximadamente `r ybarraAC1S`.
+
+Para o $IC$ $95\%$ da média da variável ... sabemos que
+$$IC_{AC1S} (\overline Y; 1-\alpha) = \left[ \overline y_{AC1S} \mp z_{\alpha/2} \sqrt{\widehat{Var}_{AC1S} \left( \overline y_{AC1S} \right)} \right]$$
+em que $\widehat{Var}_{AC1S} \left( \overline y_{AC1S} \right) = \frac{s^2_{ec}}{m}$.
+
+Interprete os resultados.
 
 
 c. Produza dois gráficos que descrevam a variável `largef92`: um na população, outro na **AC1S** sem reposição sorteada. Comente sobre as diferenças encontradas.

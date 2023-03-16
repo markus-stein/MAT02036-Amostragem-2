@@ -4,7 +4,7 @@
     <title>MAT02036 - Amostragem 2</title>
     <meta charset="utf-8" />
     <meta name="author" content="Markus Stein" />
-    <script src="libs/header-attrs-2.18/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.20/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
   </head>
@@ -38,7 +38,7 @@ class: center, middle, title-slide
 width: 110px;
 height: 128px;
 z-index: 0;
-background-image: url(C:/Users/User/Documents/MAT02036-Amostragem-2/img/logo_dest.png);
+background-image: url(/cloud/project/img/logo_dest.png);
 background-size: contain;
 background-repeat: no-repeat;
 position: absolute;
@@ -85,7 +85,7 @@ top:1em;right:1em;
 
 ---
 
-## Aula passada 💿
+## Aula passada 💽
 ### Exercícios e Lab &lt;i class="fa-duotone fa-people-group"&gt;&lt;/i&gt;<svg aria-hidden="true" role="img" viewBox="0 0 581 512" style="height:1em;width:1.13em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/></svg>
 
 Utilizaremos o banco de dados `Lucy` (com informações ao nível individual) para:
@@ -263,8 +263,8 @@ c) Não recomendaria na conglomeração `\(A\)` e recomendaria na `\(B\)`. Perce
 
 Do enunciado temos:  
 * `\(N = \overline N \times M = 4 \times 175 = 700\)` pneus, unidades elementares, na população,
-* `\(M=175\)` táxis, conglomerados.
-* `\(m=10\)` táxis foram selecionadosa com reposição 
+* `\(M = 175\)` táxis, conglomerados.
+* `\(m = 10\)` táxis foram selecionadosa com reposição 
 * `\(T_i\)` número de pneus (dentre os 4 pneus em uso) fora de condições de segurança. 
 
 **Variável de interesse** `\(Y_{ij}\)`: indicadora do pneu `\(j\)` do táxi `\(i\)` estar em condições de segurança. 
@@ -393,7 +393,7 @@ library(SDaA)
 data(agpop)
 ```
 
-a) Usando o no. cartão como semente aleatória (`set.seed(XXXXXXXX)`, sorteamos uma **AC1S** de 15 estados (variável `state`) sem reposição.
+a) Usando o meu no. cartão a amostra **AC1Ss** de 15 estados (variável `state`) é
 
 
 ```r
@@ -414,18 +414,26 @@ estados_amostra
 ## Avaliação Parcial 2
 ### Questão 3 - solução
 
-b. A partir da amostra sorteada, obtenha e apresente a estimativa pontual e por `\(IC\)` `\(95\%\)` da média da variável `largef92`. Interprete os resultados.
+b. A partir da amostra sorteada, uma estimativa pontualmente da média... de fazendas... `largef92`.  
 
 
 ```r
 ## (b) medidas agregadas e estimacao
 agpop_amostra &lt;- agpop[agpop$state %in% estados_amostra,]
-Ni &lt;- aggregate( largef92 ~ state, data=agpop_amostra, sum)      # ou tapply(), tamanho dos cong.
-Ti &lt;- aggregate( largef92 ~ state, data=agpop_amostra, length)   # totais cong.
+Ni_amostra &lt;- aggregate( largef92 ~ state, data=agpop_amostra, length) # ou tapply(), tamanho dos cong.
+Ti_amostra &lt;- aggregate( largef92 ~ state, data=agpop_amostra, sum)    # totais cong.
+ybarraAC1S &lt;- (M/m) * sum(Ti_amostra$largef92) / N
 #ybarrac
 #s2ec
 #varybarraC
 ```
+Assim, estimamos que... é aproximadamente 847.75.
+
+Para o `\(IC\)` `\(95\%\)` da média da variável ... sabemos que
+`$$IC_{AC1S} (\overline Y; 1-\alpha) = \left[ \overline y_{AC1S} \mp z_{\alpha/2} \sqrt{\widehat{Var}_{AC1S} \left( \overline y_{AC1S} \right)} \right]$$`
+em que `\(\widehat{Var}_{AC1S} \left( \overline y_{AC1S} \right) = \frac{s^2_{ec}}{m}\)`.
+
+Interprete os resultados.
 
 
 c. Produza dois gráficos que descrevam a variável `largef92`: um na população, outro na **AC1S** sem reposição sorteada. Comente sobre as diferenças encontradas.
@@ -444,11 +452,11 @@ c. Produza dois gráficos que descrevam a variável `largef92`: um na populaçã
 
 &lt;!-- * Continuar exercícios do livro 'Amostragem: Teoria e Prática Usando R'    https://amostragemcomr.github.io/livro/estrat.html#exerc11 --&gt;
 
-* Ler o capítulo 2 da apostila da Profa. Vanessa.
+* Ler o capítulo 3 da apostila da Profa. Vanessa.
 
 * Ler o capítulo 8 do livro 'Amostragem: Teoria e Prática Usando R'.
   
-* Rever os slides.
+&lt;!-- * Rever os slides. --&gt;
 
 &lt;!-- * Ler BOlfarine e Bussab...da seção 11.3 do livro 'Amostragem: Teoria e Prática Usando R'. --&gt;
 
@@ -462,7 +470,7 @@ c. Produza dois gráficos que descrevam a variável `largef92`: um na populaçã
 
   + Introdução.
   
-  + Parâmetros e Estimação
+  &lt;!-- + Parâmetros e Estimação --&gt;
   
 &lt;!-- Laboratório de &lt;i class="fa-duotone fa-people-group"&gt;&lt;/i&gt;<svg aria-hidden="true" role="img" viewBox="0 0 581 512" style="height:1em;width:1.13em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/></svg> --&gt;
 

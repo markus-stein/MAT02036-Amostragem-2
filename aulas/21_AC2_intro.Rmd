@@ -1,0 +1,398 @@
+---
+title: "MAT02036 - Amostragem 2"
+subtitle: "Aula 21 - Amostragem por Conglomerados em 2 Estágios - Introdução"
+author: "Markus Stein"
+institute: "Departamento de Estatística, IME/UFRGS"
+date: "2022/2"
+type: "lecture"
+# fontsize: 10pt
+output:
+  xaringan::moon_reader:
+    # css: ["assets/remark.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      titleSlideClass: [center, middle]
+---
+
+```{r libs, echo=FALSE, message=FALSE, warning=FALSE}
+library(xaringanExtra)
+library(emo)
+library(fontawesome)
+library(kableExtra)
+```
+
+```{r xaringan-logo, echo=FALSE}
+# install.packages("remotes")
+# remotes::install_github('yihui/xaringan')
+# remotes::install_github("gadenbuie/xaringanExtra")
+# xaringanExtra::use_logo(
+#   image_url = "https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/xaringan.png"
+# )
+xaringanExtra::use_logo( here::here('img/logo_dest.png'))
+```
+
+### *Housekeeping*
+
+* Aproveitem o momento presencial para tirar dúvidas
+
+* Se estivéssemos no ensino remoto ou à distância
+
+  + vocês poderiam estar somente ouvindo, sem interação
+  
+  + ou assistindo vídeos e material em outro momento
+  
+* Depois das aulas, rever material da aula passada
+
+  + fazer exercícios
+  
+  + se preparar para a próxima aula
+
+---
+
+## Aula passada `r emo::ji("disk")`
+### Estimação na **AS**
+
+* O estimador tipo *Horvitz-Thompson* do total $T = \sum_{i = 1}^K T_i$ sob **AS**, 
+  + o peso amostral das unidades da amostra é sempre igual a $d_i = 1 / \pi_i = K$, então
+$$\widehat{T}_{AS} = K t_r = K \sum_{i \in s_r} y_i$$
+em que $t_r = \sum_{i \in s_r} y_i$ é a soma amostral dos valores observados da variável $y$.
+
+* Para estimar a média populacional $\overline Y = \frac T N = \frac {\sum_{r=1}^{K} t_r} {\sum_{r=1}^{K} n_r}$ um estimador não viciado (`r emo::ji("question")`) é dado por (quando $N$ é conhecido)
+$$\overline y_{AS} = \frac {\widehat T_{AS}} N = \frac {K t_r}{N}.$$
+ 
+---
+
+## Aula passada `r emo::ji("disk")`
+### Estimação na **AS**
+
+Estimador | Observação
+--|--
+$\widehat T_{AS}=Kt_r=K \sum_{r=1}^{K}I(r)t_r$ | 
+$\overline {y}_{AS}=\frac KNt_r$ | se $N$ é conhecido
+$\overline{y}_{AS}= \frac {t_r}{n_r}=\overline y$ | se $N$ é desconhecido
+$\widehat{Var}_{1AS} (\widehat T_{AS}) = N^2\widehat{Var}_{1AS} (\overline y_{AS})$ | se $N$ é conhecido e sem ordenação
+$\widehat{Var}_{2AS}(\widehat T_{AS}) = N^2 \widehat{Var}_{2AS}(\overline y_{AS})$ | se $N$ é conhecido e houver ordenação
+$\widehat{Var}_{1AS} (\overline y_{AS}) = \left( \frac {1}{n} - \frac 1 {N} \right) \frac {1}{n-1} \sum_{i \in s_r} (y_i - \overline y_{AS})^2$ | se  $N$ é conhecido e sem ordenação
+$\widehat{Var}_{2AS}(\overline y_{AS}) = \left( \frac {1}{n} - \frac 1 {N} \right) \frac {1}{2(n-1)} \sum_{i \in s_r} (y_i - y_{i+K})^2$ | se $N$ é conhecido e houver ordenação
+
+---
+
+## Aula passada `r emo::ji("disk")`
+### Estimação na **AS**
+
+#### Exemplo: .
+Considere a população abaixo e $n = 2$: 
+
+$$X = (2, 6, 10, 8, 10, 12)$$
+
+a. Calcule $E( \overline y_{AS})$ e $Var( \overline y_{AS})$.
+
+b. Calcule $E \left[ \widehat{Var}_{AS} (\overline y_{AS}) \right]$.
+
+c. $\overline y_{AS}$ e $\widehat{Var}_{AS} (\overline y_{AS})$ são **ENV** para os respectivos parâmetros a que se destinam estimar?
+
+---
+
+class: inverse, middle, center
+
+# Amostragem conglomerada em dois estágios
+
+---
+
+## Amostragem conglomerada em dois estágios 
+
+* *Amostragem Conglomerada em dois estágios* - **AC2** = **AC1** + subamostragem
+
+  + **Estágio 1**: selecione uma amostra $a$ de $m$ UPAs (conglomerados).
+  
+  + **Estágio 2**: para cada UPA $C_i$ tal que $i \in a$, selecione amostra $s_i$ de $n_i$ unidades secundárias das $N_i$ unidades existentes nessa UPA.
+
+* A **amostra completa** de unidades selecionadas é dada por: 
+$$s = s_{i_1}\cup s_{i_2} \cup \dots \cup s_{i_m}= \bigcup_{k=1}^{m} s_{i_k}$$
+
+* O **tamanho total da amostra** é $n = \sum_{i \in a} n_i$.
+
+---
+
+## Amostragem conglomerada em dois estágios 
+
+As principais razões para adotar amostragem conglomerada em dois estágios são as seguintes:
+
+1) Geralmente não é prático pesquisar todas as unidades nos conglomerados selecionados: *conglomerados* muito *grandes*, *carga de trabalho variável* por entrevistador, etc.     
+
+2) Constatou-se que a perda de precisão da AC1S em relação à AAS para amostras de mesmo tamanho é tanto maior quanto maior for o tamanho do conglomerado. A adoção de AC2 vem reduzir a influência do tamanho dos conglomerados na eficiência da amostragem conglomerada, permitindo ao amostrista controlar melhor a precisão do estimador resultante, ao manejar o número de unidades que são selecionadas em cada conglomerado. Na AC1 isso não está sob controle do amostrista, pois uma vez selecionado um conglomerado, todas as suas unidades devem ser pesquisadas.     
+
+3) Se a variância dentro dos conglomerados for pequena, as médias por conglomerados $\overline {Y_i}$ podem ser bem estimadas por amostragem.     
+
+4) *Amostragem em dois estágios* é mais complexa, porém *mais flexível*.     
+
+---
+
+## Amostragem conglomerada em dois estágios 
+
+* Na estimação sob AC2, cujo plano amostral compreende *dois estágios de seleção*, para encontrar médias e variâncias de estimadores, devem ser calculadas médias considerando todas as possíveis amostras sob o plano amostral.
+
+  + Isto requer considerar todas as possíveis amostras no primeiro estágio e, todas as possíveis amostras no segundo estágio, dentro de cada amostra de UPAs do primeiro estágio.
+
+* Usaremos os resultados de @Cochran1977, Expressão 10.1 da página 275 e Expressão 10.2 da página 276, respectivamente: 
+
+$$E[\widehat \theta] = E_1[ E_2( \widehat \theta)]$$
+$$Var[\widehat \theta] = Var_1[ E_2(\widehat \theta)] + E_1[ Var_2(\widehat \theta)]$$
+  + $E_2$, $V_2$ denotam, respectivamente, valor esperado e variância considerando todas as possíveis amostras de unidades dentro de um conjunto fixado de UPAs (estágio 2).
+
+  + $E_1$, $V_1$ denotam, respectivamente, valor esperado e variância considerando todas as possíveis amostras de UPAs (estágio 1).
+
+  + $\widehat \theta$ é algum estimador para um parâmetro $\theta$. 
+
+Resultados similares podem ser estendidos para planos em três ou mais estágios (ver @Cochran1977, Seção 10.8).
+
+---
+
+## Amostragem conglomerada em dois estágios 
+
+* O estimador não viciado de Horvitz-Thompson do total $T$ sob AC2 é dado por:
+
+$$\widehat T_{AC2/HT} = \displaystyle \sum_{i\in a} \frac{\widehat Y_i}{\pi_i} = \sum_{i \in a} \frac {1} {\pi_i} \sum_{j \in s_i} \frac {y_{ij}} {\pi_{j|i}} = \sum_{i \in a} \sum_{j \in s_i}d_{ij} y_{ij}$$
+
+onde:
+
+  + $\pi_i$ é a probabilidade de inclusão da UPA $i$;
+
+  + $s_i$ é a amostra de unidades selecionadas dentro da UPA $i$;
+
+  + $\widehat T_i = \sum_{j \in s_i} \frac {y_{ij}} {\pi_{j|i}}$ é um estimador HT do total $Y_i$ da UPA $i$;
+
+  + $\pi_{j|i} = P(j \in s_i \, | \, i \in a)$ é a probabilidade de inclusão da unidade $j$ dado que a UPA $i$ está na amostra $a$; e
+
+  + $d_{ij} = \pi_{ij}^{-1} = \pi_i^{-1} \pi_{j|i}^{-1}$ é o peso associado à unidade $j$ da UPA $i$.
+
+---
+
+## Amostragem conglomerada em dois estágios 
+
+* A variância de $\widehat Y_{AC2/HT}$ sob AC2 é dada por: 
+$$\begin{eqnarray}\hspace{-1.5cm}
+Var_{AC2} \left( \widehat T_{AC2/HT} \right) & = & Var_1 \left[E_2 \left( \sum_{i \in a} \frac {\widehat T_i} {\pi_i} \right) \right] + E_1 \left[ Var_2 \left(\sum_{i \in a} \frac {\widehat T_i} {\pi_i} \right) \right] \\ & = & Var_1 \left[ \sum_{i \in U} R_i E_2 \left( \widehat T_i \right) \big/ \pi_i \right] + E_1 \left[ \sum_{i \in U} R_i Var_2 \left( {\widehat T_i} \right) \big/ {\pi_i}^2 \right] \\ & = & Var_1 \left(  \sum_{i \in a} {T_i} \big/ \pi_i \right) + \sum_{i \in U} Var_2 \left( \widehat T_i \right) \big/ \pi_i \\
+& = & Var_{UPA} + Var_{USA} 
+\end{eqnarray}$$
+onde:
+  + $R_i$ é a variável indicadora da presença da unidade $i$ na amostra; 
+  + $Var_{UPA}$ é a componente de variância de $\widehat T_{AC2/HT}$ proveniente da amostragem de UPAs (estágio 1), isto é, variância caso **AC1S** fosse usada (sem subamostragem); e
+  + $Var_{USA}$ é a componente de variância de $\widehat T_{AC2/HT}$ proveniente da amostragem de USAs (amostragem no estágio 2).
+
+---
+
+## Amostragem conglomerada em dois estágios 
+
+* Um estimador não viciado (de Horvitz-Thompson) da média por unidade $\overline Y$ é dado por:
+
+$$\overline y_{AC2/HT} = \frac {\widehat T_{AC2/HT}} N = \frac 1 N \left( \sum_{i \in a} \frac {\widehat T_i} {\pi_i} \right)$$
+
+* Se $N$ for conhecido, um estimador tipo razão para estimar o total $T$ é dado por:
+
+$$\widehat Y_{AC2}^R = N \left( \sum_{i \in a} \frac {\widehat T_i} {\pi_i} \right) \Big/ \left( \sum_{i \in a} \frac {N_i} {\pi_i} \right)$$
+
+Um estimador tipo razão da média por unidade é dado por: 
+
+$$\overline y_{AC2}^R = \left( \sum_{i \in a} \frac {\widehat T_i} {\pi_i} \right) \Big/ \left( \sum_{i \in a} \frac {N_i} {\pi_i} \right)$$
+
+Este estimador de razão da média pode ser calculado mesmo quando $N$ for desconhecido. 
+
+---
+
+## Amostragem conglomerada em dois estágios 
+### **AC2** com AAS nos 2 estágios
+
+* Tratamos agora do plano amostral *AC2 com AAS nos 2 estágios - AC2S*, ou seja:   
+
+  + **Estágio 1**: selecione amostra de $m$ UPAs usando **AAS**.
+  
+  + **Estágio 2**: para cada UPA $i$ da amostra de primeiro estágio, selecione $n_i$ unidades secundárias das $N_i$ unidades existentes usando **AAS**.
+
+Para esse plano, a probabilidade de inclusão da unidade $j$ da UPA $i$ é dada por:
+
+$$\pi_{ij} = P(i \in a \, , \, j \in s) = P(i \in a) P(j \in s \, | \, i\in a) = \frac {m} {M} \frac {n_i} {N_i}$$
+
+Planos amostrais são mais simples quando as probabilidades de inclusão são constantes, isto é, $\pi_{ij} = n / N, \,\, \forall\,\,i\,\,\text{e}\,\, \forall j$. Nestas condições, o plano amostral é dito *equiponderado* ou *autoponderado*.
+
+Com o plano amostral AC2S, isto pode ser conseguido tomando $n_i \propto N_i$.
+
+Uma desvantagem importante desse tipo de plano seria a geração de *cargas de trabalho desiguais* por UPA ou por entrevistador, caso cada UPA seja alocada a um só entrevistador.
+
+---
+
+## Amostragem conglomerada em dois estágios 
+### **AC2** com AAS nos 2 estágios
+
+* O  estimador não viciado do total sob o plano amostral **AC2S** é (@Cochran1977, Expressão 11.21): 
+
+$$\widehat Y_{AC2S} = \frac {M} {m} \sum_{i \in a} \widehat T_i$$ 
+
+com $\widehat T_i = \frac {N_i} {n_i} \sum_{j \in s_i} y_{ij}$ para toda UPA $i$. 
+
+* A variância do estimador não viciado do total sob o plano amostral **AC2S** é (@Cochran1977, Expressão 11.22): 
+
+$$\begin{eqnarray}
+Var_{AC2S} \left( \widehat T_{AC2S} \right) & = & M^2 \left( \frac {1} {m} - \frac {1} {M} \right) \frac {1} {M-1} \sum_{i \in C} \left( T_i - \overline {Y_C} \right)^2 \\&  & + \frac{M} {m} \sum_{i \in C} N_i^2 \left( \frac {1} {n_i} - \frac {1} {N_i} \right) S_i^2 \end{eqnarray}$$
+
+onde as parcelas do segundo membro representam as componentes da variância devidas ao 1º e ao 2º estágios de seleção, respectivamente, sendo: 
+$$S_i^2 = \frac {1} {N_i - 1} \sum_{j \in C_i} \left( y_{ij} - \overline {Y_i} \right)^2$$ 
+a variância dentro da UPA $i$.
+
+---
+
+## Amostragem conglomerada em dois estágios 
+### **AC2** com AAS nos 2 estágios
+
+Note que:
+
+i) Se $m = M$ então, a 1ª componente da variância é nula, ou seja:      
+    $Var_{AC2S} \left( \widehat Y_{AC2S} \right) = \displaystyle\sum_{i \in C} N_i^2 \left( \frac {1} {n_i} - \frac {1} {N_i} \right) S_i^2 = V_{AES} \left( \widehat Y_{AES} \right)$     
+    e este plano amostral equivaleria ao de uma amostra estratificada, em que os conglomerados se tornaram estratos!      
+ii) Se $n_i = N_i \,\, (\forall\, i = 1, 2, \dots, n)$ então, a 2ª componente da variância é nula, ou seja:    
+$V_{AC2S} \left( \widehat Y_{AC2S} \right) = \displaystyle M^2 \left( \frac {1} {m} - \frac {1} {M} \right) \frac {1} {M-1} \sum_{i \in C} \left( Y_i - \overline {Y_C} \right)^2 = V_{AC1S} \left( \widehat Y \right)$    
+    e este plano amostral equivaleria ao de uma amostra de conglomerados em um estágio simples.
+
+De acordo com @Cochran1977, Expressão (11.24), um estimador não viciado da variância do estimador HT do total sob o plano amostral AC2S é dado por: 
+
+$$\begin{eqnarray}\hspace{-2.0cm}
+\widehat Var_{AC2S} \left( \widehat T_{AC2S} \right) & = & M^2 \left( \frac {1} {m} - \frac {1} {M} \right) \frac {1} {m-1} \sum_{i \in a} \left( \widehat T_i - \overline y_C \right)^2 +\\& & + \frac {M} {m} \sum_{i \in a} N_i^2 \left( \frac {1} {n_i} - \frac {1} {N_i} \right) \widehat S_i^2 \\ \hfill \end{eqnarray}$$
+
+onde: 
+
+$\overline y_C = \frac {1} {m} \sum_{i \in a} \widehat T_i$ estima a média por conglomerado $\overline {Y_C}$; e
+
+$\widehat S_i^2 = \frac {1} {n_i-1} \sum_{j \in s_i} \left( y_{ij} - \overline {Y_i} \right)^2$ estima a variância dentro da UPA $i$.
+
+* Um estimador não viciado da média por unidade sob o plano amostral AC2S é dado por:
+
+$$\overline y_{AC2S} = \frac {\widehat T_{AC2S}} {N} = \frac {M} {mN} \sum_{i \in a} \widehat T_i = \frac {M} {mN} \sum_{i \in a} \frac {N_i} {n_i} \sum_{j \in s_i} y_{ij}$$ 
+
+---
+
+## Amostragem conglomerada em dois estágios 
+### **AC2** com AAS nos 2 estágios
+
+* A variância do estimador não viciado da média por unidade sob o plano amostral AC2S é dada por: 
+
+$$Var_{AC2S} \left( \overline y_{AC2S} \right) = \frac {1} {N^2} Var_{AC2S} \left( \widehat T_{AC2S} \right)$$
+
+Um estimador não viciado da variância do estimador HT da média por unidade sob o plano amostral AC2S é dado por: 
+
+$$\widehat Var_{AC2S} \left( \overline y_{AC2S} \right) = \frac {1} {N^2} \widehat Var_{AC2S} \left( \widehat T_{AC2S} \right)$$ 
+
+---
+
+## Para casa `r emo::ji("house")`
+
+<!-- * Fazer a lista 2 de exercícios. -->
+
+* Continuar exercícios.
+
+<!-- Continuar o Exercício. -->
+
+<!-- * Mostrar tamanho de amostra $n$ para AASc dentro dos estratos. -->
+
+<!-- * Continuar exercícios do livro 'Amostragem: Teoria e Prática Usando R'    https://amostragemcomr.github.io/livro/estrat.html#exerc11 -->
+
+* Ler o capítulo 3 da apostila da Profa. Vanessa.
+
+* Ler o capítulo 8 do livro 'Amostragem: Teoria e Prática Usando R'.
+
+* Rever os slides.
+
+<!-- * Ler BOlfarine e Bussab...da seção 11.3 do livro 'Amostragem: Teoria e Prática Usando R'. -->
+
+<!-- * Preparação para avaliação parcial 2 -->
+
+## Próxima aula `r emo::ji("stats")`
+
+* Acompanhar o material no moodle.
+
+Amostragem Sistemática
+
+  + Estimação.
+
+  + Laboratório de <i class="fa-duotone fa-people-group"></i>`r fa("r-project", fill = "steelblue")`
+
+---
+
+## Muito obrigado!
+
+```{r echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='20%', out.height='20%', paged.print=FALSE}
+knitr::include_graphics('img/image_basu_elephant.jpg')
+```
+.center[
+#### Fonte: imagem do livro *Combined Survey Sampling Inference: Weighing of Basu's Elephants*.
+]
+
+
+---
+
+## Referências
+
+<!-- Slides baseados no Capítulo 11 do livro -->
+
+* [Amostragem: Teoria e Prática Usando o R](https://amostragemcomr.github.io/livro/index.html)
+
+* **Elementos de Amostragem**, Bolfarine e Bussab.
+
+<!-- Citações do Capítulo -->
+
+<!-- * Neyman(1934) -->
+
+* Cochran(1977)
+
+
+<!-- * refazer calculos para amostagem aleatoria simples com reposicao -->
+<!-- * alocacao... ou lab R comparando alocação proporcional e igual tamanho -->
+
+<!-- listas de exercicios... -->
+<!-- dois aspectos da disciplina... ter flexibilidade com teoria... exercitar os conceitos com exercicios teoricos e praticos -->
+
+<!-- falar dos pesos na AES -->
+
+<!-- valor z_alpha/2 significa z ou t -->
+
+<!-- quem tiver interesse em conferir as fórmulas... mostra as conttas, gosta dessa pparte...posso contabilizar ponto extra... tem q ser o primeira... -->
+<!-- o mesmo pode valer para os códigos e texto... -->
+<!-- fazer o formulário -->
+<!-- resumo de formulas -->
+
+---
+
+## Resumo da notação
+
+---
+
+## Trabalho
+
+.center[
+#### Tópicos em 
+#### `Amostragem com Probabilidades Variáveis` 
+#### e 
+####`Amostragens Complexas`
+]
+
+* Escolher um tema dentre os tópicos que encerram o conjunto de disciplinas de Amostragem.
+
+* Materiais disponíveis:
+  + minicurso Sinape
+  + minicurso Thomas
+  + capítulos das nossas refeências
+
+* Apresentar:
+  + problema
+  + delineamento e estratégia
+  + 10 slides? máximo  
+  + 15 min apresentacao + 5 min perguntas. presencial ou video
+
+<!-- * falar com Ju -->
+
+<!-- * Falar do meu problema  -->
+<!-- 	+ ... -->
+
+<!-- chamar rodrigo e ju e marcia, para as apresentacoes??? tem canecas do datathon -->

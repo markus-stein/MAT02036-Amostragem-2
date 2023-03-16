@@ -251,7 +251,7 @@ P
 ## Amostragem Sistemática Simples
 ### Variância dos estimadores sob **AS**
 
-A variância de $\widehat Y_{AS}$ sob amostragem sistemática simples é dada por: 
+A variância de $\widehat T_{AS}$ sob amostragem sistemática simples é dada por: 
 
 $$\begin{array}{ll}\hspace{-0,6cm}
 Var_{AS}(\widehat{T}_{AS}) &=& Var_{AS}\left[K\sum_{r=1}^{K}I(r)t_r\right]\\&=&K^2\left[{\sum_{r=1}^{K}{t_r}^2 Var_{AS}[I(r)]}+\sum_{r\neq K}COV_{AS}[I(r),I(q)]t_rt_q\right]\\&=& K^2\left[\sum_{r=1}^{K}{t_r}^2\frac{1}{K}\left(1-\frac{1}{K}\right)+\sum_{r\neq K}t_rt_q\left(-\frac{1}{K^2}\right)\right]\\&=& K^2\left[\frac{1}{K}\sum_{r=1}^{K}{t_r}^2 - \frac{1}{K^2}\left(\sum_{r=1}^{K}{t_r}^2+\sum_{r\neq K}t_rt_q\right)\right]\\&=&K\left[\sum_{r=1}^{K}{t_r}^2 - \left(\sum_{r=1}^{K}{t_r}\right)^2/K\right]\\&=&K\sum_{r=1}^{K}(t_r-\overline t)^2

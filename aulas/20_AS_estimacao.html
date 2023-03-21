@@ -4,7 +4,7 @@
     <title>MAT02036 - Amostragem 2</title>
     <meta charset="utf-8" />
     <meta name="author" content="Markus Stein" />
-    <script src="libs/header-attrs-2.20/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.18/header-attrs.js"></script>
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
   </head>
@@ -38,7 +38,7 @@ class: center, middle, title-slide
 width: 110px;
 height: 128px;
 z-index: 0;
-background-image: url(/cloud/project/img/logo_dest.png);
+background-image: url(C:/Users/User/Documents/MAT02036-Amostragem-2/img/logo_dest.png);
 background-size: contain;
 background-repeat: no-repeat;
 position: absolute;
@@ -85,11 +85,7 @@ top:1em;right:1em;
 
 ---
 
-<<<<<<< HEAD
 ## Aula passada 💾
-=======
-## Aula passada 📀
->>>>>>> f0d722dbea088ca1dc18a31e5c77a3bae80292ac
 ### Amostragem Sistemática Simples
 
 * *O método*: selecionar cada `\(K\)`-ésima unidade da população; 
@@ -104,11 +100,7 @@ top:1em;right:1em;
 
 ---
 
-<<<<<<< HEAD
 ## Aula passada 💾
-=======
-## Aula passada 💿
->>>>>>> f0d722dbea088ca1dc18a31e5c77a3bae80292ac
 ### Amostragem Sistemática Simples
 
 * A probabilidade de inclusão na amostra de uma unidade `\(i\)` qualquer é dada por:
@@ -361,7 +353,7 @@ P
 ## Amostragem Sistemática Simples
 ### Variância dos estimadores sob **AS**
 
-A variância de `\(\widehat Y_{AS}\)` sob amostragem sistemática simples é dada por: 
+A variância de `\(\widehat T_{AS}\)` sob amostragem sistemática simples é dada por: 
 
 `$$\begin{array}{ll}\hspace{-0,6cm}
 Var_{AS}(\widehat{T}_{AS}) &amp;=&amp; Var_{AS}\left[K\sum_{r=1}^{K}I(r)t_r\right]\\&amp;=&amp;K^2\left[{\sum_{r=1}^{K}{t_r}^2 Var_{AS}[I(r)]}+\sum_{r\neq K}COV_{AS}[I(r),I(q)]t_rt_q\right]\\&amp;=&amp; K^2\left[\sum_{r=1}^{K}{t_r}^2\frac{1}{K}\left(1-\frac{1}{K}\right)+\sum_{r\neq K}t_rt_q\left(-\frac{1}{K^2}\right)\right]\\&amp;=&amp; K^2\left[\frac{1}{K}\sum_{r=1}^{K}{t_r}^2 - \frac{1}{K^2}\left(\sum_{r=1}^{K}{t_r}^2+\sum_{r\neq K}t_rt_q\right)\right]\\&amp;=&amp;K\left[\sum_{r=1}^{K}{t_r}^2 - \left(\sum_{r=1}^{K}{t_r}\right)^2/K\right]\\&amp;=&amp;K\sum_{r=1}^{K}(t_r-\overline t)^2
@@ -477,7 +469,7 @@ onde `\(S_y^2\)` é a variância populacional total, `\(S_{dc}^2\)` é a variân
 
 Expressão alternativa para `\(Var_{AS}(\overline y_{AS})\)` quando `\(N = nK\)`: (Teorema 8.2 de @Cochran1977, página 209)
 
-`$$Var_{AS}(\overline y_{AS})  = \left( \frac {N-1} {N} \right) \left[ 1 + (n-1) \rho \right] \frac {S_y^2} {n} \doteq \left[ 1 + (n-1)\rho \right] \frac {S_y^2} {n},$$` 
+`$$Var_{AS}(\overline y_{AS})  = \left( \frac {N-1} {N} \right) \left[ 1 + (n-1) \rho \right] \frac {S_y^2} {n} \doteq \left[ 1 + (n-1)\rho_{int} \right] \frac {S_y^2} {n},$$` 
 onde
 `$$\rho_{int} = \frac {1} {(n-1) (N-1) S_y^2} \sum_{r=1}^{K} \sum_{i \neq j \in s_r} (y_i - \overline Y) (y_j - \overline Y)$$`
 é a *correlação intraclasse* das amostras sistemáticas possíveis.
@@ -683,7 +675,7 @@ sr              # amostra selecionada
 ```
 
 ```
-## [1] 14 18  1  5  9
+## [1] 10 14 18  1  5
 ```
 
 ---

@@ -333,16 +333,40 @@ $$m = \frac{M \: z^2_{\alpha/2} \: CV^2}{z_{\alpha/2} \: CV^2 + (M-1) \: e_r^2}.
 ## dados do problema
 library(SDaA)
 data(agpop)
+estados <- unique(agpop$state)  # estados dos EUA
+M <- length( estados)           # no. de estados
+Ni <- aggregate( largef92 ~ state, agpop, length) # no. de cidades em cada estado
+Ti <- aggregate( largef92 ~ state, agpop, sum)    # totais de fazendas por estado
+N <-  sum(Ni$largef92)          # no. de cidades
 ```
 
-a) Usando o meu no. cartão a amostra **AC1Ss** de 15 estados (variável `state`) é
+* Do problema temos:
+  + $Y=$`largef92`: número de fazendas com mais de 1.000 hectares em cada cidade dos EUA;
+  + $N = `r N`$ fazendas resgistradas no censo;
+  + $M = `r M`$ estados dos EUA.
+
+Nosso interesse é estimar $\overline Y$: número médio de fazendas com mais de 1.000 hectares por cidade dos EUA;
+
+---
+
+## Avaliação Parcial 2
+### Questão 3 - solução
+
+a) Usando o meu no. cartão a amostra sob **AC1Ss** de $m=15$ estados é
 
 ```{r, warning=FALSE}
 ## (a) selecao de estados
-m <- 15                 # no. conglomerados
-set.seed(00119502)     # semesnte aleatoria com meu no. cartao
-estados_amostra <- sample( unique(agpop$state), m )  # estados selecionados
-estados_amostra
+m <- 15             # no. conglomerados
+set.seed(00119502)  # semesnte aleatoria com meu no. cartao
+(estados_amostra <- sample( estados, m ))  # estados selecionados
+```
+
+b) A partir da amostra, os tamanhos e totais por estado observados
+
+```{r, warning=FALSE}
+## (b) medidas agregadas
+(Ni_amostra <- Ni[Ni$state %in% estados_amostra,"largef92"])   # tamanhos estados amostra
+(Ti_amostra <- Ti[Ni$state %in% estados_amostra,"largef92"])   # totais estados amostra
 ```
 
 ---
@@ -350,30 +374,40 @@ estados_amostra
 ## Avaliação Parcial 2
 ### Questão 3 - solução
 
-b. A partir da amostra sorteada, uma estimativa pontualmente da média... de fazendas... `largef92`.  
+Para estimação pontual de $\overline Y$ temos os estimadores (qual escolher?)
+
+$$\overline y_{AC1S/HT} = \frac {\widehat T_{AC1S/HT}} {N} = \frac {M} {N} \frac{1}{m} \sum_{i\in a} T_i \: \: \: \text{e} \: \: \: \overline y_{AC1S}^R = \frac {\widehat T_{AC1S}^R} {N} = \frac {1} {n} \sum_{i \in a} T_i$$
 
 ```{r, warning=FALSE}
-## (b) medidas agregadas e estimacao
-N <- 
-M <- nrow(agpop)
-agpop_amostra <- agpop[agpop$state %in% estados_amostra,]
-Ni_amostra <- aggregate( largef92 ~ state, data=agpop_amostra, length) # ou tapply(), tamanho dos cong.
-Ti_amostra <- aggregate( largef92 ~ state, data=agpop_amostra, sum)    # totais cong.
-ybarraAC1S <- (M/m) * sum(Ti_amostra$largef92) / N
-#ybarrac
-#s2ec
-#varybarraC
+## estimativa
+ybarraAC1S_HT <- (M/m) * sum(Ti_amostra) / N      # estimativa por HT
+ybarraAC1S_R <- sum(Ti_amostra) / sum(Ni_amostra) # estimativa tipo razao
 ```
-Assim, estimamos que... é aproximadamente `r ybarraAC1S`.
+
+Assim, com base no censo agropecuário de 1992 dos EUA, estimamos que o número médio de fazendas com mais de 1.000 hectares por cidade seja aproximadamente `r round(ybarraAC1S_HT,2)` (ou `r round(ybarraAC1S_R,2)`) fazendas.
+
+---
+
+## Avaliação Parcial 2
+### Questão 3 - solução
 
 Para o $IC$ $95\%$ da média da variável ... sabemos que
 $$IC_{AC1S} (\overline Y; 1-\alpha) = \left[ \overline y_{AC1S} \mp z_{\alpha/2} \sqrt{\widehat{Var}_{AC1S} \left( \overline y_{AC1S} \right)} \right]$$
 em que $\widehat{Var}_{AC1S} \left( \overline y_{AC1S} \right) = \frac{s^2_{ec}}{m}$.
 
+```{r, warning=FALSE}
+## IC
+alpha <- 0.05
+z_alpha2 <- qnorm(alpha/2)
+# varybarraAC1S_HT <- 
+# erroIC <- z_alpha2 * sqrt() # estimativa por HT
+# ICHT <- ybarraAC1S_HT + c(1,-1) * erroIC
+# ybarraAC1S_R <- sum(Ti_amostra) / sum(Ni_amostra) # estimativa tipo razao
+```
+
 Interprete os resultados.
 
-
-c. Produza dois gráficos que descrevam a variável `largef92`: um na população, outro na **AC1S** sem reposição sorteada. Comente sobre as diferenças encontradas.
+c) Produza dois gráficos que descrevam a variável `largef92`: um na população, outro na **AC1S** sem reposição sorteada. Comente sobre as diferenças encontradas.
 
 ---
 

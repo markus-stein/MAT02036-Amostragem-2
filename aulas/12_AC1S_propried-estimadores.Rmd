@@ -478,7 +478,7 @@ $$\widehat Var_{AC1S} \left( \overline y_{AC1S/HT} \right) = \frac {M^2} {N^2} \
 
 * Um estimador tipo razão da média por unidade $\overline Y$ sob o plano amostral **AC1S**, **sem reposição** de conlgomerados, é dado por:  
 
-$$\overline y_{AC1S}^R = \frac {\widehat T_{AC1S}^R} {N} = \frac {1} {n} \sum_{i \in a} Y_i = \overline y_C / \overline n = \overline y$$ 
+$$\overline y_{AC1S}^R = \frac {\widehat T_{AC1S}^R} {N} = \frac {1} {n} \sum_{i \in a} T_i = \overline y_C / \overline n = \overline y$$ 
 
 onde $\overline n = \frac{1}{m} \sum_{i \in a} N_i = \frac{n}{m}$.
 

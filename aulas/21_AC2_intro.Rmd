@@ -104,13 +104,16 @@ class: inverse, middle, center
 
 ## Amostragem conglomerada em dois estágios 
 
-* *Amostragem Conglomerada em dois estágios* - **AC2** = **AC1** + subamostragem
+* *Amostragem Conglomerada em dois estágios* - **AC2** = 
 
-  + **Estágio 1**: selecione uma amostra $a$ de $m$ UPAs (conglomerados).
+  + **AC1** + subamostragem
+
+**Estágio 1**: selecione uma amostra $a$ de $m$ UPAs (conglomerados).
   
-  + **Estágio 2**: para cada UPA $C_i$ tal que $i \in a$, selecione amostra $s_i$ de $n_i$ unidades secundárias das $N_i$ unidades existentes nessa UPA.
+**Estágio 2**: para cada UPA $C_i$ tal que $i \in a$, selecione amostra $s_i$ de $n_i$ unidades secundárias das $N_i$ unidades existentes nessa UPA.
 
 * A **amostra completa** de unidades selecionadas é dada por: 
+
 $$s = s_{i_1}\cup s_{i_2} \cup \dots \cup s_{i_m}= \bigcup_{k=1}^{m} s_{i_k}$$
 
 * O **tamanho total da amostra** é $n = \sum_{i \in a} n_i$.
@@ -121,11 +124,14 @@ $$s = s_{i_1}\cup s_{i_2} \cup \dots \cup s_{i_m}= \bigcup_{k=1}^{m} s_{i_k}$$
 
 As principais razões para adotar amostragem conglomerada em dois estágios são as seguintes:
 
-1) Geralmente não é prático pesquisar todas as unidades nos conglomerados selecionados: *conglomerados* muito *grandes*, *carga de trabalho variável* por entrevistador, etc.     
+1) Geralmente não é prático pesquisar todas as unidades nos conglomerados selecionados: **conglomerados** muito **grandes**, **carga de trabalho variável** por entrevistador, etc.     
 
-2) Constatou-se que a perda de precisão da AC1S em relação à AAS para amostras de mesmo tamanho é tanto maior quanto maior for o tamanho do conglomerado. A adoção de AC2 vem reduzir a influência do tamanho dos conglomerados na eficiência da amostragem conglomerada, permitindo ao amostrista controlar melhor a precisão do estimador resultante, ao manejar o número de unidades que são selecionadas em cada conglomerado. Na AC1 isso não está sob controle do amostrista, pois uma vez selecionado um conglomerado, todas as suas unidades devem ser pesquisadas.     
+2) A **perda de precisão** da **AC1S** em relação à **AAS** para amostras de mesmo tamanho é maior quanto maior o **tamanho do conglomerado**.
+  + A adoção de **AC2** reduz a **influência do tamanho dos conglomerados** na eficiência da amostragem conglomerada. 
+  + **Controlar** melhor a **precisão do estimador** resultante, ao manejar o **número de unidades** selecionadas em cada conglomerado. 
+  + Na **AC1** isso não está sob controle do amostrista, pois uma vez selecionado um conglomerado, todas as suas unidades devem ser pesquisadas.     
 
-3) Se a variância dentro dos conglomerados for pequena, as médias por conglomerados $\overline {Y_i}$ podem ser bem estimadas por amostragem.     
+3) Se a **variância dentro** dos conglomerados for **pequena**, as médias por conglomerados $\overline {Y_i}$ podem ser bem estimadas por amostragem.     
 
 4) *Amostragem em dois estágios* é mais complexa, porém *mais flexível*.     
 
@@ -133,19 +139,15 @@ As principais razões para adotar amostragem conglomerada em dois estágios são
 
 ## Amostragem conglomerada em dois estágios 
 
-* Na estimação sob AC2, cujo plano amostral compreende *dois estágios de seleção*, para encontrar médias e variâncias de estimadores, devem ser calculadas médias considerando todas as possíveis amostras sob o plano amostral.
+* Na estimação sob **AC2**, o plano amostral $p(a)$ possui *dois estágios de seleção*, para encontrar médias e variâncias de estimadores, devem ser calculadas médias considerando todas as possíveis amostras sob $p(a)$.
 
-  + Isto requer considerar todas as possíveis amostras no primeiro estágio e, todas as possíveis amostras no segundo estágio, dentro de cada amostra de UPAs do primeiro estágio.
+  + Devemos considerar **todas** as possíveis **amostras no primeiro estágio** e, **todas** as possíveis **amostras no segundo estágio** (dentro de cada amostra de UPAs).
 
-* Usaremos os resultados de @Cochran1977, Expressão 10.1 da página 275 e Expressão 10.2 da página 276, respectivamente: 
-
+* Usaremos os resultados de @Cochran1977 (pg. 275 e 276), para algum estimador $\widehat \theta$ do parâmetro $\theta$:
 $$E[\widehat \theta] = E_1[ E_2( \widehat \theta)]$$
 $$Var[\widehat \theta] = Var_1[ E_2(\widehat \theta)] + E_1[ Var_2(\widehat \theta)]$$
-  + $E_2$, $V_2$ denotam, respectivamente, valor esperado e variância considerando todas as possíveis amostras de unidades dentro de um conjunto fixado de UPAs (estágio 2).
-
-  + $E_1$, $V_1$ denotam, respectivamente, valor esperado e variância considerando todas as possíveis amostras de UPAs (estágio 1).
-
-  + $\widehat \theta$ é algum estimador para um parâmetro $\theta$. 
+  + $E_2$, $Var_2$: valor esperado e variância sob todas as possíveis amostras de unidades dentro de um conjunto fixado de UPAs (**estágio 2**).
+  + $E_1$, $Var_1$: valor esperado e variância sob todas as possíveis amostras de UPAs (**estágio 1**).
 
 Resultados similares podem ser estendidos para planos em três ou mais estágios (ver @Cochran1977, Seção 10.8).
 
@@ -153,9 +155,9 @@ Resultados similares podem ser estendidos para planos em três ou mais estágios
 
 ## Amostragem conglomerada em dois estágios 
 
-* O estimador não viciado de Horvitz-Thompson do total $T$ sob AC2 é dado por:
+* O estimador não viciado (Horvitz-Thompson) do total $T$ sob **AC2** é
 
-$$\widehat T_{AC2/HT} = \displaystyle \sum_{i\in a} \frac{\widehat Y_i}{\pi_i} = \sum_{i \in a} \frac {1} {\pi_i} \sum_{j \in s_i} \frac {y_{ij}} {\pi_{j|i}} = \sum_{i \in a} \sum_{j \in s_i}d_{ij} y_{ij}$$
+$$\widehat T_{AC2/HT} = \displaystyle \sum_{i\in a} \frac{\widehat T_i}{\pi_i} = \sum_{i \in a} \frac {1} {\pi_i} \sum_{j \in s_i} \frac {y_{ij}} {\pi_{j|i}} = \sum_{i \in a} \sum_{j \in s_i}d_{ij} y_{ij}$$
 
 onde:
 
@@ -163,7 +165,7 @@ onde:
 
   + $s_i$ é a amostra de unidades selecionadas dentro da UPA $i$;
 
-  + $\widehat T_i = \sum_{j \in s_i} \frac {y_{ij}} {\pi_{j|i}}$ é um estimador HT do total $Y_i$ da UPA $i$;
+  + $\widehat T_i = \sum_{j \in s_i} \frac {y_{ij}} {\pi_{j|i}}$ é um estimador HT do total $T_i$ da UPA $i$;
 
   + $\pi_{j|i} = P(j \in s_i \, | \, i \in a)$ é a probabilidade de inclusão da unidade $j$ dado que a UPA $i$ está na amostra $a$; e
 
@@ -173,7 +175,7 @@ onde:
 
 ## Amostragem conglomerada em dois estágios 
 
-* A variância de $\widehat Y_{AC2/HT}$ sob AC2 é dada por: 
+* A variância de $\widehat T_{AC2/HT}$ sob **AC2**:
 $$\begin{eqnarray}\hspace{-1.5cm}
 Var_{AC2} \left( \widehat T_{AC2/HT} \right) & = & Var_1 \left[E_2 \left( \sum_{i \in a} \frac {\widehat T_i} {\pi_i} \right) \right] + E_1 \left[ Var_2 \left(\sum_{i \in a} \frac {\widehat T_i} {\pi_i} \right) \right] \\ & = & Var_1 \left[ \sum_{i \in U} R_i E_2 \left( \widehat T_i \right) \big/ \pi_i \right] + E_1 \left[ \sum_{i \in U} R_i Var_2 \left( {\widehat T_i} \right) \big/ {\pi_i}^2 \right] \\ & = & Var_1 \left(  \sum_{i \in a} {T_i} \big/ \pi_i \right) + \sum_{i \in U} Var_2 \left( \widehat T_i \right) \big/ \pi_i \\
 & = & Var_{UPA} + Var_{USA} 
@@ -181,23 +183,23 @@ Var_{AC2} \left( \widehat T_{AC2/HT} \right) & = & Var_1 \left[E_2 \left( \sum_{
 onde:
   + $R_i$ é a variável indicadora da presença da unidade $i$ na amostra; 
   + $Var_{UPA}$ é a componente de variância de $\widehat T_{AC2/HT}$ proveniente da amostragem de UPAs (estágio 1), isto é, variância caso **AC1S** fosse usada (sem subamostragem); e
-  + $Var_{USA}$ é a componente de variância de $\widehat T_{AC2/HT}$ proveniente da amostragem de USAs (amostragem no estágio 2).
+  + $Var_{USA}$ é a componente de variância de $\widehat T_{AC2/HT}$ proveniente da amostragem de USAs (amostragem no **estágio 2**).
 
 ---
 
 ## Amostragem conglomerada em dois estágios 
 
-* Um estimador não viciado (de Horvitz-Thompson) da média por unidade $\overline Y$ é dado por:
+* Um estimador não viciado (HT) da média por unidade $\overline Y$ é:
 
 $$\overline y_{AC2/HT} = \frac {\widehat T_{AC2/HT}} N = \frac 1 N \left( \sum_{i \in a} \frac {\widehat T_i} {\pi_i} \right)$$
 
-* Se $N$ for conhecido, um estimador tipo razão para estimar o total $T$ é dado por:
+* Se $N$ for conhecido, um **estimador tipo razão** para estimar o **total** $T$ é
 
-$$\widehat Y_{AC2}^R = N \left( \sum_{i \in a} \frac {\widehat T_i} {\pi_i} \right) \Big/ \left( \sum_{i \in a} \frac {N_i} {\pi_i} \right)$$
+$$\widehat T_{AC2}^R = N \left( \sum_{i \in a} \frac {\widehat T_i} {\pi_i} \right) \Big/ \left( \sum_{i \in a} \frac {N_i} {\pi_i} \right).$$
 
-Um estimador tipo razão da média por unidade é dado por: 
+* Um **estimador tipo razão** da **média** por unidade é dado por
 
-$$\overline y_{AC2}^R = \left( \sum_{i \in a} \frac {\widehat T_i} {\pi_i} \right) \Big/ \left( \sum_{i \in a} \frac {N_i} {\pi_i} \right)$$
+$$\overline y_{AC2}^R = \left( \sum_{i \in a} \frac {\widehat T_i} {\pi_i} \right) \Big/ \left( \sum_{i \in a} \frac {N_i} {\pi_i} \right).$$
 
 Este estimador de razão da média pode ser calculado mesmo quando $N$ for desconhecido. 
 
@@ -206,30 +208,31 @@ Este estimador de razão da média pode ser calculado mesmo quando $N$ for desco
 ## Amostragem conglomerada em dois estágios 
 ### **AC2** com AAS nos 2 estágios
 
-* Tratamos agora do plano amostral *AC2 com AAS nos 2 estágios - AC2S*, ou seja:   
+* Seja o plano amostral *AC2 com AAS nos 2 estágios* - **AC2S**, ou seja:   
 
   + **Estágio 1**: selecione amostra de $m$ UPAs usando **AAS**.
   
   + **Estágio 2**: para cada UPA $i$ da amostra de primeiro estágio, selecione $n_i$ unidades secundárias das $N_i$ unidades existentes usando **AAS**.
 
-Para esse plano, a probabilidade de inclusão da unidade $j$ da UPA $i$ é dada por:
+* Na **AC2S** a probabilidade de inclusão da unidade $j$ da UPA $i$ é
 
-$$\pi_{ij} = P(i \in a \, , \, j \in s) = P(i \in a) P(j \in s \, | \, i\in a) = \frac {m} {M} \frac {n_i} {N_i}$$
+$$\pi_{ij} = P(i \in a \, , \, j \in s) = P(i \in a) P(j \in s \, | \, i\in a) = \frac {m} {M} \frac {n_i} {N_i}.$$
 
-Planos amostrais são mais simples quando as probabilidades de inclusão são constantes, isto é, $\pi_{ij} = n / N, \,\, \forall\,\,i\,\,\text{e}\,\, \forall j$. Nestas condições, o plano amostral é dito *equiponderado* ou *autoponderado*.
+* Planos amostrais simplificam se as probabilidades de inclusão são constantes (plano amostral *equiponderado* ou *autoponderado*), 
 
-Com o plano amostral AC2S, isto pode ser conseguido tomando $n_i \propto N_i$.
+$$\pi_{ij} = n / N, \,\, \forall\,\,i\,\,\text{e}\,\, \forall j.$$ 
+  + Na **AC2S**, isto pode ser conseguido tomando $n_i \propto N_i$.
 
-Uma desvantagem importante desse tipo de plano seria a geração de *cargas de trabalho desiguais* por UPA ou por entrevistador, caso cada UPA seja alocada a um só entrevistador.
+* Uma desvantagem importante desse tipo de plano seria a geração de *cargas de trabalho desiguais* por UPA ou por entrevistador, caso cada UPA seja alocada a um só entrevistador.
 
 ---
 
 ## Amostragem conglomerada em dois estágios 
-### **AC2** com AAS nos 2 estágios
+### **AC2** com AAS nos 2 estágios - Estimação do Total
 
-* O  estimador não viciado do total sob o plano amostral **AC2S** é (@Cochran1977, Expressão 11.21): 
+* O  estimador não viciado de $T$ sob **AC2S** é (@Cochran1977, Expressão 11.21): 
 
-$$\widehat Y_{AC2S} = \frac {M} {m} \sum_{i \in a} \widehat T_i$$ 
+$$\widehat T_{AC2S} = \frac {M} {m} \sum_{i \in a} \widehat T_i$$ 
 
 com $\widehat T_i = \frac {N_i} {n_i} \sum_{j \in s_i} y_{ij}$ para toda UPA $i$. 
 
@@ -238,25 +241,30 @@ com $\widehat T_i = \frac {N_i} {n_i} \sum_{j \in s_i} y_{ij}$ para toda UPA $i$
 $$\begin{eqnarray}
 Var_{AC2S} \left( \widehat T_{AC2S} \right) & = & M^2 \left( \frac {1} {m} - \frac {1} {M} \right) \frac {1} {M-1} \sum_{i \in C} \left( T_i - \overline {Y_C} \right)^2 \\&  & + \frac{M} {m} \sum_{i \in C} N_i^2 \left( \frac {1} {n_i} - \frac {1} {N_i} \right) S_i^2 \end{eqnarray}$$
 
-onde as parcelas do segundo membro representam as componentes da variância devidas ao 1º e ao 2º estágios de seleção, respectivamente, sendo: 
-$$S_i^2 = \frac {1} {N_i - 1} \sum_{j \in C_i} \left( y_{ij} - \overline {Y_i} \right)^2$$ 
-a variância dentro da UPA $i$.
+onde as parcelas do segundo membro são componentes da variância devidas ao 1º e ao 2º estágios de seleção, respectivamente, sendo $S_i^2 = \frac {1} {N_i - 1} \sum_{j \in C_i} \left( y_{ij} - \overline {Y_i} \right)^2$ a variância dentro da UPA $i$.
 
 ---
 
 ## Amostragem conglomerada em dois estágios 
-### **AC2** com AAS nos 2 estágios
+### **AC2** com AAS nos 2 estágios  - Estimação do Total
 
 Note que:
 
-i) Se $m = M$ então, a 1ª componente da variância é nula, ou seja:      
-    $Var_{AC2S} \left( \widehat Y_{AC2S} \right) = \displaystyle\sum_{i \in C} N_i^2 \left( \frac {1} {n_i} - \frac {1} {N_i} \right) S_i^2 = V_{AES} \left( \widehat Y_{AES} \right)$     
-    e este plano amostral equivaleria ao de uma amostra estratificada, em que os conglomerados se tornaram estratos!      
-ii) Se $n_i = N_i \,\, (\forall\, i = 1, 2, \dots, n)$ então, a 2ª componente da variância é nula, ou seja:    
-$V_{AC2S} \left( \widehat Y_{AC2S} \right) = \displaystyle M^2 \left( \frac {1} {m} - \frac {1} {M} \right) \frac {1} {M-1} \sum_{i \in C} \left( Y_i - \overline {Y_C} \right)^2 = V_{AC1S} \left( \widehat Y \right)$    
-    e este plano amostral equivaleria ao de uma amostra de conglomerados em um estágio simples.
+1. Se $m = M$ então, a 1ª componente da variância é nula, ou seja:      
+$$Var_{AC2S} \left( \widehat T_{AC2S} \right) = \sum_{i \in C} N_i^2 \left( \frac {1} {n_i} - \frac {1} {N_i} \right) S_i^2 = Var_{AES} \left( \widehat T_{AES} \right)$$
+    + Assim a **AC2S** equivaleria a uma **AES**, os **conglomerados** se tornaram **estratos**!      
 
-De acordo com @Cochran1977, Expressão (11.24), um estimador não viciado da variância do estimador HT do total sob o plano amostral AC2S é dado por: 
+2. Se $n_i = N_i \,\, (\forall\, i = 1, 2, \dots, n)$ então, a 2ª componente da variância é nula, ou seja:    
+$Var_{AC2S} \left( \widehat T_{AC2S} \right) = M^2 \left( \frac {1} {m} - \frac {1} {M} \right) \frac {1} {M-1} \sum_{i \in C} \left( T_i - \overline {Y_C} \right)^2 = Var_{AC1S} \left( \widehat T \right)$    
+    
+    + Assim a **AC2S** equivaleria a uma **AC1S**.
+
+---
+
+## Amostragem conglomerada em dois estágios 
+### **AC2** com AAS nos 2 estágios  - Estimação do Total
+
+* Um estimador não viciado da variância do estimador HT de $T$  na **AC2S** é (@Cochran1977, Expressão 11.24): 
 
 $$\begin{eqnarray}\hspace{-2.0cm}
 \widehat Var_{AC2S} \left( \widehat T_{AC2S} \right) & = & M^2 \left( \frac {1} {m} - \frac {1} {M} \right) \frac {1} {m-1} \sum_{i \in a} \left( \widehat T_i - \overline y_C \right)^2 +\\& & + \frac {M} {m} \sum_{i \in a} N_i^2 \left( \frac {1} {n_i} - \frac {1} {N_i} \right) \widehat S_i^2 \\ \hfill \end{eqnarray}$$
@@ -267,20 +275,20 @@ $\overline y_C = \frac {1} {m} \sum_{i \in a} \widehat T_i$ estima a média por 
 
 $\widehat S_i^2 = \frac {1} {n_i-1} \sum_{j \in s_i} \left( y_{ij} - \overline {Y_i} \right)^2$ estima a variância dentro da UPA $i$.
 
-* Um estimador não viciado da média por unidade sob o plano amostral AC2S é dado por:
-
-$$\overline y_{AC2S} = \frac {\widehat T_{AC2S}} {N} = \frac {M} {mN} \sum_{i \in a} \widehat T_i = \frac {M} {mN} \sum_{i \in a} \frac {N_i} {n_i} \sum_{j \in s_i} y_{ij}$$ 
-
 ---
 
 ## Amostragem conglomerada em dois estágios 
-### **AC2** com AAS nos 2 estágios
+### **AC2** com AAS nos 2 estágios  - Estimação da Média
 
-* A variância do estimador não viciado da média por unidade sob o plano amostral AC2S é dada por: 
+* Um **estimador** não viciado da **média** por unidade $(\overline Y)$ sob **AC2S** é:
+
+$$\overline y_{AC2S} = \frac {\widehat T_{AC2S}} {N} = \frac {M} {mN} \sum_{i \in a} \widehat T_i = \frac {M} {mN} \sum_{i \in a} \frac {N_i} {n_i} \sum_{j \in s_i} y_{ij}$$ 
+
+* A **variância do estimador** não viciado da **média** por unidade: 
 
 $$Var_{AC2S} \left( \overline y_{AC2S} \right) = \frac {1} {N^2} Var_{AC2S} \left( \widehat T_{AC2S} \right)$$
 
-Um estimador não viciado da variância do estimador HT da média por unidade sob o plano amostral AC2S é dado por: 
+* Um **estimador** não viciado da **variância** do **estimador** HT da **média** por unidade: 
 
 $$\widehat Var_{AC2S} \left( \overline y_{AC2S} \right) = \frac {1} {N^2} \widehat Var_{AC2S} \left( \widehat T_{AC2S} \right)$$ 
 
@@ -288,9 +296,9 @@ $$\widehat Var_{AC2S} \left( \overline y_{AC2S} \right) = \frac {1} {N^2} \wideh
 
 ## Para casa `r emo::ji("house")`
 
-<!-- * Fazer a lista 2 de exercícios. -->
+* Fazer a lista 4 de exercícios.
 
-* Continuar exercícios.
+* Continuar exemplos.
 
 <!-- Continuar o Exercício. -->
 
@@ -298,9 +306,9 @@ $$\widehat Var_{AC2S} \left( \overline y_{AC2S} \right) = \frac {1} {N^2} \wideh
 
 <!-- * Continuar exercícios do livro 'Amostragem: Teoria e Prática Usando R'    https://amostragemcomr.github.io/livro/estrat.html#exerc11 -->
 
-* Ler o capítulo 3 da apostila da Profa. Vanessa.
+* Ler o capítulo 4 da apostila da Profa. Vanessa.
 
-* Ler o capítulo 8 do livro 'Amostragem: Teoria e Prática Usando R'.
+* Ler seção 12.10 do livro 'Amostragem: Teoria e Prática Usando R'.
 
 * Rever os slides.
 
@@ -312,9 +320,9 @@ $$\widehat Var_{AC2S} \left( \overline y_{AC2S} \right) = \frac {1} {N^2} \wideh
 
 * Acompanhar o material no moodle.
 
-Amostragem Sistemática
+Amostragem Conglomerad em 2 estágios
 
-  + Estimação.
+  + Efeito de planejamento e tamanho de amostra.
 
   + Laboratório de <i class="fa-duotone fa-people-group"></i>`r fa("r-project", fill = "steelblue")`
 

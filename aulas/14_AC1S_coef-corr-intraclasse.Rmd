@@ -222,17 +222,25 @@ Mostrar???
 ## Coeficiente de Correlação Intraclasse
 ### **Tamanhos** dos conglomerados *iguais*
 
-* Sob **AASs** dentro dos conglomerados, de acordo com @Cochran1977, página 242, tem-se:
+* Sob **AASs** dentro dos conglomerados, $\rho_{int}$ é dado por (@Cochran1977, página 242):
 
-$$\rho = \frac {\sum_{i \in C} \sum_{j \in C_i} \sum_{k \ne j \in C_i} \left( y_{ij} - \overline Y \right) \left( y_{ik} - \overline Y \right)} {\left( \overline N - 1 \right) \left( M \overline N - 1 \right) S_y^2} \doteq 1 - \frac {S_d^2} {S_y^2}$$ 
+$$\rho_{int} = \frac {2 \sum_{j \in C_i} \sum_{k \ne j \in C_i} \left( y_{ij} - \overline Y \right) \left( y_{ik} - \overline Y \right)} {\left( \overline N - 1 \right) \left( M \overline N - 1 \right) S_y^2} = \frac{(M-1) \overline N S^2_{ec} - (M \overline N - 1) S^2}{(M \overline N - 1)(\overline N - 1) S^2}$$ 
+em que $S_{ec}^2 = \frac {1} {M-1} \sum_{i \in C} \left( T_i - \overline Y_C \right)^2$ é a variância entre os **totais** dos conglomerados.
 
-é o **coeficiente de correlação intraconglomerado** ou **intraclasse**; e $S_d^2$ é a medida da variância *dentro* dos conglomerados, dada por: 
+  + Se o termo $1/M$ é negligenciável $\rho_{int} \doteq \frac {S_{ec}^2 - S_y^2} {(\overline N - 1) S_y^2}$.
 
-$$S_{dc}^2 = \frac {1} {M} \sum_{i \in C} \frac {1} {\overline N - 1} \sum_{j \in C_i} \left (y_{ij} - \overline {Y_i} \right)^2 = \frac {1} {M} \sum_{i \in C} S_i^2$$ 
+---
 
-com:  
+## Coeficiente de Correlação Intraclasse
+### **Tamanhos** dos conglomerados *iguais*
 
-$$S_i^2 = \frac {1} {\overline N - 1} \sum_{j \in C_i} \left( y_{ij} - \overline {Y_i} \right)^2$$ 
+#### Quais o Valores mínimos e máximos de $\rho_{int}$? (mostrar`r emo::ji("question")`)
+
+*(ver Hansen, Hurvitz and Madow(1953), "measure of homogeneity of the cluster")*  
+
+1. se $S^2_i = 0, \forall i$, então $S^2_{dc} = 0$ e $S^2 = (M-1) S^2_{ec} / (M \overline N - 1)$ assim $\rho = 1$ (mostrar`r emo::ji("question")`).
+
+2. se $S^2_{dc} = S^2$, então $S^2_{ec} = 0$ assim $\rho = - \frac{1}{\overline N - 1}$ (mostrar `r emo::ji("question")`).
 
 ---
 
@@ -273,38 +281,30 @@ Algumas considerações relacionadas com a variação do $EPA$ para AC1S:
 
 * Nesse caso, não ocorreria perda de precisão devido ao uso de amostragem conglomerada.    
 
-**2.** Pode ser demonstrado (`r emo::ji("question")`) que $\left [ - \left( \frac {M-1} {N-M} \right)\right] \le \rho \le 1$, ou ainda, de forma aproximada, que $\frac {-1} {\overline N - 1} \le \rho \le1$.    
+* Em muitas aplicações práticas, $\rho > 0$, porque os conglomerados tendem a ser mais homogêneos internamente do que a população em geral.       + Consequência: $EPA(AC1S^R;\,AAS) > 1$ na maioria das vezes.     
 
-* Em muitas aplicações práticas, $\rho > 0$, porque os conglomerados tendem a ser mais homogêneos internamente do que a população em geral.    
-    
-* Consequência: $EPA(AC1S^R;\,AAS) > 1$ na maioria das vezes.     
+**2.** Raramente $\rho <  0$, caso em que **AC1S** seria mais eficiente que **AAS**.     
 
----
-
-## Coeficiente de Correlação Intraclasse
-
-**3.** Raramente $\rho<  0$, caso em que AC1S seria mais eficiente que AAS.     
-
-**4.** Num caso extremo, $\rho = 1$ e portanto $EPA(AC1S^R;\,AAS) = \overline N$ e $Var_{AC1S} (\overline y_{AC1S}^R) = EPA(AC1S^R;\,AAS)\, Var_{AAS} (\overline y) \doteq \overline N \frac {S_y^2} {m \overline N} = \frac{S_y^2}{m}$    
+**3.** Num caso extremo, $\rho = 1$ e portanto $EPA(AC1S^R;\,AAS) = \overline N$ e $Var_{AC1S} (\overline y_{AC1S}^R) = EPA(AC1S^R;\,AAS)\, Var_{AAS} (\overline y) \doteq \overline N \frac {S_y^2} {m \overline N} = \frac{S_y^2}{m}$    
     
 * Nesse caso, a precisão da amostra conglomerada de tamanho total igual a $m \overline N$ é equivalente apenas àquela obtida com uma amostra aleatória simples de tamanho $m$!!! 
 
-A tabela abaixo apresenta EPAs sob **AC1S** de acordo com valores selecionados dos tamanhos dos conglomerados e do coeficiente de correlação intraclasse. 
+<!-- A tabela abaixo apresenta EPAs sob **AC1S** de acordo com valores selecionados dos tamanhos dos conglomerados e do coeficiente de correlação intraclasse.  -->
 
-Tamanho | $\rho=0,01$ | $\rho=0,05$ | $\rho=0,1$ | $\rho=0,2$ | $\rho=0,3$ | $\rho=0,5$
---|--|--|--|--|--|--|--
-2     | 1|  1|   1|  1|  1|  2
-5|      1|  1|   1|  2|  2|  3
-11|     1|  2|   2|  3|  4|  6
-21|     1|  2|   3|  5|  7| 11
-31|     1|  3|   4|  7| 10| 16
-51|     2|  4|   6| 11| 16| 26
-101|    2|  6|  11| 21| 31| 51
-201|    3| 11|  21| 41| 61 |        101
-301|    4| 16|  31| 61| 91 |        151
-501|    6| 26|  51  |   101 |  151 | 251
+<!-- Tamanho | $\rho=0,01$ | $\rho=0,05$ | $\rho=0,1$ | $\rho=0,2$ | $\rho=0,3$ | $\rho=0,5$ -->
+<!-- --|--|--|--|--|--|--|-- -->
+<!-- 2     | 1|  1|   1|  1|  1|  2 -->
+<!-- 5|      1|  1|   1|  2|  2|  3 -->
+<!-- 11|     1|  2|   2|  3|  4|  6 -->
+<!-- 21|     1|  2|   3|  5|  7| 11 -->
+<!-- 31|     1|  3|   4|  7| 10| 16 -->
+<!-- 51|     2|  4|   6| 11| 16| 26 -->
+<!-- 101|    2|  6|  11| 21| 31| 51 -->
+<!-- 201|    3| 11|  21| 41| 61 |        101 -->
+<!-- 301|    4| 16|  31| 61| 91 |        151 -->
+<!-- 501|    6| 26|  51  |   101 |  151 | 251 -->
 
-Observe que quando aumenta o tamanho do conglomerado, aumenta a perda de precisão da AC1S em relação à AAS. Note também que à medida que aumenta o coeficiente de correlação intraclasse diminui a eficiência da AC1S em comparação com a AAS.  
+<!-- Observe que quando aumenta o tamanho do conglomerado, aumenta a perda de precisão da AC1S em relação à AAS. Note também que à medida que aumenta o coeficiente de correlação intraclasse diminui a eficiência da AC1S em comparação com a AAS.   -->
 
 ---
 

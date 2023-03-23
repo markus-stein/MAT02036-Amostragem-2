@@ -151,7 +151,7 @@ c. Na divisão `\(A\)` você recomendaria utilizar um plano **AC1S** ou **AAS**?
 
 Uma empresa de táxis deseja estudar a situação dos pneus dos veículos da sua frota, que é composta por 175 táxis. Para tanto, uma amostra de 10 táxis foi selecionada com reposição e, para cada um, se avaliou o número de pneus (dentre os 4 pneus em uso) que estavam fora de condições de segurança. Os resultados obtidos foram:
 
-`$$2,4,0,1,2,0,4,1,3,1$$`
+`$$1, 2, 2, 1, 3, 0, 0, 1, 4, 2$$`
 
 a. Estime a proporção de pneus da frota fora de condições pontualmente e por `\(IC\)` `\(95\%\)`.
 
@@ -261,18 +261,13 @@ c) Não recomendaria na conglomeração `\(A\)` e recomendaria na `\(B\)`. Perce
 ## Avaliação Parcial 2
 ### Questão 2 - solução
 
-Do enunciado temos:  
-* `\(N = \overline N \times M = 4 \times 175 = 700\)` pneus, unidades elementares, na população,
-* `\(M = 175\)` táxis, conglomerados.
+Do enunciado temos:
+* `\(N = \overline N \times M = 4 \times 175 = 700\)` pneus (UE) na população
+* `\(M = 175\)` táxis (UPA) conglomerados
 * `\(m = 10\)` táxis foram selecionadosa com reposição 
-* `\(T_i\)` número de pneus (dentre os 4 pneus em uso) fora de condições de segurança. 
+* `\(T_i\)`: no. de pneus (dentre os 4 em uso) fora de condições de segurança
 
-**Variável de interesse** `\(Y_{ij}\)`: indicadora do pneu `\(j\)` do táxi `\(i\)` estar em condições de segurança. 
-
----
-
-## Avaliação Parcial 2
-### Questão 2 - solução
+**Variável observada** `\(y_{ij}\)`: indicadora do pneu `\(j\)` do táxi `\(i\)` estar em condições de segurança. Temos que `\(T_i = \sum_{j \in s_i} y_{ij}\)` 
 
 
 ```r
@@ -281,7 +276,7 @@ Do enunciado temos:
 M &lt;- 175          # no. conglomerados pop.
 Ni &lt;- rep(4, 175) # tamanho conglomerados
 N &lt;- mean(Ni) * M       # tamanho pop
-Ti_amostra &lt;- c(2,4,0,1,2,0,4,1,3,1)  # totais obtidos
+Ti_amostra &lt;- c(1, 2, 2, 1, 3, 0, 0, 1, 4, 2)  # totais obtidos
 m &lt;- length(Ti_amostra)    # no. conglomerados amostra
 Ni_amostra &lt;- Ni[1:m]      # tamanho dos cong.
 n &lt;- mean(Ni_amostra) * m  # tamanho amostra 
@@ -302,11 +297,11 @@ PchapeuR &lt;- sum(Ti_amostra) / n           # estimador R
 
 a) Para estimar pontualmente a proporção de pneus da frota fora de condições, temos dois possíveis estimadores. Aqui conhecemos o tamanho da população `\(N\)` então ambos os estimadores são possíveis. Além disso, lembre que ambos os estimadores são iguais no caso de `\(N_i = \overline N\)`, temos 
 
-`$$\widehat P_{AC1S}^{HT} = \frac {\widehat T_{AC1S/HT}}{N} = \frac {M} {N} \frac{1}{m} \sum_{i \in a} T_i = \frac{ \frac{175}{10} 18}{700} = 0.45$$`
+`$$\widehat P_{AC1S}^{HT} = \frac {\widehat T_{AC1S/HT}}{N} = \frac {M} {N} \frac{1}{m} \sum_{i \in a} T_i = \frac{ \frac{175}{10} 16}{700} = 0.4$$`
 ou
-`$$\widehat P_{AC1S}^R = \frac{\widehat T_{AC1S}^R}{N} = \frac{1}{n} \sum_{i \in a} T_i = \frac{ \frac{700}{40} 18}{700} = 0.45.$$`
+`$$\widehat P_{AC1S}^R = \frac{\widehat T_{AC1S}^R}{N} = \frac{1}{n} \sum_{i \in a} T_i = \frac{ \frac{700}{40} 16}{700} = 0.4.$$`
 
-**Estimamos** que a **proporção de pneus fora das condições** de segurança é aproximadamente 0.45 em cada carro da empresa investigada.
+**Estimamos** que a **proporção de pneus fora das condições** de segurança é aproximadamente 0.4 em cada carro da empresa investigada.
 
 ---
 
@@ -340,10 +335,10 @@ ICHT
 ```
 
 ```
-## [1] 0.2219918 0.6780082
+## [1] 0.2045644 0.5954356
 ```
 
-Então, temos que `\(IC( P_{AC1S}^{HT}; 0,95) = \left[ 0.2219918; 0.6780082 \right]\)`. Ou seja, o intervalo de 0.2219918 a 0.6780082 deve conter a proporção de pneus em conformidade com as especificações de segurança de toda a frota de táxis da empresa, com 95% de confiança.
+Então, temos que `\(IC( P_{AC1S}^{HT}; 0,95) = \left[ 0.2045644; 0.5954356 \right]\)`. Ou seja, o intervalo de 0.2045644 a 0.5954356 deve conter a proporção de pneus em conformidade com as especificações de segurança de toda a frota de táxis da empresa, com 95% de confiança.
 
 ---
 
@@ -361,7 +356,7 @@ ICR
 ```
 
 ```
-## [1] 0.2213375 0.6786625
+## [1] 0.2040036 0.5959964
 ```
 
 ---

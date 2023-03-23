@@ -329,7 +329,7 @@ onde $\widehat S_{ec}^2 = \frac {1} {m-1} \sum_{i \in a} \left( T_i - \overline 
 
 * Note que $\widehat S_{ec}^2$ é estimador não viesado de 
     
-    + $S^2_{ec} = \frac{M}{M-1} Var_{ec_T}$ se **AC1s SM reposição** e  
+    + $S^2_{ec} = \frac{M}{M-1} Var_{ec_T}$ se **AC1s SEM reposição** e  
     
     + $Var_{ec_T}$ se amostragem **AC1S COM reposição**.
 

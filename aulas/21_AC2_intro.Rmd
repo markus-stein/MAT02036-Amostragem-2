@@ -294,6 +294,18 @@ $$\widehat Var_{AC2S} \left( \overline y_{AC2S} \right) = \frac {1} {N^2} \wideh
 
 ---
 
+## Amostragem conglomerada em dois estágios 
+
+Estimadores do total e respectivas variâncias sob os planos amostrais **AC2S**. 
+
+* $\widehat T_{AC2S} = \frac {M} {m} \sum_{i \in a} \widehat T_i$  
+
+* $\small\widehat Var_{AC2S} \left( \widehat T_{AC2S} \right) = M^2 \left( \frac {1} {m} - \frac {1} {M} \right) \frac {1} {m-1} \sum_{i \in a} \left( \widehat T_i - \overline y_C \right)^2 + \frac{M} {m} \sum_{i \in a} N_i^2 \left( \frac {1} {n_i} - \frac {1} {N_i} \right) \widehat S_i^2$
+                                                                                       
+* Para obtenção dos estimadores da média populacional basta dividir os estimadores do total por $N$ e, para estimar a variância do estimador da média, dividir os estimadores da variância do total por $N^2$.
+
+---
+
 ## Para casa `r emo::ji("house")`
 
 * Fazer a lista 4 de exercícios.

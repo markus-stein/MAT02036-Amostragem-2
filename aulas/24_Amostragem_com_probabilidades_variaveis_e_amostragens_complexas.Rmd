@@ -1,6 +1,6 @@
 ---
 title: "MAT02036 - Amostragem 2"
-subtitle: "Aula 23 - **AS** e **AC2S** - Avaliação Parcial 3"
+subtitle: "Aula 24 - Amostragem com Probabilidades Variáveis e Amostragens Complexas.Rmd"
 author: "Markus Stein"
 institute: "Departamento de Estatística, IME/UFRGS"
 date: "2022/2"
@@ -53,20 +53,7 @@ xaringanExtra::use_logo( here::here('img/logo_dest.png'))
 ---
 
 ## Aula passada `r emo::ji("disk")`
-### Eficiência e Coef. de Correlação Intraclasse na AC2S
 
----
-
-## Aula passada `r emo::ji("disk")`
-### Tamanho de amostra na AC2S
-
----
-
-class: inverse, middle, center
-
-# Exercícios de avaliação AS e  AC2S
-
----
 
 ## Avaliação Parcial 3
 ### Questão 1
@@ -101,111 +88,69 @@ d. Coeficiente de correlação intraclasse.(?)
 
 class: inverse, middle, center
 
-# Solução
+# Amostragem com Probabilidades Variáveis e Amostragens Complexas
 
 ---
 
-## Avaliação Parcial 3
-### Questão 1 - solução
+## Amostragem com Probabilidades Variáveis e Amostragens Complexas
+### Trabalho
 
-Um exemplo de fluxo diário de passageiros
-
-```{r bus_flow, echo=FALSE, fig.align='center', message=FALSE, warning=FALSE, out.width='100%', out.height='100%', paged.print=FALSE}
-knitr::include_graphics('img/bus_passanger_flow_COVID_beijing.png')
-```
 .center[
-#### Fonte: do artigo *An Improved STL-LSTM Model for Daily Bus Passenger Flow Prediction during the COVID-19 Pandemic* (https://www.mdpi.com/1258480).
+*Tópicos em `Amostragem com Probabilidades Variáveis` e `Amostragens Complexas`*
 ]
 
----
+* Escolher um tema dentre os tópicos que encerram o conjunto de disciplinas de Amostragem.
 
-## Avaliação Parcial 3
-### Questão 1 - solução
+* Materiais disponíveis:
+  + minicurso Sinape
+  + minicurso Thomas
+  + capítulos das nossas referências
 
-Possíveis vantagens: 
-
-* para entrevistador pois terá definido o mesmo horário para seu trabalho?
-
-* observar o dia todo seria de maior custo?
-
-Desvantagens:
-
-* Nos slides Aula 20, pg. 19, "Para populações periódicas, amostragem sistemática simples com
-intervalo de seleção em sincronia com o período é um desastre (@Cochran1977, página 218)."
-
-  + Nesse caso, observando o mesmo período todo o dia esperamos estar na situação em que o intervalo de observação $K$ seja múltiplo do período do (ciclo de) fluxo de passageiros.
-  
-  + Cochran sugere que seja utilizado um múltiplo ímpar de metade do período. 
+* Apresentar:
+  + problema
+  + delineamento e estratégia
+  + 10 slides? máximo  
+  + 15 min apresentacao + 5 min perguntas. presencial ou video
 
 ---
 
-## Avaliação Parcial 3
-### Questão 1 - solução
+## Amostragem com Probabilidades Variáveis e Amostragens Complexas
+### Trabalho
 
-* Na apostila, pg. 40, menciona Bolfarine e Bussab (2005), que 
+Tópicos | Grupos
+--|--
+Coef. correlação e eficiência na **AC2S** |
+Tamanho de amostra na **AC2s** | Milena, Amanda e Alexandra
+Proporção na **AC2S** |
+**AC1S** com PPT |
+.. Motivação |
+.. Parâmetros e estimação |
+.. Eficiência |
+.. Tamanho de amostra |
+**AC2S** com PPT |
+Amostragem Complexa (`survey`) |
 
-  + indicam que na maioria das situações para estimar a variância do estimador da média sob **AS** pode ser usado o estimador da variância supondo **AASs**: 
   
-  + "Esse estimador é adequado quando a **AS** é aproximadamente equivalente à **AAS**. Vale ressaltar que, quando as populações apresentam periodocididade ou tendências, as duas amostragens podem ter resultados bastante distintos. Por exemplo, vendas diárias de um certo produto no supermercado podem apresentar periodicididade."
-
 ---
 
-## Avaliação Parcial 3
-### Questão 1 - solução
+## Amostragem com Probabilidades Variáveis e Amostragens Complexas
+### Trabalho
 
-a) No caso de uma **AC1S**, se considerarmnos dias como conglomerados (faz sentido?) selecionamos $m$ dias dos $M$ dias do mês, 
+* Avaliação
 
-  + Teríamos o mesmo tamanho da amostra??? 
+  + Apresentação
 
-  + Esperaríamos diferenças de turno durante o dia e dias úteis e não úteis estarem presentes na amostra?
+  + Slides e material preparado
 
-b) No caso de uma **AES**, poderíamos definir $H$ estratos como turnos, ou períodos do dia, e selecionaríamos $s_h$ dias dentro do mês?
+  + Participação
 
-  + Esperaríamos diferenças de turno durante o dia e dias úteis e não úteis estarem presentes na amostra?
-
----
-
-## Avaliação Parcial 3
-### Questão 2 - solução
-
-a) A variável de interesse, $y$, é a distância (em milhas) percorrida pelas aéronaves das companhias aéreas de um país. 
-
-* Possíveis parâmetros são: 
   
-  + $T$ o total de milhas percorridas por todas as aeronaves do país;
-  
-  + $\overline Y$ a média de milhas percorridas por aeronave.
+<!-- * falar com Ju -->
 
-b) Escolha dO estimador e justificativa  
+<!-- * Falar do meu problema  -->
+<!-- 	+ ... -->
 
-  + $\widehat T_{AC2S}$ do total de milhas percorridas por todas as aeronaves do país;
-  
-  + $\overline y_{AC2S}$ da média de milhas percorridas por aeronave.
-
-É não viesado?
-
-$$E \left( \widehat T_{AC2S} \right) =  E_1 \left( E_2 \left( \widehat T_{AC2S} \right) \right) \: \: \: \text{ou} \: \: \: E \left( \overline y_{AC2S} \right) =  E_1 \left( E_2 \left( \overline y_{AC2S} \right) \right)$$
-
----
-
-## Avaliação Parcial 3
-### Questão 2 - solução
-
-c) Estime o parâmetro, cálculos e interpretação.
-
-* $\widehat T_{AC2S} =$... . 
-
-Estimamos que o total de milhas percorridas por todas as aeronaves do país seja aproximadamente...
-  
-* $\overline y_{AC2S} =$... . 
-
-Estimamos que a média de milhas percorridas por aeronave do país seja cerca de...
-
-d) Coeficiente de correlação intraclasse.(?)
-
-$$\rho_{int} =$$
-
-
+<!-- chamar rodrigo e ju e marcia, para as apresentacoes??? tem canecas do datathon -->
 
 ---
 
@@ -289,33 +234,3 @@ knitr::include_graphics('img/image_basu_elephant.jpg')
 
 ## Resumo da notação
 
----
-
-## Trabalho
-
-.center[
-#### Tópicos em 
-#### `Amostragem com Probabilidades Variáveis` 
-#### e 
-####`Amostragens Complexas`
-]
-
-* Escolher um tema dentre os tópicos que encerram o conjunto de disciplinas de Amostragem.
-
-* Materiais disponíveis:
-  + minicurso Sinape
-  + minicurso Thomas
-  + capítulos das nossas refeências
-
-* Apresentar:
-  + problema
-  + delineamento e estratégia
-  + 10 slides? máximo  
-  + 15 min apresentacao + 5 min perguntas. presencial ou video
-
-<!-- * falar com Ju -->
-
-<!-- * Falar do meu problema  -->
-<!-- 	+ ... -->
-
-<!-- chamar rodrigo e ju e marcia, para as apresentacoes??? tem canecas do datathon -->

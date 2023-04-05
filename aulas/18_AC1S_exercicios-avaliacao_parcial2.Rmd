@@ -430,7 +430,10 @@ $$\widehat Var_{AC1S} \left( \overline y_{AC1S/HT} \right) = \frac {M^2} {N^2} \
 ## IC
 alpha <- 0.05
 z_alpha2 <- qnorm(alpha/2)
-varybarraAC1S_HT <- (1/mean(Ni$largef92)^2) * (1/m - 1/M) * s2_ec
+ybarraC <- sum(Ti_amostra) / m            # media por conglomerado
+nbarra <- sum(Ni_amostra) / m             # estimativa do tamanho medio dos conglomerados
+s2_ec <- 1/(m-1) * sum((Ti_amostra - ybarraC)^2) # estimativa variancia entre totais cong.
+varybarraAC1S_HT <- (1/nbarra^2) * (1/m - 1/M) * s2_ec
 erroIC <- z_alpha2 * sqrt(varybarraAC1S_HT) # estimativa por HT
 ICHT3 <- ybarraAC1S_HT + c(1,-1) * erroIC
 ```

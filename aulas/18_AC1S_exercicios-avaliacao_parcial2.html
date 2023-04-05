@@ -519,12 +519,15 @@ Para o `\(IC\)` `\(95\%\)` da média da variável ... sabemos que
 ## IC
 alpha &lt;- 0.05
 z_alpha2 &lt;- qnorm(alpha/2)
-varybarraAC1S_HT &lt;- (1/mean(Ni$largef92)^2) * (1/m - 1/M) * s2_ec
+ybarraC &lt;- sum(Ti_amostra) / m            # media por conglomerado
+nbarra &lt;- sum(Ni_amostra) / m             # estimativa do tamanho medio dos conglomerados
+s2_ec &lt;- 1/(m-1) * sum((Ti_amostra - ybarraC)^2) # estimativa variancia entre totais cong.
+varybarraAC1S_HT &lt;- (1/nbarra^2) * (1/m - 1/M) * s2_ec
 erroIC &lt;- z_alpha2 * sqrt(varybarraAC1S_HT) # estimativa por HT
 ICHT3 &lt;- ybarraAC1S_HT + c(1,-1) * erroIC
 ```
 
-Então, temos que `\(IC( \overline Y; 0,95) = \left[ 55.0757706; 55.0931703 \right]\)`. Ou seja, o intervalo de 55.0757706 a 55.0931703 deve conter a média de fazendas com mais de 1.000 hectares por cidade nos EUA em 1992, com 95% de confiança.
+Então, temos que `\(IC( \overline Y; 0,95) = \left[ 18.892028; 91.2769129 \right]\)`. Ou seja, o intervalo de 18.892028 a 91.2769129 deve conter a média de fazendas com mais de 1.000 hectares por cidade nos EUA em 1992, com 95% de confiança.
 
 ---
 

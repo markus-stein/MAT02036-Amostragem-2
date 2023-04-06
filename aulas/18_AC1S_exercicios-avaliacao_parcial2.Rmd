@@ -321,6 +321,33 @@ $$m = \frac{M \: z^2_{\alpha/2} \: CV^2}{z_{\alpha/2} \: CV^2 + (M-1) \: e_r^2}.
 ---
 
 ## Avaliação Parcial 2
+### Questão 2 - solução
+
+.pull-left[
+```{r}
+## m minimo para CV fixado COM rep.
+er <- 0.025
+alpha <- 0.05
+z_alpha2 <- qnorm(alpha/2)
+var_ecT <- (m-1) * s2_ec / m 
+CVc <- sqrt(var_ecT) / pbarraC
+(m_minAC1Sc <- z_alpha2^2 * CVc^2 / er^2)
+```
+
+Na **AASc** $CV = \frac{`r var_ecT`}{`r pbarraC`}$, então estimamos que são necessários no mínimo $m = \frac{`r z_alpha2`^2 \: `r CVc`^2}{`r er`^2} = `r ceiling(m_minAC1Sc)`$ para estimar a proporção de pneus em conformidade nos táxis da frota, com erro relativo máximo de 2,5% e 95% de confiança.
+]
+.pull-right[
+```{r}
+## m minimo para CV fixado SEM rep.
+CVs <- sqrt(s2_ec) / pbarraC
+(m_minAC1Ss <- M * z_alpha2^2 * CVs^2 / (z_alpha2^2 * CVs^2 + (M-1) * er^2))
+```
+Na **AASs** $CV = \frac{`r var_ecT`}{`r pbarraC`}$, então estimamos que são necessários no mínimo $m = \frac{M \: z^2_{\alpha/2} \: CV^2}{z_{\alpha/2} \: CV^2 + (M-1) \: e_r^2} \\ =  \frac{`r M` \: `r z_alpha2`^2 \: `r CVs`^2}{`r z_alpha2`^2 \: `r CVs`^2 + (`r M` -1) \: `r er`^2} = `r ceiling(m_minAC1Ss)`$ para estimar a proporção de pneus em conformidade nos táxis da frota, com erro relativo máximo de 2,5% e 95% de confiança.
+]
+
+---
+
+## Avaliação Parcial 2
 ### Questão 3 - solução
 
 ```{r, warning=FALSE}
@@ -388,21 +415,56 @@ Assim, com base no censo agropecuário de 1992 dos EUA, estimamos que o número 
 
 Para o $IC$ $95\%$ da média da variável ... sabemos que
 $$IC_{AC1S} (\overline Y; 1-\alpha) = \left[ \overline y_{AC1S} \mp z_{\alpha/2} \sqrt{\widehat{Var}_{AC1S} \left( \overline y_{AC1S} \right)} \right]$$
-em que $\widehat{Var}_{AC1S} \left( \overline y_{AC1S} \right) = \frac{s^2_{ec}}{m}$.
+* **SEM reposição**,
+$$\widehat Var_{AC1S} \left( \overline y_{AC1S/HT} \right) = \frac {M^2} {N^2} \left( \frac 1 m - \frac 1 M \right) \widehat S_{ec}^2 = \frac {1} {\overline N^2} \left( \frac 1 m - \frac 1 M \right) \widehat S_{ec}^2$$
+
+* **COM reposição**,
+$$\widehat Var_{AC1S} \left( \overline y_{AC1S/HT} \right) = \frac {M^2} {N^2} \frac{\widehat S_{ec}^2}{m} = \frac {1} {\overline N^2}  \frac{\widehat S_{ec}^2}{m}$$
+
+---
+
+## Avaliação Parcial 2
+### Questão 3 - solução
 
 ```{r, warning=FALSE}
 ## IC
 alpha <- 0.05
 z_alpha2 <- qnorm(alpha/2)
-# varybarraAC1S_HT <- 
-# erroIC <- z_alpha2 * sqrt() # estimativa por HT
-# ICHT <- ybarraAC1S_HT + c(1,-1) * erroIC
-# ybarraAC1S_R <- sum(Ti_amostra) / sum(Ni_amostra) # estimativa tipo razao
+ybarraC <- sum(Ti_amostra) / m            # media por conglomerado
+nbarra <- sum(Ni_amostra) / m             # estimativa do tamanho medio dos conglomerados
+s2_ec <- 1/(m-1) * sum((Ti_amostra - ybarraC)^2) # estimativa variancia entre totais cong.
+varybarraAC1S_HT <- (1/nbarra^2) * (1/m - 1/M) * s2_ec
+erroIC <- z_alpha2 * sqrt(varybarraAC1S_HT) # estimativa por HT
+ICHT3 <- ybarraAC1S_HT + c(1,-1) * erroIC
 ```
 
-Interprete os resultados.
+Então, temos que $IC( \overline Y; 0,95) = \left[ `r ICHT3[1]`; `r ICHT3[2]` \right]$. Ou seja, o intervalo de `r ICHT3[1]` a `r ICHT3[2]` deve conter a média de fazendas com mais de 1.000 hectares por cidade nos EUA em 1992, com 95% de confiança.
 
-c) Produza dois gráficos que descrevam a variável `largef92`: um na população, outro na **AC1S** sem reposição sorteada. Comente sobre as diferenças encontradas.
+---
+
+## Avaliação Parcial 2
+### Questão 3 - solução
+
+c) Os histogramas abaixo ilustram a distribuição do número de fazendas `largef92` na população e na **AC1S** sorteada.
+
+.pull-left[
+```{r, fig.height=4, fig.width=6, fig.align="center"}
+par(mfrow=c(1,2))
+hist(Ti$largef92, main="População", xlab="No. fazendas `large92`") # histograma da amostra
+hist(Ti_amostra, main="Amostra", xlab="No. fazendas `large92`") # histograma da amostra
+```
+]
+.pull-right[
+Comentários...   
+Assimetria...  
+heterogeneidade de conglomorados?   
+Gráficos semelhantes?  
+Variação esperada?   
+Porquê?
+]
+
+
+
 
 ---
 

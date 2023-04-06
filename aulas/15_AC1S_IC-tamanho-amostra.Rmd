@@ -120,7 +120,8 @@ em que $Var_{AC1S} \left( \overline y_{AC1S} \right) = \frac{Var_{ec}}{m}$.
 Logo, um intervalo de confiança de nível $1-\alpha$ para $\overline Y$ é dado por:
 
 $$IC_{AC1S} (\overline Y; 1-\alpha) = \left[ \overline y_{AC1S} \mp z_{\alpha/2} \sqrt{\widehat{Var}_{AC1S} \left( \overline y_{AC1S} \right)} \right]$$
-em que $\widehat{Var}_{AC1S} \left( \overline y_{AC1S} \right) = \frac{s^2_{ec}}{m}$.
+
+* Ver `Aula 12` para expressões de $\widehat{Var}_{AC1S} \left( \overline y_{AC1S} \right)$.
 
 ---
 

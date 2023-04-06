@@ -16,7 +16,7 @@ class: center, middle, title-slide
 # MAT02036 - Amostragem 2
 ]
 .subtitle[
-## Aula 15 - Amostragem por Conglomerados - IC e tamanho de amostra
+## Aula 23 - <strong>AS</strong> e <strong>AC2S</strong> - Avaliação Parcial 3
 ]
 .author[
 ### Markus Stein
@@ -85,191 +85,166 @@ top:1em;right:1em;
 
 ---
 
-## Aula passada 📀
-### Coeficiente de Correlação Intraclasse
-
-Se os **tamanhos** dos conglomerados forem todos *iguais*, `\(N_i = \overline N, \,\, \forall\, i = 1, \dots, M\)`, então, de acordo com @Cochran1977, página 242, tem-se:
-
-`$$EPA({AC1S}^R;\,AAS) \doteq 1 + (\overline N - 1) \rho$$`
-
-onde:
-
-`$$\rho = \frac {\sum_{i \in C} \sum_{j \in C_i} \sum_{k \ne j \in C_i} \left( y_{ij} - \overline Y \right) \left( y_{ik} - \overline Y \right)} {\left( \overline N - 1 \right) \left( M \overline N - 1 \right) S_y^2} \doteq 1 - \frac {S_d^2} {S_y^2}$$` 
-
-é o **coeficiente de correlação intraconglomerado** ou **intraclasse**; e `\(S_d^2\)` é a medida da variância *dentro* dos conglomerados, dada por: 
-`$$S_{dc}^2 = \frac {1} {M} \sum_{i \in C} \frac {1} {\overline N - 1} \sum_{j \in C_i} \left (y_{ij} - \overline {Y_i} \right)^2 = \frac {1} {M} \sum_{i \in C} S_i^2$$` 
-com `\(S_i^2 = \frac {1} {\overline N - 1} \sum_{j \in C_i} \left( y_{ij} - \overline {Y_i} \right)^2.\)` 
+## Aula passada 💾
+### Eficiência e Coef. de Correlação Intraclasse na AC2S
 
 ---
 
 ## Aula passada 💾
-### Coeficiente de Correlação Intraclasse
-
-### Exemplo: (cont. Exemplo slides `Aula 12`)
-
-Considere a população de tamanho `\(N = 6\)` agrupada em `\(M = 3\)` conglomerados, de três maneiras diferentes:
-
-`$$Y_A = ((7, 8); (9, 10); (12, 14))$$`
-
-`$$Y_B = ((7, 10); (12, 8); (9, 14))$$`
-
-`$$Y_C = ((7, 14); (12, 8); (9, 10))$$`
-
-
----
-
-## Aula passada 💾
-### Coeficiente de Correlação Intraclasse
-
-A expressão para o `\(EPA({AC1S}^R;\,AAS)\)` resulta do uso das expressões de acordo com @Cochran1977, página 241:
-
-`$$Var_{AC1S} (\overline y_{AC1S}^R) \doteq \left( \frac 1 {m \overline N} - \frac 1 {M \overline N} \right) S_y^2[1 + (\overline N - 1) \rho]$$`
-
-`$$Var_{AAS} (\overline y) = \left( \frac 1 {m \overline N} - \frac 1 {M \overline N} \right)S_y^2$$`
-
-* Numa **amostra** retirada **com reposição**, o **coeficiente de correlação intraclasse** pode ser **estimado**
-por:
-
-`$$r = \frac{s^2_{ec} \frac{s^2_{dc}}{\overline N}}{s^2_{ec} + s^2_{dc}}$$`
-
+### Tamanho de amostra na AC2S
 
 ---
 
 class: inverse, middle, center
 
-# Intervalos de Confiança na AC1S
+# Exercícios de avaliação AS e  AC2S
 
 ---
 
-## Intervalos de Confiança na AC1S
+## Avaliação Parcial 3
+### Questão 1
 
-* Para a **média**, se os conglomerados são de tamanhos iguais, a normalidade de `\(\overline y_{AC1S}\)` segue da média amostral na **AAS**.
+Comente vantagens e desvantagens do plano amostral de um estudo que, para estimar o número médio de usuários de certa linha de ônibus por viagem, tenha usado uma amostra sistemática de todas as primeiras saídas do dia desta linha por um mês. 
 
-Para `\(M\)` e `\(m\)` "suficientemente grandes" (❓), então pelo TCL
+a. É possível definir este plano como uma **AC1**? De que forma?
 
-`$$\frac{ \overline y_{AC1S} - \overline Y}{\sqrt{ Var_{AC1S} \left( \overline y_{AC1S} \right)}} \approx Normal(0;1)$$`
-em que `\(Var_{AC1S} \left( \overline y_{AC1S} \right) = \frac{Var_{ec}}{m}\)`.
-
-Logo, um intervalo de confiança de nível `\(1-\alpha\)` para `\(\overline Y\)` é dado por:
-
-`$$IC_{AC1S} (\overline Y; 1-\alpha) = \left[ \overline y_{AC1S} \mp z_{\alpha/2} \sqrt{\widehat{Var}_{AC1S} \left( \overline y_{AC1S} \right)} \right]$$`
-
-* Ver `Aula 12` para expressões de `\(\widehat{Var}_{AC1S} \left( \overline y_{AC1S} \right)\)`.
+b. Compare com um plano **AES** 
 
 ---
 
-## Intervalos de Confiança na AC1S
+## Avaliação Parcial 3
+### Questão 2
 
-* Para o total: 
+Seja o exemplo da frota de aviões do país com 10 cias. aéreas. Num primeiro estágio, 4 cias. foram sorteadas por **AASs**. Num segundo estágio, `\(n_i\)` aviões foram sorteados também por **AASs** de cada cia. Os resultados foram:
 
-`$$IC_{AC1S} (T; 1-\alpha) = \left[ \widehat T_{AC1S} \pm z_{\alpha/2} \sqrt{\widehat{Var}_{AC1S} \left( \widehat T_{AC1S} \right)} \right]$$`
+Cia `\((i)\)` | `\(N_i\)` | `\(n_i\)` | `\(t_i = \sum_{j \in s_i} y_{ij}\)` | `\(S^2_i\)` | `\(\overline y_i\)` | `\(\widehat T_i\)`
+--|--|--|--|--|--|--
+3 | 15 | 5 | 25 | 1 | 5 | 75
+6 | 15 | 5 | 30 | 1,5 | 6 | 90
+8 | 10 | 4 | 28 | 2,5 | 7 | 70
+9 | 10 | 4 | 16 | 0,625 | 4 | 40
+Total | 50 | 18 | 99 | - | - | 275
 
-* Para a proporção: 
-
-`$$IC_{AC1S} (P; 1-\alpha) = \left[ \widehat P_{AC1S} \pm z_{\alpha/2} \sqrt{\widehat{Var}_{AC1S} \left( \widehat P_{AC1S} \right)} \right]$$`
-
-
-### Exemplo - Dados de companhias aéreas - aula passada
-
-Considere os dados das companias aéreas, construa o `\(IC\)` 95% para a média e para
-o total.
+a. Defina a variável de interesse e um parâmetro de interesse.  
+b. Escolha um estimador. É não viesado?  
+c. Estime o parâmetro.  
+d. Coeficiente de correlação intraclasse.(?)
 
 ---
 
 class: inverse, middle, center
 
-# Tamanho de amostra na AC1S
+# Solução
 
 ---
 
-## Tamanho de amostra na AC1S
+## Avaliação Parcial 3
+### Questão 1 - solução
 
-* Para planejar uma **AC1S**, é necessário **determinar** o **número de conglomerados** `\(m\)` que serão sorteados
-para fazer parte da amostra. 
+Um exemplo de fluxo diário de passageiros
 
-  + Vimos que pode-se utilizar fórmulas que dependem do **erro relativo** `\(e_r\)` ou do **erro absoluto** `\(e\)`.
-
-* **Erro relativo** `\(e_r\)`
-
-Ao utilizar o **erro relativo**, deseja-se que a estimativa do parâmetro não difira mais do que
-`\(100 \times e_r\)`% do seu verdadeiro valor, com `\(100 \times (1 − \alpha)\)`% de confiança. Isto é:
-`$$P \left( \left| \frac{\overline y_{AES} - \overline Y}{\overline Y} \right| \leq e_r \right) = P \left( \frac{ \left| \overline y_{AES} - \overline Y \right| }{\sqrt{Var(\overline y_{AES})}} \leq \frac{e_r \left| \overline Y \right|}{\sqrt{Var(\overline y_{AES})}} \right) = 1 - \alpha.$$`
-
-.pull-left[
-**AASc** de conglomerados `\(CV = \frac{Var_{ec_T}}{\overline Y_c}\)`, 
-`$$m = \frac{z^2_{\alpha/2} \: CV^2}{e_r^2}.$$`
-]
-.pull-right[
-**AASs** de conglomerados `\(CV = \frac{S^2_{ec}}{\overline Y_c}\)`,
-`$$m = \frac{M \: z^2_{\alpha/2} \: CV^2}{z_{\alpha/2} \: CV^2 + (M-1) \: e_r^2}.$$`
+&lt;img src="img/bus_passanger_flow_COVID_beijing.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+.center[
+#### Fonte: do artigo *An Improved STL-LSTM Model for Daily Bus Passenger Flow Prediction during the COVID-19 Pandemic* (https://www.mdpi.com/1258480).
 ]
 
 ---
 
-## Tamanho de amostra na AC1S
+## Avaliação Parcial 3
+### Questão 1 - solução
 
-* **Erro absoluto** `\(e = e_r \left| \overline Y \right|\)`
+Possíveis vantagens: 
 
-Ao utilizar o erro absoluto, deseja-se que a estimativa do parâmetro não difira mais do que e
-unidades do seu verdadeiro valor, com `\(100 \times (1 − \alpha)\)`% de confiança. Isto é:
+* para entrevistador pois terá definido o mesmo horário para seu trabalho?
 
-`$$P \left( \left| \overline y - \overline Y \right| \leq e \right) = P \left( \frac{ \left| \overline y - \overline Y \right|}{\sqrt{Var(\overline y)}} \leq \frac{e}{\sqrt{Var(\overline y)}} \right) = 1 - \alpha.$$` 
+* observar o dia todo seria de maior custo?
 
-* Para média e proporção:
+Desvantagens:
 
-.pull-left[
-Na **AASc**, `\(m = \frac{z^2_{\alpha/2} \: Var_{ec_T}}{\overline N e^2};\)`
-]
-.pull-right[
-Na **AASs**, `\(m = \frac{M \: z^2_{\alpha/2} \: S^2_{ec}}{z^2_{\alpha/2} \: S^2_{ec} + \overline N (M-1) \: e^2}.\)`
-]
+* Nos slides Aula 20, pg. 19, "Para populações periódicas, amostragem sistemática simples com
+intervalo de seleção em sincronia com o período é um desastre (@Cochran1977, página 218)."
 
-* Para o total:
-
-.pull-left[
-Na **AASc**, `\(m = \frac{M^2 z^2_{\alpha/2} \: Var_{ec_T}}{e^2};\)`
-]
-.pull-right[
-Na **AASs**, `\(m = \frac{M^3 \: z^2_{\alpha/2} \: S_{ec}^2}{M^2 z^2_{\alpha/2} \: S_{ec}^2 + (M-1) \: e^2}.\)`
-]
+  + Nesse caso, observando o mesmo período todo o dia esperamos estar na situação em que o intervalo de observação `\(K\)` seja múltiplo do período do (ciclo de) fluxo de passageiros.
+  
+  + Cochran sugere que seja utilizado um múltiplo ímpar de metade do período. 
 
 ---
 
-## Tamanho de amostra na AC1S
+## Avaliação Parcial 3
+### Questão 1 - solução
 
-* O coeficiente de variação `\(CV\)`, ou variâncias entre totais de conglomerados, `\(Var_{ec_T}\)` ou `\(S^2_{ec}\)`, são necessários para os cálculos de `\(m\)`;
+* Na apostila, pg. 40, menciona Bolfarine e Bussab (2005), que 
 
-  + geralmente devemos **estimar**, por estudos prévios, similares, ou piloto.
-
-
-#### Exemplo: pg. 30 da Apostila da Profa. Vanessa
-
-Suponha que se deseja estimar a média de renda familiar em certa cidade com um
-erro não maior que 10% e 99,57% de confiança `\((z = 3)\)`. Para tanto, vai se fazer **AC1S** nos bairros
-da cidade `\((M = 5)\)`. Num estudo anterior, obteve-se `\(CV = 0, 077\)`.
-
-
+  + indicam que na maioria das situações para estimar a variância do estimador da média sob **AS** pode ser usado o estimador da variância supondo **AASs**: 
+  
+  + "Esse estimador é adequado quando a **AS** é aproximadamente equivalente à **AAS**. Vale ressaltar que, quando as populações apresentam periodocididade ou tendências, as duas amostragens podem ter resultados bastante distintos. Por exemplo, vendas diárias de um certo produto no supermercado podem apresentar periodicididade."
 
 ---
 
-## Tamanho de amostra na AC1S
-### Uso de `\(EPA\)` `\((deff)\)` para cálculo de tamanho de amostra
+## Avaliação Parcial 3
+### Questão 1 - solução
 
-Um método aproximado para obter-se o tamanho de amostra necessário na **AC1S** é multiplicar o
-tamanho de amostra necessário para uma **AASc**, `\(n_{AASc}\)`, pelo `\(EPA_{AC1S}\)` `\((deff_{AC1S})\)` e então dividir pelo tamanho médio
-dos conglomerados `\(\overline N\)`. 
+a) No caso de uma **AC1S**, se considerarmnos dias como conglomerados (faz sentido?) selecionamos `\(m\)` dias dos `\(M\)` dias do mês, 
 
-`$$m \approx \frac{n_{AASc} \times EPA_{AC1S}}{\overline N} (❓).$$`
+  + Teríamos o mesmo tamanho da amostra??? 
 
-#### Exemplo: pg. 36 da Apostila da Profa. Vanessa
+  + Esperaríamos diferenças de turno durante o dia e dias úteis e não úteis estarem presentes na amostra?
 
-Em uma certa região, deseja-se fazer uma **AC1S** de fazendas criadores de gado. Em média, as fazendas têm 50 animais. O interesse é estimar a prevalência de uma doença, isto é, a proporção de animais doentes. Numa região vizinha, um estudo mostrou que 10% dos animais estavam doentes e `\(r_{int} = 0, 1225\)`. Quantas fazendas devem pertencer à amostra, considerando que se deseja uma margem de erro de `\(1\%\)` para mais ou para menos e `\(95\%\)` de confiança?
+b) No caso de uma **AES**, poderíamos definir `\(H\)` estratos como turnos, ou períodos do dia, e selecionaríamos `\(s_h\)` dias dentro do mês?
+
+  + Esperaríamos diferenças de turno durante o dia e dias úteis e não úteis estarem presentes na amostra?
+
+---
+
+## Avaliação Parcial 3
+### Questão 2 - solução
+
+a) A variável de interesse, `\(y\)`, é a distância (em milhas) percorrida pelas aéronaves das companhias aéreas de um país. 
+
+* Possíveis parâmetros são: 
+  
+  + `\(T\)` o total de milhas percorridas por todas as aeronaves do país;
+  
+  + `\(\overline Y\)` a média de milhas percorridas por aeronave.
+
+b) Escolha dO estimador e justificativa  
+
+  + `\(\widehat T_{AC2S}\)` do total de milhas percorridas por todas as aeronaves do país;
+  
+  + `\(\overline y_{AC2S}\)` da média de milhas percorridas por aeronave.
+
+É não viesado?
+
+`$$E \left( \widehat T_{AC2S} \right) =  E_1 \left( E_2 \left( \widehat T_{AC2S} \right) \right) \: \: \: \text{ou} \: \: \: E \left( \overline y_{AC2S} \right) =  E_1 \left( E_2 \left( \overline y_{AC2S} \right) \right)$$`
+
+---
+
+## Avaliação Parcial 3
+### Questão 2 - solução
+
+c) Estime o parâmetro, cálculos e interpretação.
+
+* `\(\widehat T_{AC2S} =\)`... . 
+
+Estimamos que o total de milhas percorridas por todas as aeronaves do país seja aproximadamente...
+  
+* `\(\overline y_{AC2S} =\)`... . 
+
+Estimamos que a média de milhas percorridas por aeronave do país seja cerca de...
+
+d) Coeficiente de correlação intraclasse.(?)
+
+`$$\rho_{int} =$$`
+
+
 
 ---
 
 ## Para casa 🏠
 
-* Fazer a lista 2 de exercícios.
+*  Continuar trabalho e apresentação final.
+
+&lt;!-- * Continuar exemplos. --&gt;
 
 &lt;!-- Continuar o Exercício. --&gt;
 
@@ -277,24 +252,24 @@ Em uma certa região, deseja-se fazer uma **AC1S** de fazendas criadores de gado
 
 &lt;!-- * Continuar exercícios do livro 'Amostragem: Teoria e Prática Usando R'    https://amostragemcomr.github.io/livro/estrat.html#exerc11 --&gt;
 
-&lt;!-- * Fazer exercícios da lista 1. --&gt;
+&lt;!-- * Ler o capítulo 4 da apostila da Profa. Vanessa. --&gt;
 
-* Ler o capítulo 2 da apostila da Profa. Vanessa.
+&lt;!-- * Ler seção 12.10 do livro 'Amostragem: Teoria e Prática Usando R'. --&gt;
 
-&lt;!-- do livro 'Amostragem: Teoria e Prática Usando R'. --&gt;
-  
-* Rever os slides.
+&lt;!-- * Rever os slides. --&gt;
 
 &lt;!-- * Ler BOlfarine e Bussab...da seção 11.3 do livro 'Amostragem: Teoria e Prática Usando R'. --&gt;
+
+&lt;!-- * Preparação para avaliação parcial 2 --&gt;
 
 ## Próxima aula 📊
 
 * Acompanhar o material no moodle.
 
-Amostragem por Conglomerados
+Amostragem Conglomerada com probabilidades em 2 estágios
 
-  + Estimação de proporção na **AC1S**.
-  
+  + Efeito de planejamento e tamanho de amostra.
+
   + Laboratório de &lt;i class="fa-duotone fa-people-group"&gt;&lt;/i&gt;<svg aria-hidden="true" role="img" viewBox="0 0 581 512" style="height:1em;width:1.13em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:steelblue;overflow:visible;position:relative;"><path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"/></svg>
 
 ---
@@ -343,6 +318,36 @@ Amostragem por Conglomerados
 
 ## Resumo da notação
 
+---
+
+## Trabalho
+
+.center[
+#### Tópicos em 
+#### `Amostragem com Probabilidades Variáveis` 
+#### e 
+####`Amostragens Complexas`
+]
+
+* Escolher um tema dentre os tópicos que encerram o conjunto de disciplinas de Amostragem.
+
+* Materiais disponíveis:
+  + minicurso Sinape
+  + minicurso Thomas
+  + capítulos das nossas refeências
+
+* Apresentar:
+  + problema
+  + delineamento e estratégia
+  + 10 slides? máximo  
+  + 15 min apresentacao + 5 min perguntas. presencial ou video
+
+&lt;!-- * falar com Ju --&gt;
+
+&lt;!-- * Falar do meu problema  --&gt;
+&lt;!-- 	+ ... --&gt;
+
+&lt;!-- chamar rodrigo e ju e marcia, para as apresentacoes??? tem canecas do datathon --&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

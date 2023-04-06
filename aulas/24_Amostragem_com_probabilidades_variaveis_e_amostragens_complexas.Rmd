@@ -1,6 +1,6 @@
 ---
 title: "MAT02036 - Amostragem 2"
-subtitle: "Aula 24 - Amostragem com Probabilidades Variáveis e Amostragens Complexas.Rmd"
+subtitle: "Aula 24 - Amostragem com Probabilidades Variáveis e Amostragens Complexas"
 author: "Markus Stein"
 institute: "Departamento de Estatística, IME/UFRGS"
 date: "2022/2"
@@ -121,11 +121,11 @@ Tópicos | Grupos
 --|--
 Coef. correlação e eficiência na **AC2S** |
 Tamanho de amostra na **AC2s** | Milena, Amanda e Alexandra
-Proporção na **AC2S** |
-**AC1S** com PPT |
-.. Motivação |
-.. Parâmetros e estimação |
-.. Eficiência |
+Proporção na **AC2S** | Guilherme, 
+**AC1S** com PPT | - 
+.. Motivação | Ramon
+.. Parâmetros e estimação | Geanine
+.. Eficiência | 
 .. Tamanho de amostra |
 **AC2S** com PPT |
 Amostragem Complexa (`survey`) |

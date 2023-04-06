@@ -82,6 +82,9 @@ class: inverse, middle, center
 
 # Eficiência e Coef. de Correlação Intraclasse na AC2S
 
+Da **AC1S**
+
+
 ---
 
 class: inverse, middle, center

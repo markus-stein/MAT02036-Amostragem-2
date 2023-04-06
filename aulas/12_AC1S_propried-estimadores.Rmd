@@ -107,7 +107,7 @@ Definição | População | Amostra
 --|:--:|:--:
 Conglomerados | $M$ | $m$
 Unidades no conglomerado $i$ |  $N_i$ | $N_i$
-Tamanho da população/amostra |  $N = \sum_{i\in C}N_i$ | $n = \displaystyle \sum_{i \in a} N_i$
+Tamanho da população/amostra |  $N = \sum_{i\in C}N_i$ | $n = \sum_{i \in a} N_i$
 
 * $C = \{1, ..., M\}$: índice dos conglomerados na população.
 

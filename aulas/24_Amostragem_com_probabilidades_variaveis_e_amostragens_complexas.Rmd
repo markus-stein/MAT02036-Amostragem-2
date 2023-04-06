@@ -115,20 +115,18 @@ class: inverse, middle, center
 ---
 
 ## Amostragem com Probabilidades Variáveis e Amostragens Complexas
-### Trabalho
 
 Tópicos | Grupos
 --|--
-Coef. correlação e eficiência na **AC2S** |
 Tamanho de amostra na **AC2s** | Milena, Amanda e Alexandra
-Proporção na **AC2S** | Guilherme, 
+Proporção na **AC2S** | Guilherme, Francisco, Loenzo e Vinícius Zaltron
 **AC1S** com PPT | - 
-.. Motivação | Ramon
-.. Parâmetros e estimação | Geanine
+.. Motivação | Ramon, Lucas, Lisiane e Vinícius
+.. Parâmetros e estimação | Geanine, Giovanna, Amanda Ramos e Victor
 .. Eficiência | 
-.. Tamanho de amostra |
-**AC2S** com PPT |
-Amostragem Complexa (`survey`) |
+.. Tamanho de amostra | Bruno, Elisa, Igor e Luiz
+**AC2S** com PPT | 
+Amostragem Complexa (`survey`) | João, Leonardo, Giordano e Kevin
 
   
 ---

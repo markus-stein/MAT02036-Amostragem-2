@@ -168,7 +168,12 @@ b) No caso de uma **AES**, poderíamos definir $H$ estratos como turnos, ou per�
 ## Avaliação Parcial 3
 ### Questão 2 - solução
 
-a) A variável de interesse, $y$, é a distância (em milhas) percorrida pelas aéronaves das companhias aéreas de um país. 
+```{r}
+## dados do problema
+i <- 1:
+  
+```
+a) A variável de interesse, $y$, (observada em cada uma das unidades elementares) é a distância (em milhas) percorrida pelas aéronaves das companhias aéreas de um país. 
 
 * Possíveis parâmetros são: 
   
@@ -176,10 +181,19 @@ a) A variável de interesse, $y$, é a distância (em milhas) percorrida pelas a
   
   + $\overline Y$ a média de milhas percorridas por aeronave.
 
-b) Escolha dO estimador e justificativa  
+b) Escolha do estimador e justificativa  
 
-  + $\widehat T_{AC2S}$ do total de milhas percorridas por todas as aeronaves do país;
-  
+Estimador | $HT$ 
+--|:--:
+Média | $\overline y_{AC1S/HT} = \frac {\widehat T_{AC1S/HT}}{N} = \frac {M} {N} \frac{1}{m} \sum_{i \in a} T_i = \overline y_C / \overline N$ 
+Variância do total | $\widehat Var_{AC1S} \left( \widehat T_{AC1S/HT} \right) = M^2 \left( \frac 1 m - \frac 1 M \right) \widehat S_{ec}^2$ 
+Variância da média | $\widehat Var_{AC1S} \left( \overline y_{AC1S/HT} \right) = \frac {1} {\overline N^2} \left( \frac 1 m - \frac 1 M \right) \widehat S_{ec}^2$
+
+* Para o total temos 
+  + $\widehat T^{HT}_{AC2S} = \frac {M} {m} \sum_{i \in a} \widehat T_i$, $\widehat T_i = \frac {N_i} {n_i} \sum_{j \in s_i} y_{ij}$, ou 
+  + $\widehat T^R_{AC2S} = N \frac{ \sum_{i \in a} \widehat T_i}{ \sum_{i \in a} N_i}$;
+
+Para a média  
   + $\overline y_{AC2S}$ da média de milhas percorridas por aeronave.
 
 É não viesado?
@@ -193,8 +207,10 @@ $$E \left( \widehat T_{AC2S} \right) =  E_1 \left( E_2 \left( \widehat T_{AC2S} 
 
 c) Estime o parâmetro, cálculos e interpretação.
 
-* $\widehat T_{AC2S} =$... . 
+  + $\widehat T^{HT}_{AC2S} =$... . 
 
+  + $\widehat T^{HT}_{AC2S} =$
+  
 Estimamos que o total de milhas percorridas por todas as aeronaves do país seja aproximadamente...
   
 * $\overline y_{AC2S} =$... . 
@@ -203,7 +219,7 @@ Estimamos que a média de milhas percorridas por aeronave do país seja cerca de
 
 d) Coeficiente de correlação intraclasse.(?)
 
-$$\rho_{int} =$$
+$$\rho_{int} = $$
 
 
 

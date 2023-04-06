@@ -336,7 +336,7 @@ N <-  sum(Ni$largef92)          # no. de cidades
 ```
 
 * Do problema temos:
-  + $Y=$`largef92`: número de fazendas com mais de 1.000 hectares em cada cidade dos EUA;
+  + $Y=$ `largef92`: número de fazendas com mais de 1.000 hectares em cada cidade dos EUA;
   + $N = `r N`$ fazendas resgistradas no censo;
   + $M = `r M`$ estados dos EUA.
 

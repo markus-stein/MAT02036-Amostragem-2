@@ -118,9 +118,9 @@ class: inverse, middle, center
 
 Tópicos | Grupos
 --|--
-Tamanho de amostra na **AC2s** | Milena, Amanda e Alexandra
+Tamanho de amostra na **AC2s** | Milena, Amanda, Alexandra e Rodrigo
 Proporção na **AC2S** | Guilherme, Francisco, Loenzo e Vinícius Zaltron
-**AC1S** com PPT | - 
+**AC1S** com PPT | --- 
 .. Motivação | Ramon, Lucas, Lisiane e Vinícius
 .. Parâmetros e estimação | Geanine, Giovanna, Amanda Ramos e Victor
 .. Eficiência | 

@@ -82,7 +82,19 @@ class: inverse, middle, center
 
 # Eficiência e Coef. de Correlação Intraclasse na AC2S
 
-Da **AC1S**
+---
+
+## Eficiência e Coef. de Correlação Intraclasse na AC2S
+
+* Da **AC1S**, slides Aula 14, (estimamos as quantidades que desconhecemos) 
+
+  + **AASc** de conglomerados
+$$\rho_{int} = \frac{Var_{ec} - \frac{Var_{dc}}{\overline N - 1}}{Var_y} =  \frac{\overline N Var_{ec} - Var_y}{ \left( \overline N - 1 \right) Var_y},$$
+em que $Var_{ec} = \frac {1} {M} \sum_{i \in C} \left( T_i - \overline Y_C \right)^2$
+
+  + **AASs** de conglomerados
+$$\rho_{int} = \frac{(M-1) \overline N S^2_{ec} - (M \overline N - 1) S^2}{(M \overline N - 1)(\overline N - 1) S^2},$$ 
+em que $S_{ec}^2 = \frac {1} {M-1} \sum_{i \in C} \left( T_i - \overline Y_C \right)^2$
 
 
 ---

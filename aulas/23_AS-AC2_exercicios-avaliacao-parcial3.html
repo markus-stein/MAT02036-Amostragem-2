@@ -85,12 +85,12 @@ top:1em;right:1em;
 
 ---
 
-## Aula passada 💾
+## Aula passada 📀
 ### Eficiência e Coef. de Correlação Intraclasse na AC2S
 
 ---
 
-## Aula passada 💾
+## Aula passada 💽
 ### Tamanho de amostra na AC2S
 
 ---
@@ -153,7 +153,7 @@ Um exemplo de fluxo diário de passageiros
 ## Avaliação Parcial 3
 ### Questão 1 - solução
 
-Possíveis vantagens: 
+Possíveis vantagens: método simples de ser implementado
 
 * para entrevistador pois terá definido o mesmo horário para seu trabalho?
 
@@ -199,7 +199,29 @@ b) No caso de uma **AES**, poderíamos definir `\(H\)` estratos como turnos, ou 
 ## Avaliação Parcial 3
 ### Questão 2 - solução
 
-a) A variável de interesse, `\(y\)`, é a distância (em milhas) percorrida pelas aéronaves das companhias aéreas de um país. 
+
+```r
+## dados do problema - slides Aula 13
+i &lt;- 1:10                                       # indice dos estratos
+Ni &lt;- c(10, 15, 15, 15, 10, 15, 15, 10, 10, 15) # tamanhos dos estratos
+Ti &lt;- c(40, 75, 75, 60, 60, 90, 75, 70, 40, 90) # totais dos estratos
+N &lt;- sum(Ni)                 # tamanho da populacao
+M &lt;- length(Ni)              # no. estratos na populacao 
+m &lt;- 4                       # no. estratos na amostra   
+## dados adicionais questao 2 - slides Aula 23
+a &lt;- c(3, 6, 8, 9)           # indices dos conglomerados selecionados
+ni &lt;- c(5, 5, 4, 4)          # tamanhos de amostra em cada cluster
+ti &lt;- c(25, 30, 28, 16)      # totais das amostras em cada cluster
+```
+
+a) A variável de interesse, (observada em cada uma das unidades elementares)
+
+`\(y\)`: distância (em milhas) percorrida pelas aéronaves das companhias aéreas de um país. 
+
+---
+
+## Avaliação Parcial 3
+### Questão 2 - solução
 
 * Possíveis parâmetros são: 
   
@@ -207,34 +229,71 @@ a) A variável de interesse, `\(y\)`, é a distância (em milhas) percorrida pel
   
   + `\(\overline Y\)` a média de milhas percorridas por aeronave.
 
-b) Escolha dO estimador e justificativa  
+b) Escolha do estimador e justificativa  
 
-  + `\(\widehat T_{AC2S}\)` do total de milhas percorridas por todas as aeronaves do país;
-  
-  + `\(\overline y_{AC2S}\)` da média de milhas percorridas por aeronave.
+* Para o total temos 
+`$$\widehat T^{HT}_{AC2S} = \frac {M} {m} \sum_{i \in a} \widehat T_i \: \: \: \: \: \text{ou} \: \: \: \: \: \widehat T^R_{AC2S} = N \frac{ \sum_{i \in a} \widehat T_i}{ \sum_{i \in a} N_i},$$`
+em que `\(\widehat T_i = \frac {N_i} {n_i} \sum_{j \in s_i} y_{ij}\)`
 
-É não viesado?
+* Para a média  
+`$$\overline y^{HT}_{AC1S} = \frac {\widehat T_{AC1S/HT}}{N} \: \: \: \: \: \text{ou} \: \: \: \: \: \overline y^R_{AC2S} = \frac {\widehat T^R_{AC1S}}{N}.$$`
 
-`$$E \left( \widehat T_{AC2S} \right) =  E_1 \left( E_2 \left( \widehat T_{AC2S} \right) \right) \: \: \: \text{ou} \: \: \: E \left( \overline y_{AC2S} \right) =  E_1 \left( E_2 \left( \overline y_{AC2S} \right) \right)$$`
 
 ---
 
 ## Avaliação Parcial 3
 ### Questão 2 - solução
 
-c) Estime o parâmetro, cálculos e interpretação.
+O esimador escolhido é viesado ou não? Justificar.
 
-* `\(\widehat T_{AC2S} =\)`... . 
+`$$E \left( \widehat T_{AC2S} \right) =  E_1 \left( E_2 \left( \widehat T_{AC2S} \right) \right) \: \: \: \text{ou} \: \: \: E \left( \overline y_{AC2S} \right) =  E_1 \left( E_2 \left( \overline y_{AC2S} \right) \right).$$`
 
-Estimamos que o total de milhas percorridas por todas as aeronaves do país seja aproximadamente...
+c) Estimativa do total, cálculos e interpretação.
+
+
+```r
+Ti_chapeu &lt;- (Ni[a] / ni) * ti
+T_chapeu_HT &lt;- (M / m) * sum(Ti_chapeu)
+n &lt;- sum(ni)
+T_chapeu_R &lt;- (N / n) * sum(Ti_chapeu)
+```
+
+  + `\(\widehat T^{HT}_{AC2S} = \frac{10}{4} \left( \frac{15}{5}25 + \frac{15}{5}30 + \frac{10}{4}28 + \frac{10}{4}16 \right) = 687.5\)`. 
+  + `\(\widehat T^{HT}_{AC2S} = \frac{130}{18} \left( \frac{15}{5}25 + \frac{15}{5}30 + \frac{10}{4}28 + \frac{10}{4}16 \right) = 1986.1111111\)`
   
-* `\(\overline y_{AC2S} =\)`... . 
+Estimamos que a distância total percorrida por todas as aeronaves do país seja aproximadamente 687.5 (ou 1986.11) milhas.
+  
 
-Estimamos que a média de milhas percorridas por aeronave do país seja cerca de...
+---
 
-d) Coeficiente de correlação intraclasse.(?)
+## Avaliação Parcial 3
+### Questão 2 - solução
 
-`$$\rho_{int} =$$`
+* para a média
+
+
+```r
+ybarra_HT &lt;- T_chapeu_HT / N
+ybarra_R &lt;- T_chapeu_R / N
+```
+
+  + `\(\overline y^{HT}_{AC2S} = \frac{687.5}{130} = 5.29.\)` 
+  + `\(\overline y^R_{AC2S} = \frac{1986.1111111}{130} = 15.28.\)` 
+
+Estimamos que a distância média percorrida por cada aeronave do país seja cerca de 5.29 (15.28) milhas.
+
+---
+
+## Avaliação Parcial 3
+### Questão 2 - solução
+
+d) Coeficiente de correlação intraclasse.(slides Aula 22 e Apostila pg. 50)
+
+`$$EPA(AC2S) \approx 1 + \rho_{int} (\overline n - 1),$$`
+
+em que `\(EPA(AC2S) = \frac{Var_{AC2S} (\overline y)}{Var_{AASc} (\overline y)}\)`.
+ 
+`\(\widehat Var_{AC2S} \left( \overline y_{AC1S} \right) = \frac {1} {\overline N^2} \left( \frac 1 m - \frac 1 M \right) \widehat S_{ec}^2\)`
 
 
 

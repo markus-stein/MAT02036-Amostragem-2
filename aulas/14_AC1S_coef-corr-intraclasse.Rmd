@@ -104,7 +104,7 @@ class: inverse, middle, center
 
 * O **Efeito do Plano Amostral - EPA** é uma medida para comparar a **eficiência** de duas estratégias, $E_1$ e $E_2,$ formadas pelas combinações de **plano amostral** e **estimador**, para um **mesmo tamanho de amostra**.
 
-$$EPA(E_1;\,E_2) = V_{E_1} (\widehat \theta_1) / V_{E_2} (\widehat \theta_2)$$ 
+$$EPA(E_1;\,E_2) = Var_{E_1} (\widehat \theta_1) / Var_{E_2} (\widehat \theta_2)$$ 
 
 * O termo original em inglês é **Design Effect - deff** e foi sugerido por @Kish1965.
 
@@ -129,7 +129,7 @@ Neste caso, as duas estratégias cuja eficiência se quer comparar são:
 
 O efeito do plano amostral (neste caso, conglomeração) ao estimar a média populacional por unidade elementar é:
 
-$$EPA(AC1S/HT;\,AAS) = \frac {V_{AC1S} (\overline y_{AC1S/HT})} {V_{AAS} (\overline y)}$$
+$$EPA(AC1S/HT;\,AAS) = \frac {Var_{AC1S} (\overline y_{AC1S/HT})} {Var_{AAS} (\overline y)}$$
 ---
 
 ## Efeito do plano amostral
@@ -156,7 +156,7 @@ Um valor de $EPA=5$, por exemplo, indicaria que a variância sob amostragem cong
 
 O efeito do plano amostral (neste caso, conglomeração) ao estimar a média populacional por unidade elementar é:
 
-$$EPA({AC1S}^R;\,AAS) = \frac {V_{AC1S} (\overline y_{AC1S}^R)} {V_{AAS} (\overline y)}$$
+$$EPA({AC1S}^R;\,AAS) = \frac {Var_{AC1S} (\overline y_{AC1S}^R)} {Var_{AAS} (\overline y)}$$
 
 **Nota:** Os estimadores pontuais são idênticos; somente os planos amostrais (e as variâncias) são diferentes. 
 
@@ -191,7 +191,7 @@ $(i,N_i)$ | $(Y_{iN_i}, Y_{i1})$ | $(Y_{iN_i}, Y_{i2})$ | $\ldots$ | $(Y_{iN_i},
 ## Coeficiente de Correlação Intraclasse
 
 * O **CCI** é coeficiente de correlação de Pearson para todos os $\sum_{i \in C} N_i(N_i-1)$ pares do tipo $(Y_1', Y_2')$, 
-$$\rho = \frac{Cov(Y_1', Y_2')}{\sqrt{Var(Y_1')Var(Y_2')}}$$
+$$\rho_{int} = \frac{Cov(Y_1', Y_2')}{\sqrt{Var(Y_1')Var(Y_2')}}$$
   + $Y_1'$ significa possíveis valores da primeira posição do par 
   + $Y_2'$ significa possíveis valores da segunda posição do par.
 
@@ -212,7 +212,7 @@ $$Cov(Y_1', Y_2') = \frac{\sum_{i \in C} \sum_{j \in C_i} \sum_{k \ne j \in C_i}
 e
 $$Var(Y_1') = Var(Y_2') = Var_y,$$
 então 
-$$\rho = \frac{Var_{ec} - \frac{Var_{dc}}{\overline N - 1}}{Var_y}$$
+$$\rho_{int} = \frac{Var_{ec} - \frac{Var_{dc}}{\overline N - 1}}{Var_y}$$
 
 Mostrar???
 

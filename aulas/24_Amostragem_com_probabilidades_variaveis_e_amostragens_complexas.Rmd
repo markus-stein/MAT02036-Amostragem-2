@@ -125,7 +125,7 @@ Proporção na **AC2S** | Guilherme, Francisco, Loenzo e Vinícius Zaltron
 .. Parâmetros e estimação | Geanine, Giovanna, Amanda Ramos e Victor
 .. Eficiência | 
 .. Tamanho de amostra | Bruno, Elisa, Igor e Luiz
-**AC2S** com PPT | 
+**AC2S** com PPT | Antônio e Letícia
 Amostragem Complexa (`survey`) | João, Leonardo, Giordano e Kevin
 
   

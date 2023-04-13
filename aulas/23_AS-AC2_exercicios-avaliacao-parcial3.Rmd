@@ -122,7 +122,7 @@ knitr::include_graphics('img/bus_passanger_flow_COVID_beijing.png')
 ## Avaliação Parcial 3
 ### Questão 1 - solução
 
-Possíveis vantagens: 
+Possíveis vantagens: método simples de ser implementado
 
 * para entrevistador pois terá definido o mesmo horário para seu trabalho?
 
@@ -169,11 +169,28 @@ b) No caso de uma **AES**, poderíamos definir $H$ estratos como turnos, ou per�
 ### Questão 2 - solução
 
 ```{r}
-## dados do problema
-i <- 1:
-  
+## dados do problema - slides Aula 13
+i <- 1:10                                       # indice dos estratos
+Ni <- c(10, 15, 15, 15, 10, 15, 15, 10, 10, 15) # tamanhos dos estratos
+Ti <- c(40, 75, 75, 60, 60, 90, 75, 70, 40, 90) # totais dos estratos
+N <- sum(Ni)                 # tamanho da populacao
+M <- length(Ni)              # no. estratos na populacao 
+## dados adicionais questao 2 - slides Aula 23
+m <- 4                       # no. estratos na amostra   
+a <- c(3, 6, 8, 9)           # indices dos conglomerados selecionados
+ni <- c(5, 5, 4, 4)          # tamanhos de amostra em cada cluster
+ti <- c(25, 30, 28, 16)      # totais das amostras em cada cluster
+S2i <- c(1, 1.5, 2.5, 0.625)
 ```
-a) A variável de interesse, $y$, (observada em cada uma das unidades elementares) é a distância (em milhas) percorrida pelas aéronaves das companhias aéreas de um país. 
+
+a) A variável de interesse, (observada em cada uma das unidades elementares)
+
+$y$: distância (em milhas) percorrida pelas aéronaves das companhias aéreas de um país. 
+
+---
+
+## Avaliação Parcial 3
+### Questão 2 - solução
 
 * Possíveis parâmetros são: 
   
@@ -183,45 +200,111 @@ a) A variável de interesse, $y$, (observada em cada uma das unidades elementare
 
 b) Escolha do estimador e justificativa  
 
-Estimador | $HT$ 
---|:--:
-Média | $\overline y_{AC1S/HT} = \frac {\widehat T_{AC1S/HT}}{N} = \frac {M} {N} \frac{1}{m} \sum_{i \in a} T_i = \overline y_C / \overline N$ 
-Variância do total | $\widehat Var_{AC1S} \left( \widehat T_{AC1S/HT} \right) = M^2 \left( \frac 1 m - \frac 1 M \right) \widehat S_{ec}^2$ 
-Variância da média | $\widehat Var_{AC1S} \left( \overline y_{AC1S/HT} \right) = \frac {1} {\overline N^2} \left( \frac 1 m - \frac 1 M \right) \widehat S_{ec}^2$
-
 * Para o total temos 
-  + $\widehat T^{HT}_{AC2S} = \frac {M} {m} \sum_{i \in a} \widehat T_i$, $\widehat T_i = \frac {N_i} {n_i} \sum_{j \in s_i} y_{ij}$, ou 
-  + $\widehat T^R_{AC2S} = N \frac{ \sum_{i \in a} \widehat T_i}{ \sum_{i \in a} N_i}$;
+$$\widehat T^{HT}_{AC2S} = \frac {M} {m} \sum_{i \in a} \widehat T_i \: \: \: \: \: \text{ou} \: \: \: \: \: \widehat T^R_{AC2S} = N \frac{ \sum_{i \in a} \widehat T_i}{ \sum_{i \in a} N_i},$$
+em que $\widehat T_i = \frac {N_i} {n_i} \sum_{j \in s_i} y_{ij}$
 
-Para a média  
-  + $\overline y_{AC2S}$ da média de milhas percorridas por aeronave.
+* Para a média  
+$$\overline y^{HT}_{AC1S} = \frac {\widehat T_{AC1S/HT}}{N} \: \: \: \: \: \text{ou} \: \: \: \: \: \overline y^R_{AC2S} = \frac {\widehat T^R_{AC1S}}{N}.$$
 
-É não viesado?
-
-$$E \left( \widehat T_{AC2S} \right) =  E_1 \left( E_2 \left( \widehat T_{AC2S} \right) \right) \: \: \: \text{ou} \: \: \: E \left( \overline y_{AC2S} \right) =  E_1 \left( E_2 \left( \overline y_{AC2S} \right) \right)$$
 
 ---
 
 ## Avaliação Parcial 3
 ### Questão 2 - solução
 
-c) Estime o parâmetro, cálculos e interpretação.
+O esimador escolhido é viesado ou não? Justificar.
 
-  + $\widehat T^{HT}_{AC2S} =$... . 
+$$E \left( \widehat T_{AC2S} \right) =  E_1 \left( E_2 \left( \widehat T_{AC2S} \right) \right) \: \: \: \text{ou} \: \: \: E \left( \overline y_{AC2S} \right) =  E_1 \left( E_2 \left( \overline y_{AC2S} \right) \right).$$
 
-  + $\widehat T^{HT}_{AC2S} =$
+c) Estimativa do total, cálculos e interpretação.
+
+```{r}
+## estimativas pontuais do total
+Ti_hat <- (Ni[a] / ni) * ti
+T_hat_HT <- (M / m) * sum(Ti_hat)
+n <- sum(ni)
+T_hat_R <- (N / n) * sum(Ti_hat)
+```
+
+  + $\widehat T^{HT}_{AC2S} = \frac{`r M`}{`r m`} \left( `r paste0( "\\frac{", Ni[a], "}{", ni, "}", ti, collapse=" + ")` \right) = `r T_hat_HT`$. 
+  + $\widehat T^{HT}_{AC2S} = \frac{`r N`}{`r n`} \left( `r paste0( "\\frac{", Ni[a], "}{", ni, "}", ti, collapse=" + ")` \right) = `r T_hat_R`$
   
-Estimamos que o total de milhas percorridas por todas as aeronaves do país seja aproximadamente...
+Estimamos que a distância total percorrida por todas as aeronaves do país seja aproximadamente `r round(T_hat_HT,2)` (ou `r round(T_hat_R,2)`) milhas.
   
-* $\overline y_{AC2S} =$... . 
 
-Estimamos que a média de milhas percorridas por aeronave do país seja cerca de...
+---
 
-d) Coeficiente de correlação intraclasse.(?)
+## Avaliação Parcial 3
+### Questão 2 - solução
 
-$$\rho_{int} = $$
+* para a média
 
+```{r}
+## estimativas pontuais da media
+ybarra_HT <- T_hat_HT / N
+ybarra_R <- T_hat_R / N
+```
 
+  + $\overline y^{HT}_{AC2S} = \frac{`r T_hat_HT`}{`r N`} = `r round(ybarra_HT,2)`.$ 
+  + $\overline y^R_{AC2S} = \frac{`r T_hat_R`}{`r N`} = `r round(ybarra_R,2)`.$ 
+
+Estimamos que a distância média percorrida por cada aeronave do país seja cerca de `r round(ybarra_HT,2)` (`r round(ybarra_R,2)`) milhas.
+
+---
+
+## Avaliação Parcial 3
+### Questão 2 - solução
+
+d) Coeficiente de correlação intraclasse.(slides Aula 22 e Apostila pg. 50)
+
+$$EPA(AC2S) \approx 1 + \rho_{int} (\overline n - 1),$$
+
+em que $EPA(AC2S) = \frac{Var_{AC2S} (\overline y)}{Var_{AASc} (\overline y)}$.
+ 
+* Um estimador não viciado da variância do estimador HT 
+
+$$\widehat Var_{AC2S} \left( \overline y_{AC2S} \right) = \frac{1}{N^2} \widehat Var_{AC2S} \left( \widehat T_{AC2S} \right)$$
+
+onde: 
+
+$\widehat Var_{AC2S} \left( \widehat T_{AC2S} \right) = M^2 \left( \frac {1} {m} - \frac {1} {M} \right) \frac {1} {m-1} \sum_{i \in a} \left( \widehat T_i - \overline y_C \right)^2 + \frac {M} {m} \sum_{i \in a} N_i^2 \left( \frac {1} {n_i} - \frac {1} {N_i} \right) \widehat S_i^2$  
+
+$\overline y_C = \frac {1} {m} \sum_{i \in a} \widehat T_i$ estima a média por conglomerado $\overline {Y_C}$; e
+
+$\widehat S_i^2 = \frac {1} {n_i-1} \sum_{j \in s_i} \left( y_{ij} - \overline y_i \right)^2$ estima a variância dentro da UPA $i$.
+
+---
+
+## Avaliação Parcial 3
+### Questão 2 - solução
+
+```{r}
+## variancias estimadas dos estimadores da media
+ybarraC <- T_hat_HT / m
+# s2i_hat <- sum() 
+(var_ybarra_HT <- M^2 * (1/m - 1/M) * (1/(m-1)) * sum((Ti_hat - ybarraC)^2) +
+                 (M/m) * sum( Ni[a]^2 * (1/ni - 1/ Ni[a]) * S2i))
+
+```
+
+* Adaptando da Aula 12  para na **AC2S** com **AASs** de conglomerados nos dois estágios,
+
+$$\widehat S_y^2 = \frac {(\overline N - 1) M \widehat S_{dc}^2 + \overline N (M-1) \overline \widehat S_{ec}^2} {M \overline N - 1},$$
+onde $\overline \widehat S_{ec}^2 = \frac {\widehat S_{ec}^2} {\overline N}$ e:
+
+* a medida da **variância entre** os totais dos conglomerados
+
+$$\widehat S_{ec}^2 = \frac {1} {m-1} \sum_{i \in a} \left( \widehat T_i - \overline y_C \right)^2;$$
+
+* a medida da variância *dentro* dos conglomerados, dada por: 
+
+$$\widehat S_{dc}^2 = \frac {1} {m - 1} \sum_{i \in a} S_i^2.$$ 
+
+então
+
+$$\rho_{int} = \frac{(M-1) \overline N S^2_{ec} - (M \overline N - 1) S^2}{(M \overline N - 1)(\overline N - 1) S^2},$$ 
+em que $S_{ec}^2 = \frac {1} {M-1} \sum_{i \in C} \left( T_i - \overline Y_C \right)^2$
 
 ---
 

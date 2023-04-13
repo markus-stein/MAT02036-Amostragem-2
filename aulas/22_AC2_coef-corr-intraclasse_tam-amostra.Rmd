@@ -82,8 +82,36 @@ class: inverse, middle, center
 
 # Eficiência e Coef. de Correlação Intraclasse na AC2S
 
-Da **AC1S**
+---
 
+## Eficiência e Coef. de Correlação Intraclasse na AC2S
+
+* Da **AC1S**, slides Aula 14, (estimamos as quantidades que desconhecemos) 
+
+  + **AASc** de conglomerados
+$$\rho_{int} = \frac{Var_{ec} - \frac{Var_{dc}}{\overline N - 1}}{Var_y} =  \frac{\overline N Var_{ec} - Var_y}{ \left( \overline N - 1 \right) Var_y},$$
+em que $Var_{ec} = \frac {1} {M} \sum_{i \in C} \left( T_i - \overline Y_C \right)^2$
+
+  + **AASs** de conglomerados
+$$\rho_{int} = \frac{(M-1) \overline N S^2_{ec} - (M \overline N - 1) S^2}{(M \overline N - 1)(\overline N - 1) S^2},$$ 
+em que $S_{ec}^2 = \frac {1} {M-1} \sum_{i \in C} \left( T_i - \overline Y_C \right)^2$
+
+---
+
+## Eficiência e Coef. de Correlação Intraclasse na AC2S
+
+* Da Aula 12 sabemos que na **AC21** com **AASs** de conglomerados nos dois estágios,
+
+$$S_y^2 = \frac {(\overline N - 1) M S_{dc}^2 + \overline N (M-1) \overline S_{ec}^2} {M \overline N - 1},(`r emo::ji("question")`)$$
+onde $\overline S_{ec}^2 = \frac {S_{ec}^2} {\overline N}$ e:
+
+* a medida da **variância entre** os totais dos conglomerados
+
+$$S_{ec}^2 = \frac {1} {M-1} \sum_{i \in C} \left( T_i - \overline Y_C \right)^2;$$
+
+* a medida da variância *dentro* dos conglomerados, dada por: 
+
+$$S_{dc}^2 = \frac {1} {M} \sum_{i \in C} \frac {1} {\overline N - 1} \sum_{j \in C_i} \left (y_{ij} - \overline {Y_i} \right)^2 = \frac {1} {M} \sum_{i \in C} S_i^2.$$ 
 
 ---
 

@@ -107,7 +107,7 @@ Definição | População | Amostra
 --|:--:|:--:
 Conglomerados | $M$ | $m$
 Unidades no conglomerado $i$ |  $N_i$ | $N_i$
-Tamanho da população/amostra |  $N = \sum_{i\in C}N_i$ | $n = \sum_{i \in a} N_i$
+Tamanho da população/amostra |  $N = \sum_{i\in C}N_i$ | $n = \displaystyle \sum_{i \in a} N_i$
 
 * $C = \{1, ..., M\}$: índice dos conglomerados na população.
 
@@ -202,7 +202,7 @@ $$S_{ec}^2 = \frac {1} {M-1} \sum_{i \in C} \left( T_i - \overline Y_C \right)^2
 
 * a medida da variância *dentro* dos conglomerados, dada por: 
 
-$$S_{dc}^2 = \frac {1} {M} \displaystyle \sum_{i \in C} \frac {1} {\overline N - 1} \sum_{j \in C_i} \left (y_{ij} - \overline {Y_i} \right)^2 = \frac {1} {M} \sum_{i \in C} S_i^2.$$ 
+$$S_{dc}^2 = \frac {1} {M} \sum_{i \in C} \frac {1} {\overline N - 1} \sum_{j \in C_i} \left (y_{ij} - \overline {Y_i} \right)^2 = \frac {1} {M} \sum_{i \in C} S_i^2.$$ 
 
 ---
 

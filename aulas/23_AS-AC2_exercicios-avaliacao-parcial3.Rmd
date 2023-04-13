@@ -175,11 +175,12 @@ Ni <- c(10, 15, 15, 15, 10, 15, 15, 10, 10, 15) # tamanhos dos estratos
 Ti <- c(40, 75, 75, 60, 60, 90, 75, 70, 40, 90) # totais dos estratos
 N <- sum(Ni)                 # tamanho da populacao
 M <- length(Ni)              # no. estratos na populacao 
-m <- 4                       # no. estratos na amostra   
 ## dados adicionais questao 2 - slides Aula 23
+m <- 4                       # no. estratos na amostra   
 a <- c(3, 6, 8, 9)           # indices dos conglomerados selecionados
 ni <- c(5, 5, 4, 4)          # tamanhos de amostra em cada cluster
 ti <- c(25, 30, 28, 16)      # totais das amostras em cada cluster
+S2i <- c(1, 1.5, 2.5, 0.625)
 ```
 
 a) A variável de interesse, (observada em cada uma das unidades elementares)
@@ -219,16 +220,17 @@ $$E \left( \widehat T_{AC2S} \right) =  E_1 \left( E_2 \left( \widehat T_{AC2S} 
 c) Estimativa do total, cálculos e interpretação.
 
 ```{r}
-Ti_chapeu <- (Ni[a] / ni) * ti
-T_chapeu_HT <- (M / m) * sum(Ti_chapeu)
+## estimativas pontuais do total
+Ti_hat <- (Ni[a] / ni) * ti
+T_hat_HT <- (M / m) * sum(Ti_hat)
 n <- sum(ni)
-T_chapeu_R <- (N / n) * sum(Ti_chapeu)
+T_hat_R <- (N / n) * sum(Ti_hat)
 ```
 
-  + $\widehat T^{HT}_{AC2S} = \frac{`r M`}{`r m`} \left( `r paste0( "\\frac{", Ni[a], "}{", ni, "}", ti, collapse=" + ")` \right) = `r T_chapeu_HT`$. 
-  + $\widehat T^{HT}_{AC2S} = \frac{`r N`}{`r n`} \left( `r paste0( "\\frac{", Ni[a], "}{", ni, "}", ti, collapse=" + ")` \right) = `r T_chapeu_R`$
+  + $\widehat T^{HT}_{AC2S} = \frac{`r M`}{`r m`} \left( `r paste0( "\\frac{", Ni[a], "}{", ni, "}", ti, collapse=" + ")` \right) = `r T_hat_HT`$. 
+  + $\widehat T^{HT}_{AC2S} = \frac{`r N`}{`r n`} \left( `r paste0( "\\frac{", Ni[a], "}{", ni, "}", ti, collapse=" + ")` \right) = `r T_hat_R`$
   
-Estimamos que a distância total percorrida por todas as aeronaves do país seja aproximadamente `r round(T_chapeu_HT,2)` (ou `r round(T_chapeu_R,2)`) milhas.
+Estimamos que a distância total percorrida por todas as aeronaves do país seja aproximadamente `r round(T_hat_HT,2)` (ou `r round(T_hat_R,2)`) milhas.
   
 
 ---
@@ -239,12 +241,13 @@ Estimamos que a distância total percorrida por todas as aeronaves do país seja
 * para a média
 
 ```{r}
-ybarra_HT <- T_chapeu_HT / N
-ybarra_R <- T_chapeu_R / N
+## estimativas pontuais da media
+ybarra_HT <- T_hat_HT / N
+ybarra_R <- T_hat_R / N
 ```
 
-  + $\overline y^{HT}_{AC2S} = \frac{`r T_chapeu_HT`}{`r N`} = `r round(ybarra_HT,2)`.$ 
-  + $\overline y^R_{AC2S} = \frac{`r T_chapeu_R`}{`r N`} = `r round(ybarra_R,2)`.$ 
+  + $\overline y^{HT}_{AC2S} = \frac{`r T_hat_HT`}{`r N`} = `r round(ybarra_HT,2)`.$ 
+  + $\overline y^R_{AC2S} = \frac{`r T_hat_R`}{`r N`} = `r round(ybarra_R,2)`.$ 
 
 Estimamos que a distância média percorrida por cada aeronave do país seja cerca de `r round(ybarra_HT,2)` (`r round(ybarra_R,2)`) milhas.
 
@@ -259,9 +262,49 @@ $$EPA(AC2S) \approx 1 + \rho_{int} (\overline n - 1),$$
 
 em que $EPA(AC2S) = \frac{Var_{AC2S} (\overline y)}{Var_{AASc} (\overline y)}$.
  
-$\widehat Var_{AC2S} \left( \overline y_{AC1S} \right) = \frac {1} {\overline N^2} \left( \frac 1 m - \frac 1 M \right) \widehat S_{ec}^2$
+* Um estimador não viciado da variância do estimador HT 
 
+$$\widehat Var_{AC2S} \left( \overline y_{AC2S} \right) = \frac{1}{N^2} \widehat Var_{AC2S} \left( \widehat T_{AC2S} \right)$$
 
+onde: 
+
+$\widehat Var_{AC2S} \left( \widehat T_{AC2S} \right) = M^2 \left( \frac {1} {m} - \frac {1} {M} \right) \frac {1} {m-1} \sum_{i \in a} \left( \widehat T_i - \overline y_C \right)^2 + \frac {M} {m} \sum_{i \in a} N_i^2 \left( \frac {1} {n_i} - \frac {1} {N_i} \right) \widehat S_i^2$  
+
+$\overline y_C = \frac {1} {m} \sum_{i \in a} \widehat T_i$ estima a média por conglomerado $\overline {Y_C}$; e
+
+$\widehat S_i^2 = \frac {1} {n_i-1} \sum_{j \in s_i} \left( y_{ij} - \overline y_i \right)^2$ estima a variância dentro da UPA $i$.
+
+---
+
+## Avaliação Parcial 3
+### Questão 2 - solução
+
+```{r}
+## variancias estimadas dos estimadores da media
+ybarraC <- T_hat_HT / m
+# s2i_hat <- sum() 
+(var_ybarra_HT <- M^2 * (1/m - 1/M) * (1/(m-1)) * sum((Ti_hat - ybarraC)^2) +
+                 (M/m) * sum( Ni[a]^2 * (1/ni - 1/ Ni[a]) * S2i))
+
+```
+
+* Adaptando da Aula 12  para na **AC2S** com **AASs** de conglomerados nos dois estágios,
+
+$$\widehat S_y^2 = \frac {(\overline N - 1) M \widehat S_{dc}^2 + \overline N (M-1) \overline \widehat S_{ec}^2} {M \overline N - 1},$$
+onde $\overline \widehat S_{ec}^2 = \frac {\widehat S_{ec}^2} {\overline N}$ e:
+
+* a medida da **variância entre** os totais dos conglomerados
+
+$$\widehat S_{ec}^2 = \frac {1} {m-1} \sum_{i \in a} \left( \widehat T_i - \overline y_C \right)^2;$$
+
+* a medida da variância *dentro* dos conglomerados, dada por: 
+
+$$\widehat S_{dc}^2 = \frac {1} {m - 1} \sum_{i \in a} S_i^2.$$ 
+
+então
+
+$$\rho_{int} = \frac{(M-1) \overline N S^2_{ec} - (M \overline N - 1) S^2}{(M \overline N - 1)(\overline N - 1) S^2},$$ 
+em que $S_{ec}^2 = \frac {1} {M-1} \sum_{i \in C} \left( T_i - \overline Y_C \right)^2$
 
 ---
 

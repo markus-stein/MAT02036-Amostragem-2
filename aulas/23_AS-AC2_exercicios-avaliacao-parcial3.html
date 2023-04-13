@@ -85,12 +85,12 @@ top:1em;right:1em;
 
 ---
 
-## Aula passada 📀
+## Aula passada 💽
 ### Eficiência e Coef. de Correlação Intraclasse na AC2S
 
 ---
 
-## Aula passada 💽
+## Aula passada 📀
 ### Tamanho de amostra na AC2S
 
 ---
@@ -207,11 +207,12 @@ Ni &lt;- c(10, 15, 15, 15, 10, 15, 15, 10, 10, 15) # tamanhos dos estratos
 Ti &lt;- c(40, 75, 75, 60, 60, 90, 75, 70, 40, 90) # totais dos estratos
 N &lt;- sum(Ni)                 # tamanho da populacao
 M &lt;- length(Ni)              # no. estratos na populacao 
-m &lt;- 4                       # no. estratos na amostra   
 ## dados adicionais questao 2 - slides Aula 23
+m &lt;- 4                       # no. estratos na amostra   
 a &lt;- c(3, 6, 8, 9)           # indices dos conglomerados selecionados
 ni &lt;- c(5, 5, 4, 4)          # tamanhos de amostra em cada cluster
 ti &lt;- c(25, 30, 28, 16)      # totais das amostras em cada cluster
+S2i &lt;- c(1, 1.5, 2.5, 0.625)
 ```
 
 a) A variável de interesse, (observada em cada uma das unidades elementares)
@@ -252,10 +253,11 @@ c) Estimativa do total, cálculos e interpretação.
 
 
 ```r
-Ti_chapeu &lt;- (Ni[a] / ni) * ti
-T_chapeu_HT &lt;- (M / m) * sum(Ti_chapeu)
+## estimativas pontuais do total
+Ti_hat &lt;- (Ni[a] / ni) * ti
+T_hat_HT &lt;- (M / m) * sum(Ti_hat)
 n &lt;- sum(ni)
-T_chapeu_R &lt;- (N / n) * sum(Ti_chapeu)
+T_hat_R &lt;- (N / n) * sum(Ti_hat)
 ```
 
   + `\(\widehat T^{HT}_{AC2S} = \frac{10}{4} \left( \frac{15}{5}25 + \frac{15}{5}30 + \frac{10}{4}28 + \frac{10}{4}16 \right) = 687.5\)`. 
@@ -273,8 +275,9 @@ Estimamos que a distância total percorrida por todas as aeronaves do país seja
 
 
 ```r
-ybarra_HT &lt;- T_chapeu_HT / N
-ybarra_R &lt;- T_chapeu_R / N
+## estimativas pontuais da media
+ybarra_HT &lt;- T_hat_HT / N
+ybarra_R &lt;- T_hat_R / N
 ```
 
   + `\(\overline y^{HT}_{AC2S} = \frac{687.5}{130} = 5.29.\)` 
@@ -293,9 +296,53 @@ d) Coeficiente de correlação intraclasse.(slides Aula 22 e Apostila pg. 50)
 
 em que `\(EPA(AC2S) = \frac{Var_{AC2S} (\overline y)}{Var_{AASc} (\overline y)}\)`.
  
-`\(\widehat Var_{AC2S} \left( \overline y_{AC1S} \right) = \frac {1} {\overline N^2} \left( \frac 1 m - \frac 1 M \right) \widehat S_{ec}^2\)`
+* Um estimador não viciado da variância do estimador HT 
+
+`$$\widehat Var_{AC2S} \left( \overline y_{AC2S} \right) = \frac{1}{N^2} \widehat Var_{AC2S} \left( \widehat T_{AC2S} \right)$$`
+
+onde: 
+
+`\(\widehat Var_{AC2S} \left( \widehat T_{AC2S} \right) = M^2 \left( \frac {1} {m} - \frac {1} {M} \right) \frac {1} {m-1} \sum_{i \in a} \left( \widehat T_i - \overline y_C \right)^2 + \frac {M} {m} \sum_{i \in a} N_i^2 \left( \frac {1} {n_i} - \frac {1} {N_i} \right) \widehat S_i^2\)`  
+
+`\(\overline y_C = \frac {1} {m} \sum_{i \in a} \widehat T_i\)` estima a média por conglomerado `\(\overline {Y_C}\)`; e
+
+`\(\widehat S_i^2 = \frac {1} {n_i-1} \sum_{j \in s_i} \left( y_{ij} - \overline y_i \right)^2\)` estima a variância dentro da UPA `\(i\)`.
+
+---
+
+## Avaliação Parcial 3
+### Questão 2 - solução
 
 
+```r
+## variancias estimadas dos estimadores da media
+ybarraC &lt;- T_hat_HT / m
+# s2i_hat &lt;- sum() 
+(var_ybarra_HT &lt;- M^2 * (1/m - 1/M) * (1/(m-1)) * sum((Ti_hat - ybarraC)^2) +
+                 (M/m) * sum( Ni[a]^2 * (1/ni - 1/ Ni[a]) * S2i))
+```
+
+```
+## [1] 219593.8
+```
+
+* Adaptando da Aula 12  para na **AC2S** com **AASs** de conglomerados nos dois estágios,
+
+`$$\widehat S_y^2 = \frac {(\overline N - 1) M \widehat S_{dc}^2 + \overline N (M-1) \overline \widehat S_{ec}^2} {M \overline N - 1},$$`
+onde `\(\overline \widehat S_{ec}^2 = \frac {\widehat S_{ec}^2} {\overline N}\)` e:
+
+* a medida da **variância entre** os totais dos conglomerados
+
+`$$\widehat S_{ec}^2 = \frac {1} {m-1} \sum_{i \in a} \left( \widehat T_i - \overline y_C \right)^2;$$`
+
+* a medida da variância *dentro* dos conglomerados, dada por: 
+
+`$$\widehat S_{dc}^2 = \frac {1} {m - 1} \sum_{i \in a} S_i^2.$$` 
+
+então
+
+`$$\rho_{int} = \frac{(M-1) \overline N S^2_{ec} - (M \overline N - 1) S^2}{(M \overline N - 1)(\overline N - 1) S^2},$$` 
+em que `\(S_{ec}^2 = \frac {1} {M-1} \sum_{i \in C} \left( T_i - \overline Y_C \right)^2\)`
 
 ---
 
